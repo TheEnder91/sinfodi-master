@@ -63,7 +63,8 @@ class ModulosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $datos = Modulo::findOrFail($id);
+        return response()->json($datos);
     }
 
     /**
@@ -75,7 +76,10 @@ class ModulosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $datos = Modulo::findOrFail($id);
+        if($datos->update(['nombre'=>$request->nombre])){
+            return response()->json('ok');
+        }
     }
 
     /**

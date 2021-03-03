@@ -25,6 +25,8 @@
     </section><br>
     @include('estimulos.modulos.tabla')
 
+    @include('estimulos.modulos.modalEditar')
+
     {{-- Modal nuevo --}}
     @section('titulo_modal', 'Nuevo registro')
 
@@ -34,9 +36,38 @@
             @include('estimulos.modulos.form')
             @section('pie_modal')
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-save"></i> Guardar
+                    <i class="fa fa-save"></i> Guardar registro
                 </button>
         </form>
         @endsection
     @endsection
+@endsection
+
+@section('scripts')
+    <script>
+        function ver_datos(id){
+            $.get('modulos/' + id + '/edit', function(data){
+                // console.log(data);
+                $('#id').val(data.id);
+                $('input[name="nombre"]').val(data.nombre);
+            });
+
+            $('#btn_actualizar').on('click', function(){
+                var id = $('#id').val();
+                var nombre = $('input[name="nombre"]').val();
+                var token = $('input[name="_token"]').val();
+                $.ajax({
+                    url: 'modulos/' + id,
+                    type: 'PUT',
+                    data: {
+                        nombre: nombre,
+                        _token: token
+                    },
+                    success: function(data){
+                        console.log(data);
+                    }
+                });
+            });
+        }
+    </script>
 @endsection
