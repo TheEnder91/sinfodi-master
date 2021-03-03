@@ -64,7 +64,11 @@
                         _token: token
                     },
                     success: function(data){
-                        console.log(data);
+                        if(data == "ok"){
+                            $('#modalEditar').modal('hide');
+                            swal('Exito!!', 'Se guardo correctamente el registro.', 'success');
+                            //ver_tabla();
+                        }
                     }
                 });
             });
