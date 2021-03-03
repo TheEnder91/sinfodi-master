@@ -47,7 +47,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">@yield('titulo_modal')</h5>
+                        <h5 class="modal-title" id="modalNuevoLabel">@yield('titulo_modal')</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -56,7 +56,7 @@
                         @yield('cuerpo_modal')
                     </div>
                     <div class="modal-footer">
-                        @yield('botones_modal')
+                        @yield('pie_modal')
                     </div>
                 </div>
             </div>

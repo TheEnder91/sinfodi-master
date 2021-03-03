@@ -37,7 +37,11 @@ class ModulosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $nuevo = new Modulo();
+        if($nuevo->create($request->all())){
+            return back()->with('exito', 'Guardado con exito');
+        }
     }
 
     /**
