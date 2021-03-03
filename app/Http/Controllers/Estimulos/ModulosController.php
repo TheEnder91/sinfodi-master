@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Estimulos;
 
+use App\Entities\Estimulos\Modulo;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class ModulosController extends Controller
      */
     public function index()
     {
-        return view('estimulos.modulos.index');
+        $datos = Modulo::all();
+        return view('estimulos.modulos.index', compact('datos'));
     }
 
     /**
