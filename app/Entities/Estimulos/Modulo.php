@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Entities;
+namespace App\Entities\Estimulos;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Criterio extends Model
+class Modulo extends Model
 {
     protected $fillable = [
-        'nombre', 'id_modulo',
+        'nombre',
     ];
 }
