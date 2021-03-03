@@ -16,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layouts.app');
 });
+
+Route::resource('estimulos/modulos', 'Estimulos\ModulosController')->except('create', 'show');

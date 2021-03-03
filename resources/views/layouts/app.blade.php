@@ -42,5 +42,24 @@
                 </section>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalNuevo" tabindex="-1" role="dialog" aria-labelledby="modalNuevoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">@yield('titulo_modal')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @yield('cuerpo_modal')
+                    </div>
+                    <div class="modal-footer">
+                        @yield('botones_modal')
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
