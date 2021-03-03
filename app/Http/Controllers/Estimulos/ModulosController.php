@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Estimulos;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Entities\Modulo;
 
 class ModulosController extends Controller
 {
@@ -15,8 +14,7 @@ class ModulosController extends Controller
      */
     public function index()
     {
-        $datos = Modulo::all();
-        return view('estimulos.modulos.index', compact('datos'));
+        return view('estimulos.modulos.index');
     }
 
     /**
@@ -37,11 +35,7 @@ class ModulosController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $nuevo = new Modulo();
-        if($nuevo->create($request->all())){
-            return back()->with('exito', 'Guardado con exito');
-        }
+        //
     }
 
     /**
