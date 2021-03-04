@@ -8,22 +8,14 @@
 
 @section('content_card')
 
-    @if (session('exito'))
-        <span class="alert-success">
-            {{ session('exito') }}
-        </span>
-    @else
-        <span class="alert-error">
-            {{ session('error') }}
-        </span>
-    @endif
-
     <section class="text-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
             <i class="fa fa-plus-circle"></i> Nuevo registro
         </button>
     </section><br>
-    @include('estimulos.modulos.tabla')
+    {{-- @include('estimulos.modulos.tabla') --}}
+
+    <div id="tabla"></div>
 
     @include('estimulos.modulos.modalEditar')
 
@@ -45,6 +37,10 @@
 
 @section('scripts')
     <script>
+        $(document).ready(function(){
+            ver_tabla();
+        });
+
         function ver_datos(id){
             $.get('modulos/' + id + '/edit', function(data){
                 // console.log(data);
@@ -67,10 +63,16 @@
                         if(data == "ok"){
                             $('#modalEditar').modal('hide');
                             swal('Exito!!', 'Se guardo correctamente el registro.', 'success');
-                            //ver_tabla();
+                            ver_tabla();
                         }
                     }
                 });
+            });
+        }
+
+        function ver_tabla(){
+            $.get('tblModulos', function(data){
+                $('#tabla').empty().html(data);
             });
         }
     </script>

@@ -15,8 +15,14 @@ class ModulosController extends Controller
      */
     public function index()
     {
+        return view('estimulos.modulos.index');
+    }
+
+    //Codigo personal- Para actualizar tabla por ajax...
+    public function tabla()
+    {
         $datos = Modulo::all();
-        return view('estimulos.modulos.index', compact('datos'));
+        return view('estimulos.modulos.tabla', compact('datos'));
     }
 
     /**

@@ -18,3 +18,4 @@ Route::get('/', function () {
 });
 
 Route::resource('estimulos/modulos', 'Estimulos\ModulosController')->except('create', 'show');
+Route::get('estimulos/tblModulos', 'Estimulos\ModulosController@tabla');
