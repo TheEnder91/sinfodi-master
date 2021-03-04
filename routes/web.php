@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('layouts.app');
-});
+})->name('home');
 
 Route::resource('estimulos/modulos', 'Estimulos\ModulosController')->except('create', 'show');
 Route::get('estimulos/tblModulos', 'Estimulos\ModulosController@tabla');

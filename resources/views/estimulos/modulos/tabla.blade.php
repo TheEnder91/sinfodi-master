@@ -15,6 +15,9 @@
                     <button class="btn btn-warning" data-toggle="modal" data-target="#modalEditar" onclick="ver_datos({{ $item->id }});">
                         <i class="fa fa-pencil-alt"></i>
                     </button>
+                    <button class="btn btn-danger" onclick="eliminar({{ $item->id }});">
+                        <i class="fa fa-trash-alt"></i>
+                    </button>
                 </td>
             </tr>
         @endforeach

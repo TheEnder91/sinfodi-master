@@ -96,6 +96,9 @@ class ModulosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $datos = Modulo::findOrFail($id);
+        if($datos->delete()){
+            return response()->json('ok');
+        }
     }
 }

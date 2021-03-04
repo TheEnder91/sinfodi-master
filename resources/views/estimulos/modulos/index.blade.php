@@ -4,6 +4,13 @@
     <i class="fa fa-cubes"></i> Módulos
 @endsection
 
+@section('breadcrumb')
+    <ol class="breadcrumb float-sm-right">
+       <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
+       <li class="breadcrumb-item active">Listado de módulos</li>
+    </ol>
+@endsection
+
 @section('title_card', 'Listado de módulos')
 
 @section('content_card')
@@ -13,10 +20,10 @@
             <i class="fa fa-plus-circle"></i> Nuevo registro
         </button>
     </section><br>
-    {{-- @include('estimulos.modulos.tabla') --}}
 
     <div id="tabla"></div>
 
+    {{-- Incluimos el modal para editar... --}}
     @include('estimulos.modulos.modalEditar')
 
     {{-- Modal nuevo --}}
@@ -43,7 +50,6 @@
 
         function ver_datos(id){
             $.get('modulos/' + id + '/edit', function(data){
-                // console.log(data);
                 $('#id').val(data.id);
                 $('input[name="nombre"]').val(data.nombre);
             });
@@ -73,6 +79,36 @@
         function ver_tabla(){
             $.get('tblModulos', function(data){
                 $('#tabla').empty().html(data);
+            });
+        }
+
+        function eliminar(id){
+            var ruta = 'modulos/' + id;
+            var token = $('input[name="_token"]').val();
+            swal({
+                type: 'warning',
+                title: "¿Estas seguro?",
+                text: "Se eliminara de forma permanente.",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, eliminar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                if (result) {
+                    $.ajax({
+                        url: ruta,
+                        data: {
+                            _token: token,
+                        },
+                        type: 'DELETE',
+                        success: function(data){
+                            if(data == "ok"){
+                                swal('Exito!!', 'Eliminado con exito.', 'success');
+                                ver_tabla();
+                            }
+                        }
+                    });
+                }
             });
         }
     </script>
