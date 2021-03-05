@@ -1,10 +1,15 @@
 @csrf
 <input type="text" name="id" id="id" hidden>
 
+{{-- <label for="" class="col-form-control">
+    Criterio:
+</label>
+<input type="text" name="nombre" class="form-control"> --}}
+
 <label for="" class="col-form-control">
     Criterio:
 </label>
-<input type="text" name="nombre" class="form-control">
+<textarea class="form-control" name="nombre"></textarea>
 
 <label for="" name='id_modulo'>
     Modulo al que pertenece:
