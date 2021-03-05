@@ -16,7 +16,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-header"><b>ESTIMULOS</b></li>
                 <li class="nav-item">
-                    <a href="{{ route('modulos.index') }}" class="nav-link">
+                    <a href="{{ route('modulos.index') }}" class="nav-link {{ Str::contains(Route::currentRouteName(), 'modulos') ? 'active' : Null }}">
                         <i class="nav-icon fa fa-cubes"></i>
                         <p>
                             Objetivo
@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('criterios.index') }}" class="nav-link">
+                    <a href="{{ route('criterios.index') }}" class="nav-link {{ Str::contains(Route::currentRouteName(), 'criterios') ? 'active' : Null }}">
                         <i class="nav-icon fa fa-clipboard-list"></i>
                         <p>
                             Criterios y puntos

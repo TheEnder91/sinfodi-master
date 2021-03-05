@@ -15,6 +15,8 @@
 
 @section('content_card')
 
+{{ Route::currentRouteName() }}
+
     <section class="text-right">
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
             <i class="fa fa-plus-circle"></i> Nuevo registro
