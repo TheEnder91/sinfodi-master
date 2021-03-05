@@ -27,7 +27,7 @@
                     <a href="{{ route('criterios.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-clipboard-list"></i>
                         <p>
-                            Criterios
+                            Criterios y puntos
                         </p>
                     </a>
                 </li>

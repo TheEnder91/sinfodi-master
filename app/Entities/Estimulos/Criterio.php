@@ -11,7 +11,7 @@ class Criterio extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'nombre', 'id_modulo',
+        'nombre', 'id_modulo', 'puntos',
     ];
 
     public function modulo(){

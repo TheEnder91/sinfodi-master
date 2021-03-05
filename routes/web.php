@@ -22,3 +22,6 @@ Route::get('estimulos/tblModulos', 'Estimulos\ModulosController@tabla');
 
 Route::resource('estimulos/criterios', 'Estimulos\CriteriosController')->except('create', 'show');
 Route::get('estimulos/tblCriterios', 'Estimulos\CriteriosController@tabla');
+
+Route::resource('estimulos/puntos', 'Estimulos\PuntosController')->except('create', 'show');
+Route::get('estimulos/tblPuntos', 'Estimulos\PuntosController@tabla');

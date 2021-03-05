@@ -4,6 +4,7 @@
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Módulo</th>
+            <th scope="col">Puntos</th>
             <th scope="col">Acciones</th>
         </tr>
     </thead>
@@ -13,6 +14,7 @@
                 <th scope="row" class="text-center">{{ $item->id }}</th>
                 <td>{{ $item->nombre }}</td>
                 <td>{{ $item->modulo->nombre }}</td>
+                <td>{{ $item->puntos }}</td>
                 <td class="text-center">
                     <button class="btn btn-warning" data-toggle="modal" data-target="#modalEditar" onclick="ver_datos({{ $item->id }});">
                         <i class="fa fa-pencil-alt"></i>

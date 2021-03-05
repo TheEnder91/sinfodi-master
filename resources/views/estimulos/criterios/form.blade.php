@@ -16,3 +16,8 @@
         <option value="{{ $item->id }}">{{ $item->nombre }}</option>
     @endforeach
 </select>
+
+<label for="" name='puntos' class="col-form-control">
+    Punto asginado:
+</label>
+<input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)">

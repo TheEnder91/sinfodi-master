@@ -17,6 +17,7 @@ class CreateCriteriosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->unsignedBigInteger('id_modulo');
+            $table->integer('puntos');
             $table->foreign('id_modulo')->references('id')->on('modulos');
             $table->timestamps();
             $table->softDeletes();

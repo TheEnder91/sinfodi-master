@@ -41,6 +41,7 @@ class CriteriosController extends Controller
         $rules = [
             'nombre' => 'required',
             'id_modulo' => 'required',
+            'puntos' => 'required',
         ];
 
         $this->validate($request, $rules);
