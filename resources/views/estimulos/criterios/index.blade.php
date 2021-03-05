@@ -51,14 +51,14 @@
         function ver_datos(id){
             $.get('criterios/' + id + '/edit', function(data){
                 $('#id').val(data.id);
-                $('input[name="nombre"]').val(data.nombre);
+                $('#nombre').val(data.nombre);
                 $('#id_modulo').val(data.id_modulo);
                 $('input[name="puntos"]').val(data.puntos);
             });
 
             $('#btn_actualizar').on('click', function(){
                 var id = $('#id').val();
-                var nombre = $('input[name="nombre"]').val();
+                var nombre = $('#nombre').val();
                 var id_modulo = $('#id_modulo').val();
                 var puntos = $('input[name="puntos"]').val();
                 var token = $('input[name="_token"]').val();

@@ -1,9 +1,9 @@
-<table class="table table-bordered">
+<table id="example1" class="table table-bordered">
     <thead class="thead-dark">
         <tr class="text-center">
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Módulo</th>
+            <th scope="col">Objetivo</th>
             <th scope="col">Puntos</th>
             <th scope="col">Acciones</th>
         </tr>
@@ -27,3 +27,28 @@
         @endforeach
     </tbody>
 </table>
+<script>
+    $('#example1').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": false,
+        "info": true,
+        "autoWidth": false,
+        "language":{
+            "lengthMenu": "Mostrar _MENU_ registros por página.",
+            "info": "Página _PAGE_ de _PAGES_",
+            "infoEmpty": "No se encontraron registros.",
+            "infoFiltered": "(filtrada de _MAX_ registros)",
+            "loadingRecords": "Cargando...",
+            "processing":     "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords":    "No se encontraron registros.",
+            "paginate": {
+                "next":       ">",
+                "previous":   "<"
+            },
+        },
+        lengthMenu: [[5, 10, 15], [5, 10, 15]]
+    });
+</script>

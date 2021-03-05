@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('title_content')
-    <i class="fa fa-cubes"></i> Módulos
+    <i class="fa fa-cubes"></i> Objetivo
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
        <li class="breadcrumb-item"><a href="{{ route('home') }}">Inicio</a></li>
-       <li class="breadcrumb-item active">Listado de módulos</li>
+       <li class="breadcrumb-item active">Listado de Objetivo</li>
     </ol>
 @endsection
 
-@section('title_card', 'Listado de módulos')
+@section('title_card', 'Listado de objetivo')
 
 @section('content_card')
 

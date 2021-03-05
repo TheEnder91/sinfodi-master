@@ -16,6 +16,7 @@ mix
         'resources/vendor/fontawesome-free-5.15.2-web/css/all.min.css',
         'resources/vendor/overlayScrollbars/css/OverlayScrollbars.min.css',
         'resources/vendor/sweetalert2/css/sweetalert2.css',
+        'resources/vendor/datatables-bs4/css/dataTables.bootstrap4.css',
         'resources/css/adminlte.css',
     ], 'public/css/app.css')
 
@@ -26,6 +27,8 @@ mix
         'resources/vendor/bootstrap/js/bootstrap.bundle.min.js',
         'resources/vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js',
         'resources/vendor/sweetalert2/js/sweetalert2.min.js',
+        'resources/vendor/datatables/jquery.dataTables.js',
+        'resources/vendor/datatables-bs4/js/dataTables.bootstrap4.js',
     ], 'public/js/vendor.js')
 
     .copy('resources/vendor/fontawesome-free-5.15.2-web/webfonts', 'public/webfonts')

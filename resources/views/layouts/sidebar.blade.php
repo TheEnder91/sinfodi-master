@@ -19,7 +19,7 @@
                     <a href="{{ route('modulos.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-cubes"></i>
                         <p>
-                            Modulos
+                            Objetivo
                         </p>
                     </a>
                 </li>

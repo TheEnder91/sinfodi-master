@@ -9,10 +9,10 @@
 <label for="" class="col-form-control">
     Criterio:
 </label>
-<textarea class="form-control" name="nombre"></textarea>
+<textarea class="form-control" name="nombre" id="nombre"></textarea>
 
 <label for="" name='id_modulo'>
-    Modulo al que pertenece:
+    Objetivo al que pertenece:
 </label>
 
 <select name="id_modulo" id="id_modulo" class="form-control">
