@@ -23,6 +23,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('criterios.index') }}" class="nav-link">
+                        <i class="nav-icon fa fa-clipboard-list"></i>
+                        <p>
+                            Criterios
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

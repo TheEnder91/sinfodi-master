@@ -19,3 +19,6 @@ Route::get('/', function () {
 
 Route::resource('estimulos/modulos', 'Estimulos\ModulosController')->except('create', 'show');
 Route::get('estimulos/tblModulos', 'Estimulos\ModulosController@tabla');
+
+Route::resource('estimulos/criterios', 'Estimulos\CriteriosController')->except('create', 'show');
+Route::get('estimulos/tblCriterios', 'Estimulos\CriteriosController@tabla');

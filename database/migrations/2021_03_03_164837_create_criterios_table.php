@@ -19,6 +19,7 @@ class CreateCriteriosTable extends Migration
             $table->unsignedBigInteger('id_modulo');
             $table->foreign('id_modulo')->references('id')->on('modulos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
