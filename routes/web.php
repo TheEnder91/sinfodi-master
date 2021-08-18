@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-Route::get('/inicio/{user}', function () {
-    $user = request()->user;
-    Session::put('username', $user);
-    return view('layouts.app');
+Route::middleware(['login'])->group(function(){
+    Route::get('/', function () {
+        return view('layouts.app');
+    });
+
+    Route::get('/panelControl/listUser', [UsersController::class, "index"]);
 });
