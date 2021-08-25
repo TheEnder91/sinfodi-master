@@ -56,5 +56,17 @@
             </div>
             <aside class="control-sidebar control-sidebar-dark"></aside>
         </div>
+        <script src="{{ URL::asset('js/main.js') }}" type="text/javascript"></script>
+        <script>
+            function getUrlToken(url, redirect){
+                var url =  '{{ config("app.url") }}' + (url ? url : '') + ('?token=' + $('#txtTokenRepo').val());
+                if(redirect){
+                    window.location.href = url;
+                }else{
+                    return url;
+                }
+            }
+    	</script>
+        @yield('scripts')
     </body>
 </html>

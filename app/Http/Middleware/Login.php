@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Login
 {
+    use SingleResponse;
+
     /**
      * Handle an incoming request.
      *
