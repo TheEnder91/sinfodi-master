@@ -74,7 +74,8 @@ class Login
         //iniciar session
         Auth::attempt(['usuario' => $login, 'password' => $login]);
 
-        session(['token' => $nombre]);
+        session(['nombre' => $nombre]);
+        session(['token' => $token]);
         return $next($request);
     }
 }
