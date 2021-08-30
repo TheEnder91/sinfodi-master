@@ -11,12 +11,33 @@
         </div>
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item">
-                    <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUser')  }}" class="nav-link">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>Usuarios</p>
-                    </a>
-                </li>
+                @if(Auth::user()->hasPermissionTo('admin-user-index') || Auth::user()->hasPermissionTo('admin-role-index') || Auth::user()->hasPermissionTo('admin-permission-index'))
+                    <li class="nav-header">PANEL DE CONTROL</li>
+                @endif
+                @can('admin-user-index')
+                    <li class="nav-item">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers')  }}" class="nav-link {{ isRouteActive('panelControl.users') }}">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>Usuarios</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('admin-role-index')
+                    <li class="nav-item">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles')  }}" class="nav-link {{ isRouteActive('panelControl.roles') }}">
+                            <i class="nav-icon fa fa-unlock-alt"></i>
+                            <p>Roles</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('admin-permission-index')
+                    <li class="nav-item">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listPermissions')  }}" class="nav-link {{ isRouteActive('panelControl.permissions') }}">
+                            <i class="nav-icon fa fa-key"></i>
+                            <p>Permisos</p>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </nav>
     </div>

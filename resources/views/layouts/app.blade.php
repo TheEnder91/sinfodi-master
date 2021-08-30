@@ -10,6 +10,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed">
+        <input type="hidden"  id="txtTokenRepo" value="{{ Session::has('token') ? Session::get('token') : '' }}" />
         <div class="wrapper">
             @include('layouts.sidebar')
             <div class="content-wrapper">
