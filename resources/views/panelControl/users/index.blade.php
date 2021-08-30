@@ -23,7 +23,9 @@
                         <th>Nombre</th>
                         <th>Usuario</th>
                         <th>Fecha de acceso</th>
-                        <th width="10%">Acciones</th>
+                        @if (Auth::user()->hasPermissionTo('admin-user-show'))
+                            <th width="10%">Acciones</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -33,9 +35,13 @@
                             <td>{{ $user->nombre }}</td>
                             <td>{{ $user->usuario }}</td>
                             <td>{{ $user->created_at }}</td>
-                            <td>
-                                <a href="javascript:getUrlToken('/panelControl/showUser/{{ $user->id }}', true)"><i class="fa fa-edit"></i></a>
-                            </td>
+                            @if (Auth::user()->hasPermissionTo('admin-user-show'))
+                                <td>
+                                    @can('admin-user-show')
+                                        <a href="javascript:getUrlToken('/panelControl/showUser/{{ $user->id }}', true)"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

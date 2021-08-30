@@ -14,11 +14,13 @@
 @section('content')
     @component('components.card')
         @slot('title_card', 'Listado de roles')
-        <section class="text-right">
-            <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/createRol') }}" class="btn btn-primary" role="button" aria-disabled="true">
-                <i class="fa fa-plus"></i> Nuevo registro
-            </a>
-        </section><br>
+        @can('admin-role-create')
+            <section class="text-right">
+                <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/createRol') }}" class="btn btn-primary" role="button" aria-disabled="true">
+                    <i class="fa fa-plus"></i> Nuevo registro
+                </a>
+            </section><br>
+        @endcan
         <div class="table-responsive">
             <table id="tblRole" class="table table-bordered table-striped">
                 <caption>Listado de roles</caption>
@@ -29,7 +31,9 @@
                         <th>Slug</th>
                         <th>Descripción</th>
                         <th>Fecha de creación</th>
-                        <th>Acciones</th>
+                        @if (Auth::user()->hasPermissionTo('admin-role-show') || Auth::user()->hasPermissionTo('admin-role-destroy'))
+                            <th>Acciones</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -40,10 +44,16 @@
                             <td>{{ $item->slug }}</td>
                             <td class="text-left">{{ $item->description }}</td>
                             <td>{{ $item->created_at }}</td>
-                            <td>
-                                <a href="javascript:getUrlToken('/panelControl/showRol/{{ $item->id }}', true)"><i class="fa fa-edit"></i></a>
-                                <a href="javascript:eliminarRol({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
-                            </td>
+                            @if (Auth::user()->hasPermissionTo('admin-role-show') || Auth::user()->hasPermissionTo('admin-role-destroy'))
+                                <td>
+                                    @can('admin-role-show')
+                                        <a href="javascript:getUrlToken('/panelControl/showRol/{{ $item->id }}', true)"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                    @can('admin-role-destroy')
+                                        <a href="javascript:eliminarRol({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
+                                    @endcan
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
