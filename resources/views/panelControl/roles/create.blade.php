@@ -43,7 +43,7 @@
                         @foreach ($permissions as $permission)
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->name }}</label>
+                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
                         </div>
                     @endforeach
                     </div>

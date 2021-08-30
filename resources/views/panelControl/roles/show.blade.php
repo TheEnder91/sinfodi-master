@@ -50,7 +50,7 @@
                                     checked
                                 @endif
                             >
-                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->name }}</label>
+                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
                         </div>
                     @endforeach
                     </div>
