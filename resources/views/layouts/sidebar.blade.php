@@ -38,6 +38,17 @@
                         </a>
                     </li>
                 @endcan
+                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index'))
+                    <li class="nav-header">ESTIMULOS</li>
+                @endif
+                @can('estimulo-objetivo-index')
+                    <li class="nav-item">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/objetivos/listObjetivos')  }}" class="nav-link {{ isRouteActive('estimulos.objetivos') }}">
+                            <i class="nav-icon fa fa-bullseye"></i>
+                            <p>Objetivos</p>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </nav>
     </div>

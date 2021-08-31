@@ -50,15 +50,30 @@ function peticionGeneralAjax(options){
         contentType: options.contentType,
         headers: options.headers,
         success: function (data) {
-            swal({
-                type: 'success',
-                title: options.mensajeConfirm,
-                showConfirmButton: false,
-                timer: 4000
-            })
-            setTimeout(function(){
-                window.location.href = options.url;
-            }, 3000);
+            if(data){
+                options.ok(data);
+                swal({
+                    type: 'success',
+                    title: options.mensajeConfirm,
+                    showConfirmButton: false,
+                    timer: 4000
+                })
+                setTimeout(function(){
+                    window.location.href = options.url;
+                }, 3000);
+            }else{
+                alert('error');
+            }
+            // options.ok(data);
+            // swal({
+            //     type: 'success',
+            //     title: options.mensajeConfirm,
+            //     showConfirmButton: false,
+            //     timer: 4000
+            // })
+            // setTimeout(function(){
+            //     window.location.href = options.url;
+            // }, 3000);
         },
         error: function (data) {
             swal({
@@ -67,6 +82,41 @@ function peticionGeneralAjax(options){
                 showConfirmButton: true,
             });
         },
+    });
+}
+
+function consultarDatos(options){
+    var defaults = {
+        ok: function(){},
+        headers: {
+            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+        }
+    };
+
+    options = $.extend({}, defaults, options);
+    if (options.dataType === 'json') {
+        options.data = JSON.stringify(options.json);
+    } else {
+        options.data = options.json;
+    }
+    if(options.formData){
+        options.data = options.json;
+    }
+
+    var ruta = options.action;
+
+    $.ajax({
+        url: ruta,
+        type: options.type,
+        data: options.data,
+        dataType: options.dataType,
+        async: options.async,
+        processData: false,
+        contentType: options.contentType,
+        headers: options.headers,
+        success: function (data) {
+            options.ok(data);
+        }
     });
 }
 
