@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 
 class PermissionsSeeder extends Seeder
@@ -35,5 +36,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => ObjetivosController::PERMISSIONS['show']], ['slug' => 'Ver objetivo', 'description' => 'A user can see objective']);
         Permission::updateOrCreate(['name' => ObjetivosController::PERMISSIONS['edit']], ['slug' => 'Editar objetivo', 'description' => 'A user can edit objective']);
         Permission::updateOrCreate(['name' => ObjetivosController::PERMISSIONS['delete']], ['slug' => 'Eliminar objetivo', 'description' => 'A user can delete objective']);
+        /** Permiso para ver los lineamientos de estimulos... */
+        Permission::updateOrCreate(['name' => LineamientosController::PERMISSIONS['index']], ['slug' => 'Ver lineamientos(PDF)', 'description' => 'A user can see guidelines(PDF)']);
     }
 }

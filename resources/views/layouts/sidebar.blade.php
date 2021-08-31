@@ -16,7 +16,7 @@
                 @endif
                 @can('admin-user-index')
                     <li class="nav-item">
-                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers')  }}" class="nav-link {{ isRouteActive('panelControl.users') }}">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers') }}" class="nav-link {{ isRouteActive('panelControl.users') }}">
                             <i class="nav-icon fa fa-users"></i>
                             <p>Usuarios</p>
                         </a>
@@ -24,7 +24,7 @@
                 @endcan
                 @can('admin-role-index')
                     <li class="nav-item">
-                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles')  }}" class="nav-link {{ isRouteActive('panelControl.roles') }}">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles') }}" class="nav-link {{ isRouteActive('panelControl.roles') }}">
                             <i class="nav-icon fa fa-unlock-alt"></i>
                             <p>Roles</p>
                         </a>
@@ -32,7 +32,7 @@
                 @endcan
                 @can('admin-permission-index')
                     <li class="nav-item">
-                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listPermissions')  }}" class="nav-link {{ isRouteActive('panelControl.permissions') }}">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listPermissions') }}" class="nav-link {{ isRouteActive('panelControl.permissions') }}">
                             <i class="nav-icon fa fa-key"></i>
                             <p>Permisos</p>
                         </a>
@@ -43,9 +43,17 @@
                 @endif
                 @can('estimulo-objetivo-index')
                     <li class="nav-item">
-                        <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/objetivos/listObjetivos')  }}" class="nav-link {{ isRouteActive('estimulos.objetivos') }}">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/objetivos/listObjetivos') }}" class="nav-link {{ isRouteActive('estimulos.objetivos') }}">
                             <i class="nav-icon fa fa-bullseye"></i>
                             <p>Objetivos</p>
+                        </a>
+                    </li>
+                @endcan
+                @can('estimulo-lineamientos-index')
+                    <li class="nav-item">
+                        <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/lineamientos/viewLineamientos') }}" class="nav-link {{ isRouteActive('estimulos.lineamientos') }}">
+                            <i class="nav-icon fa fa-file-invoice"></i>
+                            <p>Lineamientos</p>
                         </a>
                     </li>
                 @endcan

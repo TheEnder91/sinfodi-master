@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +42,6 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/objetivos/showObjetivo/{id}', [ObjetivosController::class, "show"])->name('estimulos.objetivos');
     Route::put('/estimulos/objetivos/updateObjetivo/{id}', [ObjetivosController::class, "update"])->name('estimulos.objetivos');
     Route::delete('/estimulos/objetivos/destroyObjetivo/{id}', [ObjetivosController::class, "destroy"])->name('estimulos.objetivos');
+    //Ruta para visualizar los lineamientos de estimulos...
+    Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
 });
