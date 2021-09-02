@@ -38,7 +38,7 @@
                         </a>
                     </li>
                 @endcan
-                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index'))
+                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index'))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -57,6 +57,24 @@
                         </a>
                     </li>
                 @endcan
+                @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index'))
+                    <li class="nav-item {{ isMenuOpen('estimulos.actividadesA') }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-table"></i>
+                            <p><b>Factor 1</b><i class="fa fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('estimulo-actividadA-index')
+                                <li class="nav-item">
+                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesA') }}" class="nav-link {{ isRouteActive('estimulos.actividadesA') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Actividades A</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </nav>
     </div>

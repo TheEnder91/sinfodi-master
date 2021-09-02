@@ -14,4 +14,8 @@ class Objetivo extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function criterio(){
+        return $this->hasMany(Criterio::class);
+    }
 }

@@ -51,7 +51,6 @@ function peticionGeneralAjax(options){
         headers: options.headers,
         success: function (data) {
             if(data){
-                options.ok(data);
                 swal({
                     type: 'success',
                     title: options.mensajeConfirm,
@@ -64,16 +63,6 @@ function peticionGeneralAjax(options){
             }else{
                 alert('error');
             }
-            // options.ok(data);
-            // swal({
-            //     type: 'success',
-            //     title: options.mensajeConfirm,
-            //     showConfirmButton: false,
-            //     timer: 4000
-            // })
-            // setTimeout(function(){
-            //     window.location.href = options.url;
-            // }, 3000);
         },
         error: function (data) {
             swal({
@@ -161,4 +150,9 @@ function setTokenUtils(newToken){
 
 function getTokenUtils(){
     return token_fondos;
+}
+
+function soloNumeros(e){
+    var key = window.Event ? e.which : e.keyCode;
+    return ((key >= 48 && key <= 57) || (key==8) || (key==46));
 }

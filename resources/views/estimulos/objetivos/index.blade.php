@@ -106,7 +106,7 @@
         function guardarObjetivo(){
             var nombre = $('#txtNomObjetivo').val();
 
-            // console.log(nombre); //Se comenta para futuras pruebas...
+            console.log(nombre); //Se comenta para futuras pruebas...
 
             if(nombre === ""){
                 swal({
