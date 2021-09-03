@@ -10,6 +10,7 @@ use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
+use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor2\MetasController;
 
 class PermissionsSeeder extends Seeder
@@ -65,5 +66,11 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => MetasController::PERMISSIONS['show']], ['slug' => 'Ver meta', 'description' => 'A user can see goal']);
         Permission::updateOrCreate(['name' => MetasController::PERMISSIONS['edit']], ['slug' => 'Editar meta', 'description' => 'A user can edit goal']);
         Permission::updateOrCreate(['name' => MetasController::PERMISSIONS['delete']], ['slug' => 'Eliminar meta', 'description' => 'A user can delete goal']);
+        /** Permisos para el catalogo de nivel de impacto */
+        Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['index']], ['slug' => 'Listar nivel de impacto', 'description' => 'A user can list impact level']);
+        Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['create']], ['slug' => 'Crear nivel de impacto', 'description' => 'A user can create impact level']);
+        Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['show']], ['slug' => 'Ver nivel de impacto', 'description' => 'A user can see impact level']);
+        Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['edit']], ['slug' => 'Editar nivel de impacto', 'description' => 'A user can edit impact level']);
+        Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['delete']], ['slug' => 'Eliminar nivel de impacto', 'description' => 'A user can delete impact level']);
     }
 }

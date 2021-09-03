@@ -39,7 +39,7 @@
                     </li>
                 @endcan
                 @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index'))
+                     Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index'))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -92,21 +92,29 @@
                         </ul>
                     </li>
                 @endif
-                @if (Auth::user()->hasPermissionTo('estimulo-meta-index'))
+                @if (Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index'))
                     <li class="nav-item {{ isMenuOpen('estimulos.factor2') }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-table"></i>
                             <p><b>Factor 2</b><i class="fa fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
-                             @can('estimulo-meta-index')
+                            @can('estimulo-meta-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor2/metas/listMetas') }}" class="nav-link {{ isRouteActive('estimulos.factor2.metas') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Metas alcanzadas</p>
                                     </a>
                                 </li>
-                             @endcan
+                            @endcan
+                            @can('estimulo-impacto-index')
+                                <li class="nav-item">
+                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor2/inpacto/listImpacto') }}" class="nav-link {{ isRouteActive('estimulos.factor2.impacto') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Nivel de impacto</p>
+                                    </a>
+                                </li>
+                            @endcan
                         </ul>
                     </li>
                 @endif
