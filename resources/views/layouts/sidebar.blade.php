@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="#" class="brand-link">
+    <a href="{{ \App\Traits\Principal::getUrlToken('/') }}" class="brand-link">
         <img src="{{ asset('img/cideteq.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light"><b>S I N F O D I</b></span>
     </a>
@@ -38,7 +38,8 @@
                         </a>
                     </li>
                 @endcan
-                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index'))
+                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-responsabilidad-index'))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -57,7 +58,7 @@
                         </a>
                     </li>
                 @endcan
-                @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index'))
+                @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') || Auth::user()->hasPermissionTo('estimulo-responsabilidad-index'))
                     <li class="nav-item {{ isMenuOpen('estimulos.factor1') }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-table"></i>
@@ -77,6 +78,14 @@
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesB') }}" class="nav-link {{ isRouteActive('estimulos.factor1.actividadesB') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Actividades B</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('estimulo-responsabilidad-index')
+                                <li class="nav-item">
+                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/responsabilidades/listResponsabildiades') }}" class="nav-link {{ isRouteActive('estimulos.factor1.responsabilidades') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Responsabilidades</p>
                                     </a>
                                 </li>
                             @endcan

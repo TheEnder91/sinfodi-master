@@ -8,6 +8,7 @@ use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,4 +59,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/factor1/criterios/showActividadesB/{id}', [ActividadesBController::class, "show"])->name('estimulos.factor1.actividadesB');
     Route::put('/estimulos/factor1/criterios/updateActividadesB/{id}', [ActividadesBController::class, "update"])->name('estimulos.factor1.actividadesB');
     Route::delete('/estimulos/factor1/criterios/destroyActividadesB/{id}', [ActividadesBController::class, "destroy"])->name('estimulos.factor1.actividadesB');
+    /** Rutas para el catalogo de responsabilidades */
+    Route::get('/estimulos/factor1/responsabilidades/listResponsabildiades', [ResponsabilidadesController::class, "index"])->name('estimulos.factor1.responsabilidades');
+    Route::post('/estimulos/factor1/responsabilidades/storeResponsabildiades', [ResponsabilidadesController::class, "store"])->name('estimulos.factor1.responsabilidades');
+    Route::get('/estimulos/factor1/responsabilidades/showResponsabildiades/{id}', [ResponsabilidadesController::class, "show"])->name('estimulos.factor1.responsabilidades');
+    Route::put('/estimulos/factor1/responsabilidades/updateResponsabildiades/{id}', [ResponsabilidadesController::class, "update"])->name('estimulos.factor1.responsabilidades');
+    Route::delete('/estimulos/factor1/responsabilidades/destroyResponsabildiades/{id}', [ResponsabilidadesController::class, "destroy"])->name('estimulos.factor1.responsabilidades');
 });

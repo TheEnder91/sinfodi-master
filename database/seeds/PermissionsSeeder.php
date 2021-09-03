@@ -9,6 +9,7 @@ use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -51,5 +52,11 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['show']], ['slug' => 'Ver Acividad B', 'description' => 'A user can see activity B']);
         Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['edit']], ['slug' => 'Editar Acividad B', 'description' => 'A user can edit activity B']);
         Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['delete']], ['slug' => 'Eliminar Acividad B', 'description' => 'A user can delete activity B']);
+        /** Permisos para el catalogo de responsabildades */
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['index']], ['slug' => 'Listar responsabilidades', 'description' => 'A user can list responsibilities']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['create']], ['slug' => 'Crear responsabildiad', 'description' => 'A user can create responsibility']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['show']], ['slug' => 'Ver responsabildiad', 'description' => 'A user can see responsibility']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['edit']], ['slug' => 'Editar responsabildiad', 'description' => 'A user can edit responsibility']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['delete']], ['slug' => 'Eliminar responsabildiad', 'description' => 'A user can delete responsibility']);
     }
 }
