@@ -7,14 +7,14 @@
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/') }}">Inicio</a></li>
-        <li class="breadcrumb-item active">Tabla 1. Actividades A</li>
+        <li class="breadcrumb-item active">Tabla 1. Actividades B</li>
     </ol>
 @endsection
 
 @section('content')
     @component('components.card')
-        @slot('title_card', 'Tabla 1. Actividades A')
-        @can('estimulo-actividadA-create')
+        @slot('title_card', 'Tabla 1. Actividades B')
+        @can('estimulo-actividadB-create')
             <section class="text-right">
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
                     <i class="fa fa-plus"></i> Nuevo criterio
@@ -26,30 +26,25 @@
             <i class="fa fa-plus"></i> Agregar criterio
         @endsection
         @section('content_modal')
-            {{-- @include('estimulos.factores.factor1.actividadesA.form') --}}
-            {{-- <div class="row"> --}}
-                {{-- <div class="col-12"> --}}
-                    <input type="text" name="id" id="id" hidden>
-                    <label for="txtNombre" class="col-form-control">
-                        Criterio:
-                    </label>
-                    <textarea class="form-control" id="txtNombre"></textarea>
-                    <label for="" name='id_objetivo'>
-                        Objetivo al que pertenece:
-                    </label>
-                    <select name="id_objetivo" id="id_objetivo" class="form-control id_objetivo">
-                        <option value="0" selected disabled>Seleccione un objetivo...</option>
-                        @foreach ($objetivos as $item)
-                            <option value="{{ $item->id }}">{{ $item->nombre }}</option>
-                        @endforeach
-                    </select>
-                    <label for="txtPuntos" name='puntos' class="col-form-control">
-                        Punto asginado:
-                    </label>
-                    <input type="number" class="form-control" onKeyPress="return soloNumeros(event)" id="txtPuntos">
-                    <input type="text" name="observaciones" class="observaciones" id="observaciones" value="Tabla 1. Actividad A." hidden>
-                {{-- </div> --}}
-            {{-- </div> --}}
+            <input type="text" name="id" id="id" hidden>
+            <label for="" class="col-form-control">
+                Criterio:
+            </label>
+            <textarea class="form-control" name="nombre" id="nombreN"></textarea>
+            <label for="" name='id_objetivo'>
+                Objetivo al que pertenece:
+            </label>
+            <select name="id_objetivo" id="id_objetivoN" class="form-control">
+                <option value="" selected disabled>Seleccione un objetivo...</option>
+                @foreach ($objetivos as $item)
+                    <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                @endforeach
+            </select>
+            <label for="" name='puntos' class="col-form-control">
+                Punto asginado:
+            </label>
+            <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosN">
+            <input type="text" name="observaciones" id="observaciones" value="Tabla 1. Actividad B." hidden>
             @section('buttons_modal')
                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
                 <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
@@ -57,15 +52,15 @@
         @endsection
         {{-- Termina modal nuevo registro --}}
         <div class="table-responsive">
-            <table id="tblActividadesA" class="table table-bordered table-striped">
-                <caption>Actividades sustantivas que representan la contribución directa de la productividad del personal a las metas e indicadores instituciones.</caption>
+            <table id="tblActividadesB" class="table table-bordered table-striped">
+                <caption>Actividades sustantivas que, ademas, buscan impulsar el trabajo colaborativo, la transferencia de tecnologia, la rentabilidad de los proyectos y contribuyen a alcanzar la autosostentabilidad del centro.</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col">#</th>
                         <th scope="col">Criterio</th>
                         <th scope="col">Objetivo</th>
                         <th scope="col">Puntos</th>
-                        @if (Auth::user()->hasPermissionTo('estimulo-actividadA-show') || Auth::user()->hasPermissionTo('estimulo-actividadA-delete'))
+                        @if (Auth::user()->hasPermissionTo('estimulo-actividadB-show') || Auth::user()->hasPermissionTo('estimulo-actividadB-delete'))
                             <th scope="col">Acciones</th>
                         @endif
                     </tr>
@@ -77,13 +72,13 @@
                             <td width="42%">{{ $item->nombre }}</td>
                             <td width="35%">{{ $item->modulo->nombre }}</td>
                             <td class="text-center" width="8%">{{ $item->puntos }}</td>
-                            @if (Auth::user()->hasPermissionTo('estimulo-actividadA-show') || Auth::user()->hasPermissionTo('estimulo-actividadA-delete'))
+                            @if (Auth::user()->hasPermissionTo('estimulo-actividadB-show') || Auth::user()->hasPermissionTo('estimulo-actividadB-delete'))
                                 <td class="text-center" width="10%">
-                                    @can('estimulo-actividadA-show')
-                                        <a href="javascript:editarActividadA({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                    @can('estimulo-actividadB-show')
+                                        <a href="javascript:editarActividadB({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
                                     @endcan
-                                    @can('estimulo-actividadA-delete')
-                                        <a href="javascript:eliminarActividadA({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
+                                    @can('estimulo-actividadB-delete')
+                                        <a href="javascript:eliminarActividadB({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
                                     @endcan
                                 </td>
                             @endif
@@ -92,10 +87,9 @@
                 </tbody>
             </table>
         </div>
-        @include('estimulos.factores.factor1.actividadesA.modalEditar')
         <script>
             $(function(){
-                $('#tblActividadesA').DataTable({
+                $('#tblActividadesB').DataTable({
                     "order":[[0, "asc"]],
                     "language":{
                       "lengthMenu": "Mostrar _MENU_ registros por página.",
@@ -115,23 +109,24 @@
                 });
             });
         </script>
+        @include('estimulos.factores.factor1.actividadesB.modalEditar')
     @endcomponent
 @endsection
 
 @section('scripts')
     <script>
-        $(document).ready(initActividadesA);
+        $(document).ready(initActividadesB);
 
-        function initActividadesA(){
-            $('#btnGuardar').on('click', guardarActividadesA);
-            $('#btnActualizar').on('click', actualizarActividadesA);
+        function initActividadesB(){
+            $('#btnGuardar').on('click', guardarActividadesB);
+            $('#btnActualizar').on('click', actualizarActividadesB);
         }
 
-        function guardarActividadesA(){
-            var criterio = $('#txtNombre').val();
-            var objetivo = $('#id_objetivo').val();
-            var puntos = $('#txtPuntos').val();
-            var observaciones = $('.observaciones').val();
+        function guardarActividadesB(){
+            var criterio = $('#nombreN').val();
+            var objetivo = $('#id_objetivoN').val();
+            var puntos = $('#puntosN').val();
+            var observaciones = $('#observaciones').val();
             // console.log(criterio); // Se comenta para futuras pruebas...
             // console.log(objetivo); // Se comenta para futuras pruebas...
             // console.log(puntos); // Se comenta para futuras pruebas...
@@ -145,7 +140,7 @@
                 return;
             }
             var options = {
-                action: "{{ config('app.url') }}/estimulos/factor1/criterios/storeActividadesA",
+                action: "{{ config('app.url') }}/estimulos/factor1/criterios/storeActividadesB",
                 json: {
                     nombre: criterio,
                     id_objetivo: objetivo,
@@ -156,14 +151,14 @@
                 type: 'POST',
                 dateType: 'json',
                 mensajeConfirm: 'El registro se agrego correctamente',
-                url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesA?token={{ Session::get('token') }}"
+                url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesB?token={{ Session::get('token') }}"
             };
             peticionGeneralAjax(options);
         }
 
-        function editarActividadA(id){
+        function editarActividadB(id){
             consultarDatos({
-                action: "{{ config('app.url') }}/estimulos/factor1/criterios/showActividadesA/" + id,
+                action: "{{ config('app.url') }}/estimulos/factor1/criterios/showActividadesB/" + id,
                 type: 'GET',
                 dataType: 'json',
                 ok: function(data){
@@ -172,20 +167,20 @@
                     // console.log(data.response.id_objetivo); // Se comenta para futuras pruebas...
                     // console.log(data.response.puntos); // Se comenta para futuras pruebas...
                     $('#id').val(data.response.id);
-                    $('#txtNombreE').val(data.response.nombre);
+                    $('#nombreE').val(data.response.nombre);
                     $('#id_objetivoE').val(data.response.id_objetivo);
-                    $('#txtPuntosE').val(data.response.puntos);
+                    $('#puntosE').val(data.response.puntos);
                     $('#modalEditar').modal('show');
                 },
             });
         }
 
-        function actualizarActividadesA(){
+        function actualizarActividadesB(){
             var id = $('#id').val();
-            var criterio = $('#txtNombreE').val();
+            var criterio = $('#nombreE').val();
             var objetivo = $('#id_objetivoE').val();
-            var puntos = $('#txtPuntosE').val();
-            var observaciones = $('.observaciones').val();
+            var puntos = $('#puntosE').val();
+            var observaciones = $('#observaciones').val();
             // console.log(id); // Se comenta para futuras pruebas...
             // console.log(criterio); // Se comenta para futuras pruebas...
             // console.log(objetivo); // Se comenta para futuras pruebas...
@@ -209,7 +204,7 @@
                 denyButtonText: "Cancelar",
             }).then((result) => {
                 var options = {
-                    action: "{{ config('app.url') }}/estimulos/factor1/criterios/updateActividadesA/" + id,
+                    action: "{{ config('app.url') }}/estimulos/factor1/criterios/updateActividadesB/" + id,
                     json: {
                         nombre: criterio,
                         id_objetivo: objetivo,
@@ -219,13 +214,13 @@
                     type: 'PUT',
                     dateType: 'json',
                     mensajeConfirm: 'El registro se actualizo correctamente',
-                    url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesA?token={{ Session::get('token') }}"
+                    url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesB?token={{ Session::get('token') }}"
                 };
                 peticionGeneralAjax(options);
             });
         }
 
-        function eliminarActividadA(id){
+        function eliminarActividadB(id){
             swal({
                 type: 'warning',
                 title: "Se eliminara el registro.",
@@ -235,9 +230,8 @@
                 confirmButtonText: "Si, eliminar",
                 denyButtonText: "Cancelar",
             }).then((result) => {
-                console.log('asdasdasd');
                 var options = {
-                    action: "{{ config('app.url') }}/estimulos/factor1/criterios/destroyActividadesA/" + id,
+                    action: "{{ config('app.url') }}/estimulos/factor1/criterios/destroyActividadesB/" + id,
                     json: {
                         _token: "{{ csrf_token() }}",
                         _method: 'DELETE',
@@ -245,7 +239,7 @@
                     type: 'POST',
                     dateType: 'json',
                     mensajeConfirm: 'El registro se elimino correctamente',
-                    url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesA?token={{ Session::get('token') }}"
+                    url: "{{ config('app.url') }}/estimulos/factor1/criterios/listActividadesB?token={{ Session::get('token') }}"
                 };
                 peticionGeneralAjax(options);
             });

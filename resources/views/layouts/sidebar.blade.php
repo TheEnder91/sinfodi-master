@@ -38,7 +38,7 @@
                         </a>
                     </li>
                 @endcan
-                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index'))
+                @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index'))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -57,8 +57,8 @@
                         </a>
                     </li>
                 @endcan
-                @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index'))
-                    <li class="nav-item {{ isMenuOpen('estimulos.actividadesA') }}">
+                @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index'))
+                    <li class="nav-item {{ isMenuOpen('estimulos.factor1') }}">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-table"></i>
                             <p><b>Factor 1</b><i class="fa fa-angle-left right"></i></p>
@@ -66,9 +66,17 @@
                         <ul class="nav nav-treeview">
                             @can('estimulo-actividadA-index')
                                 <li class="nav-item">
-                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesA') }}" class="nav-link {{ isRouteActive('estimulos.actividadesA') }}">
+                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesA') }}" class="nav-link {{ isRouteActive('estimulos.factor1.actividadesA') }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Actividades A</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('estimulo-actividadB-index')
+                                <li class="nav-item">
+                                    <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesB') }}" class="nav-link {{ isRouteActive('estimulos.factor1.actividadesB') }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Actividades B</p>
                                     </a>
                                 </li>
                             @endcan

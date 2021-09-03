@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\PermissionsController;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
-use App\Http\Controllers\Estimulos\LineamientosController;
+use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
+use App\Http\Controllers\Estimulos\LineamientosController;
+use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
+use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -45,5 +46,10 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => ActividadesAController::PERMISSIONS['show']], ['slug' => 'Ver Acividad A', 'description' => 'A user can see activity A']);
         Permission::updateOrCreate(['name' => ActividadesAController::PERMISSIONS['edit']], ['slug' => 'Editar Acividad A', 'description' => 'A user can edit activity A']);
         Permission::updateOrCreate(['name' => ActividadesAController::PERMISSIONS['delete']], ['slug' => 'Eliminar Acividad A', 'description' => 'A user can delete activity A']);
+        Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['index']], ['slug' => 'Listar Actividades B', 'description' => 'A user can list activities B']);
+        Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['create']], ['slug' => 'Crear Acividad B', 'description' => 'A user can create activity B']);
+        Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['show']], ['slug' => 'Ver Acividad B', 'description' => 'A user can see activity B']);
+        Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['edit']], ['slug' => 'Editar Acividad B', 'description' => 'A user can edit activity B']);
+        Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['delete']], ['slug' => 'Eliminar Acividad B', 'description' => 'A user can delete activity B']);
     }
 }
