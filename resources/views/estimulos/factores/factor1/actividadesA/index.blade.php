@@ -14,11 +14,13 @@
 @section('content')
     @component('components.card')
         @slot('title_card', 'Tabla 1. Actividades A')
-        <section class="text-right">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
-                <i class="fa fa-plus"></i> Nuevo criterio
-            </button>
-        </section><br>
+        @can('estimulo-actividadA-create')
+            <section class="text-right">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                    <i class="fa fa-plus"></i> Nuevo criterio
+                </button>
+            </section><br>
+        @endcan
         {{-- Modal nuevo registro --}}
         @section('title_modal')
             <i class="fa fa-plus"></i> Agregar criterio
@@ -63,7 +65,9 @@
                         <th scope="col">Criterio</th>
                         <th scope="col">Objetivo</th>
                         <th scope="col">Puntos</th>
-                        <th scope="col">Acciones</th>
+                        @if (Auth::user()->hasPermissionTo('estimulo-actividadA-show') || Auth::user()->hasPermissionTo('estimulo-actividadA-delete'))
+                            <th scope="col">Acciones</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -73,10 +77,16 @@
                             <td width="42%">{{ $item->nombre }}</td>
                             <td width="35%">{{ $item->modulo->nombre }}</td>
                             <td class="text-center" width="8%">{{ $item->puntos }}</td>
-                            <td class="text-center" width="10%">
-                                <a href="javascript:editarActividadA({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
-                                <a href="javascript:eliminarActividadA({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
-                            </td>
+                            @if (Auth::user()->hasPermissionTo('estimulo-actividadA-show') || Auth::user()->hasPermissionTo('estimulo-actividadA-delete'))
+                                <td class="text-center" width="10%">
+                                    @can('estimulo-actividadA-show')
+                                        <a href="javascript:editarActividadA({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                    @endcan
+                                    @can('estimulo-actividadA-delete')
+                                        <a href="javascript:eliminarActividadA({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
+                                    @endcan
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

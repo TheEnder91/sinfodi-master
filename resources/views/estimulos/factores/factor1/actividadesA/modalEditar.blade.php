@@ -13,7 +13,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                @can('estimulo-actividadA-edit')
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                @endcan
             </div>
         </div>
     </div>
