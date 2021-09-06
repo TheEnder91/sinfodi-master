@@ -82,7 +82,7 @@ class ObjetivosController extends Controller
     public function destroy($id)
     {
         try {
-            DB::table('sinfodi_objetivos')->delete($id);
+            Objetivo::find($id)->delete();
             $data['response'] = true;
             return $this->response($data);
         } catch (\Throwable $th) {

@@ -21,19 +21,19 @@
         <div class="row">
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtNomRol">*Nombre del rol:</label>
+                    <label class="control-label" for="txtNomRol"><span style="color: red">*</span>Nombre del rol:</label>
                     <input id="txtNomRol" autocomplete="off" type="text" class="form-control" value="{{ $role->name }}">
                 </div>
             </div>
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtSlug">*Slug:</label>
+                    <label class="control-label" for="txtSlug"><span style="color: red">*</span>Slug:</label>
                     <input id="txtSlug" autocomplete="off" type="text" class="form-control" value="{{ $role->slug }}">
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label class="control-label" for="txtDesRol">*Descripción del rol:</label>
+                    <label class="control-label" for="txtDesRol"><span style="color: red">*</span>Descripción del rol:</label>
                     <input id="txtDesRol" autocomplete="off" type="text" class="form-control" value="{{ $role->description }}">
                 </div>
             </div>

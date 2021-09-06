@@ -83,7 +83,7 @@ class DesempeñoController extends Controller
     public function destroy($id)
     {
         try {
-            DB::table('sinfodi_desempeños')->delete($id);
+            Desempeño::find($id)->delete();
             $data['response'] = true;
             return $this->response($data);
         } catch (\Throwable $th) {

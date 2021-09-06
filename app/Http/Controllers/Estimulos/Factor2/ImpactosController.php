@@ -82,7 +82,7 @@ class ImpactosController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('sinfodi_impacto')->delete($id);
+        Impacto::find($id)->delete();
         $data['response'] = true;
         return $this->response($data);
     }

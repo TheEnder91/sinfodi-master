@@ -9,6 +9,8 @@ class Criterio extends Model
 {
     use SoftDeletes;
 
+    protected $dates = ['deleted_at'];
+
     public $table = 'sinfodi_criterios';
 
     protected $fillable = [

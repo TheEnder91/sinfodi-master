@@ -28,11 +28,11 @@
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
             <label for="" class="col-form-control">
-                Criterio:
+                <span style="color: red">*</span>Criterio:
             </label>
             <textarea class="form-control" name="nombre" id="nombreN"></textarea>
             <label for="" name='id_objetivo'>
-                Objetivo al que pertenece:
+                <span style="color: red">*</span>Objetivo al que pertenece:
             </label>
             <select name="id_objetivo" id="id_objetivoN" class="form-control">
                 <option value="" selected disabled>Seleccione un objetivo...</option>
@@ -41,7 +41,7 @@
                 @endforeach
             </select>
             <label for="" name='puntos' class="col-form-control">
-                Punto asginado:
+                <span style="color: red">*</span>Punto asginado:
             </label>
             <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosN">
             <input type="text" name="observaciones" id="observaciones" value="Tabla 1. Actividad B." hidden>
@@ -75,7 +75,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-actividadB-show') || Auth::user()->hasPermissionTo('estimulo-actividadB-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-actividadB-show')
-                                        <a href="javascript:editarActividadB({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarActividadB({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-actividadB-delete')
                                         <a href="javascript:eliminarActividadB({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

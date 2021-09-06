@@ -2,12 +2,12 @@
 <input type="text" name="id" id="id" hidden>
 
 <label for="" class="col-form-control">
-    Criterio:
+    <span style="color: red">*</span>Criterio:
 </label>
 <textarea class="form-control" name="nombre" id="nombreE"></textarea>
 
 <label for="" name='id_objetivo'>
-    Objetivo al que pertenece:
+    <span style="color: red">*</span>Objetivo al que pertenece:
 </label>
 
 <select name="id_objetivo" id="id_objetivoE" class="form-control">
@@ -18,7 +18,7 @@
 </select>
 
 <label for="" name='puntos' class="col-form-control">
-    Punto asginado:
+    <span style="color: red">*</span>Punto asginado:
 </label>
 
 <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosE">

@@ -28,6 +28,9 @@
         @section('content_modal')
             {{-- @include('estimulos.objetivos.form') --}}
             <div class="col-12">
+                <label class="col-form-label">
+                    <span style="color: red">*</span>Nombre del objetivo:
+                </label>
                 <input type="text" class="form-control txtNomObjetivo" name="nombre" id="txtNomObjetivo">
             </div>
             @section('buttons_modal')
@@ -56,7 +59,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-objetivo-show') || Auth::user()->hasPermissionTo('estimulo-objetivo-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-objetivo-show')
-                                        <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-objetivo-delete')
                                         <a href="javascript:eliminarObjetivo({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

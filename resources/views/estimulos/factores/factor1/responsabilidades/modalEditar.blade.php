@@ -11,11 +11,11 @@
             <div class="modal-body">
                 <input type="text" name="id" id="id" hidden>
                 <label for="" class="col-form-control">
-                    Nivel de responsabilidad:
+                    <span style="color: red">*</span>Nivel de responsabilidad:
                 </label>
                 <textarea class="form-control" name="nombre" id="nombreE"></textarea>
                 <label for="" name='puntos' class="col-form-control">
-                    Puntos asginado:
+                    <span style="color: red">*</span>Puntos asginado:
                 </label>
                 <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosE">
             </div>

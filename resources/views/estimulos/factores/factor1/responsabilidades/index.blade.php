@@ -28,11 +28,11 @@
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
             <label for="" class="col-form-control">
-                Nivel de responsabilidad:
+                <span style="color: red">*</span>Nivel de responsabilidad:
             </label>
             <textarea class="form-control" name="nombre" id="nombreN"></textarea>
             <label for="" name='puntos' class="col-form-control">
-                Puntos asginado:
+                <span style="color: red">*</span>Puntos asginado:
             </label>
             <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosN">
             @section('buttons_modal')
@@ -63,7 +63,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-responsabilidad-show') || Auth::user()->hasPermissionTo('estimulo-responsabilidad-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-responsabilidad-show')
-                                        <a href="javascript:editarResponsabilidad({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarResponsabilidad({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-responsabilidad-delete')
                                         <a href="javascript:eliminarResponsabilidad({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

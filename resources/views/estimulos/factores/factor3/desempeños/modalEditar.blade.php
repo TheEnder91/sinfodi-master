@@ -11,11 +11,11 @@
             <div class="modal-body">
                 <input type="text" name="id" id="id" hidden>
                 <label for="resultados" class="col-form-control">
-                    RESULTADO DE LA EVALUACION:
+                    <span style="color: red">*</span>RESULTADO DE LA EVALUACION:
                 </label>
                 <input type="text" name="resultados" id="resultadosE" class="form-control">
                 <label for="f3" class="col-form-control">
-                    F3 = FACTOR X Cumplimiento de Metas de Desempeño Cualitativo:
+                    <span style="color: red">*</span>F3 = FACTOR X Cumplimiento de Metas de Desempeño Cualitativo:
                 </label>
                 <input type="text" name="f3" id="f3E" class="form-control" onKeyPress="return soloNumeros(event)">
             </div>

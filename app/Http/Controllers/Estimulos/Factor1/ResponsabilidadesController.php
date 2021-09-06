@@ -83,7 +83,7 @@ class ResponsabilidadesController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('sinfodi_responsabilidades')->delete($id);
+        Responsabilidad::find($id)->delete();
         $data['response'] = true;
         return $this->response($data);
     }

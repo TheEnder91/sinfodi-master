@@ -82,7 +82,7 @@ class MetasController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('sinfodi_metas')->delete($id);
+        Meta::find($id)->delete();
         $data['response'] = true;
         return $this->response($data);
     }

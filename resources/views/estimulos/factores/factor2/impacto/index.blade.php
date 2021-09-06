@@ -28,11 +28,11 @@
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
             <label for="factor" class="col-form-control">
-                F2 = FACTOR:
+                <span style="color: red">*</span>F2 = FACTOR:
             </label>
             <input type="text" name="factor" id="factorN" class="form-control" onKeyPress="return soloNumeros(event)">
             <label for="nivel" class="col-form-control">
-                Nivel:
+                <span style="color: red">*</span>Nivel:
             </label>
             <select name="nivel" id="nivelN" class="form-control">
                 <option value="" selected disabled>Seleccione un nivel...</option>
@@ -69,7 +69,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-impacto-show') || Auth::user()->hasPermissionTo('estimulo-impacto-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-impacto-show')
-                                        <a href="javascript:editarImpacto({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarImpacto({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-impacto-delete')
                                         <a href="javascript:eliminarImpacto({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

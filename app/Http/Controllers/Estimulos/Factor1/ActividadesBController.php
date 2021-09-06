@@ -86,7 +86,7 @@ class ActividadesBController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('sinfodi_criterios')->delete($id);
+        Criterio::find($id)->delete();
         $data['response'] = true;
         return $this->response($data);
     }

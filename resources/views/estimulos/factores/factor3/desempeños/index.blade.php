@@ -28,11 +28,11 @@
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
             <label for="resultados" class="col-form-control">
-                RESULTADO DE LA EVALUACION:
+                <span style="color: red">*</span>RESULTADO DE LA EVALUACION:
             </label>
             <input type="text" name="resultados" id="resultadosN" class="form-control">
             <label for="f3" class="col-form-control">
-                F3 = FACTOR X Cumplimiento de Metas de Desempeño Cualitativo:
+                <span style="color: red">*</span>F3 = FACTOR X Cumplimiento de Metas de Desempeño Cualitativo:
             </label>
             <input type="text" name="f3" id="f3N" class="form-control" onKeyPress="return soloNumeros(event)">
             @section('buttons_modal')
@@ -63,7 +63,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-desempeño-show') || Auth::user()->hasPermissionTo('estimulo-desempeño-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-desempeño-show')
-                                        <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-desempeño-delete')
                                         <a href="javascript:eliminarObjetivo({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

@@ -9,6 +9,8 @@ class Meta extends Model
 {
     use SoftDeletes;
 
+    protected $dates = ['deleted_at'];
+
     public $table = 'sinfodi_metas';
 
     protected $fillable = [

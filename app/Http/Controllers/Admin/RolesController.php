@@ -105,7 +105,7 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('roles')->delete($id);
+        Role::find($id)->delete();
         $data['response'] = true;
         return $this->response($data);
     }

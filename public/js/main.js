@@ -55,11 +55,11 @@ function peticionGeneralAjax(options){
                     type: 'success',
                     title: options.mensajeConfirm,
                     showConfirmButton: false,
-                    timer: 4000
+                    timer: 1800
                 })
                 setTimeout(function(){
                     window.location.href = options.url;
-                }, 3000);
+                }, 1500);
             }else{
                 alert('error');
             }

@@ -31,11 +31,11 @@
                 {{-- <div class="col-12"> --}}
                     <input type="text" name="id" id="id" hidden>
                     <label for="txtNombre" class="col-form-control">
-                        Criterio:
+                        <span style="color: red">*</span>Criterio:
                     </label>
                     <textarea class="form-control" id="txtNombre"></textarea>
                     <label for="" name='id_objetivo'>
-                        Objetivo al que pertenece:
+                        <span style="color: red">*</span>Objetivo al que pertenece:
                     </label>
                     <select name="id_objetivo" id="id_objetivo" class="form-control id_objetivo">
                         <option value="0" selected disabled>Seleccione un objetivo...</option>
@@ -44,7 +44,7 @@
                         @endforeach
                     </select>
                     <label for="txtPuntos" name='puntos' class="col-form-control">
-                        Punto asginado:
+                        <span style="color: red">*</span>Punto asginado:
                     </label>
                     <input type="number" class="form-control" onKeyPress="return soloNumeros(event)" id="txtPuntos">
                     <input type="text" name="observaciones" class="observaciones" id="observaciones" value="Tabla 1. Actividad A." hidden>
@@ -80,7 +80,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-actividadA-show') || Auth::user()->hasPermissionTo('estimulo-actividadA-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-actividadA-show')
-                                        <a href="javascript:editarActividadA({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarActividadA({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-actividadA-delete')
                                         <a href="javascript:eliminarActividadA({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>

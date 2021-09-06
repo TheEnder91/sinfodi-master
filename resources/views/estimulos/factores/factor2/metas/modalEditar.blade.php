@@ -11,11 +11,11 @@
             <div class="modal-body">
                 <input type="text" name="id" id="id" hidden>
                 <label for="cumplimiento" class="col-form-control">
-                    % CUMPLIMIENTO DE METAS:
+                    <span style="color: red">*</span> % CUMPLIMIENTO DE METAS:
                 </label>
                 <textarea class="form-control" name="cumplimiento" id="cumplimientoE"></textarea>
                 <label for="f2" class="col-form-control">
-                    F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
+                    <span style="color: red">*</span>F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
                 </label>
                 <input type="text" name="f2" id="f2E" class="form-control" onKeyPress="return soloNumeros(event)">
             </div>

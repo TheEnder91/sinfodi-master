@@ -28,11 +28,11 @@
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
             <label for="cumplimiento" class="col-form-control">
-                % CUMPLIMIENTO DE METAS:
+                <span style="color: red">*</span> % CUMPLIMIENTO DE METAS:
             </label>
             <textarea class="form-control" name="cumplimiento" id="cumplimientoN"></textarea>
             <label for="f2" class="col-form-control">
-                F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
+                <span style="color: red">*</span>F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
             </label>
             <input type="text" name="f2" id="f2N" class="form-control" onKeyPress="return soloNumeros(event)">
             @section('buttons_modal')
@@ -63,7 +63,7 @@
                             @if (Auth::user()->hasPermissionTo('estimulo-meta-show') || Auth::user()->hasPermissionTo('estimulo-meta-delete'))
                                 <td class="text-center" width="10%">
                                     @can('estimulo-meta-show')
-                                        <a href="javascript:editarMeta({{ $item->id }})"><i class="fa fa-pencil-alt"></i></a>
+                                        <a href="javascript:editarMeta({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('estimulo-meta-delete')
                                         <a href="javascript:eliminarMeta({{ $item->id }})"><i class="fa fa-trash-alt"></i></a>
