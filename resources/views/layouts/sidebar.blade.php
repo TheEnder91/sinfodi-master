@@ -39,7 +39,8 @@
                     </li>
                 @endcan
                 @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index'))
+                     Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-desempeño-index'))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -115,6 +116,22 @@
                                     </a>
                                 </li>
                             @endcan
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('estimulo-desempeño-index'))
+                    <li class="nav-item {{ isMenuOpen('estimulos.factor3') }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-table"></i>
+                            <p><b>Factor 3</b><i class="fa fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor3/desempeño/listDesempeño') }}" class="nav-link {{ isRouteActive('estimulos.factor3.desempeño') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Desempeño</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endif

@@ -12,6 +12,7 @@ use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor2\MetasController;
+use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -72,5 +73,11 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['show']], ['slug' => 'Ver nivel de impacto', 'description' => 'A user can see impact level']);
         Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['edit']], ['slug' => 'Editar nivel de impacto', 'description' => 'A user can edit impact level']);
         Permission::updateOrCreate(['name' => ImpactosController::PERMISSIONS['delete']], ['slug' => 'Eliminar nivel de impacto', 'description' => 'A user can delete impact level']);
+        /** Permisos para el catalogo de nivel de impacto */
+        Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['index']], ['slug' => 'Listar desempeños', 'description' => 'A user can list performances']);
+        Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['create']], ['slug' => 'Crear desempeño', 'description' => 'A user can create performance']);
+        Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['show']], ['slug' => 'Ver desempeño', 'description' => 'A user can see performance']);
+        Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['edit']], ['slug' => 'Editar desempeño', 'description' => 'A user can edit performance']);
+        Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['delete']], ['slug' => 'Eliminar desempeño', 'description' => 'A user can delete performance']);
     }
 }
