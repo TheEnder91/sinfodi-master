@@ -6,12 +6,16 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Estimulos\LineamientosController;
+use App\Http\Controllers\Estimulos\Factor2\MetasController;
+use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
+use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
-use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
-use App\Http\Controllers\Estimulos\Factor2\MetasController;
-use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
+use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
+use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
+use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +30,7 @@ use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 
 Route::middleware(['login'])->group(function(){
     Route::get('/', function () {
+        saveEvaluados();
         return view('layouts.app');
     });
 
@@ -86,4 +91,9 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/factor3/desempeño/showDesempeño/{id}', [DesempeñoController::class, "show"])->name('estimulos.factor3.desempeño');
     Route::put('/estimulos/factor3/desempeño/updateDesempeño/{id}', [DesempeñoController::class, "update"])->name('estimulos.factor3.desempeño');
     Route::delete('/estimulos/factor3/desempeño/destroyDesempeño/{id}', [DesempeñoController::class, "destroy"])->name('estimulos.factor3.desempeño');
+    /** Rutas para las evaluaciones de estimulos... */
+    Route::get('/estimulos/evaluaciones/responsabilidades/directores/listDirectores', [DirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.directores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/listSubdirectores', [SubdirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/coordinadores/listCoordinadores', [CoordinadoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo', [PersonalApoyoController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
 });

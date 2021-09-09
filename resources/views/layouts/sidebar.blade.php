@@ -40,7 +40,9 @@
                 @endcan
                 @if (Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-desempeño-index'))
+                     Auth::user()->hasPermissionTo('estimulo-desempeño-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Directores") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') ||
+                     existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo"))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-objetivo-index')
@@ -69,7 +71,7 @@
                             @can('estimulo-actividadA-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesA') }}" class="nav-link {{ isRouteActive('estimulos.factor1.actividadesA') }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fab fa-amilia nav-icon"></i>
                                         <p>Actividades A</p>
                                     </a>
                                 </li>
@@ -77,7 +79,7 @@
                             @can('estimulo-actividadB-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/criterios/listActividadesB') }}" class="nav-link {{ isRouteActive('estimulos.factor1.actividadesB') }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-bold nav-icon"></i>
                                         <p>Actividades B</p>
                                     </a>
                                 </li>
@@ -85,7 +87,7 @@
                             @can('estimulo-responsabilidad-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor1/responsabilidades/listResponsabildiades') }}" class="nav-link {{ isRouteActive('estimulos.factor1.responsabilidades') }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-hands nav-icon"></i>
                                         <p>Responsabilidades</p>
                                     </a>
                                 </li>
@@ -103,7 +105,7 @@
                             @can('estimulo-meta-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor2/metas/listMetas') }}" class="nav-link {{ isRouteActive('estimulos.factor2.metas') }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-bullseye nav-icon"></i>
                                         <p>Metas alcanzadas</p>
                                     </a>
                                 </li>
@@ -111,7 +113,7 @@
                             @can('estimulo-impacto-index')
                                 <li class="nav-item">
                                     <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor2/inpacto/listImpacto') }}" class="nav-link {{ isRouteActive('estimulos.factor2.impacto') }}">
-                                        <i class="far fa-circle nav-icon"></i>
+                                        <i class="fas fa-sign-language nav-icon"></i>
                                         <p>Nivel de impacto</p>
                                     </a>
                                 </li>
@@ -128,10 +130,68 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/factor3/desempeño/listDesempeño') }}" class="nav-link {{ isRouteActive('estimulos.factor3.desempeño') }}">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fas fa-chart-bar nav-icon"></i>
                                     <p>Desempeño</p>
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Directores") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo"))
+                    <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
+                        <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
+                            <i class="fas fa-clipboard-check nav-icon"></i>
+                            <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Directores") ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores") ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores") ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo"))
+                                <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.responsabilidades') }}">
+                                    <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades') }}">
+                                        <i class="fas fa-hands nav-icon"></i>
+                                        <p><b>Responsabilidades</b><i class="right fas fa-angle-left"></i></p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Directores"))
+                                            <li class="nav-item">
+                                                <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/responsabilidades/directores/listDirectores') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades.directores') }}">
+                                                    <i class="fa fa-fist-raised nav-icon"></i>
+                                                    <p>Directores</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/responsabilidades/subdirectores/listSubdirectores') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades.subdirectores') }}">
+                                                    <i class="fa fa-user-tie nav-icon"></i>
+                                                    <p>Subdirectores</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/responsabilidades/coordinadores/listCoordinadores') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades.coordinadores') }}">
+                                                    <i class="fa fa-people-arrows nav-icon"></i>
+                                                    <p>Coordinadores</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades.personalApoyo') }}">
+                                                    <i class="fa fa-hands-helping nav-icon"></i>
+                                                    <p>Personal de apoyo</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                 @endif

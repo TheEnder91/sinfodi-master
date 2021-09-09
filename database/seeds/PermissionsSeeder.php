@@ -7,12 +7,16 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Estimulos\LineamientosController;
+use App\Http\Controllers\Estimulos\Factor2\MetasController;
+use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
+use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
-use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
-use App\Http\Controllers\Estimulos\Factor2\MetasController;
-use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
+use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
+use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
+use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -79,5 +83,13 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['show']], ['slug' => 'Ver desempeño', 'description' => 'A user can see performance']);
         Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['edit']], ['slug' => 'Editar desempeño', 'description' => 'A user can edit performance']);
         Permission::updateOrCreate(['name' => DesempeñoController::PERMISSIONS['delete']], ['slug' => 'Eliminar desempeño', 'description' => 'A user can delete performance']);
+        /** Permisos para el listado de directores */
+        Permission::updateOrCreate(['name' => DirectoresController::PERMISSIONS['index']], ['slug' => 'Listar directores', 'description' => 'A user can list directors']);
+        /** Permisos para el listado de subdirectores */
+        Permission::updateOrCreate(['name' => SubdirectoresController::PERMISSIONS['index']], ['slug' => 'Listar subdirectores', 'description' => 'A user can list deputy directors']);
+        /** Permisos para el listado de coordinadores */
+        Permission::updateOrCreate(['name' => CoordinadoresController::PERMISSIONS['index']], ['slug' => 'Listar coordinadores', 'description' => 'A user can list coordinators']);
+        /** Permisos para el listado de personal de apoyo */
+        Permission::updateOrCreate(['name' => PersonalApoyoController::PERMISSIONS['index']], ['slug' => 'Listar personal de apoyo', 'description' => 'A user can list support staff']);
     }
 }
