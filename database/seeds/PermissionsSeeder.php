@@ -17,6 +17,7 @@ use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -91,5 +92,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => CoordinadoresController::PERMISSIONS['index']], ['slug' => 'Listar coordinadores', 'description' => 'A user can list coordinators']);
         /** Permisos para el listado de personal de apoyo */
         Permission::updateOrCreate(['name' => PersonalApoyoController::PERMISSIONS['index']], ['slug' => 'Listar personal de apoyo', 'description' => 'A user can list support staff']);
+        /** Permisos para el catalogo de evaluaciones de la Direccion General... */
+        Permission::updateOrCreate(['name' => DifusionDivulgacionController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Difusion y Divulgacion', 'description' => 'A user can list general direction->diffusion and dissemination']);
     }
 }

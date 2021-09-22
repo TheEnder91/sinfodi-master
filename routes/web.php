@@ -14,6 +14,7 @@ use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 
@@ -91,9 +92,21 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/factor3/desempeño/showDesempeño/{id}', [DesempeñoController::class, "show"])->name('estimulos.factor3.desempeño');
     Route::put('/estimulos/factor3/desempeño/updateDesempeño/{id}', [DesempeñoController::class, "update"])->name('estimulos.factor3.desempeño');
     Route::delete('/estimulos/factor3/desempeño/destroyDesempeño/{id}', [DesempeñoController::class, "destroy"])->name('estimulos.factor3.desempeño');
-    /** Rutas para las evaluaciones de estimulos... */
+    /** Rutas para las evaluaciones de estimulos responsabilidades... */
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/listDirectores', [DirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/listSubdirectores', [SubdirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::get('/estimulos/evaluaciones/responsabilidades/coordinadores/listCoordinadores', [CoordinadoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.coordinadores');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo', [PersonalApoyoController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    /** Rutas para las evaluaciones de estimulos Direccion general... */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchEvidenciasDifDIv/{year}/{clave}', [DifusionDivulgacionController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/puntos/{id}', [DifusionDivulgacionController::class, "puntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatos', [DifusionDivulgacionController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/DifDiv/savePuntos', [DifusionDivulgacionController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchEvidencias/{clave}/{year}', [DifusionDivulgacionController::class, "searchEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::delete('/estimulos/evaluaciones/DireccionGeneral/DifDiv/deletePuntos/{clave}/{year}', [DifusionDivulgacionController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/obtenerEvidencias/{clave}/{year}', [DifusionDivulgacionController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/datosDifDIv/{year}', [DifusionDivulgacionController::class, "datosDifDIv"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/updateDatos/{clave}/{year}', [DifusionDivulgacionController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
 });
