@@ -16,6 +16,7 @@ class DifusionDivulgacionController extends Controller
 
     const PERMISSIONS = [
         'index' => 'estimulo-evaluaciones-general-difusiondivulgacion-index',
+        'update' => 'estimulo-evaluaciones-general-difusiondivulgacion-update',
     ];
 
     /**

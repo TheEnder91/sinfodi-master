@@ -41,8 +41,11 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::get();
-        return view('panelControl.roles.create', compact('permissions'));
+        // $permissions = Permission::get();
+        $permissionsCat = Permission::select('id_categoria', 'categoria')->distinct()->get();
+        $permissionsPanelControl = Permission::where('id_categoria', 1)->get();
+        $permissionsEstimulos = Permission::where('id_categoria', 2)->get();
+        return view('panelControl.roles.create', compact(['permissionsCat', 'permissionsPanelControl', 'permissionsEstimulos']));
     }
 
     /**
@@ -68,6 +71,7 @@ class RolesController extends Controller
     public function show($id)
     {
         $role = Role::findOrFail($id);
+        $permissionsCat = Permission::select('id_categoria', 'categoria')->distinct()->get();
         $permissions = Permission::get();
 
         $permission_role = [];
@@ -75,7 +79,7 @@ class RolesController extends Controller
             $permission_role[] = $permission->id;
         }
 
-        return view('panelControl.roles.show', compact('permissions', 'role', 'permission_role'));
+        return view('panelControl.roles.show', compact('permissions', 'role', 'permission_role', 'permissionsCat'));
     }
 
     /**

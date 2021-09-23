@@ -15,7 +15,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                @can('estimulo-evaluaciones-general-difusiondivulgacion-update')
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                @endcan
             </div>
         </div>
     </div>

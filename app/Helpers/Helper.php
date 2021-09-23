@@ -180,7 +180,7 @@ function existeUsuario($usuario, $tipo, $criterio){
     }elseif($tipo == 'responsabilidades'){
         $queryExiste = DB::table('sinfodi_evaluacion_responsabilidades')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'general'){
-        $queryExiste = DB::table('sinfodi_evaluacion_general')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+        $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
     }elseif($tipo == 'ciencia'){
         $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'servTecno'){

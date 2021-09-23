@@ -42,17 +42,46 @@
             <div class="col-12 col-md-12">
                 @component('components.card')
                     @slot('title_card', 'Listado de permisos')
-                    <div style="column-count:4; list-style: none;">
-                        @foreach ($permissions as $permission)
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}"
-                                @if (is_array($permission_role) && in_array("$permission->id", $permission_role))
-                                    checked
-                                @endif
-                            >
-                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            @foreach ($permissionsCat as $item)
+                                <a class="nav-item nav-link {{ $item->id_categoria == 1 ? 'active' : '' }}" id="nav-{{ $item->id_categoria }}-tab" data-toggle="tab" href="#nav-{{ $item->id_categoria }}" role="tab" aria-controls="nav-{{ $item->id_categoria }}" aria-selected="true">{{ $item->categoria }}</a>
+                            @endforeach
                         </div>
-                    @endforeach
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab">
+                            <div style="column-count:4; list-style: none; padding-left: 1em; padding-top: 1em;">
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->id_categoria == 1)
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}"
+                                                @if (is_array($permission_role) && in_array("$permission->id", $permission_role))
+                                                    checked
+                                                @endif
+                                            >
+                                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-2" role="tabpanel" aria-labelledby="nav-2-tab">
+                            <div style="column-count:4; list-style: none; padding-left: 1em; padding-top: 1em;">
+                                @foreach ($permissions as $permission)
+                                    @if ($permission->id_categoria == 2)
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}"
+                                                @if (is_array($permission_role) && in_array("$permission->id", $permission_role))
+                                                    checked
+                                                @endif
+                                            >
+                                            <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 @endcomponent
             </div>

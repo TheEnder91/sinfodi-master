@@ -111,14 +111,20 @@
                             var row = "";
                             for(var i = 0; i < dataGeneral.length; i++){
                                 var data = dataGeneral[i];
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="10%">' + data.clave + '</td>';
-                                row += '<td width="40%">' + data.nombre + "</td>";
-                                row += '<td class="text-center" width="10%">' + data.puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + data.total_puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + data.year + '</td>';
-                                row += '<td class="text-center" width="10%"><a href="javascript:editarEvidencias(' + data.year + ', ' + data.clave + ')"><i class="fa fa-edit"></i></a></td>';
-                                row += "</tr>";
+                                // console.log(data.username);
+                                var authUser = '<?= Auth()->user()->usuario ?>';
+                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-difusiondivulgacion-index") ?>';
+                                // console.log(permissions);
+                                if(data.username == authUser || permissions == 1){
+                                    row += "<tr>";
+                                    row += '<th scope="row" class="text-center" width="10%">' + data.clave + '</td>';
+                                    row += '<td width="40%">' + data.nombre + "</td>";
+                                    row += '<td class="text-center" width="10%">' + data.puntos + '</td>';
+                                    row += '<td class="text-center" width="10%">' + data.total_puntos + '</td>';
+                                    row += '<td class="text-center" width="10%">' + data.year + '</td>';
+                                    row += '<td class="text-center" width="10%"><a href="javascript:editarEvidencias(' + data.year + ', ' + data.clave + ')"><i class="fa fa-edit"></i></a></td>';
+                                    row += "</tr>";
+                                }
                             }
                             if ($.fn.dataTable.isDataTable("#tblDifusionDivulgacion")) {
                                 tblDifusionDivulgacion = $("#tblDifusionDivulgacion").DataTable();
