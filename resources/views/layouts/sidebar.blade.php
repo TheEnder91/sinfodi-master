@@ -163,7 +163,7 @@
                                 </li>
                             @endif
                         </ul>
-                        <ul class="nav nav-treeview">
+                        {{-- <ul class="nav nav-treeview">
                             @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.direccionGeneral') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral') }}">
@@ -182,7 +182,7 @@
                                     </ul>
                                 </li>
                             @endif
-                        </ul>
+                        </ul> --}}
                     </li>
                 @endif
             </ul>
