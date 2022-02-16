@@ -7,7 +7,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/') }}">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles') }}">Listado de roles</a></li>
+        <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers') }}">Listado de usuarios</a></li>
         <li class="breadcrumb-item active">Editar usuario: <b>{{ $row->nombre }}</b></li>
     </ol>
 @endsection

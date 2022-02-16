@@ -76,6 +76,7 @@ class Login
 
         session(['nombre' => $nombre]);
         session(['token' => $token]);
+        session(['usuario' => $usuario]);
         return $next($request);
     }
 }

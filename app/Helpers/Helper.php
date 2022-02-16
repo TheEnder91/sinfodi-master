@@ -159,7 +159,7 @@ function GetRestoPersonal(){
 
 function saveEvaluados(){
     $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
-    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetRestoPersonal());
+    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo());
     if(count($queryDatos) >= 1){
         if(DB::table('sinfodi_evaluados')->delete()){
             DB::table('sinfodi_evaluados')->truncate();
@@ -175,19 +175,18 @@ function saveEvaluados(){
 }
 
 function existeUsuario($usuario, $tipo, $criterio){
-    if($tipo == 'acuses'){
-        $queryExiste = DB::table('sinfodi_evaluacion_responsabilidades')->select('username')->where('username', '=', $usuario)->get();
-    }elseif($tipo == 'responsabilidades'){
+    if($tipo == 'responsabilidades'){
         $queryExiste = DB::table('sinfodi_evaluacion_responsabilidades')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'general'){
         $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
-    }elseif($tipo == 'ciencia'){
-        $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'servTecno'){
-        $queryExiste = DB::table('sinfodi_evaluacion_servtecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'proyTecno'){
-        $queryExiste = DB::table('sinfodi_evaluacion_proytecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }
+    // elseif($tipo == 'ciencia'){
+    //     $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    // }elseif($tipo == 'servTecno'){
+    //     $queryExiste = DB::table('sinfodi_evaluacion_servtecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    // }elseif($tipo == 'proyTecno'){
+    //     $queryExiste = DB::table('sinfodi_evaluacion_proytecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    // }
     if(count($queryExiste) >= 1){
         return true;
     }else{

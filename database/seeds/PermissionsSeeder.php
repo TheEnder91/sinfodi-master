@@ -61,11 +61,11 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['edit']], ['slug' => 'Editar Acividad B', 'description' => 'A user can edit activity B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => ActividadesBController::PERMISSIONS['delete']], ['slug' => 'Eliminar Acividad B', 'description' => 'A user can delete activity B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         /** Permisos para el catalogo de responsabildades */
-        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['index']], ['slug' => 'Listar responsabilidades', 'description' => 'A user can list responsibilities']);
-        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['create']], ['slug' => 'Crear responsabilidad', 'description' => 'A user can create responsibility']);
-        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['show']], ['slug' => 'Ver responsabilidad', 'description' => 'A user can see responsibility']);
-        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['edit']], ['slug' => 'Editar responsabilidad', 'description' => 'A user can edit responsibility']);
-        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['delete']], ['slug' => 'Eliminar responsabilidad', 'description' => 'A user can delete responsibility']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['index']], ['slug' => 'Listar responsabilidades', 'description' => 'A user can list responsibilities', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['create']], ['slug' => 'Crear responsabilidad', 'description' => 'A user can create responsibility', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['show']], ['slug' => 'Ver responsabilidad', 'description' => 'A user can see responsibility', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['edit']], ['slug' => 'Editar responsabilidad', 'description' => 'A user can edit responsibility', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => ResponsabilidadesController::PERMISSIONS['delete']], ['slug' => 'Eliminar responsabilidad', 'description' => 'A user can delete responsibility', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         /** Permisos para el catalogo de metas */
         Permission::updateOrCreate(['name' => MetasController::PERMISSIONS['index']], ['slug' => 'Listar metas', 'description' => 'A user can list goals', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => MetasController::PERMISSIONS['create']], ['slug' => 'Crear meta', 'description' => 'A user can create goal', 'id_categoria' => 2, 'categoria' => 'Estimulos']);

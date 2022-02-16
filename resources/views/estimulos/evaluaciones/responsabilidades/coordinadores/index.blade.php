@@ -14,6 +14,11 @@
 @section('content')
     @component('components.card')
         @slot('title_card', 'Listado de evaluacion a coordinadores')
+        <section class="text-right">
+            <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/responsabilidades/Coordinadores/historialCoordinadores') }}" class="btn btn-primary" role="button" aria-disabled="true">
+                <i class="fas fa-history"></i> Ver historial
+            </a>
+        </section><br>
         <div class="table-responsive">
             <table id="tblCoordinadores" class="table table-bordered table-striped">
                 <thead>
@@ -23,6 +28,9 @@
                         <th scope="col">Puesto</th>
                         <th scope="col">Puntos</th>
                         <th scope="col">Año</th>
+                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index'))
+                            <th scope="col">Acciones</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +42,11 @@
                                 <td width="30%" class="text-center">{{ $item->responsabilidad }}</td>
                                 <td class="text-center" width="10%">{{ $item->puntos }}</td>
                                 <td class="text-center" width="10%">{{ $item->year }}</td>
+                                @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index'))
+                                    <td class="text-center" width="10%">
+                                        <a href="javascript:guardarCoordinador('{{ $item->clave }}', '{{ $item->nombre }}', '{{ $item->direccion }}', '{{ $item->responsabilidad }}', {{ $item->puntos }}, {{ $item->year }}, '{{ $item->username }}')"><i class="far fa-save fa-lg"></i></a>
+                                    </td>
+                                @endif
                             </tr>
                         @endif
                     @endforeach
@@ -63,4 +76,66 @@
             });
         </script>
     @endcomponent
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(initCoordinadores);
+
+        function initCoordinadores(){
+            $('#btnGuardarCoordinadores').on('click', guardarCoordinador);
+        }
+
+        function guardarCoordinador(clave, nombre, direccion, responsabilidad, puntos, year, username){
+            swal({
+                type: 'warning',
+                title: "Se guardara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, guardar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/consultarCoordinadores/" + clave + "/" + year,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(data){
+                        // console.log(data); //Se comenta para futuras pruebas...
+                        if(data > 0){
+                            mostrarMensaje(clave, nombre, year);
+                        }else{
+                            var options = {
+                                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/storeCoordinadores",
+                                json: {
+                                    clave: clave,
+                                    nombre: nombre,
+                                    direccion: direccion,
+                                    responsabilidad: responsabilidad,
+                                    puntos: puntos,
+                                    year: year,
+                                    username: username,
+                                    status: 1,
+                                    _token: "{{ csrf_token() }}",
+                                },
+                                type: 'POST',
+                                dateType: 'json',
+                                mensajeConfirm: 'El registro se guardo correctamente',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/listCoordinadores?token={{ Session::get('token') }}"
+                            };
+                            peticionGeneralAjax(options);
+                        }
+                    },
+                });
+            }).catch(swal.noop);
+        }
+
+        function mostrarMensaje(clave, nombre, year){
+            swal({
+                type: 'info',
+                title: "",
+                text: "El usuario "+nombre+" con clave "+clave+" ya se encuentra registrado para la evaluacion del año "+year+", ver historial.",
+            });
+        }
+    </script>
 @endsection

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Models\Estimulos;
+namespace App\Models\Estimulos\Evaluaciones;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EvaluacionResponsabilidades extends Model
+class EvaluarResponsabilidades extends Model
 {
-    public $timestamps = false;
-
-    public $table = 'sinfodi_evaluacion_responsabilidades';
+    public $table = 'sinfodi_evaluar_responsabilidades';
 
     protected $fillable = [
         'clave', 'nombre', 'direccion', 'responsabilidad','puntos', 'year', 'username', 'status',
