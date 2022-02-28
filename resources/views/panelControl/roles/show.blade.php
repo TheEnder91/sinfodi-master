@@ -136,8 +136,8 @@
                 permissions.push(this.value);
             });
 
-            console.log(full_access);
-            console.log(permissions);
+            // console.log(full_access);
+            // console.log(permissions);
 
             swal({
                 type: 'warning',

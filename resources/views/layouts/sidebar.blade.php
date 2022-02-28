@@ -11,7 +11,8 @@
                      Auth::user()->hasPermissionTo('estimulo-desempeño-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Directores") ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') ||
                      existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo") ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                     <li class="nav-header">ESTIMULOS</li>
                 @endif
                 @can('estimulo-lineamientos-index')
@@ -25,7 +26,7 @@
                 @can('estimulo-objetivo-index')
                     <li class="nav-item">
                         <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/objetivos/listObjetivos') }}" class="nav-link {{ isRouteActive('estimulos.objetivos') }}">
-                            <i class="nav-icon fa fa-bullseye"></i>
+                            <i class="far fa-arrow-alt-circle-right"></i>
                             <p>Objetivos</p>
                         </a>
                     </li>
@@ -33,7 +34,7 @@
                 @if (Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') || Auth::user()->hasPermissionTo('estimulo-responsabilidad-index'))
                     <li class="nav-item {{ isMenuOpen('estimulos.factor1') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.factor1') }}">
-                            <i class="nav-icon fas fa-bullseye"></i>
+                            <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Factor 1</b><i class="fa fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -67,7 +68,7 @@
                 @if (Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index'))
                     <li class="nav-item {{ isMenuOpen('estimulos.factor2') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.factor2') }}">
-                            <i class="nav-icon fas fa-bullseye"></i>
+                            <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Factor 2</b><i class="fa fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -93,7 +94,7 @@
                 @if (Auth::user()->hasPermissionTo('estimulo-desempeño-index'))
                     <li class="nav-item {{ isMenuOpen('estimulos.factor3') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.factor3') }}">
-                            <i class="nav-icon fas fa-bullseye"></i>
+                            <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Factor 3</b><i class="fa fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -110,10 +111,11 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirectores") ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinadores") ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo") ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                     <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
-                            <i class="nav-icon fas fa-bullseye"></i>
+                            <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -123,7 +125,7 @@
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-apoyo-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Personal_Apoyo"))
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.responsabilidades') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.responsabilidades') }}">
-                                        <i class="far fa-arrow-alt-circle-right"></i>
+                                        <i class="far fa-arrow-alt-circle-down"></i>
                                         <p><b>Responsabilidades</b><i class="right fas fa-angle-left"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
@@ -163,26 +165,44 @@
                                 </li>
                             @endif
                         </ul>
-                        {{-- <ul class="nav nav-treeview">
-                            @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
+                        <ul class="nav nav-treeview">
+                            @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.direccionGeneral') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral') }}">
-                                        <i class="fa fa-cogs nav-icon"></i>
+                                        <i class="far fa-arrow-alt-circle-down"></i>
                                         <p><b>Dirección general</b><i class="right fas fa-angle-left"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.DivDif') }}">
-                                                    <i class="fa fa-bullhorn nav-icon"></i>
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Difusión y Divulgación</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/posgrado/listPosgrado') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.posgrado') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Posgrado->FRH</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/investigacion/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.investigacion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Investigación Cientifica</p>
                                                 </a>
                                             </li>
                                         @endif
                                     </ul>
                                 </li>
                             @endif
-                        </ul> --}}
+                        </ul>
                     </li>
                 @endif
             </ul>

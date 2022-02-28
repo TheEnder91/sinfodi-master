@@ -16,7 +16,6 @@ class DifusionDivulgacionController extends Controller
 
     const PERMISSIONS = [
         'index' => 'estimulo-evaluaciones-general-difusiondivulgacion-index',
-        'update' => 'estimulo-evaluaciones-general-difusiondivulgacion-update',
     ];
 
     /**
@@ -52,28 +51,15 @@ class DifusionDivulgacionController extends Controller
         return $this->response($data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $year
-     * @return \Illuminate\Http\Response
-     */
-    public function datosDifDIv($year)
-    {
-        $datos = DB::table('sinfodi_evaluacion_general')->where('year', '=', $year)->get();
-        $data['response'] = $datos;
-        return $this->response($data);
-    }
-
     /** Codigo personal... */
     public static function Evaluaciones_Difusion_Divulgacion($clave, $inical, $final){
         $queryDIF = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_ead_personas')
                         ->selectRaw('sinfodidb.sinfodi_ead_personas.ead_clave_personal AS numero_personal,
                                      sinfodidb.sinfodi_ead_personas.ead_nombre AS nombre,
-                                     productivo_sinfodi.sinfodi_evaluados.usuario as username')
-                        ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                            $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_ead_personas.ead_clave_personal')
-                                 ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                     sinfodi_master.sinfodi_evaluados.usuario as username')
+                        ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                            $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_ead_personas.ead_clave_personal')
+                                 ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                         })
                         ->leftJoin('sinfodidb.sinfodi_ead', 'sinfodidb.sinfodi_ead.ead_clave', '=', 'sinfodidb.sinfodi_ead_personas.ead_clave_ead_persona')
                         ->where('sinfodidb.sinfodi_ead.ead_eliminado', '=', 0)
@@ -83,14 +69,14 @@ class DifusionDivulgacionController extends Controller
                         ->where('sinfodidb.sinfodi_ead_personas.ead_tipo', '=', "Personal")
                         ->groupBy('sinfodidb.sinfodi_ead_personas.ead_clave_personal')
                         ->groupBy('sinfodidb.sinfodi_ead_personas.ead_nombre')
-                        ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario');
+                        ->groupBy('sinfodi_master.sinfodi_evaluados.usuario');
         $queryEAD = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_dif_persona')
                         ->selectRaw('sinfodidb.sinfodi_dif_persona.dif_clave_personal AS numero_personal,
                                      sinfodidb.sinfodi_dif_persona.dif_nombre AS nombre,
-                                     productivo_sinfodi.sinfodi_evaluados.usuario as username')
-                        ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                            $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_dif_persona.dif_clave_personal')
-                                 ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                     sinfodi_master.sinfodi_evaluados.usuario as username')
+                        ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                            $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_dif_persona.dif_clave_personal')
+                                 ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                         })
                         ->leftJoin('sinfodidb.sinfodi_dif', 'sinfodidb.sinfodi_dif.dif_clave','=', 'sinfodidb.sinfodi_dif_persona.dif_clave_dif_personal')
                         ->where('sinfodidb.sinfodi_dif.dif_eliminado', '=', 0)
@@ -99,7 +85,7 @@ class DifusionDivulgacionController extends Controller
                         ->where('sinfodidb.sinfodi_dif_persona.dif_clave_personal', '<>', 0)
                         ->groupBy('sinfodidb.sinfodi_dif_persona.dif_clave_personal')
                         ->groupBy('sinfodidb.sinfodi_dif_persona.dif_nombre')
-                        ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                        ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                         ->unionAll($queryDIF);
         $queryGral = DB::table($queryEAD)
                         ->selectRaw('numero_personal, nombre, username')
@@ -120,7 +106,7 @@ class DifusionDivulgacionController extends Controller
      */
     public function saveDatos(Request $request)
     {
-        if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->count() == 0){
+        if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->where('direccion', '=', 'DGeneral')->count() == 0){
             $nuevo = new EvaluacionDGeneral();
             $nuevo->create($request->all());
             $data['response'] = true;
@@ -134,16 +120,23 @@ class DifusionDivulgacionController extends Controller
      * @param  int  $year
      * @return \Illuminate\Http\Response
      */
+    public function datosDifDiv($year, $criterio)
+    {
+        $datos = DB::table('sinfodi_evaluacion_general')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DGeneral')->get();
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
     public function searchEvidencias($year, $clave)
     {
         $fechaInicial = $year.'-01-01';
         $fechaFinal = $year.'-12-31';
-        $evidencias_dif_div = self::Get_Evidencias($clave, $fechaInicial, $fechaFinal);
-        $data['response'] = $evidencias_dif_div;
-        return $this->response($data);
-    }
-
-    public static function Get_Evidencias($clave, $fechaInicial, $fechaFinal){
         $queryDIF = DB::connection('sinfodiDB')->table('sinfodi_dif_persona')
                         ->selectRaw('sinfodi_dif_persona.dif_clave_personal AS numeroPersonal,
                                      sinfodi_dif_persona.dif_clave_dif_personal AS clave,
@@ -164,9 +157,42 @@ class DifusionDivulgacionController extends Controller
                         ->whereBetween('fechaini', [$fechaInicial, $fechaFinal])
                         ->whereBetween('fechafin', [$fechaInicial, $fechaFinal])
                         ->where('numeroPersonal', '=', $clave)
-                        ->orderBy('numeroPersonal', 'ASC')
+                        ->orderBy('clave', 'ASC')
                         ->get();
         return $queryGral;
+    }
+
+    //** Codigo personal */
+    public function getEvidenciasGeneral($clave, $year, $criterio){
+        $obtener = EvidenciasDGeneral::where('clave', '=', $clave)
+                                        ->where('id_criterio', '=', $criterio)
+                                        ->where('year', '=', $year)
+                                        ->where(function($query){
+                                            $query->orWhere('clave_evidencia', 'like', 'EAD%')
+                                                  ->orWhere('clave_evidencia', 'like', 'DIF%');
+                                        })
+                                        ->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidenciasGeneral($clave, $year, $criterio){
+        $contar = EvidenciasDGeneral::where('clave', '=', $clave)
+                                        ->where('id_criterio', '=', $criterio)
+                                        ->where('year', '=', $year)
+                                        ->where(function($query){
+                                            $query->orWhere('clave_evidencia', 'like', 'EAD%')
+                                                  ->orWhere('clave_evidencia', 'like', 'DIF%');
+                                        })
+                                        ->count();
+        if($contar == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
     }
 
     /**
@@ -175,20 +201,9 @@ class DifusionDivulgacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function puntos($id){
-        $puntos = Criterio::findOrFail($id);
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
         $data['response'] = $puntos;
-        return $this->response($data);
-    }
-
-    //** Codigo personal */
-    public function searchEvidenciasGeneral($clave, $year){
-        if(EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('clave_evidencia', 'like', 'DIF%')->orWhere('clave_evidencia', 'like', 'EAD%')->count() == 0){
-            $count = 0;
-        }else{
-            $count = 1;
-        }
-        $data['response'] = $count;
         return $this->response($data);
     }
 
@@ -205,34 +220,27 @@ class DifusionDivulgacionController extends Controller
         return $this->response($data);
     }
 
+    /** Codigo personal */
+    public static function updateDatosGeneral($clave, $year, $criterio){
+        $obtener = DB::table('sinfodi_evidencias_general')->select('puntos', 'total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->take(1)->get();
+        foreach ($obtener as $item){
+            $puntos = $item->puntos;
+            $total_puntos = $item->total_puntos;
+        }
+        EvaluacionDGeneral::where('clave', '=', $clave)->where('id_criterio', '=',  $criterio)->where('year', '=', $year)->update( array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
+        return true;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year)
+    public function deletePuntos($clave, $year, $criterio)
     {
-        EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->delete();
+        DB::table('sinfodi_evidencias_general')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
         $data['response'] = true;
         return $this->response($data);
-    }
-
-    //** Codigo personal */
-    public function obtenerEvidenciasGeneral($clave, $year){
-        $obtener = EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->orWhere('clave_evidencia', 'like', 'DIF%')->orWhere('clave_evidencia', 'like', 'EAD%')->get();
-        $data['response'] = $obtener;
-        return $this->response($data);
-    }
-
-    /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year){
-        $obtener = DB::table('sinfodi_evidencias_general')->select('puntos', 'total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->take(1)->get();
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-        }
-        EvaluacionDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->update( array('puntos'=>$puntos, 'total_puntos'=>$total_puntos) );
-        return true;
     }
 }

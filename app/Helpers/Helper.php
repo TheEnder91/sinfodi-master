@@ -27,10 +27,10 @@ function isMenuOpen($route, $class = 'menu-open'){
 }
 
 function GetDirectores(){
-    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-    $array = json_decode($data);
-    foreach($array->data->director->data as $item){
-        $datos[]= [
+    $directores = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($directores);
+    foreach($array->director as $item){
+        $datosDirectores[]= [
             'clave'=>$item->clave,
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
@@ -39,14 +39,14 @@ function GetDirectores(){
             'puesto'=>'Director',
         ];
     }
-    return $datos;
+    return $datosDirectores;
 }
 
 function GetSubdirectores(){
-    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-    $array = json_decode($data);
-    foreach($array->data->subdirector->data as $item){
-        $datos[]= [
+    $subdirectores = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($subdirectores);
+    foreach($array->subdirector as $item){
+        $datosSubdirectores[]= [
             'clave'=>$item->clave,
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
@@ -55,14 +55,14 @@ function GetSubdirectores(){
             'puesto'=>'Subdirector',
         ];
     }
-    return $datos;
+    return $datosSubdirectores;
 }
 
 function GetCoordinadores(){
-    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-    $array = json_decode($data);
-    foreach($array->data->coordinador->data as $item){
-        $datos[]= [
+    $Coordinadores = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($Coordinadores);
+    foreach($array->coordinador as $item){
+        $datosCoordinadores[]= [
             'clave'=>$item->clave,
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
@@ -71,14 +71,14 @@ function GetCoordinadores(){
             'puesto'=>'Coordinador',
         ];
     }
-    return $datos;
+    return $datosCoordinadores;
 }
 
 function GetPersonalApoyo(){
-    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-    $array = json_decode($data);
-    foreach($array->data->personal_apoyo->data as $item){
-        $datos[]= [
+    $personalApoyo = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($personalApoyo);
+    foreach($array->personal_apoyo as $item){
+        $datosPersonalApoyo[]= [
             'clave'=>$item->clave,
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
@@ -87,13 +87,13 @@ function GetPersonalApoyo(){
             'puesto'=>'Personal_Apoyo',
         ];
     }
-    return $datos;
+    return $datosPersonalApoyo;
 }
 
-function GetRestoPersonal(){
-    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-    $array = json_decode($data);
-    foreach($array->data->unidad_administrativa->direccion_general as $item){
+function GetDireccionGeneral(){
+    $direccionGeneral = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($direccionGeneral);
+    foreach($array->unidad_administrativa->direccion_general as $item){
         $datosDG[]= [
             'clave'=>$item->clave,
             'nombre'=>$item->nombre,
@@ -103,63 +103,79 @@ function GetRestoPersonal(){
             'puesto'=>'Direccion_General',
         ];
     }
-    foreach($array->data->unidad_administrativa->direccion_de_ciencia as $item){
-        $datosDC[]= [
-            'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
-            'usuario'=>$item->usuario,
-            'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
-            'puesto'=>'Direccion_Ciencia',
-        ];
-    }
-    foreach($array->data->unidad_administrativa->direccion_de_administracion as $item){
-        $datosDA[]= [
-            'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
-            'usuario'=>$item->usuario,
-            'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
-            'puesto'=>'Direccion_Admin',
-        ];
-    }
-    foreach($array->data->unidad_administrativa->direccion_de_tecnologia as $item){
-        $datosDT[]= [
-            'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
-            'usuario'=>$item->usuario,
-            'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
-            'puesto'=>'Direccion_Tecnologia',
-        ];
-    }
-    foreach($array->data->unidad_administrativa->direccion_de_servicios_tecnologicos as $item){
-        $datosDST[]= [
-            'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
-            'usuario'=>$item->usuario,
-            'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
-            'puesto'=>'Direccion_Servicios_Tecno',
-        ];
-    }
-    foreach($array->data->unidad_administrativa->direccion_de_posgrado as $item){
-        $datosDP[]= [
-            'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
-            'usuario'=>$item->usuario,
-            'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
-            'puesto'=>'Direccion_Posgrado',
-        ];
-    }
-    $GetDatosDirecciones = array_merge($datosDG, $datosDC, $datosDA, $datosDT, $datosDST, $datosDP);
-    return $GetDatosDirecciones;
+    return $datosDG;
 }
+
+// function GetRestoPersonal(){
+//     $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+//     $array = json_decode($data);
+//     foreach($array->data->unidad_administrativa->direccion_general as $item){
+//         $datosDG[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_General',
+//         ];
+//     }
+//     foreach($array->data->unidad_administrativa->direccion_de_ciencia as $item){
+//         $datosDC[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_Ciencia',
+//         ];
+//     }
+//     foreach($array->data->unidad_administrativa->direccion_de_administracion as $item){
+//         $datosDA[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_Admin',
+//         ];
+//     }
+//     foreach($array->data->unidad_administrativa->direccion_de_tecnologia as $item){
+//         $datosDT[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_Tecnologia',
+//         ];
+//     }
+//     foreach($array->data->unidad_administrativa->direccion_de_servicios_tecnologicos as $item){
+//         $datosDST[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_Servicios_Tecno',
+//         ];
+//     }
+//     foreach($array->data->unidad_administrativa->direccion_de_posgrado as $item){
+//         $datosDP[]= [
+//             'clave'=>$item->clave,
+//             'nombre'=>$item->nombre,
+//             'usuario'=>$item->usuario,
+//             'categoria'=>$item->organigrama->categoria->nombre,
+//             'unidad_admin'=>$item->tipo_actividad->nombre,
+//             'puesto'=>'Direccion_Posgrado',
+//         ];
+//     }
+//     $GetDatosDirecciones = array_merge($datosDG, $datosDC, $datosDA, $datosDT, $datosDST, $datosDP);
+//     return $GetDatosDirecciones;
+// }
 
 function saveEvaluados(){
     $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
-    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo());
+    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral());
     if(count($queryDatos) >= 1){
         if(DB::table('sinfodi_evaluados')->delete()){
             DB::table('sinfodi_evaluados')->truncate();

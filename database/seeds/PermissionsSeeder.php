@@ -17,6 +17,8 @@ use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\PosgradoDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 
 class PermissionsSeeder extends Seeder
@@ -94,6 +96,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => PersonalApoyoController::PERMISSIONS['index']], ['slug' => 'Listar personal de apoyo', 'description' => 'A user can list support staff', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         /** Permisos para el catalogo de evaluaciones de la Direccion General... */
         Permission::updateOrCreate(['name' => DifusionDivulgacionController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Difusion y Divulgacion', 'description' => 'A user can list general direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
-        Permission::updateOrCreate(['name' => DifusionDivulgacionController::PERMISSIONS['update']], ['slug' => 'Editar Eval. D. Gral->Difusion y Divulgacion', 'description' => 'A user can edit eval. general direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => PosgradoDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Posgrado', 'description' => 'A user can list general direction->Postgraduate', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => InvestigacionDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Investigación cientifica', 'description' => 'A user can list general direction->Scientific investigation', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }
