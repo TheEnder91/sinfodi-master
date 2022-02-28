@@ -37,7 +37,9 @@
                         <th scope="col">Puntos</th>
                         <th scope="col">Total</th>
                         <th scope="col">Año</th>
-                        <th scope="col">Evidencias</th>
+                        @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-difusiondivulgacion-index"))
+                            <th scope="col">Evidencias</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -111,19 +113,21 @@
                         for(var i = 0; i < datosGeneralCriterio1.length; i++){
                             var dataGeneralCriterio1 = datosGeneralCriterio1[i];
                             // console.log(dataGeneralCriterio1);
-                            // var authUser = '<?= Auth()->user()->usuario ?>';
-                            // var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-difusiondivulgacion-index") ?>';
+                            var authUser = '<?= Auth::user()->usuario ?>';
+                            var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-difusiondivulgacion-index") ?>';
                             // console.log(permissions);
-                            // if(dataGeneralCriterio1.username == authUser || permissions == 1){
+                            if(dataGeneralCriterio1.username == authUser || permissions == 1){
                                     row += "<tr>";
                                     row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio1.clave + '</td>';
                                     row += '<td width="40%">' + dataGeneralCriterio1.nombre + "</td>";
                                     row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.puntos + '</td>';
                                     row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.total_puntos + '</td>';
                                     row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.year + '</td>';
-                                    row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio1(' + dataGeneralCriterio1.year + ', ' + dataGeneralCriterio1.clave + ')"><i class="fa fa-edit"></i></a></td>';
+                                    if(permissions == 1){
+                                        row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio1(' + dataGeneralCriterio1.year + ', ' + dataGeneralCriterio1.clave + ')"><i class="fa fa-edit"></i></a></td>';
+                                    }
                                     row += "</tr>";
-                            // }
+                            }
                         }
                         if ($.fn.dataTable.isDataTable("#tblCriterio1")) {
                             tblDifusionDivulgacion = $("#tblCriterio1").DataTable();
