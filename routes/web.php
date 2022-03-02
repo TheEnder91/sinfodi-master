@@ -17,7 +17,11 @@ use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\PosgradoDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\FormacionRHDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\ColaboracionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 
 /*
@@ -126,11 +130,12 @@ Route::middleware(['login'])->group(function(){
     Route::post('/estimulos/evaluaciones/DireccionGeneral/DifDiv/savePuntos', [DifusionDivulgacionController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/updateDatosDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::delete('/estimulos/evaluaciones/DireccionGeneral/DifDiv/deletePuntosDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
-
     /** Rutas para las evaluaciones de estimulos Direccion general->Posgrado... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/listPosgrado', [PosgradoDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
-    Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/searchPosgrado/{year}', [PosgradoDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/searchPosgrado/{year}/{criterio}', [PosgradoDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/searchUsernamePosgrado/{clave}', [PosgradoDGController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/posgrado/saveDatosPosgrado', [PosgradoDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/datosposgrado/{year}/{criterio}', [PosgradoDGController::class, "datosPosgrado"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
     /** Rutas para las evaluaciones de estimulos Direccion general->Investigacion Cientifica... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacion/listInvestigacion', [InvestigacionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacion/searchInvestigacion/{year}/{criterio}', [InvestigacionDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
@@ -143,4 +148,27 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacion/getEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDGController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
     Route::delete('/estimulos/evaluaciones/DireccionGeneral/investigacion/deletePuntosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDGController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDGController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
+    /** Rutas para las evaluaciones de estimulos Direccion general->Sostentabilidad */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/listSostentabilidad', [SostentabilidadDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+
+    /** Rutas para ls evaluaciones de estimulos Dirección general->Transferencia de conocimiento e innovación */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/listTransferencia', [TransferenciaDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/transferencia/saveDatosTransferencia', [TransferenciaDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/datosTransferencia/{year}/{criterio}', [TransferenciaDGController::class, "datosTransferencia"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/searchEvidenciasTransferencia/{year}/{clave}/{criterio}', [TransferenciaDGController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/getEvidenciasTransferencia/{clave}/{year}/{criterio}', [TransferenciaDGController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/obtenerEvidenciasTransferencia/{clave}/{year}/{criterio}', [TransferenciaDGController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/puntosTransferencia/{id}/{objetivo}', [TransferenciaDGController::class, "puntos"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/transferencia/savePuntos', [TransferenciaDGController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/updateDatosTransferencia/{clave}/{year}/{criterio}', [TransferenciaDGController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    Route::delete('/estimulos/evaluaciones/DireccionGeneral/transferencia/deletePuntosTransferencia/{clave}/{year}/{criterio}', [TransferenciaDGController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
+    /** Rutas para las evidencias de estimulos Dirección general->Formación de recursos humanos */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/listFormacionRH', [FormacionRHDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDGController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH', [FormacionRHDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
 });

@@ -15,6 +15,20 @@
     @component('components.card')
         @slot('title_card', 'Evaluación a la dirección general->Posgrado')
         <div class="row">
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                    </div>
+                    <select class="custom-select" id="year" onChange="ShowSelected();">
+                        @for ($i = date('Y'); $i >= 2020; $i--)
+                            <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
+                        @endfor
+                    </select>
+                </div>
+            </div>
+        </div><br>
+        <div class="row">
             <div class="col-12">
                 <div class="card card-primary">
                     <div class="card-header p-0 pt-1">
@@ -62,4 +76,31 @@
                 </div>
             </div>
         </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(initVer);
+
+        function initVer(){
+            VerDatos(0);
+        }
+
+        function ShowSelected(){
+            var year = document.getElementById("year").value;
+            VerDatos(year);
+        }
+
+        function VerDatos(year){
+            if(year === 0){
+                var año = document.getElementById("year").value;
+            }else{
+                var año = year;
+            }
+            obtenerCriterio2(año, 2);
+            obtenerCriterio3(año, 3);
+            obtenerCriterio4(año, 4);
+            obtenerCriterio5(año, 5);
+        }
+    </script>
 @endsection

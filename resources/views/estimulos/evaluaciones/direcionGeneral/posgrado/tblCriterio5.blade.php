@@ -8,66 +8,118 @@
                 <th scope="col">Puntos</th>
                 <th scope="col">Total</th>
                 <th scope="col">Año</th>
-                <th scope="col">Evidencias</th>
+                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-direccionGral-posgrado-index"))
+                    <th scope="col">Evidencias</th>
+                @endif
             </tr>
         </thead>
-        <tbody>
-            @foreach ($datosCriterio5 as $item)
-                @if ($item->username == Auth::user()->usuario || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index'))
-                    <tr>
-                        <th scope="row" class="text-center" width="10%">{{ $item->clave }}</th>
-                        <td width="40%">{{ $item->nombre }}</td>
-                        <td class="text-center" width="10%">{{ $item->puntos }}</td>
-                        <td class="text-center" width="10%">{{ $item->total_puntos }}</td>
-                        <td class="text-center" width="10%">{{ $item->year }}</td>
-                        <td class="text-center" width="15%">
-                            @foreach ($evidenciasCriterio5 as $item2)
-                                @if ($item->clave == $item2->numero_personal)
-                                    <a href="#" data-toggle="modal" data-target="#modalPDF_{{ $item2->numero_personal }}"><i class="fa fa-eye"></i></a>
-                                    <!-- Modal Visualizar PDFs -->
-                                    <div class="modal fade bd-example-modal-xl" id="modalPDF_{{ $item2->numero_personal }}" tabindex="-1" role="dialog" aria-labelledby="modalPDFLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalPDFLabel">Evidencia: <b>{{ $item2->numero_personal }}</b></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                     <object class="PDFdoc" width="100%" height="700px" type="application/pdf" data="{{ $item2->documentacion }}"></object>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </td>
-                    </tr>
-                @endif
-            @endforeach
-        </tbody>
+        <tbody></tbody>
     </table>
 </div>
+@include('estimulos.evaluaciones.direcionGeneral.posgrado.modalEvidenciasCriterio5')
+
 <script>
-    $(function(){
-        $('#tblCriterio5').DataTable({
-            "order":[[0, "asc"]],
-            "language":{
-              "lengthMenu": "Mostrar _MENU_ registros por página.",
-              "info": "Página _PAGE_ de _PAGES_",
-              "infoEmpty": "No se encontraron registros.",
-              "infoFiltered": "(filtrada de _MAX_ registros)",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search": "Buscar:",
-              "zeroRecords":    "No se encontraron registros.",
-              "paginate": {
-                              "next":       ">",
-                              "previous":   "<"
-                          },
+    function obtenerCriterio5(year, criterio){
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/searchPosgrado/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(datosCritero5){
+                var datosCriterio5 = datosCritero5.response;
+                // console.log(datosCritero5);
+                // Codigo para guardar en el sistema...
+                for(var i = 0; i < datosCriterio5.length; i++){
+                    var dataCriterio5 = datosCriterio5[i];
+                    // console.log(dataCriterio5);
+                    consultarDatos({
+                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/searchUsernamePosgrado/" + dataCriterio5.numero_personal,
+                        type: 'GET',
+                        dataType: 'json',
+                        ok: function(datosCritero5Username){
+                            // Codigo para guardar en el sistema...
+                            var username = datosCritero5Username.response[0];
+                            // console.log(username.clave + "->" + username.usuario);
+                            var options = {
+                                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/saveDatosPosgrado",
+                                json: {
+                                    clave: username.clave,
+                                    nombre: username.nombre,
+                                    id_objetivo: 2,
+                                    id_criterio: 5,
+                                    direccion: "DGeneral",
+                                    puntos: 0,
+                                    total_puntos: 0,
+                                    year: year,
+                                    username: username.usuario,
+                                    _token: "{{ csrf_token() }}",
+                                },
+                                type: 'POST',
+                                dateType: 'json',
+                            };
+                            // console.log(options); // e comenta para futuras pruebas...
+                            guardarAutomatico(options);
+                            // Finaliza codigo para guardar en el sistema...
+                        },
+                    });
+                }
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/datosposgrado/" + year + "/" + criterio,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(datosGeneralCriterio5){
+                        // console.log(datosGeneralCriterio5);
+                        var datosGeneralCriterio5 = datosGeneralCriterio5.response;
+                        var row = "";
+                        for(var i = 0; i < datosGeneralCriterio5.length; i++){
+                            var dataGeneralCriterio5 = datosGeneralCriterio5[i];
+                            // console.log(dataGeneralCriterio5);
+                            var authUser = '<?= Auth::user()->usuario ?>';
+                            var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-direccionGral-posgrado-index") ?>';
+                            // console.log(permissions);
+                            if(dataGeneralCriterio5.username == authUser || permissions == 1){
+                                row += "<tr>";
+                                row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio5.clave + '</td>';
+                                row += '<td width="40%">' + dataGeneralCriterio5.nombre + "</td>";
+                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio5.puntos + '</td>';
+                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio5.total_puntos + '</td>';
+                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio5.year + '</td>';
+                                if(permissions == 1){
+                                    row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio5(' + dataGeneralCriterio5.year + ', ' + dataGeneralCriterio5.clave + ', ' + 5 +')"><i class="fa fa-edit"></i></a></td>';
+                                }
+                                row += "</tr>";
+                            }
+                        }
+                        if ($.fn.dataTable.isDataTable("#tblCriterio5")) {
+                            tblDifusionDivulgacion = $("#tblCriterio5").DataTable();
+                            tblDifusionDivulgacion.destroy();
+                        }
+                        $('#tblCriterio5 > tbody').html('');
+                        $('#tblCriterio5 > tbody').append(row);
+                        $('#tblCriterio5').DataTable({
+                            "order":[[0, "asc"]],
+                            "language":{
+                              "lengthMenu": "Mostrar _MENU_ registros por página.",
+                              "info": "Página _PAGE_ de _PAGES_",
+                              "infoEmpty": "No se encontraron registros.",
+                              "infoFiltered": "(filtrada de _MAX_ registros)",
+                              "loadingRecords": "Cargando...",
+                              "processing":     "Procesando...",
+                              "search": "Buscar:",
+                              "zeroRecords":    "No se encontraron registros.",
+                              "paginate": {
+                                              "next":       ">",
+                                              "previous":   "<"
+                                          },
+                            },
+                            lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                        });
+                    },
+                });
             },
-            lengthMenu: [[10, 15, 20], [10, 15, 20]]
         });
-    });
+    }
+
+    function verEvidenciasCriterio5(year, clave, criterio){
+        $('#modalEvidenciasCriterio5').modal('show');
+    }
 </script>
