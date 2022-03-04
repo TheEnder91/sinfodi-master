@@ -171,4 +171,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionDGController::class, "existeColaboracion"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/colaboracion/savePuntosColaboradores', [ColaboracionDGController::class, "savePuntosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDGController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+
+    // Route::post('/estimulos/evaluaciones/DireccionGeneral/colaboracion/saveDatosColaboradores', [ColaboracionDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    // Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboradoresDGController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
 });
+
+Route::post('buscar-colaborador', [ColaboracionDGController::class, 'buscarColaborador'])->name('buscar.colaborador');
