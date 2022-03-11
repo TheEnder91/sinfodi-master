@@ -18,6 +18,7 @@ class CreateSinfodiColaboracionTable extends Migration
             $table->integer('clave');
             $table->string('nombre');
             $table->string('usuario');
+            $table->string('comites');
             $table->integer('valor');
             $table->integer('cantidad');
             $table->integer('total');

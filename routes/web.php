@@ -3,14 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Models\Estimulos\SostentabilidadEconomica;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
+use App\Http\Controllers\Modulos\ColaboracionController;
 use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\Factor2\MetasController;
 use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Modulos\SostentabilidadEconomicaController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
@@ -54,6 +57,20 @@ Route::middleware(['login'])->group(function(){
     Route::delete('/panelControl/destroyRol/{id}', [RolesController::class, "destroy"])->name('panelControl.roles');
     //Rutas para el modulo de permisos...
     Route::get('/panelControl/listPermissions', [PermissionsController::class, "index"])->name('panelControl.permissions');
+    /** Rutas para los modulos faltantes para completar las evaluaciones... */
+    /** Sostentabilidad economica... */
+    Route::get('/modulos/sostenibilidad/listSostenibilidad', [SostentabilidadEconomicaController::class, "index"])->name('modulos.sostenibilidad');
+    Route::get('/modulos/sostenibilidad/getPuntos', [SostentabilidadEconomicaController::class, "getPuntos"])->name('modulos.sostentabilidad');
+    Route::post('/modulos/sostenibilidad/store', [SostentabilidadEconomicaController::class, "store"])->name('modulos.sostentabilidad');
+    Route::get('/modulos/sostenibilidad/datosSostentabilidad/{tipo}', [SostentabilidadEconomicaController::class, "datosSostentabilidad"])->name('modulos.sostentabilidad');
+    /** Colaboración institucional... */
+    Route::get('/modulos/colaboracion/listColaboracion', [ColaboracionController::class, "index"])->name('modulos.colaboracion');
+    Route::get('/modulos/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionController::class, "existeColaboracion"])->name('modulos.colaboracion');
+    Route::get('/modulos/colaboracion/searchColaboradores/{year}', [ColaboracionController::class, "searchColaboradores"])->name('modulos.colaboracion');
+    Route::post('/modulos/colaboracion/savePuntosColaboradores', [ColaboracionController::class, "savePuntosColaboradores"])->name('modulos.colaboracion');
+    Route::get('/modulos/colaboracion/datosColaboradores', [ColaboracionController::class, "datosColaboradores"])->name('modulos.colaboracion');
+    Route::get('/modulos/colaboracion/getColaboradores/{id}/{claveEmpleado}/{year}', [ColaboracionController::class, "getColaboradores"])->name('modulos.colaboracion');
+    Route::put('/modulos/colaboracion/updateColaboracion/{id}', [ColaboracionController::class, "update"])->name('modulos.colaboracion');
     //Rutas para el catalogo de objetivos...
     Route::get('/estimulos/objetivos/listObjetivos', [ObjetivosController::class, "index"])->name('estimulos.objetivos');
     Route::post('/estimulos/objetivos/storeObjetivo', [ObjetivosController::class, "store"])->name('estimulos.objetivos');
@@ -150,6 +167,9 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDGController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.investigacion');
     /** Rutas para las evaluaciones de estimulos Direccion general->Sostentabilidad */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/listSostentabilidad', [SostentabilidadDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/searchSostentabilidad/{year}', [SostentabilidadDGController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad', [SostentabilidadDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostentabilidadDGController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
 
     /** Rutas para ls evaluaciones de estimulos Dirección general->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/listTransferencia', [TransferenciaDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
@@ -169,15 +189,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDGController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH', [FormacionRHDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+
+    /** Rutas para las evaluaciones... */
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
-    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionDGController::class, "existeColaboracion"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
-    Route::post('/estimulos/evaluaciones/DireccionGeneral/colaboracion/savePuntosColaboradores', [ColaboracionDGController::class, "savePuntosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDGController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
-
-    // Route::post('/estimulos/evaluaciones/DireccionGeneral/colaboracion/saveDatosColaboradores', [ColaboracionDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
-    // Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboradoresDGController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
 });
 
-Route::post('buscar-colaborador', [ColaboracionDGController::class, 'buscarColaborador'])->name('buscar.colaborador');
+Route::post('buscar-colaborador', [ColaboracionController::class, 'buscarColaborador'])->name('buscar.colaborador');

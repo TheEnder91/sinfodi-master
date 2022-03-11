@@ -74,6 +74,68 @@ function peticionGeneralAjax(options){
     });
 }
 
+function guardarMensaje(options){
+    var defaults = {
+        fail: resultError,
+        err: function(){},
+        req: null,
+        params: null,
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: null,
+        type: 'POST',
+        async: true,
+        ok: function(){},
+        headers: {
+            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+        }
+    };
+
+    options = $.extend({}, defaults, options);
+    if (options.dataType === 'json') {
+        options.data = JSON.stringify(options.json);
+    } else {
+        options.data = options.json;
+    }
+    if(options.formData){
+        options.data = options.json;
+    }
+
+    var ruta = options.action;
+
+    // console.log(options.data);
+
+    $.ajax({
+        url: ruta,
+        type: options.type,
+        data: options.data,
+        dataType: options.dataType,
+        async: options.async,
+        processData: false,
+        contentType: options.contentType,
+        headers: options.headers,
+        success: function (data) {
+            if(data){
+                swal({
+                    type: 'success',
+                    title: options.mensajeConfirm,
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+            }else{
+                alert('error');
+            }
+        },
+        error: function (data) {
+            swal({
+                type: 'error',
+                title: 'Hubo un error, intentelo de nuevo o envie un ticket a soporte.',
+                showConfirmButton: true,
+            });
+        },
+    });
+}
+
 function guardarAutomatico(options){
     var defaults = {
         fail: resultError,
