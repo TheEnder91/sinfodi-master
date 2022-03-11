@@ -114,24 +114,19 @@
                     for(var i = 0; i < datosColaboradores.length; i++){
                         var dataColaboradores = datosColaboradores[i];
                         // console.log(dataColaboradores);
-                        var authUser = '<?= Auth::user()->usuario ?>';
-                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-colaboracion-index") ?>';
-                        // console.log(permissions);
-                        if(dataColaboradores.username == authUser || permissions == 1){
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.clave + '</td>';
-                                row += '<td width="65%" style="font-size:12px;">' + dataColaboradores.nombre.toUpperCase() + "</td>";
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.comites + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.valor + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.cantidad + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.total + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.year + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">'+
-                                            '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
-                                            '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-trash-alt"></i></a>'+
-                                        '</td>';
-                                row += "</tr>";
-                        }
+                        row += "<tr>";
+                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.clave + '</td>';
+                        row += '<td width="65%" style="font-size:12px;">' + dataColaboradores.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.comites + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.valor + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.cantidad + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.total + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.year + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">'+
+                                    '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                                    '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-trash-alt"></i></a>'+
+                                '</td>';
+                        row += "</tr>";
                     }
                     if ($.fn.dataTable.isDataTable("#tblColaboradores")) {
                         tblDifusionDivulgacion = $("#tblColaboradores").DataTable();
@@ -270,7 +265,7 @@
                             },
                             type: 'POST',
                             dateType: 'json',
-                            mensajeConfirm: 'Se han registrado.',
+                            mensajeConfirm: 'Se ha registrado el colaborador con exito.',
                             url: "{{ config('app.url') }}/modulos/colaboracion/listColaboracion?token={{ Session::get('token') }}"
                         };
                         // console.log(options); // Se comenta para futuras pruebas...
