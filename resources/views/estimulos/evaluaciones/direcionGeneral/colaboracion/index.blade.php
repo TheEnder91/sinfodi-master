@@ -32,11 +32,11 @@
             <table id="tblCriterio32" class="table table-bordered table-striped">
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">Clave</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Puntos</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Año</th>
+                        <th scope="col" style="font-size:13px;">Clave</th>
+                        <th scope="col" style="font-size:13px;">Nombre</th>
+                        <th scope="col" style="font-size:13px;">Puntos</th>
+                        <th scope="col" style="font-size:13px;">Total</th>
+                        <th scope="col" style="font-size:13px;">Año</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -113,11 +113,11 @@
                                 // console.log(permissions);
                                 if(dataGeneralCriterio32.username == authUser || permissions == 1){
                                         row += "<tr>";
-                                        row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio32.clave + '</td>';
-                                        row += '<td width="40%">' + dataGeneralCriterio32.nombre + "</td>";
-                                        row += '<td class="text-center" width="10%">' + Math.trunc(dataGeneralCriterio32.puntos) + '</td>';
-                                        row += '<td class="text-center" width="10%">' + Math.trunc(dataGeneralCriterio32.total_puntos) + '</td>';
-                                        row += '<td class="text-center" width="10%">' + dataGeneralCriterio32.year + '</td>';
+                                        row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio32.clave + '</td>';
+                                        row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio32.nombre + "</td>";
+                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.puntos) + '</td>';
+                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.total_puntos) + '</td>';
+                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio32.year + '</td>';
                                         row += "</tr>";
                                 }
                             }

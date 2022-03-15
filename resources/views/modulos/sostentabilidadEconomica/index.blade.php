@@ -35,111 +35,111 @@
                             <div class="tab-pane fade show active" id="proys" role="tabpanel" aria-labelledby="proys-tab">
                                 <div class="row">
                                     <div class="col-2">
-                                        <label class="col-form-label"><span style="color: red">*</span>CGN:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>CGN:</label>
                                         <input type="text" class="form-control form-control-sm" name="cgn" id="txtCGN">
                                     </div>
                                     <div class="col-10">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del proyecto:</label>
+                                        <label class="col-form-label"  style="font-size:13px;"><span style="color: red">*</span>Nombre del proyecto:</label>
                                         <input type="text" class="form-control form-control-sm" name="proyecto" id="txtProyecto">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="claveLider" id="txtClaveLider" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del lider del proyecto:</label>
+                                        <label class="col-form-label"  style="font-size:13px;"><span style="color: red"  style="font-size:13px;">*</span>Nombre del lider del proyecto:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombreLider" id="txtNombreLider" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioLider" id="txtUsuarioLider" readonly>
                                     </div>
                                     <div class="col-5">
-                                        <label class="col-form-label">Seleccione una opción:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Seleccione una opción:</label>
                                         <div style="column-count:3; list-style: none;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input remanente" name="remanente[]" id="remanente" value="remanente">
-                                                <label class="custom-control-label" for="remanente" style="font-weight: normal;">Remanente</label>
+                                                <label class="custom-control-label" for="remanente" style="font-weight: normal; font-size:13px;">Remanente</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input interinstitucional" name="interinstitucional[]" id="interinstitucional" value="interinstitucional">
-                                                <label class="custom-control-label" for="interinstitucional" style="font-weight: normal;">Interinstitucional</label>
+                                                <label class="custom-control-label" for="interinstitucional" style="font-weight: normal; font-size:13px;">Interinstitucional</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input interareas" name="interareas[]" id="interareas" value="interareas">
-                                                <label class="custom-control-label" for="interareas" style="font-weight: normal;">Inter-Áreas</label>
+                                                <label class="custom-control-label" for="interareas" style="font-weight: normal; font-size:13px;">Inter-Áreas</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="clave" id="txtClave" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del participante:</label>
+                                        <label class="col-form-label"  style="font-size:13px;"><span style="color: red">*</span>Nombre del participante:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombre" id="txtNombre" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuario" id="txtUsuario" readonly>
                                     </div>
                                     <div class="col-3">
-                                        <label class="col-form-label">Lider o participante del proyecto:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Lider o participante del proyecto:</label>
                                         <div style="column-count:2; list-style: none;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input lider" name="lider[]" id="lider" value="Lider" onclick="calcular1();">
-                                                <label class="custom-control-label" for="lider" style="font-weight: normal;">Lider</label>
+                                                <label class="custom-control-label" for="lider" style="font-weight: normal; font-size:13px;">Lider</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input participante" name="participante[]" id="participante" value="participante" disabled checked>
-                                                <label class="custom-control-label" for="participante" style="font-weight: normal;">Participante</label>
+                                                <label class="custom-control-label" for="participante" style="font-weight: normal; font-size:13px;">Participante</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>Porcentaje:</label>
+                                        <label class="col-form-label"  style="font-size:13px;"><span style="color: red">*</span>Porcentaje:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="procentaje" id="txtPorcentaje" onKeyPress="return soloNumeros(event)" onkeyup="calcular1();" value='0'>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>$ por CTCI:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>$ por CTCI:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="monto" id="txtMonto" onKeyPress="return soloNumeros(event)" onkeyup="calcular1();" value='0'>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
-                                        <label class="col-form-label">$ por participación:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">$ por participación:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="importe" id="txtImporte" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Puntos T.:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Puntos T.:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="puntosTotales" id="txtPuntosTotales" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">P. Lider:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">P. Lider:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="puntosLider" id="txtPuntosLider" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">N. Puntos:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">N. Puntos:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="nuevosPuntosTotales" id="txtNuevosPuntosTotales" readonly>
                                     </div>
                                     <div class="col-2">
-                                        <label class="col-form-label">Puntos por participación:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Puntos por participación:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="nuevosPuntosParticipacion" id="txtNuevosPuntosParticipacion" readonly>
                                     </div>
                                     <div class="col-2">
-                                        <label class="col-form-label">Total:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Total:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotal" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Año:</label>
+                                        <label class="col-form-label"  style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
                                     <div class="col-2">
@@ -176,76 +176,76 @@
                             <div class="tab-pane fade show" id="servEsp" role="tabpanel" aria-labelledby="servEsp-tab">
                                 <div class="row">
                                     <div class="col-2">
-                                        <label class="col-form-label"><span style="color: red">*</span>CGN:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>CGN:</label>
                                         <input type="text" class="form-control form-control-sm" name="cgn" id="txtCGNServEsp">
                                     </div>
                                     <div class="col-10">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del servicio especial:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del servicio especial:</label>
                                         <input type="text" class="form-control form-control-sm" name="proyecto" id="txtProyectoServEsp">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="claveResponsableServEsp" id="txtClaveResponsableServEsp" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del responsable:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del responsable:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombreResponsableServEsp" id="txtNombreResponsableServEsp" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioResponsableServEsp" id="txtUsuarioResponsableServEsp" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="claveParticipanteServEsp" id="txtClaveParticipanteServEsp" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del participante:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del participante:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombreParticipanteServEsp" id="txtNombreParticipanteServEsp" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioParticipanteServEsp" id="txtUsuarioParticipanteServEsp" readonly>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <label class="col-form-label"><span style="color: red">*</span>Responsable o participante del proyecto:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Responsable o participante del proyecto:</label>
                                         <div style="column-count:2; list-style: none;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input responsableServEsp" name="responsableServEsp[]" id="responsableServEsp" value="Responsable">
-                                                <label class="custom-control-label" for="responsableServEsp" style="font-weight: normal;">Responsable</label>
+                                                <label class="custom-control-label" for="responsableServEsp" style="font-weight: normal; font-size:13px;">Responsable</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input participanteServEsp" name="participanteServEsp[]" id="participanteServEsp" value="Participante">
-                                                <label class="custom-control-label" for="participanteServEsp" style="font-weight: normal;">Participante</label>
+                                                <label class="custom-control-label" for="participanteServEsp" style="font-weight: normal; font-size:13px;">Participante</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>Porcentaje:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Porcentaje:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="procentajeServEsp" id="txtPorcentajeServEsp" onKeyPress="return soloNumeros(event)" onkeyup="calcularServEsp();" value='0'>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>$ por CTCI:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>$ por CTCI:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="montoServEsp" id="txtMontoServEsp" onKeyPress="return soloNumeros(event)" onkeyup="calcularServEsp();" value='0'>
                                     </div>
                                     <div class="col-2">
-                                        <label class="col-form-label">$ por participación:</label>
+                                        <label class="col-form-label" style="font-size:13px;">$ por participación:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="importeServEsp" id="txtImporteServEsp" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Total:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Total:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="totalServEsp" id="txtTotalServEsp" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Año:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="yearServEsp" id="txtYearServEsp" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
                                     <div class="col-3"><br>
@@ -281,76 +281,76 @@
                             <div class="tab-pane fade show" id="cursos" role="tabpanel" aria-labelledby="cursos-tab">
                                 <div class="row">
                                     <div class="col-2">
-                                        <label class="col-form-label"><span style="color: red">*</span>CGN:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>CGN:</label>
                                         <input type="text" class="form-control form-control-sm" name="cgn" id="txtCGNCursos">
                                     </div>
                                     <div class="col-10">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del curso:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del curso:</label>
                                         <input type="text" class="form-control form-control-sm" name="proyecto" id="txtProyectoCursos">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="claveResponsableCursos" id="txtClaveResponsableCursos" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del responsable:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del responsable:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombreResponsableCursos" id="txtNombreResponsableCursos" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioResponsableCursos" id="txtUsuarioResponsableCursos" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Clave:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Clave:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="claveParticipanteCursos" id="txtClaveParticipanteCursos" readonly>
                                     </div>
                                     <div class="col-4">
-                                        <label class="col-form-label"><span style="color: red">*</span>Nombre del participante:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Nombre del participante:</label>
                                         <div class="ui-widget">
                                             <input type="text" class="form-control form-control-sm" name="nombreParticipanteCursos" id="txtNombreParticipanteCursos" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Usuario:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioParticipanteCursos" id="txtUsuarioParticipanteCursos" readonly>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-3">
-                                        <label class="col-form-label"><span style="color: red">*</span>Responsable o participante del curso:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Responsable o participante del curso:</label>
                                         <div style="column-count:2; list-style: none;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input responsableCursos" name="responsableCursos[]" id="responsableCursos" value="Responsable">
-                                                <label class="custom-control-label" for="responsableCursos" style="font-weight: normal;">Responsable</label>
+                                                <label class="custom-control-label" for="responsableCursos" style="font-weight: normal; font-size:13px;">Responsable</label>
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input participanteCursos" name="participanteCursos[]" id="participanteCursos" value="Participante">
-                                                <label class="custom-control-label" for="participanteCursos" style="font-weight: normal;">Participante</label>
+                                                <label class="custom-control-label" for="participanteCursos" style="font-weight: normal; font-size:13px;">Participante</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>Porcentaje:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>Porcentaje:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="procentajeCursos" id="txtPorcentajeCursos" onKeyPress="return soloNumeros(event)" onkeyup="calcularCursos();" value='0'>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"><span style="color: red">*</span>$ por CTCI:</label>
+                                        <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>$ por CTCI:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="montoCursos" id="txtMontoCursos" onKeyPress="return soloNumeros(event)" onkeyup="calcularCursos();" value='0'>
                                     </div>
                                     <div class="col-2">
-                                        <label class="col-form-label">$ por participación:</label>
+                                        <label class="col-form-label" style="font-size:13px;">$ por participación:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="importeCursos" id="txtImporteCursos" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Total:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Total:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="totalCursos" id="txtTotalCursos" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label">Año:</label>
+                                        <label class="col-form-label" style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="yearCursos" id="txtYearCursos" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
                                     <div class="col-3">

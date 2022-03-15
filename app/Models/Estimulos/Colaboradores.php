@@ -3,9 +3,12 @@
 namespace App\Models\Estimulos;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Colaboradores extends Model
 {
+    use SoftDeletes;
+
     public $table = 'sinfodi_colaboracion';
 
     protected $fillable = [

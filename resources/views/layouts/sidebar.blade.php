@@ -6,7 +6,7 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header">MODULOS</li>
+                <li class="nav-header" style="font-size:13px;">MODULOS</li>
                 <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/sostenibilidad/listSostenibilidad') }}" class="nav-link {{ isRouteActive('modulos.sostentabilidad') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -30,7 +30,7 @@
                      existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidad-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-colaboracion-index'))
-                    <li class="nav-header">ESTIMULOS</li>
+                    <li class="nav-header" style="font-size:13px;">ESTIMULOS</li>
                 @endif
                 @can('estimulo-lineamientos-index')
                     <li class="nav-item">
@@ -196,7 +196,7 @@
                                         <p><b>Dirección general</b><i class="right fas fa-angle-left"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        <li class="nav-header">ACTIVIDADES->TABLA A</li>
+                                        <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA A</li>
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.DivDif') }}">

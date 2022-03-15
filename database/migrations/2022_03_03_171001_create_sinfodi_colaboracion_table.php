@@ -24,6 +24,7 @@ class CreateSinfodiColaboracionTable extends Migration
             $table->integer('total');
             $table->year('year');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

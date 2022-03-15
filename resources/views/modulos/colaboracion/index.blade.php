@@ -124,7 +124,7 @@
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.year + '</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">'+
                                     '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
-                                    '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-trash-alt"></i></a>'+
+                                    '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +')"><i class="fa fa-trash-alt"></i></a>'+
                                 '</td>';
                         row += "</tr>";
                     }
@@ -384,6 +384,31 @@
             };
             // console.log(options);
             peticionGeneralAjax(options);
+        }
+
+        function eliminarColaboradores(id){
+            swal({
+                type: 'warning',
+                title: "Se eliminara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, eliminar",
+                denyButtonText: "Cancelar",
+            }).catch(swal.noop).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/colaboracion/destroyColaboracion/" + id,
+                    json: {
+                        _token: "{{ csrf_token() }}",
+                        _method: 'DELETE',
+                    },
+                    type: 'POST',
+                    dateType: 'json',
+                    mensajeConfirm: 'El registro se elimino correctamente',
+                    url: "{{ config('app.url') }}/modulos/colaboracion/listColaboracion?token={{ Session::get('token') }}"
+                };
+                peticionGeneralAjax(options);
+            });
         }
     </script>
 @endsection

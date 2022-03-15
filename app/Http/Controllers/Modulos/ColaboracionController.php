@@ -166,4 +166,17 @@ class ColaboracionController extends Controller
         $data['response'] = true;
         return $this->response($data);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        Colaboradores::find($id)->delete();
+        $data['response'] = true;
+        return $this->response($data);
+    }
 }
