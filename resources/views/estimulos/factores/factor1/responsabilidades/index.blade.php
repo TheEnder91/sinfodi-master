@@ -16,8 +16,8 @@
         @slot('title_card', 'Puntaje según su nivel de responsabilidad')
         @can('estimulo-responsabilidad-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
-                    <i class="fa fa-plus"></i> Nuevo criterio
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px;">
+                    <i class="fa fa-plus"></i> Nueva responsabilidad
                 </button>
             </section><br>
         @endcan
@@ -27,17 +27,17 @@
         @endsection
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
-            <label for="" class="col-form-control">
+            <label for="" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>Nivel de responsabilidad:
             </label>
-            <textarea class="form-control" name="nombre" id="nombreN"></textarea>
-            <label for="" name='puntos' class="col-form-control">
+            <textarea class="form-control form-control-sm" name="nombre" id="nombreN"></textarea>
+            <label for="" name='puntos' class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>Puntos asginado:
             </label>
-            <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosN">
+            <input type="number" name="puntos" class="form-control form-control-sm" onKeyPress="return soloNumeros(event)" id="puntosN">
             @section('buttons_modal')
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
+                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" style="font-size:13px;"/>
             @endsection
         @endsection
         {{-- Termina modal nuevo registro --}}
@@ -46,22 +46,22 @@
                 <caption>Listado de puntaje según el nivel de responsabilidad.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Puntos</th>
+                        <th scope="col" style="font-size:13px;">#</th>
+                        <th scope="col" style="font-size:13px;">Nombre</th>
+                        <th scope="col" style="font-size:13px;">Puntos</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-responsabilidad-show') || Auth::user()->hasPermissionTo('estimulo-responsabilidad-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($responsabilidades as $item)
                         <tr>
-                            <th scope="row" class="text-center" width="2%">{{ $item->id }}</th>
-                            <td width="83%">{{ $item->nombre }}</td>
-                            <td class="text-center" width="5%">{{ $item->puntos }}</td>
+                            <th scope="row" class="text-center" width="2%" style="font-size:12px;">{{ $item->id }}</th>
+                            <td width="83%" style="font-size:12px;">{{ $item->nombre }}</td>
+                            <td class="text-center" width="5%" style="font-size:12px;">{{ $item->puntos }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-responsabilidad-show') || Auth::user()->hasPermissionTo('estimulo-responsabilidad-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-responsabilidad-show')
                                         <a href="javascript:editarResponsabilidad({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
