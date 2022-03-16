@@ -16,6 +16,7 @@
         @slot('title_card', 'Crear registro->Sostentabilidad economica')
         <div class="row">
             <div class="col-12">
+                <input type="text" class="form-control form-control-sm" name="id" id="txtId">
                 <div class="card card-primary">
                     <div class="card-header p-0 pt-1">
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
@@ -142,10 +143,19 @@
                                         <label class="col-form-label"  style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
+                                        <br>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-danger" value="Cancelar" id="btnCancelarProys"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
                                         <br>
                                         <div class="float-right">
                                             <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardarProys"/>
+                                        </div>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizarProys"/>
                                         </div>
                                     </div>
                                 </div><br>
@@ -153,7 +163,7 @@
                                     <div class="col-12">
                                         <div class="table-responsive">
                                             <table id="tblCriterio14Proys" class="table table-bordered table-striped">
-                                                <caption>RELACIÓN DE PROYECTOS CONCLUIDOS  Y CERRADOS INTERNAMENTE POR EL CTCI BAJO LOS ACUERDOS 14/05/2021-5 y 04/06/2021-6</caption>
+                                                <caption>RELACIÓN DE PROYECTOS CONCLUIDOS Y CERRADOS INTERNAMENTE POR EL CTCI BAJO LOS ACUERDOS 14/05/2021-5 y 04/06/2021-6</caption>
                                                 <thead>
                                                     <tr class="text-center">
                                                         <th scope="col" style="font-size:13px;">#</th>
@@ -165,6 +175,7 @@
                                                         <th scope="col" style="font-size:13px">$ Parti.</th>
                                                         <th scope="col" style="font-size:13px">Total</th>
                                                         <th scope="col" style="font-size:13px">Año</th>
+                                                        <th scope="col" style="font-size:13px;">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -248,9 +259,18 @@
                                         <label class="col-form-label" style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="yearServEsp" id="txtYearServEsp" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
-                                    <div class="col-3"><br>
+                                    <div class="col-2">
+                                        <br>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-danger" value="Cancelar" id="btnCancelarServEsp"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-1"><br>
                                         <div class="float-right">
                                             <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardarServEsp"/>
+                                        </div>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizarServEsp"/>
                                         </div>
                                     </div>
                                 </div><br>
@@ -270,6 +290,7 @@
                                                         <th scope="col" style="font-size:13px">$ Parti.</th>
                                                         <th scope="col" style="font-size:13px">Total</th>
                                                         <th scope="col" style="font-size:13px">Año</th>
+                                                        <th scope="col" style="font-size:13px;">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -353,10 +374,19 @@
                                         <label class="col-form-label" style="font-size:13px;">Año:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="yearCursos" id="txtYearCursos" value="{{ date("Y") - 1 }}" readonly>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-2">
+                                        <br>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-danger" value="Cancelar" id="btnCancelarCursos"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
                                         <br>
                                         <div class="float-right">
                                             <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardarCursos"/>
+                                        </div>
+                                        <div class="float-right">
+                                            <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizarCursos"/>
                                         </div>
                                     </div>
                                 </div><br>
@@ -376,6 +406,7 @@
                                                         <th scope="col" style="font-size:13px">$ Parti.</th>
                                                         <th scope="col" style="font-size:13px">Total</th>
                                                         <th scope="col" style="font-size:13px">Año</th>
+                                                        <th scope="col" style="font-size:13px;">Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -397,6 +428,17 @@
         $(document).ready(initCriterio14);
 
         function initCriterio14(){
+            $('#txtId').hide();
+            // Mostrar u ocultar los botones de guardar y actualizar...
+            $('#btnGuardarProys').show();
+            $('#btnActualizarProys').hide();
+            $('#btnCancelarProys').hide();
+            $('#btnGuardarServEsp').show();
+            $('#btnActualizarServEsp').hide();
+            $('#btnCancelarServEsp').hide();
+            $('#btnGuardarCursos').show();
+            $('#btnActualizarCursos').hide();
+            $('#btnCancelarCursos').hide();
             // Funciones para autocompletar los nombres de los lideres, responsables y participantes...
             ConsultarLider();
             ConsultarColaborador();
@@ -410,8 +452,14 @@
             obtenerCursos();
             // Funciones para los botones para guardar los registros...
             $('#btnGuardarProys').on('click', guardarProyectos);
+            $('#btnActualizarProys').on('click', actualizarProyectos);
+            $('#btnCancelarProys').on('click', cancelarProyectos);
             $('#btnGuardarServEsp').on('click', guardarServEsp);
+            $('#btnActualizarServEsp').on('click', actualizarServEsp);
+            $('#btnCancelarServEsp').on('click', cancelarServEsp);
             $('#btnGuardarCursos').on('click', guardarCursos);
+            $('#btnActualizarCursos').on('click', actualizarCursos);
+            $('#btnCancelarCursos').on('click', cancelarCursos);
         }
 
         // Apartir de aqui las funciones son para la seccion de proyectos...
@@ -442,6 +490,10 @@
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+'$'+new Intl.NumberFormat().format(dataProyectos.ingreso_participacion)+'</td>';
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+dataProyectos.total+'</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+dataProyectos.year+'</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+
+                                    '<a href="javascript:editarProys('+ dataProyectos.id +', '+dataProyectos.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                                    '<a href="javascript:eliminarProys('+ dataProyectos.id +')"><i class="fa fa-trash-alt"></i></a>'+
+                                '</td>';
                         row += "</tr>";
                     }
                     if ($.fn.dataTable.isDataTable("#tblCriterio14Proys")) {
@@ -668,7 +720,7 @@
                 },
                 type: 'POST',
                 dateType: 'json',
-                mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
+                mensajeConfirm: 'Se ha guardado correctamente el registro.',
             };
             // console.log(options);
             guardarMensaje(options);
@@ -694,6 +746,211 @@
             document.getElementById("interinstitucional").checked = false;
             document.getElementById("interareas").checked = false;
             document.getElementById("lider").checked = false;
+        }
+
+        function editarProys(id, year){
+            $('#btnActualizarProys').show();
+            $('#btnGuardarProys').hide();
+            $('#btnCancelarProys').show();
+            //Consultar los datos de la base de datos...
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/sostenibilidad/getSostentabilidad/"+id+"/"+year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getSostentabilidad){
+                    var getSostentabilidad = getSostentabilidad.response[0];
+                    // console.log(getSostentabilidad.cgn);
+                    $('#txtId').val(getSostentabilidad.id);
+                    $('#txtCGN').val(getSostentabilidad.cgn);
+                    $('#txtProyecto').val(getSostentabilidad.nombre);
+                    $('#txtClaveLider').val(getSostentabilidad.clave_responsable);
+                    $('#txtNombreLider').val(getSostentabilidad.nombre_responsable);
+                    $('#txtUsuarioLider').val(getSostentabilidad.usuario_responsable);
+                    if(getSostentabilidad.remanente == 'No'){
+                        $("#remanente").prop('checked', false);
+                    }else{
+                        $("#remanente").prop('checked', true);
+                    }
+                    if(getSostentabilidad.interinstitucional == 'No'){
+                        $("#interinstitucional").prop('checked', false);
+                    }else{
+                        $("#interinstitucional").prop('checked', true);
+                    }
+                    if(getSostentabilidad.interareas == 'No'){
+                        $("#interareas").prop('checked', false);
+                    }else{
+                        $("#interareas").prop('checked', true);
+                    }
+                    $('#txtClave').val(getSostentabilidad.clave_participante);
+                    $('#txtNombre').val(getSostentabilidad.nombre_participante);
+                    $('#txtUsuario').val(getSostentabilidad.usuario_participante);
+                    if(getSostentabilidad.lider_responsable == 'No'){
+                        $("#lider").prop('checked', false);
+                    }else{
+                        $("#lider").prop('checked', true);
+                    }
+                    $('#txtPorcentaje').val(getSostentabilidad.porcentaje_participacion);
+                    $('#txtMonto').val(getSostentabilidad.monto_ingresado);
+                    $('#txtImporte').val(getSostentabilidad.ingreso_participacion);
+                    $('#txtPuntosTotales').val(getSostentabilidad.puntos_totales);
+                    $('#txtPuntosLider').val(getSostentabilidad.puntos_lider);
+                    $('#txtNuevosPuntosTotales').val(getSostentabilidad.nuevos_puntos_totales);
+                    $('#txtNuevosPuntosParticipacion').val(getSostentabilidad.puntos_participacion);
+                    $('#txtTotal').val(getSostentabilidad.total);
+                    $('#txtYear').val(getSostentabilidad.year);
+                },
+            });
+        }
+
+        function actualizarProyectos(){
+            var id = $('#txtId').val();
+            var cgn = $('#txtCGN').val();
+            var nombreProyecto = $('#txtProyecto').val();
+            var claveresponsable = $('#txtClaveLider').val();
+            var nombreresponsable = $('#txtNombreLider').val();
+            var usuarioresponsable = $('#txtUsuarioLider').val();
+            if($('#remanente').prop('checked')){
+                var remanente = "Si"
+            }else{
+                var remanente = "No";
+            }
+            if($('#interinstitucional').prop('checked')){
+                var interinstitucional = "Si"
+            }else{
+                var interinstitucional = "No";
+            }
+            if($('#interareas').prop('checked')){
+                var interareas = "Si"
+            }else{
+                var interareas = "No";
+            }
+            var claveParticipante = $('#txtClave').val();
+            var nombreParticipante = $('#txtNombre').val();
+            var usuarioParticipante = $('#txtUsuario').val();
+            if($('#lider').prop('checked')){
+                var lider = "Si"
+            }else{
+                var lider = "No";
+            }
+            if($('#participante').prop('checked')){
+                var participante = "Si"
+            }else{
+                var participante = "No";
+            }
+            var porcentajeParticipacion = parseFloat($('#txtPorcentaje').val());
+            var monto = parseFloat($('#txtMonto').val());
+            var ingresoParticipacion = parseFloat($('#txtImporte').val().split('$').join('').split(',').join('') || 0);
+            var puntosTotales = parseFloat($('#txtPuntosTotales').val());
+            var puntosLider = parseFloat($('#txtPuntosLider').val());
+            var nuevosPuntos = parseFloat($('#txtNuevosPuntosTotales').val());
+            var puntosParticipacion = parseFloat($('#txtNuevosPuntosParticipacion').val());
+            var total = parseFloat($('#txtTotal').val());
+            var year = parseFloat($('#txtYear').val());
+            if(cgn == "" || nombreProyecto == "" || nombreresponsable == "" || nombreParticipante == "" || porcentajeParticipacion == 0 || monto == 0){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de llenar los campos marcados con *.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            swal({
+                type: 'warning',
+                title: "Se actualizara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, actualizar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/sostenibilidad/updateSostentabilidad/"+id,
+                    json: {
+                        cgn: cgn,
+                        nombre: nombreProyecto,
+                        clave_responsable: claveresponsable,
+                        nombre_responsable: nombreresponsable,
+                        usuario_responsable: usuarioresponsable,
+                        clave_participante: claveParticipante,
+                        nombre_participante: nombreParticipante,
+                        usuario_participante: usuarioParticipante,
+                        lider_responsable: lider,
+                        participante: participante,
+                        porcentaje_participacion: porcentajeParticipacion,
+                        monto_ingresado: monto,
+                        ingreso_participacion: ingresoParticipacion,
+                        remanente: remanente,
+                        interinstitucional: interinstitucional,
+                        interareas: interareas,
+                        puntos_totales: puntosTotales,
+                        puntos_lider: puntosLider,
+                        nuevos_puntos_totales: nuevosPuntos,
+                        puntos_participacion: puntosParticipacion,
+                        total: total,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    type: 'PUT',
+                    dateType: 'json',
+                    mensajeConfirm: 'Se ha actualizado correctamente el registro.',
+                    url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}",
+                };
+                // console.log(options);
+                peticionGeneralAjax(options);
+            });
+        }
+
+        function cancelarProyectos(){
+            $('#txtId').val('');
+            $('#txtCGN').val('');
+            $('#txtProyecto').val('');
+            $('#txtClaveLider').val('');
+            $('#txtNombreLider').val('');
+            $('#txtUsuarioLider').val('');
+            $("#remanente").prop('checked', false);
+            $("#interinstitucional").prop('checked', false);
+            $("#interareas").prop('checked', false);
+            $('#txtClave').val('');
+            $('#txtNombre').val('');
+            $('#txtUsuario').val('');
+            $("#lider").prop('checked', false);
+            $('#txtPorcentaje').val('');
+            $('#txtMonto').val('');
+            $('#txtImporte').val('');
+            $('#txtPuntosTotales').val('');
+            $('#txtPuntosLider').val('');
+            $('#txtNuevosPuntosTotales').val('');
+            $('#txtNuevosPuntosParticipacion').val('');
+            $('#txtTotal').val('');
+            $('#txtYear').val(new Date().getFullYear() - 1);
+            $('#btnActualizarProys').hide();
+            $('#btnGuardarProys').show();
+            $('#btnCancelarProys').hide();
+        }
+
+        function eliminarProys(id){
+            swal({
+                type: 'warning',
+                title: "Se eliminara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, eliminar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/sostenibilidad/destroySostentabilidad/" + id,
+                    json: {
+                        _token: "{{ csrf_token() }}",
+                        _method: 'DELETE',
+                    },
+                    type: 'POST',
+                    dateType: 'json',
+                    mensajeConfirm: 'El registro se elimino correctamente',
+                    url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}"
+                };
+                peticionGeneralAjax(options);
+            });
         }
 
         // Apartir de aqui las funciones son para la seccion de servicios especiales...
@@ -819,6 +1076,10 @@
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+'$'+new Intl.NumberFormat().format(dataServEsp.ingreso_participacion)+'</td>';
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+dataServEsp.total+'</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+dataServEsp.year+'</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+
+                                    '<a href="javascript:editarServEsp('+ dataServEsp.id +', '+dataServEsp.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                                    '<a href="javascript:eliminarServEsp('+ dataServEsp.id +')"><i class="fa fa-trash-alt"></i></a>'+
+                                '</td>';
                         row += "</tr>";
                     }
                     if ($.fn.dataTable.isDataTable("#tblCriterio14ServEsp")) {
@@ -944,6 +1205,176 @@
             document.getElementById("participanteServEsp").checked = false;
         }
 
+        function editarServEsp(id, year){
+            $('#btnActualizarServEsp').show();
+            $('#btnGuardarServEsp').hide();
+            $('#btnCancelarServEsp').show();
+            //Consultar los datos de la base de datos...
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/sostenibilidad/getSostentabilidad/"+id+"/"+year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getSostentabilidad){
+                    var getSostentabilidad = getSostentabilidad.response[0];
+                    // console.log(getSostentabilidad.cgn);
+                    $('#txtId').val(getSostentabilidad.id);
+                    $('#txtCGNServEsp').val(getSostentabilidad.cgn);
+                    $('#txtProyectoServEsp').val(getSostentabilidad.nombre);
+                    $('#txtClaveResponsableServEsp').val(getSostentabilidad.clave_responsable);
+                    $('#txtNombreResponsableServEsp').val(getSostentabilidad.nombre_responsable);
+                    $('#txtUsuarioResponsableServEsp').val(getSostentabilidad.usuario_responsable);
+                    $('#txtClaveParticipanteServEsp').val(getSostentabilidad.clave_participante);
+                    $('#txtNombreParticipanteServEsp').val(getSostentabilidad.nombre_participante);
+                    $('#txtUsuarioParticipanteServEsp').val(getSostentabilidad.usuario_participante);
+                    if(getSostentabilidad.lider_responsable == 'No'){
+                        $("#responsableServEsp").prop('checked', false);
+                    }else{
+                        $("#responsableServEsp").prop('checked', true);
+                    }
+                    if(getSostentabilidad.participante == 'No'){
+                        $("#participanteServEsp").prop('checked', false);
+                    }else{
+                        $("#participanteServEsp").prop('checked', true);
+                    }
+                    $('#txtPorcentajeServEsp').val(getSostentabilidad.porcentaje_participacion);
+                    $('#txtMontoServEsp').val(getSostentabilidad.monto_ingresado);
+                    $('#txtImporteServEsp').val(getSostentabilidad.ingreso_participacion);
+                    $('#txtTotalServEsp').val(getSostentabilidad.total);
+                    $('#txtYearServEsp').val(getSostentabilidad.year);
+                },
+            });
+        }
+
+        function actualizarServEsp(){
+            var id = $("#txtId").val();
+            var cgn = $('#txtCGNServEsp').val();
+            var nombreServEsp = $('#txtProyectoServEsp').val();
+            var claveResponsable = $('#txtClaveResponsableServEsp').val();
+            var nombreResponsable = $('#txtNombreResponsableServEsp').val();
+            var usuarioResponsable = $('#txtUsuarioResponsableServEsp').val();
+            var claveParticipante = $('#txtClaveParticipanteServEsp').val();
+            var nombreParticipante = $('#txtNombreParticipanteServEsp').val();
+            var usuarioParticipante = $('#txtUsuarioParticipanteServEsp').val();
+            var porcentaje = parseFloat($('#txtPorcentajeServEsp').val());
+            var montoCTCI = parseFloat($('#txtMontoServEsp').val());
+            var montoParticipacion = parseFloat($('#txtImporteServEsp').val().split('$').join('').split(',').join('') || 0);
+            var total = parseFloat($('#txtTotalServEsp').val());
+            var year = parseFloat($('#txtYearServEsp').val());
+            if($('#responsableServEsp').prop('checked')){
+                var responsable = "Si"
+            }else{
+                var responsable = "No";
+            }
+            if($('#participanteServEsp').prop('checked')){
+                var participante = "Si"
+            }else{
+                var participante = "No";
+            }
+            // console.log(responsable + '->' + participante);
+            // Nos muestra un mensaje de que debe de llenar los campos...
+            if(cgn == "" || nombreServEsp == "" || nombreResponsable == "" || nombreParticipante == "" || porcentaje == 0 || montoCTCI == 0){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de llenar los campos marcados con *.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            if(responsable == "No" && participante == "No"){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de seleccionar si es el responsable o el participante.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            swal({
+                type: 'warning',
+                title: "Se actualizara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, actualizar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/sostenibilidad/updateSostentabilidad/"+id,
+                    json: {
+                        cgn: cgn,
+                        nombre: nombreServEsp,
+                        clave_responsable: claveResponsable,
+                        nombre_responsable: nombreResponsable,
+                        usuario_responsable: usuarioResponsable,
+                        clave_participante: claveParticipante,
+                        nombre_participante: nombreParticipante,
+                        usuario_participante: usuarioParticipante,
+                        lider_responsable: responsable,
+                        participante: participante,
+                        porcentaje_participacion: porcentaje,
+                        monto_ingresado: montoCTCI,
+                        ingreso_participacion: montoParticipacion,
+                        total: total,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    type: 'PUT',
+                    dateType: 'json',
+                    mensajeConfirm: 'Se ha actualizado correctamente el registro.',
+                    url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}",
+                };
+                // console.log(options);
+                peticionGeneralAjax(options);
+            });
+        }
+
+        function cancelarServEsp(){
+            $('#txtId').val('');
+            $('#txtCGNServEsp').val('');
+            $('#txtProyectoServEsp').val('');
+            $('#txtClaveResponsableServEsp').val('');
+            $('#txtNombreResponsableServEsp').val('');
+            $('#txtUsuarioResponsableServEsp').val('');
+            $('#txtClaveParticipanteServEsp').val('');
+            $('#txtNombreParticipanteServEsp').val('');
+            $('#txtUsuarioParticipanteServEsp').val('');
+            $("#responsableServEsp").prop('checked', false);
+            $("#participanteServEsp").prop('checked', false);
+            $('#txtPorcentajeServEsp').val('');
+            $('#txtMontoServEsp').val('');
+            $('#txtImporteServEsp').val('');
+            $('#txtTotalServEsp').val('');
+            $('#txtYearServEsp').val(new Date().getFullYear() - 1);
+            $('#btnActualizarServEsp').hide();
+            $('#btnGuardarServEsp').show();
+            $('#btnCancelarServEsp').hide();
+        }
+
+        function eliminarServEsp(id){
+            swal({
+                type: 'warning',
+                title: "Se eliminara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, eliminar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/sostenibilidad/destroySostentabilidad/" + id,
+                    json: {
+                        _token: "{{ csrf_token() }}",
+                        _method: 'DELETE',
+                    },
+                    type: 'POST',
+                    dateType: 'json',
+                    mensajeConfirm: 'El registro se elimino correctamente',
+                    url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}"
+                };
+                peticionGeneralAjax(options);
+            });
+        }
+
         // Apartir de aqui las funciones son para la seccion de cursos...
         // Muestra los datos en la tabla para los cursos...
         function obtenerCursos(){
@@ -973,6 +1404,10 @@
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+'$'+new Intl.NumberFormat().format(dataCursos.ingreso_participacion)+'</td>';
                         row += '<td class="text-center" width="8%" style="font-size:12px; vertical-align:middle;">'+dataCursos.total+'</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+dataCursos.year+'</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">'+
+                                    '<a href="javascript:editarCursos('+ dataCursos.id +', '+dataCursos.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                                    '<a href="javascript:eliminarCursos('+ dataCursos.id +')"><i class="fa fa-trash-alt"></i></a>'+
+                                '</td>';
                         row += "</tr>";
                     }
                     if ($.fn.dataTable.isDataTable("#tblCriterio14Cursos")) {
@@ -1190,6 +1625,151 @@
             $('#txtTotalCursos').val('');
             document.getElementById("responsableCursos").checked = false;
             document.getElementById("participanteCursos").checked = false;
+        }
+
+        function editarCursos(id, year){
+            $('#btnActualizarCursos').show();
+            $('#btnGuardarCursos').hide();
+            $('#btnCancelarCursos').show();
+            //Consultar los datos de la base de datos...
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/sostenibilidad/getSostentabilidad/"+id+"/"+year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getSostentabilidad){
+                    var getSostentabilidad = getSostentabilidad.response[0];
+                    // console.log(getSostentabilidad.cgn);
+                    $('#txtId').val(getSostentabilidad.id);
+                    $('#txtCGNCursos').val(getSostentabilidad.cgn);
+                    $('#txtProyectoCursos').val(getSostentabilidad.nombre);
+                    $('#txtClaveResponsableCursos').val(getSostentabilidad.clave_responsable);
+                    $('#txtNombreResponsableCursos').val(getSostentabilidad.nombre_responsable);
+                    $('#txtUsuarioResponsableCursos').val(getSostentabilidad.usuario_responsable);
+                    $('#txtClaveParticipanteCursos').val(getSostentabilidad.clave_participante);
+                    $('#txtNombreParticipanteCursos').val(getSostentabilidad.nombre_participante);
+                    $('#txtUsuarioParticipanteCursos').val(getSostentabilidad.usuario_participante);
+                    if(getSostentabilidad.lider_responsable == 'No'){
+                        $("#responsableCursos").prop('checked', false);
+                    }else{
+                        $("#responsableCursos").prop('checked', true);
+                    }
+                    if(getSostentabilidad.participante == 'No'){
+                        $("#participanteCursos").prop('checked', false);
+                    }else{
+                        $("#participanteCursos").prop('checked', true);
+                    }
+                    $('#txtPorcentajeCursos').val(getSostentabilidad.porcentaje_participacion);
+                    $('#txtMontoCursos').val(getSostentabilidad.monto_ingresado);
+                    $('#txtImporteCursos').val(getSostentabilidad.ingreso_participacion);
+                    $('#txtTotalCursos').val(getSostentabilidad.total);
+                    $('#txtYearCursos').val(getSostentabilidad.year);
+                },
+            });
+        }
+
+        function actualizarCursos(){
+            var id = $("#txtId").val();
+            var cgn = $('#txtCGNCursos').val();
+            var nombreCursos = $('#txtProyectoCursos').val();
+            var claveResponsable = $('#txtClaveResponsableCursos').val();
+            var nombreResponsable = $('#txtNombreResponsableCursos').val();
+            var usuarioResponsable = $('#txtUsuarioResponsableCursos').val();
+            var claveParticipante = $('#txtClaveParticipanteCursos').val();
+            var nombreParticipante = $('#txtNombreParticipanteCursos').val();
+            var usuarioParticipante = $('#txtUsuarioParticipanteCursos').val();
+            var porcentaje = parseFloat($('#txtPorcentajeCursos').val());
+            var montoCTCI = parseFloat($('#txtMontoCursos').val());
+            var montoParticipacion = parseFloat($('#txtImporteCursos').val().split('$').join('').split(',').join('') || 0);
+            var total = parseFloat($('#txtTotalCursos').val());
+            var year = parseFloat($('#txtYearCursos').val());
+            if($('#responsableCursos').prop('checked')){
+                var responsable = "Si"
+            }else{
+                var responsable = "No";
+            }
+            if($('#participanteCursos').prop('checked')){
+                var participante = "Si"
+            }else{
+                var participante = "No";
+            }
+            // console.log(responsable + '->' + participante);
+            // Nos muestra un mensaje de que debe de llenar los campos...
+            if(cgn == "" || nombreCursos == "" || nombreResponsable == "" || nombreParticipante == "" || porcentaje == 0 || montoCTCI == 0){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de llenar los campos marcados con *.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            if(responsable == "No" && participante == "No"){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de seleccionar si es el responsable o el participante.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            swal({
+                type: 'warning',
+                title: "Se actualizara el registro.",
+                text: "¿Desea continuar?",
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: "Si, actualizar",
+                denyButtonText: "Cancelar",
+            }).then((result) => {
+                var options = {
+                    action: "{{ config('app.url') }}/modulos/sostenibilidad/updateSostentabilidad/"+id,
+                    json: {
+                        cgn: cgn,
+                        nombre: nombreCursos,
+                        clave_responsable: claveResponsable,
+                        nombre_responsable: nombreResponsable,
+                        usuario_responsable: usuarioResponsable,
+                        clave_participante: claveParticipante,
+                        nombre_participante: nombreParticipante,
+                        usuario_participante: usuarioParticipante,
+                        lider_responsable: responsable,
+                        participante: participante,
+                        porcentaje_participacion: porcentaje,
+                        monto_ingresado: montoCTCI,
+                        ingreso_participacion: montoParticipacion,
+                        total: total,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    type: 'PUT',
+                    dateType: 'json',
+                    mensajeConfirm: 'Se ha actualizado correctamente el registro.',
+                    url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}",
+                };
+                // console.log(options);
+                peticionGeneralAjax(options);
+            });
+        }
+
+        function cancelarCursos(){
+            $('#txtId').val('');
+            $('#txtCGNCursos').val('');
+            $('#txtProyectoCursos').val('');
+            $('#txtClaveResponsableCursos').val('');
+            $('#txtNombreResponsableCursos').val('');
+            $('#txtUsuarioResponsableCursos').val('');
+            $('#txtClaveParticipanteCursos').val('');
+            $('#txtNombreParticipanteCursos').val('');
+            $('#txtUsuarioParticipanteCursos').val('');
+            $("#responsableCursos").prop('checked', false);
+            $("#participanteCursos").prop('checked', false);
+            $('#txtPorcentajeCursos').val('');
+            $('#txtMontoCursos').val('');
+            $('#txtImporteCursos').val('');
+            $('#txtTotalCursos').val('');
+            $('#txtYearCursos').val(new Date().getFullYear() - 1);
+            $('#btnActualizarCursos').hide();
+            $('#btnGuardarCursos').show();
+            $('#btnCancelarCursos').hide();
         }
     </script>
 @endsection

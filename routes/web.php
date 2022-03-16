@@ -63,6 +63,9 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/sostenibilidad/getPuntos', [SostentabilidadEconomicaController::class, "getPuntos"])->name('modulos.sostentabilidad');
     Route::post('/modulos/sostenibilidad/store', [SostentabilidadEconomicaController::class, "store"])->name('modulos.sostentabilidad');
     Route::get('/modulos/sostenibilidad/datosSostentabilidad/{tipo}', [SostentabilidadEconomicaController::class, "datosSostentabilidad"])->name('modulos.sostentabilidad');
+    Route::get('/modulos/sostenibilidad/getSostentabilidad/{id}/{year}', [SostentabilidadEconomicaController::class, "getSostentabilidad"])->name('modulos.sostenibilidad');
+    Route::put('/modulos/sostenibilidad/updateSostentabilidad/{id}', [SostentabilidadEconomicaController::class, "update"])->name('modulos.sostenibilidad');
+    Route::delete('/modulos/sostenibilidad/destroySostentabilidad/{id}', [SostentabilidadEconomicaController::class, "destroy"])->name('modulos.sostenibilidad');
     /** Colaboración institucional... */
     Route::get('/modulos/colaboracion/listColaboracion', [ColaboracionController::class, "index"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionController::class, "existeColaboracion"])->name('modulos.colaboracion');

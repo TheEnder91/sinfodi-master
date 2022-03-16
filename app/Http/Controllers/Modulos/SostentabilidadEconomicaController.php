@@ -57,4 +57,68 @@ class SostentabilidadEconomicaController extends Controller
         $query = SostentabilidadEconomica::where('tipo', $tipo)->orderBy('id', 'ASC')->get();
         return $query;
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function getSostentabilidad($id, $year)
+    {
+        $datos = DB::table('sinfodi_sostentabilidad')
+                    ->where('id', '=', $id)
+                    ->where('year', '=', $year)
+                    ->get();
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $actualizar = SostentabilidadEconomica::findOrFail($id);
+        $actualizar->cgn = $request->cgn;
+        $actualizar->nombre = $request->nombre;
+        $actualizar->clave_responsable = $request->clave_responsable;
+        $actualizar->nombre_responsable = $request->nombre_responsable;
+        $actualizar->usuario_responsable = $request->usuario_responsable;
+        $actualizar->clave_participante = $request->clave_participante;
+        $actualizar->nombre_participante = $request->nombre_participante;
+        $actualizar->usuario_participante = $request->usuario_participante;
+        $actualizar->lider_responsable = $request->lider_responsable;
+        $actualizar->participante = $request->participante;
+        $actualizar->porcentaje_participacion = $request->porcentaje_participacion;
+        $actualizar->monto_ingresado = $request->monto_ingresado;
+        $actualizar->ingreso_participacion = $request->ingreso_participacion;
+        $actualizar->remanente = $request->remanente;
+        $actualizar->interinstitucional = $request->interinstitucional;
+        $actualizar->interareas = $request->interareas;
+        $actualizar->puntos_totales = $request->puntos_totales;
+        $actualizar->puntos_lider = $request->puntos_lider;
+        $actualizar->nuevos_puntos_totales = $request->nuevos_puntos_totales;
+        $actualizar->puntos_participacion = $request->puntos_participacion;
+        $actualizar->total = $request->total;
+        $actualizar->save();
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        SostentabilidadEconomica::find($id)->delete();
+        $data['response'] = true;
+        return $this->response($data);
+    }
 }
