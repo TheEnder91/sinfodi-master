@@ -12,9 +12,9 @@
                 @include('estimulos.factores.factor1.actividadesA.form')
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
                 @can('estimulo-actividadA-edit')
-                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar" style="font-size:13px;"/>
                 @endcan
             </div>
         </div>
