@@ -10,19 +10,19 @@
             </div>
             <div class="modal-body">
                 <input type="text" name="id" id="id" hidden>
-                <label for="cumplimiento" class="col-form-control">
+                <label for="cumplimiento" class="col-form-control" style="font-size:13px;">
                     <span style="color: red">*</span> % CUMPLIMIENTO DE METAS:
                 </label>
-                <textarea class="form-control" name="cumplimiento" id="cumplimientoE"></textarea>
-                <label for="f2" class="col-form-control">
+                <textarea class="form-control form-control-sm" name="cumplimiento" id="cumplimientoE"></textarea>
+                <label for="f2" class="col-form-control" style="font-size:13px;">
                     <span style="color: red">*</span>F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
                 </label>
-                <input type="text" name="f2" id="f2E" class="form-control" onKeyPress="return soloNumeros(event)">
+                <input type="text" name="f2" id="f2E" class="form-control form-control-sm" onKeyPress="return soloNumeros(event)">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
                 @can('estimulo-meta-edit')
-                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar" style="font-size:13px;"/>
                 @endcan
             </div>
         </div>

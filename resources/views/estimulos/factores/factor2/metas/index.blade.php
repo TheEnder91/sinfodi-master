@@ -16,7 +16,7 @@
         @slot('title_card', 'FACTOR DE CUMPLIMIENTO DE ACUERDO A METAS ALCANZADAS DEL ÁREA(F2)')
         @can('estimulo-meta-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px;">
                     <i class="fa fa-plus"></i> Nueva meta
                 </button>
             </section><br>
@@ -27,17 +27,17 @@
         @endsection
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
-            <label for="cumplimiento" class="col-form-control">
+            <label for="cumplimiento" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span> % CUMPLIMIENTO DE METAS:
             </label>
-            <textarea class="form-control" name="cumplimiento" id="cumplimientoN"></textarea>
-            <label for="f2" class="col-form-control">
+            <textarea class="form-control form-control-sm" name="cumplimiento" id="cumplimientoN"></textarea>
+            <label for="f2" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>F2 = FACTOR X Cumplimiento de Indicadores Institucionales:
             </label>
-            <input type="text" name="f2" id="f2N" class="form-control" onKeyPress="return soloNumeros(event)">
+            <input type="text" name="f2" id="f2N" class="form-control form-control-sm" onKeyPress="return soloNumeros(event)">
             @section('buttons_modal')
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
+                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" style="font-size:13px;"/>
             @endsection
         @endsection
         {{-- Termina modal nuevo registro --}}
@@ -46,22 +46,22 @@
                 <caption>Los valores de esta tabla podrán ser modificados a criterío de la Dirección General.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">% CUMPLIMIENTO DE METAS</th>
-                        <th scope="col">F2= FACTOR x Cumplimiento de Indicadores Institucionales</th>
+                        <th scope="col" style="font-size:13px;">#</th>
+                        <th scope="col" style="font-size:13px;">% CUMPLIMIENTO DE METAS</th>
+                        <th scope="col" style="font-size:13px;">F2= FACTOR x Cumplimiento de Indicadores Institucionales</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-meta-show') || Auth::user()->hasPermissionTo('estimulo-meta-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($metas as $item)
                         <tr>
-                            <th scope="row" class="text-center" width="2%">{{ $item->id }}</th>
-                            <td width="44%" class="text-center">{{ $item->cumplimiento }}</td>
-                            <td width="44%" class="text-center">{{ $item->f2 }}</td>
+                            <th scope="row" class="text-center" width="2%" style="font-size:12px;">{{ $item->id }}</th>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->cumplimiento }}</td>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->f2 }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-meta-show') || Auth::user()->hasPermissionTo('estimulo-meta-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-meta-show')
                                         <a href="javascript:editarMeta({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan

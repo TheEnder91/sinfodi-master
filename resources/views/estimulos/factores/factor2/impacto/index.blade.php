@@ -16,7 +16,7 @@
         @slot('title_card', 'FACTOR DEL NIVEL DE IMPACTO AL DESARROLLO INTITUCIONAL(F2)')
         @can('estimulo-impacto-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px;">
                     <i class="fa fa-plus"></i> Nuevo Nivel de Impacto
                 </button>
             </section><br>
@@ -52,22 +52,22 @@
                 <caption>Listado del factor por nivel de impacto al desarrollo institucional.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">F2 = FACTOR</th>
-                        <th scope="col">Nivel</th>
+                        <th scope="col" style="font-size:13px;">#</th>
+                        <th scope="col" style="font-size:13px;">F2 = FACTOR</th>
+                        <th scope="col" style="font-size:13px;">Nivel</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-impacto-show') || Auth::user()->hasPermissionTo('estimulo-impacto-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($impacto as $item)
                         <tr>
-                            <th scope="row" class="text-center" width="2%">{{ $item->id }}</th>
-                            <td width="44%" class="text-center">{{ $item->factor }}</td>
-                            <td width="44%" class="text-center">{{ $item->nivel }}</td>
+                            <th scope="row" class="text-center" width="2%" style="font-size:12px;">{{ $item->id }}</th>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->factor }}</td>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->nivel }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-impacto-show') || Auth::user()->hasPermissionTo('estimulo-impacto-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-impacto-show')
                                         <a href="javascript:editarImpacto({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
