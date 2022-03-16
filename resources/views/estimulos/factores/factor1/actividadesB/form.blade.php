@@ -1,23 +1,23 @@
 @csrf
 <input type="text" name="id" id="id" hidden>
 
-<label for="" class="col-form-control">
+<label for="" class="col-form-control" style="font-size:13px;">
     <span style="color: red">*</span>Criterio:
 </label>
 <textarea class="form-control" name="nombre" id="nombreE"></textarea>
 
-<label for="" name='id_objetivo'>
+<label for="" name='id_objetivo' style="font-size:13px;">
     <span style="color: red">*</span>Objetivo al que pertenece:
 </label>
 
 <select name="id_objetivo" id="id_objetivoE" class="form-control">
-    <option value="" selected disabled>Seleccione un objetivo...</option>
+    <option value="" selected disabled style="font-size:13px;">Seleccione un objetivo...</option>
     @foreach ($objetivos as $item)
         <option value="{{ $item->id }}">{{ $item->nombre }}</option>
     @endforeach
 </select>
 
-<label for="" name='puntos' class="col-form-control">
+<label for="" name='puntos' class="col-form-control" style="font-size:13px;">
     <span style="color: red">*</span>Punto asginado:
 </label>
 

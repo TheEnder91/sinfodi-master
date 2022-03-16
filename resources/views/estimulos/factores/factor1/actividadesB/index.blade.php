@@ -16,7 +16,7 @@
         @slot('title_card', 'Tabla 1. Actividades B')
         @can('estimulo-actividadB-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px;">
                     <i class="fa fa-plus"></i> Nuevo criterio
                 </button>
             </section><br>
@@ -27,53 +27,53 @@
         @endsection
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
-            <label for="" class="col-form-control">
+            <label for="" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>Criterio:
             </label>
             <textarea class="form-control" name="nombre" id="nombreN"></textarea>
-            <label for="" name='id_objetivo'>
+            <label for="" name='id_objetivo' style="font-size:13px;">
                 <span style="color: red">*</span>Objetivo al que pertenece:
             </label>
             <select name="id_objetivo" id="id_objetivoN" class="form-control">
-                <option value="" selected disabled>Seleccione un objetivo...</option>
+                <option value="" selected disabled style="font-size:13px;">Seleccione un objetivo...</option>
                 @foreach ($objetivos as $item)
                     <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                 @endforeach
             </select>
-            <label for="" name='puntos' class="col-form-control">
+            <label for="" name='puntos' class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>Punto asginado:
             </label>
             <input type="number" name="puntos" class="form-control" onKeyPress="return soloNumeros(event)" id="puntosN">
             <input type="text" name="observaciones" id="observaciones" value="Tabla 1. Actividad B." hidden>
             @section('buttons_modal')
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
+                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" style="font-size:13px;"/>
             @endsection
         @endsection
         {{-- Termina modal nuevo registro --}}
         <div class="table-responsive">
             <table id="tblActividadesB" class="table table-bordered table-striped">
-                <caption>Actividades sustantivas que, ademas, buscan impulsar el trabajo colaborativo, la transferencia de tecnologia, la rentabilidad de los proyectos y contribuyen a alcanzar la autosostentabilidad del centro.</caption>
+                <caption style="font-size:13px;">Actividades sustantivas que, ademas, buscan impulsar el trabajo colaborativo, la transferencia de tecnologia, la rentabilidad de los proyectos y contribuyen a alcanzar la autosostentabilidad del centro.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Criterio</th>
-                        <th scope="col">Objetivo</th>
-                        <th scope="col">Puntos</th>
+                        <th scope="col" style="font-size:13px;">#</th>
+                        <th scope="col" style="font-size:13px;">Criterio</th>
+                        <th scope="col" style="font-size:13px;">Objetivo</th>
+                        <th scope="col" style="font-size:13px;">Puntos</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-actividadB-show') || Auth::user()->hasPermissionTo('estimulo-actividadB-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($datos as $item)
                         <tr>
-                            <th scope="row" width="5%" class="text-center">{{ $item->id }}</td>
-                            <td width="42%">{{ $item->nombre }}</td>
-                            <td width="35%">{{ $item->modulo->nombre }}</td>
-                            <td class="text-center" width="8%">{{ $item->puntos }}</td>
+                            <th scope="row" width="5%" class="text-center" style="font-size:12px;">{{ $item->id }}</td>
+                            <td width="42%" style="font-size:12px;">{{ $item->nombre }}</td>
+                            <td width="35%" style="font-size:12px;">{{ $item->modulo->nombre }}</td>
+                            <td class="text-center" width="8%" style="font-size:12px;">{{ $item->puntos }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-actividadB-show') || Auth::user()->hasPermissionTo('estimulo-actividadB-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-actividadB-show')
                                         <a href="javascript:editarActividadB({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
