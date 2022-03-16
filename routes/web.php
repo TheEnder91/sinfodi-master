@@ -82,12 +82,7 @@ Route::middleware(['login'])->group(function(){
 
 
 
-    /** Rutas para el catalogo de nivel de impacto... */
-    Route::get('/estimulos/factor2/inpacto/listImpacto', [ImpactosController::class, "index"])->name('estimulos.factor2.impacto');
-    Route::post('/estimulos/factor2/inpacto/storeImpacto', [ImpactosController::class, "store"])->name('estimulos.factor2.impacto');
-    Route::get('/estimulos/factor2/inpacto/showImpacto/{id}', [ImpactosController::class, "show"])->name('estimulos.factor2.impacto');
-    Route::put('/estimulos/factor2/inpacto/updateImpacto/{id}', [ImpactosController::class, "update"])->name('estimulos.factor2.impacto');
-    Route::delete('/estimulos/factor2/inpacto/destroyImpacto/{id}', [ImpactosController::class, "destroy"])->name('estimulos.factor2.impacto');
+
     /** Rutas para el catalogo de desempeño... */
     Route::get('/estimulos/factor3/desempeño/listDesempeño', [DesempeñoController::class, "index"])->name('estimulos.factor3.desempeño');
     Route::post('/estimulos/factor3/desempeño/storeDesempeño', [DesempeñoController::class, "store"])->name('estimulos.factor3.desempeño');
@@ -201,6 +196,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/factor2/metas/showMetas/{id}', [MetasController::class, "show"])->name('estimulos.factor2.metas');
     Route::put('/estimulos/factor2/metas/updateMetas/{id}', [MetasController::class, "update"])->name('estimulos.factor2.metas');
     Route::delete('/estimulos/factor2/metas/destroyMetas/{id}', [MetasController::class, "destroy"])->name('estimulos.factor2.metas');
+    /** Rutas para el catalogo de nivel de impacto... */
+    Route::get('/estimulos/factor2/inpacto/listImpacto', [ImpactosController::class, "index"])->name('estimulos.factor2.impacto');
+    Route::post('/estimulos/factor2/inpacto/storeImpacto', [ImpactosController::class, "store"])->name('estimulos.factor2.impacto');
+    Route::get('/estimulos/factor2/inpacto/showImpacto/{id}', [ImpactosController::class, "show"])->name('estimulos.factor2.impacto');
+    Route::put('/estimulos/factor2/inpacto/updateImpacto/{id}', [ImpactosController::class, "update"])->name('estimulos.factor2.impacto');
+    Route::delete('/estimulos/factor2/inpacto/destroyImpacto/{id}', [ImpactosController::class, "destroy"])->name('estimulos.factor2.impacto');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');

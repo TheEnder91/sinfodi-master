@@ -10,15 +10,15 @@
             </div>
             <div class="modal-body">
                 <input type="text" name="id" id="id" hidden>
-                <label for="factor" class="col-form-control">
+                <label for="factor" class="col-form-control" style="font-size:13px;">
                     <span style="color: red">*</span>F2 = FACTOR:
                 </label>
-                <input type="text" name="factor" id="factorE" class="form-control" onKeyPress="return soloNumeros(event)">
-                <label for="nivel" class="col-form-control">
+                <input type="text" name="factor" id="factorE" class="form-control form-control-sm" onKeyPress="return soloNumeros(event)">
+                <label for="nivel" class="col-form-control" style="font-size:13px;">
                     <span style="color: red">*</span>Nivel:
                 </label>
-                <select name="nivel" id="nivelE" class="form-control">
-                    <option value="" selected disabled>Seleccione un nivel...</option>
+                <select name="nivel" id="nivelE" class="form-control form-control-sm">
+                    <option value="" selected disabled style="font-size:13px;">Seleccione un nivel...</option>
                     <option value="Alto">Alto</option>
                     <option value="Medio">Medio</option>
                     <option value="Bajo">Bajo</option>
@@ -26,9 +26,9 @@
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
                 @can('estimulo-impacto-edit')
-                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar" style="font-size:13px;"/>
                 @endcan
             </div>
         </div>
