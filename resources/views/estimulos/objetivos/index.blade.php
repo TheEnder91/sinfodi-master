@@ -16,7 +16,7 @@
         @slot('title_card', 'Listado de objetivos')
         @can('estimulo-objetivo-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px">
                     <i class="fa fa-plus"></i> Nuevo objetivo
                 </button>
             </section><br>
@@ -28,14 +28,14 @@
         @section('content_modal')
             {{-- @include('estimulos.objetivos.form') --}}
             <div class="col-12">
-                <label class="col-form-label">
+                <label class="col-form-label" style="font-size:13px">
                     <span style="color: red">*</span>Nombre del objetivo:
                 </label>
-                <input type="text" class="form-control txtNomObjetivo" name="nombre" id="txtNomObjetivo">
+                <input type="text" class="form-control form-control-sm txtNomObjetivo" name="nombre" id="txtNomObjetivo">
             </div>
             @section('buttons_modal')
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px">Cancelar</button>
+                <input type="button" class="btn btn-success" style="font-size:13px" value="Guardar" id="btnGuardar"/>
             @endsection
         @endsection
         {{-- Termina modal nuevo registro --}}
@@ -44,20 +44,20 @@
                 <caption>Listado de objetivos establecidos para la evaluación.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre del objetivo</th>
+                        <th scope="col" style="font-size:13px">#</th>
+                        <th scope="col" style="font-size:13px">Nombre del objetivo</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-objetivo-show') || Auth::user()->hasPermissionTo('estimulo-objetivo-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($datos as $item)
                         <tr>
-                            <th scope="row" width="5%" class="text-center">{{ $item->id }}</td>
-                            <td width="85%">{{ $item->nombre }}</td>
+                            <th scope="row" width="5%" class="text-center" style="font-size:12px;">{{ $item->id }}</td>
+                            <td width="85%" style="font-size:12px;">{{ $item->nombre }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-objetivo-show') || Auth::user()->hasPermissionTo('estimulo-objetivo-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-objetivo-show')
                                         <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan

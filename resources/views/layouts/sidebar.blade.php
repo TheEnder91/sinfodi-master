@@ -35,7 +35,7 @@
                 @can('estimulo-lineamientos-index')
                     <li class="nav-item">
                         <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/lineamientos/viewLineamientos') }}" class="nav-link {{ isRouteActive('estimulos.lineamientos') }}">
-                            <i class="nav-icon fa fa-file-invoice"></i>
+                            <i class="far fa-arrow-alt-circle-right"></i>
                             <p>Lineamientos</p>
                         </a>
                     </li>
