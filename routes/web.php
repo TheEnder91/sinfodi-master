@@ -75,8 +75,8 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/colaboracion/getColaboradores/{id}/{claveEmpleado}/{year}', [ColaboracionController::class, "getColaboradores"])->name('modulos.colaboracion');
     Route::put('/modulos/colaboracion/updateColaboracion/{id}', [ColaboracionController::class, "update"])->name('modulos.colaboracion');
     Route::delete('/modulos/colaboracion/destroyColaboracion/{id}', [ColaboracionController::class, "destroy"])->name('modulos.colaboracion');
-    //Ruta para visualizar los lineamientos de estimulos...
-    Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
+
+    /** Rutas para las evaluaciones... */
     //Rutas para el catalogo de objetivos...
     Route::get('/estimulos/objetivos/listObjetivos', [ObjetivosController::class, "index"])->name('estimulos.objetivos');
     Route::post('/estimulos/objetivos/storeObjetivo', [ObjetivosController::class, "store"])->name('estimulos.objetivos');
@@ -174,7 +174,6 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/searchSostentabilidad/{year}', [SostentabilidadDGController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad', [SostentabilidadDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostentabilidadDGController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
-
     /** Rutas para ls evaluaciones de estimulos Dirección general->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/listTransferencia', [TransferenciaDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
@@ -195,6 +194,8 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
 
     /** Rutas para las evaluaciones... */
+    //Ruta para visualizar los lineamientos de estimulos...
+    Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
