@@ -83,12 +83,7 @@ Route::middleware(['login'])->group(function(){
 
 
 
-    /** Rutas para el catalogo de desempeño... */
-    Route::get('/estimulos/factor3/desempeño/listDesempeño', [DesempeñoController::class, "index"])->name('estimulos.factor3.desempeño');
-    Route::post('/estimulos/factor3/desempeño/storeDesempeño', [DesempeñoController::class, "store"])->name('estimulos.factor3.desempeño');
-    Route::get('/estimulos/factor3/desempeño/showDesempeño/{id}', [DesempeñoController::class, "show"])->name('estimulos.factor3.desempeño');
-    Route::put('/estimulos/factor3/desempeño/updateDesempeño/{id}', [DesempeñoController::class, "update"])->name('estimulos.factor3.desempeño');
-    Route::delete('/estimulos/factor3/desempeño/destroyDesempeño/{id}', [DesempeñoController::class, "destroy"])->name('estimulos.factor3.desempeño');
+
     /** Rutas para las evaluaciones de estimulos responsabilidades->Directores... */
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/listDirectores', [DirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/consultarDirectores/{clave}/{year}', [DirectoresController::class, "consultar"])->name('estimulos.evaluaciones.responsabilidades.directores');
@@ -202,6 +197,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/factor2/inpacto/showImpacto/{id}', [ImpactosController::class, "show"])->name('estimulos.factor2.impacto');
     Route::put('/estimulos/factor2/inpacto/updateImpacto/{id}', [ImpactosController::class, "update"])->name('estimulos.factor2.impacto');
     Route::delete('/estimulos/factor2/inpacto/destroyImpacto/{id}', [ImpactosController::class, "destroy"])->name('estimulos.factor2.impacto');
+    /** Rutas para el catalogo de desempeño... */
+    Route::get('/estimulos/factor3/desempeño/listDesempeño', [DesempeñoController::class, "index"])->name('estimulos.factor3.desempeño');
+    Route::post('/estimulos/factor3/desempeño/storeDesempeño', [DesempeñoController::class, "store"])->name('estimulos.factor3.desempeño');
+    Route::get('/estimulos/factor3/desempeño/showDesempeño/{id}', [DesempeñoController::class, "show"])->name('estimulos.factor3.desempeño');
+    Route::put('/estimulos/factor3/desempeño/updateDesempeño/{id}', [DesempeñoController::class, "update"])->name('estimulos.factor3.desempeño');
+    Route::delete('/estimulos/factor3/desempeño/destroyDesempeño/{id}', [DesempeñoController::class, "destroy"])->name('estimulos.factor3.desempeño');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');

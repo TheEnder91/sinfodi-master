@@ -16,7 +16,7 @@
         @slot('title_card', 'FACTOR DE CUMPLIMIENTO DE ACUERDO A LA EVALUACION CUALITATIVA DE DESEMPEÑO(F3)')
         @can('estimulo-desempeño-create')
             <section class="text-right">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevo" style="font-size:13px;">
                     <i class="fa fa-plus"></i> Nuevo Factor por Desempeño
                 </button>
             </section><br>
@@ -27,41 +27,41 @@
         @endsection
         @section('content_modal')
             <input type="text" name="id" id="id" hidden>
-            <label for="resultados" class="col-form-control">
+            <label for="resultados" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>RESULTADO DE LA EVALUACION:
             </label>
-            <input type="text" name="resultados" id="resultadosN" class="form-control">
-            <label for="f3" class="col-form-control">
+            <input type="text" name="resultados" id="resultadosN" class="form-control form-control-sm">
+            <label for="f3" class="col-form-control" style="font-size:13px;">
                 <span style="color: red">*</span>F3 = FACTOR X Cumplimiento de Metas de Desempeño Cualitativo:
             </label>
-            <input type="text" name="f3" id="f3N" class="form-control" onKeyPress="return soloNumeros(event)">
+            <input type="text" name="f3" id="f3N" class="form-control form-control-sm" onKeyPress="return soloNumeros(event)">
             @section('buttons_modal')
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" style="font-size:13px;">Cancelar</button>
+                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" style="font-size:13px;"/>
             @endsection
         @endsection
         {{-- Termina modal nuevo registro --}}
         <div class="table-responsive">
             <table id="tblDesempeño" class="table table-bordered table-striped">
-                <caption>Los valores de esta tabla podrán ser modificados a criterío de la Dirección General.</caption>
+                <caption style="font-size:13px;">Los valores de esta tabla podrán ser modificados a criterío de la Dirección General.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">#</th>
-                        <th scope="col">RESULTADO DE LA EVALUACION</th>
-                        <th scope="col">F3 = FACTOR x Cumplimiento de Metas de Desempeño Cualitativo</th>
+                        <th scope="col" style="font-size:13px;">#</th>
+                        <th scope="col" style="font-size:13px;">RESULTADO DE LA EVALUACION</th>
+                        <th scope="col" style="font-size:13px;">F3 = FACTOR x Cumplimiento de Metas de Desempeño Cualitativo</th>
                         @if (Auth::user()->hasPermissionTo('estimulo-desempeño-show') || Auth::user()->hasPermissionTo('estimulo-desempeño-delete'))
-                            <th scope="col">Acciones</th>
+                            <th scope="col" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($desempeño as $item)
                         <tr>
-                            <th scope="row" class="text-center" width="2%">{{ $item->id }}</th>
-                            <td width="44%" class="text-center">{{ $item->resultados }}</td>
-                            <td width="44%" class="text-center">{{ $item->f3 }}</td>
+                            <th scope="row" class="text-center" width="2%" style="font-size:12px;">{{ $item->id }}</th>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->resultados }}</td>
+                            <td width="44%" class="text-center" style="font-size:12px;">{{ $item->f3 }}</td>
                             @if (Auth::user()->hasPermissionTo('estimulo-desempeño-show') || Auth::user()->hasPermissionTo('estimulo-desempeño-delete'))
-                                <td class="text-center" width="10%">
+                                <td class="text-center" width="10%" style="font-size:12px;">
                                     @can('estimulo-desempeño-show')
                                         <a href="javascript:editarObjetivo({{ $item->id }})"><i class="fa fa-edit"></i></a>
                                     @endcan
