@@ -24,63 +24,34 @@ class CoordinadoresController extends Controller
      */
     public function index()
     {
-        $queryResponsabilidades = DB::table('sinfodi_responsabilidades')
-                    ->selectRaw('nombre, puntos')
-                    ->where('nombre', 'LIKE', '%coordinador%')
-                    ->take(1)
-                    ->get();
-        $ultimoAño = date('Y') - 1;
-        $criterio = "Coordinadores";
-        $status = 0;
-        $queryEvaluados = DB::table('sinfodi_evaluados')
-                            ->select('clave', 'nombre', 'usuario')
+        return view('estimulos.evaluaciones.responsabilidades.coordinadores.index');
+    }
+
+    public function existe($year, $direccion){
+        $existe = DB::table('sinfodi_evaluacion_responsabilidades')->where('direccion', '=', $direccion)->where('year', '=', $year)->count();
+        if($existe == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    public static function searchCoordinadores(){
+        $queryDirectores = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'nombre', 'usuario', 'puesto')
                             ->where('puesto', '=', 'Coordinador')
                             ->get();
-        foreach($queryEvaluados as $itemEvaluados){
-            foreach($queryResponsabilidades as $itemResponsabilidades){
-                $datos[] = ['clave'=>$itemEvaluados->clave,
-                            'nombre'=>$itemEvaluados->nombre,
-                            'direccion'=>$criterio,
-                            'responsabilidad' =>$itemResponsabilidades->nombre,
-                            'puntos'=>$itemResponsabilidades->puntos,
-                            'year'=>$ultimoAño,
-                            'username'=>$itemEvaluados->usuario,
-                            'status'=>$status,
-                ];
-            }
-        }
-        self::saveEvaluacionesCoordinadores($datos, $ultimoAño, $criterio);
-        $guardadosDatos = DB::table('sinfodi_evaluar_responsabilidades')
-                                ->select('clave', 'nombre', 'direccion', 'responsabilidad', 'puntos', 'year', 'username')
-                                ->where('direccion', '=', 'Coordinadores')
-                                ->get();
-        return view('estimulos.evaluaciones.responsabilidades.coordinadores.index', compact('guardadosDatos'));
+        return $queryDirectores;
     }
 
-    public static function saveEvaluacionesCoordinadores($datos, $añoEvaluado, $criterio){
-        $queryEvaluaciones = DB::table('sinfodi_evaluar_responsabilidades')
-                                ->select('clave')
-                                ->where('direccion', '=', $criterio)
-                                ->get();
-        if(count($queryEvaluaciones) >= 1){
-            if(DB::table('sinfodi_evaluar_responsabilidades')->where('direccion', '=', $criterio)->delete()){
-                $saveEvaluaciones = new EvaluarResponsabilidades();
-                $saveEvaluaciones->insert($datos);
-                return true;
-            }else{
-                return "Hubo un problema, recarge la pagina o llame a soporte.";
-            }
-        }else{
-            $saveEvaluaciones = new EvaluarResponsabilidades();
-            $saveEvaluaciones->insert($datos);
-            return true;
-        }
-    }
-
-    /** Consultar personal para consultar a los directores guardardos... */
-    public function consultar($clave, $year){
-        $coordinadores = DB::table('sinfodi_evaluacion_responsabilidades')->where('clave', $clave)->where('year', $year)->count();
-        return $coordinadores;
+    public static function puntos(){
+        $queryPuntos = DB::table('sinfodi_responsabilidades')
+                            ->select('puntos')
+                            ->where('nombre', 'like', 'Coordinador%')
+                            ->get();
+        return $queryPuntos;
     }
 
     /**
@@ -91,14 +62,19 @@ class CoordinadoresController extends Controller
      */
     public function store(Request $request)
     {
-        $coordinadores = EvaluacionResponsabilidades::create($request->all());
+        $nuevo = new EvaluacionResponsabilidades();
+        $nuevo->create($request->all());
         $data['response'] = true;
         return $this->response($data);
     }
 
-    /** Consultar personal para ver el historial de los directores guardardos... */
-    public function historial(){
-        $coordinadores = DB::table('sinfodi_evaluacion_responsabilidades')->where('direccion', '=', 'Coordinadores')->get();
-        return view('estimulos.evaluaciones.responsabilidades.coordinadores.historial', compact('coordinadores'));
+    public function getCoordinadores($year){
+        $queryDirectores = DB::table('sinfodi_evaluacion_responsabilidades')
+                                ->select('*')
+                                ->where('year', '=', $year)
+                                ->where('direccion', '=', 'Coordinador')
+                                ->get();
+        $data['response'] = $queryDirectores;
+        return $this->response($data);
     }
 }

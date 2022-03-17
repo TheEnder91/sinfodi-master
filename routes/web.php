@@ -78,13 +78,6 @@ Route::middleware(['login'])->group(function(){
 
     /** Rutas para las evaluaciones... */
 
-
-
-    /** Rutas para las evaluaciones de estimulos responsabilidades->Coordinadores... */
-    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/listCoordinadores', [CoordinadoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
-    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/consultarCoordinadores/{clave}/{year}', [CoordinadoresController::class, "consultar"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
-    Route::post('/estimulos/evaluaciones/responsabilidades/Coordinadores/storeCoordinadores', [CoordinadoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
-    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/historialCoordinadores', [CoordinadoresController::class, "historial"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     /** Rutas para las evaluaciones de estimulos responsabilidades->Personal de apoyo... */
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo', [PersonalApoyoController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/consultarPersonalApoyo/{clave}/{year}', [PersonalApoyoController::class, "consultar"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
@@ -203,6 +196,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/existe/{year}/{direccion}', [SubdirectoresController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::post('/estimulos/evaluaciones/responsabilidades/subdirectores/store', [SubdirectoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/getSubdirectores/{year}', [SubdirectoresController::class, "getSubdirectores"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
+    /** Rutas para las evaluaciones de estimulos responsabilidades->Coordinadores... */
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/listCoordinadores', [CoordinadoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/existe/{year}/{direccion}', [CoordinadoresController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/searchCoordinadores', [CoordinadoresController::class, "searchCoordinadores"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/puntos', [CoordinadoresController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::post('/estimulos/evaluaciones/responsabilidades/Coordinadores/store', [CoordinadoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/getCoordinadores/{year}', [CoordinadoresController::class, "getCoordinadores"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
