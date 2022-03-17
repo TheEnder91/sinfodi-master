@@ -24,63 +24,34 @@ class SubdirectoresController extends Controller
      */
     public function index()
     {
-        $queryResponsabilidades = DB::table('sinfodi_responsabilidades')
-                    ->selectRaw('nombre, puntos')
-                    ->where('nombre', 'LIKE', '%subdirector%')
-                    ->take(1)
-                    ->get();
-        $ultimoAño = date('Y') - 1;
-        $criterio = "Subdirectores";
-        $status = 0;
-        $queryEvaluados = DB::table('sinfodi_evaluados')
-                            ->select('clave', 'nombre', 'usuario')
+        return view('estimulos.evaluaciones.responsabilidades.subdirectores.index');
+    }
+
+    public static function searchSubdirectores(){
+        $querySubdirectores = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'nombre', 'usuario', 'puesto')
                             ->where('puesto', '=', 'Subdirector')
                             ->get();
-        foreach($queryEvaluados as $itemEvaluados){
-            foreach($queryResponsabilidades as $itemResponsabilidades){
-                $datos[] = ['clave'=>$itemEvaluados->clave,
-                            'nombre'=>$itemEvaluados->nombre,
-                            'direccion'=>$criterio,
-                            'responsabilidad' =>$itemResponsabilidades->nombre,
-                            'puntos'=>$itemResponsabilidades->puntos,
-                            'year'=>$ultimoAño,
-                            'username'=>$itemEvaluados->usuario,
-                            'status'=>$status,
-                ];
-            }
-        }
-        self::saveEvaluacionesSubdirectores($datos, $ultimoAño, $criterio);
-        $guardadosDatos = DB::table('sinfodi_evaluar_responsabilidades')
-                                ->select('clave', 'nombre', 'direccion', 'responsabilidad', 'puntos', 'year', 'username')
-                                ->where('direccion', '=', 'Subdirectores')
-                                ->get();
-        return view('estimulos.evaluaciones.responsabilidades.subdirectores.index', compact('guardadosDatos'));
+        return $querySubdirectores;
     }
 
-    public static function saveEvaluacionesSubdirectores($datos, $añoEvaluado, $criterio){
-        $queryEvaluaciones = DB::table('sinfodi_evaluar_responsabilidades')
-                                ->select('clave')
-                                ->where('direccion', '=', $criterio)
-                                ->get();
-        if(count($queryEvaluaciones) >= 1){
-            if(DB::table('sinfodi_evaluar_responsabilidades')->where('direccion', '=', $criterio)->delete()){
-                $saveEvaluaciones = new EvaluarResponsabilidades();
-                $saveEvaluaciones->insert($datos);
-                return true;
-            }else{
-                return "Hubo un problema, recarge la pagina o llame a soporte.";
-            }
+    public static function puntos(){
+        $queryPuntos = DB::table('sinfodi_responsabilidades')
+                            ->select('puntos')
+                            ->where('nombre', 'like', 'Subdirector%')
+                            ->get();
+        return $queryPuntos;
+    }
+
+    public function existe($year, $direccion){
+        $existe = DB::table('sinfodi_evaluacion_responsabilidades')->where('direccion', '=', $direccion)->where('year', '=', $year)->count();
+        if($existe == 0){
+            $count = 0;
         }else{
-            $saveEvaluaciones = new EvaluarResponsabilidades();
-            $saveEvaluaciones->insert($datos);
-            return true;
+            $count = 1;
         }
-    }
-
-    /** Consultar personal para consultar a los directores guardardos... */
-    public function consultar($clave, $year){
-        $subdirectores = DB::table('sinfodi_evaluacion_responsabilidades')->where('clave', $clave)->where('year', $year)->count();
-        return $subdirectores;
+        $data['response'] = $count;
+        return $this->response($data);
     }
 
     /**
@@ -91,14 +62,19 @@ class SubdirectoresController extends Controller
      */
     public function store(Request $request)
     {
-        $subdirectores = EvaluacionResponsabilidades::create($request->all());
+        $nuevo = new EvaluacionResponsabilidades();
+        $nuevo->create($request->all());
         $data['response'] = true;
         return $this->response($data);
     }
 
-    /** Consultar personal para ver el historial de los directores guardardos... */
-    public function historial(){
-        $subdirectores = DB::table('sinfodi_evaluacion_responsabilidades')->where('direccion', '=', 'Subdirectores')->get();
-        return view('estimulos.evaluaciones.responsabilidades.subdirectores.historial', compact('subdirectores'));
+    public function getSubdirectores($year){
+        $querySubdirectores = DB::table('sinfodi_evaluacion_responsabilidades')
+                                ->select('*')
+                                ->where('year', '=', $year)
+                                ->where('direccion', '=', 'Subdirector')
+                                ->get();
+        $data['response'] = $querySubdirectores;
+        return $this->response($data);
     }
 }
