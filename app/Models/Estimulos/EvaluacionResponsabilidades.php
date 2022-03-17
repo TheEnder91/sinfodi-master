@@ -11,6 +11,6 @@ class EvaluacionResponsabilidades extends Model
     public $table = 'sinfodi_evaluacion_responsabilidades';
 
     protected $fillable = [
-        'clave', 'nombre', 'direccion', 'responsabilidad','puntos', 'year', 'username', 'status',
+        'clave', 'nombre', 'direccion', 'responsabilidad','puntos', 'year', 'username',
     ];
 }
