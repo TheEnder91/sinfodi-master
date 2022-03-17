@@ -35,7 +35,7 @@
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
                         <th scope="col" style="font-size:13px;">Nombre</th>
-                        <th scope="col" style="font-size:13px;">Puesto</th>
+                        <th scope="col" style="font-size:13px;">Responsabilidad</th>
                         <th scope="col" style="font-size:13px;">Puntos</th>
                         <th scope="col" style="font-size:13px;">Año</th>
                     </tr>
@@ -111,54 +111,54 @@
                             },
                         });
                     }
-                },
-            });
-            consultarDatos({
-                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/getSubdirectores/" + año,
-                type: 'GET',
-                dataType: 'json',
-                ok: function(getSubdirectores){
-                    var getSubdirectores = getSubdirectores.response;
-                    var row = "";
-                    // console.log(getSubdirectores);
-                    for(var i = 0; i < getSubdirectores.length; i++){
-                        var dataSubdirectores = getSubdirectores[i];
-                        // console.log(dataSubdirectores);
-                        var authUser = '<?= Auth::user()->usuario ?>';
-                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-subdirectores-index") ?>';
-                        if(dataSubdirectores.username == authUser || permissions == 1){
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataSubdirectores.clave + '</td>';
-                                row += '<td width="77%" style="font-size:12px;">' + dataSubdirectores.nombre + "</td>";
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataSubdirectores.puntos) + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataSubdirectores.puntos) + '</td>';
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataSubdirectores.year + '</td>';
-                                row += "</tr>";
-                        }
-                    }
-                    if ($.fn.dataTable.isDataTable("#tblSubdirectores")) {
-                        tblDifusionDivulgacion = $("#tblSubdirectores").DataTable();
-                        tblDifusionDivulgacion.destroy();
-                    }
-                    $('#tblSubdirectores > tbody').html('');
-                    $('#tblSubdirectores > tbody').append(row);
-                    $('#tblSubdirectores').DataTable({
-                        "order":[[0, "asc"]],
-                        "language":{
-                          "lengthMenu": "Mostrar _MENU_ registros por página.",
-                          "info": "Página _PAGE_ de _PAGES_",
-                          "infoEmpty": "No se encontraron registros.",
-                          "infoFiltered": "(filtrada de _MAX_ registros)",
-                          "loadingRecords": "Cargando...",
-                          "processing":     "Procesando...",
-                          "search": "Buscar:",
-                          "zeroRecords":    "No se encontraron registros.",
-                          "paginate": {
-                                          "next":       ">",
-                                          "previous":   "<"
-                                      },
+                    consultarDatos({
+                        action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/getSubdirectores/" + año,
+                        type: 'GET',
+                        dataType: 'json',
+                        ok: function(getSubdirectores){
+                            var getSubdirectores = getSubdirectores.response;
+                            var row = "";
+                            // console.log(getSubdirectores);
+                            for(var i = 0; i < getSubdirectores.length; i++){
+                                var dataSubdirectores = getSubdirectores[i];
+                                // console.log(dataSubdirectores);
+                                var authUser = '<?= Auth::user()->usuario ?>';
+                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-subdirectores-index") ?>';
+                                if(dataSubdirectores.username == authUser || permissions == 1){
+                                        row += "<tr>";
+                                        row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataSubdirectores.clave + '</td>';
+                                        row += '<td width="62%" style="font-size:12px;">' + dataSubdirectores.nombre.toUpperCase() + "</td>";
+                                        row += '<td class="text-center" width="20%" style="font-size:12px;">' + dataSubdirectores.responsabilidad.toUpperCase() + '</td>';
+                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataSubdirectores.puntos) + '</td>';
+                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataSubdirectores.year + '</td>';
+                                        row += "</tr>";
+                                }
+                            }
+                            if ($.fn.dataTable.isDataTable("#tblSubdirectores")) {
+                                tblDifusionDivulgacion = $("#tblSubdirectores").DataTable();
+                                tblDifusionDivulgacion.destroy();
+                            }
+                            $('#tblSubdirectores > tbody').html('');
+                            $('#tblSubdirectores > tbody').append(row);
+                            $('#tblSubdirectores').DataTable({
+                                "order":[[0, "asc"]],
+                                "language":{
+                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
+                                  "info": "Página _PAGE_ de _PAGES_",
+                                  "infoEmpty": "No se encontraron registros.",
+                                  "infoFiltered": "(filtrada de _MAX_ registros)",
+                                  "loadingRecords": "Cargando...",
+                                  "processing":     "Procesando...",
+                                  "search": "Buscar:",
+                                  "zeroRecords":    "No se encontraron registros.",
+                                  "paginate": {
+                                                  "next":       ">",
+                                                  "previous":   "<"
+                                              },
+                                },
+                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                            });
                         },
-                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });
