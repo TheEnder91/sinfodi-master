@@ -29,6 +29,17 @@ class DirectoresController extends Controller
         return view('estimulos.evaluaciones.responsabilidades.directores.index');
     }
 
+    public function existe($year, $direccion){
+        $existe = DB::table('sinfodi_evaluacion_responsabilidades')->where('direccion', '=', $direccion)->where('year', '=', $year)->count();
+        if($existe == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
     public static function searchDirectores(){
         $queryDirectores = DB::table('sinfodi_evaluados')
                             ->select('clave', 'nombre', 'usuario', 'puesto')
