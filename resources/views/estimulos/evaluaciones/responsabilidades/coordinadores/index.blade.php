@@ -30,6 +30,7 @@
         </div><br>
         <div class="table-responsive">
             <table id="tblCoordinadores" class="table table-bordered table-striped">
+                <caption style="font-size:13px;">Listado de coordinadores y sus respectivos puntos.</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
