@@ -18,20 +18,20 @@
         <div class="row">
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtNomRol"><span style="color: red">*</span>Nombre del rol:</label>
-                    <input id="txtNomRol" autocomplete="off" type="text" class="form-control">
+                    <label class="control-label" for="txtNomRol" style="font-size:13px;"><span style="color: red">*</span>Nombre del rol:</label>
+                    <input id="txtNomRol" autocomplete="off" type="text" class="form-control form-control-sm">
                 </div>
             </div>
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtSlug"><span style="color: red">*</span>Slug:</label>
-                    <input id="txtSlug" autocomplete="off" type="text" class="form-control">
+                    <label class="control-label" for="txtSlug" style="font-size:13px;"><span style="color: red">*</span>Slug:</label>
+                    <input id="txtSlug" autocomplete="off" type="text" class="form-control form-control-sm">
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label class="control-label" for="txtDesRol"><span style="color: red">*</span>Descripción del rol:</label>
-                    <input id="txtDesRol" autocomplete="off" type="text" class="form-control">
+                    <label class="control-label" for="txtDesRol" style="font-size:13px;"><span style="color: red">*</span>Descripción del rol:</label>
+                    <input id="txtDesRol" autocomplete="off" type="text" class="form-control form-control-sm">
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                                 @foreach ($permissionsPanelControl as $permission)
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                                        <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
+                                        <label class="custom-control-label" for="permission_{{ $permission->id }}" style="font-size:13px;">{{ $permission->id }} - {{ $permission->slug }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -62,7 +62,7 @@
                                 @foreach ($permissionsEstimulos as $permission)
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input permissions" name="permission[]" id="permission_{{ $permission->id }}" value="{{ $permission->id }}">
-                                        <label class="custom-control-label" for="permission_{{ $permission->id }}">{{ $permission->id }} - {{ $permission->slug }}</label>
+                                        <label class="custom-control-label" for="permission_{{ $permission->id }}" style="font-size:13px;">{{ $permission->id }} - {{ $permission->slug }}</label>
                                     </div>
                                 @endforeach
                             </div>
@@ -74,8 +74,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="float-right">
-                    <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles') }}" class="btn btn-outline-danger">Cancelar</a>
-                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar"/>
+                    <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listRoles') }}" class="btn btn-outline-danger" style="font-size:13px;">Cancelar</a>
+                    <input type="button" class="btn btn-success" value="Guardar" id="btnGuardar" style="font-size:13px;"/>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
         @slot('title_card', 'Listado de roles')
         @can('admin-role-create')
             <section class="text-right">
-                <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/createRol') }}" class="btn btn-primary" role="button" aria-disabled="true">
+                <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/createRol') }}" style="font-size:13px;" class="btn btn-primary" role="button" aria-disabled="true">
                     <i class="fa fa-plus"></i> Nuevo registro
                 </a>
             </section><br>
@@ -26,26 +26,26 @@
                 <caption>Listado de roles</caption>
                 <thead>
                     <tr class="text-center">
-                        <th width="5%">#</th>
-                        <th>Nombre</th>
-                        <th>Slug</th>
-                        <th>Descripción</th>
-                        <th>Fecha de creación</th>
+                        <th width="5%" style="font-size:13px;">#</th>
+                        <th style="font-size:13px;">Nombre</th>
+                        <th style="font-size:13px;">Slug</th>
+                        <th style="font-size:13px;">Descripción</th>
+                        <th style="font-size:13px;">Fecha de creación</th>
                         @if (Auth::user()->hasPermissionTo('admin-role-show') || Auth::user()->hasPermissionTo('admin-role-destroy'))
-                            <th>Acciones</th>
+                            <th style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($rows as $item)
                         <tr class="text-center">
-                            <th scope="row">{{ $item->id }}</th>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->slug }}</td>
-                            <td class="text-left">{{ $item->description }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <th scope="row" style="font-size:12px;">{{ $item->id }}</th>
+                            <td style="font-size:12px;">{{ $item->name }}</td>
+                            <td style="font-size:12px;">{{ $item->slug }}</td>
+                            <td style="font-size:12px;" class="text-left">{{ $item->description }}</td>
+                            <td style="font-size:12px;">{{ $item->created_at }}</td>
                             @if (Auth::user()->hasPermissionTo('admin-role-show') || Auth::user()->hasPermissionTo('admin-role-destroy'))
-                                <td>
+                                <td style="font-size:12px;">
                                     @can('admin-role-show')
                                         <a href="javascript:getUrlToken('/panelControl/showRol/{{ $item->id }}', true)"><i class="fa fa-edit"></i></a>
                                     @endcan
