@@ -80,9 +80,14 @@ Route::middleware(['login'])->group(function(){
 
     /** Rutas para las evaluaciones de estimulos responsabilidades->Personal de apoyo... */
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo', [PersonalApoyoController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/consultarPersonalApoyo/{clave}/{year}', [PersonalApoyoController::class, "consultar"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-    Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/storePersonalApoyo', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/historialPersonalApoyo', [PersonalApoyoController::class, "historial"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/existe/{year}/{direccion}', [PersonalApoyoController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/searchPersonalApoyo', [PersonalApoyoController::class, "searchPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/puntos', [PersonalApoyoController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/store', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/{year}', [PersonalApoyoController::class, "getPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    // Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/consultarPersonalApoyo/{clave}/{year}', [PersonalApoyoController::class, "consultar"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    // Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/storePersonalApoyo', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    // Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/historialPersonalApoyo', [PersonalApoyoController::class, "historial"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
