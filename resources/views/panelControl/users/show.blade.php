@@ -20,14 +20,14 @@
         <div class="row">
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtNomUser">Nombre del usuario:</label>
-                    <input id="txtNomUser" autocomplete="off" type="text" class="form-control" value="{{ $row->nombre }}" readonly>
+                    <label class="control-label" for="txtNomUser" style="font-size:13px;">Nombre del usuario:</label>
+                    <input id="txtNomUser" autocomplete="off" type="text" class="form-control form-control-sm" value="{{ $row->nombre }}" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-2">
                 <div class="form-group">
-                    <label class="control-label" for="txtUser">Usuario:</label>
-                    <input id="txtUser" autocomplete="off" type="text" class="form-control" value="{{ $row->usuario }}" readonly>
+                    <label class="control-label" for="txtUser" style="font-size:13px;">Usuario:</label>
+                    <input id="txtUser" autocomplete="off" type="text" class="form-control form-control-sm" value="{{ $row->usuario }}" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-7">
@@ -41,7 +41,7 @@
                                         checked
                                     @endif
                                 >
-                                <label class="custom-control-label" for="rol{{ $itemRoles->id }}">{{ $itemRoles->id }} - {{ $itemRoles->description }}</label>
+                                <label class="custom-control-label" for="rol{{ $itemRoles->id }}" style="font-size:13px;">{{ $itemRoles->id }} - {{ $itemRoles->description }}</label>
                             </div>
                         @endforeach
                     </div>
@@ -51,9 +51,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="float-right">
-                    <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers') }}" class="btn btn-outline-danger">Cancelar</a>
+                    <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers') }}" class="btn btn-outline-danger" style="font-size:13px;">Cancelar</a>
                     @can('admin-user-edit')
-                        <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar"/>
+                        <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar" style="font-size:13px;"/>
                     @endcan
                 </div>
             </div>

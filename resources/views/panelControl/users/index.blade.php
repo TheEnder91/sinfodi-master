@@ -16,27 +16,27 @@
         @slot('title_card', 'Listado de usuarios')
         <div class="table-responsive" id="central">
             <table id="tblUsers" class="table table-bordered table-striped">
-                <caption>Lisado de usuarios a los cuales se les dara un rol.</caption>
+                <caption style="font-size:13px;">Lisado de usuarios a los cuales se les dara un rol.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th width="5%">#</th>
-                        <th>Nombre</th>
-                        <th>Usuario</th>
-                        <th>Fecha de acceso</th>
+                        <th width="5%" style="font-size:13px;">#</th>
+                        <th style="font-size:13px;">Nombre</th>
+                        <th style="font-size:13px;">Usuario</th>
+                        <th style="font-size:13px;">Fecha de acceso</th>
                         @if (Auth::user()->hasPermissionTo('admin-user-show'))
-                            <th width="10%">Acciones</th>
+                            <th width="10%" style="font-size:13px;">Acciones</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                         <tr class="text-center">
-                            <th scope="row">{{ $user->clave }}</th>
-                            <td>{{ $user->nombre }}</td>
-                            <td>{{ $user->usuario }}</td>
-                            <td>{{ $user->created_at }}</td>
+                            <th scope="row" width="8%" style="font-size:12px;">{{ $user->clave }}</th>
+                            <td width="55%" style="font-size:12px;">{{ $user->nombre }}</td>
+                            <td width="10%" style="font-size:12px;">{{ $user->usuario }}</td>
+                            <td width="15%" style="font-size:12px;">{{ $user->created_at }}</td>
                             @if (Auth::user()->hasPermissionTo('admin-user-show'))
-                                <td>
+                                <td width="5%" style="font-size:12px;">
                                     @can('admin-user-show')
                                         <a href="javascript:getUrlToken('/panelControl/showUser/{{ $user->id }}', true)"><i class="fa fa-edit"></i></a>
                                     @endcan
