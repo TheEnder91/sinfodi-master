@@ -23,7 +23,7 @@
         @endcan
         <div class="table-responsive">
             <table id="tblRole" class="table table-bordered table-striped">
-                <caption>Listado de roles</caption>
+                <caption style="font-size:13px;">Listado de roles creados</caption>
                 <thead>
                     <tr class="text-center">
                         <th width="5%" style="font-size:13px;">#</th>
