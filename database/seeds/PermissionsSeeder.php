@@ -19,10 +19,14 @@ use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\PosgradoDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\FormacionRHDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\AcreditacionesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\ColaboracionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionBDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 
 class PermissionsSeeder extends Seeder
@@ -106,5 +110,9 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => TransferenciaDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Transferencia de conocimiento', 'description' => 'A user can list general direction->knowledge transfer', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => FormacionRHDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Formación recursos humanos', 'description' => 'A user can list general direction->Training of human resources', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => ColaboracionDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Colaboración institucional', 'description' => 'A user can list general direction->Institutional collaboration', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => AcreditacionesController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Acreditaciones', 'description' => 'A user can list general direction->accreditations', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => InvestigacionBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Investigación cientifica B', 'description' => 'A user can list general direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => SostentabilidadBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Sostentatibilidad economica B', 'description' => 'A user can list general direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => TransferenciaBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Transferencia de conocimiento B', 'description' => 'A user can list general direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }

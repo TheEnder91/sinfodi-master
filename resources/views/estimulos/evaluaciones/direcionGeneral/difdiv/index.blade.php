@@ -18,10 +18,10 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>
@@ -30,15 +30,16 @@
         </div><br>
         <div class="table-responsive">
             <table id="tblCriterio1" class="table table-bordered table-striped">
+                <caption style="font-size:13px;">Listado de evaluación Dirección General->Difusión y Divulgación y sus respectivos puntos.</caption>
                 <thead>
                     <tr class="text-center">
-                        <th scope="col">Clave</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Puntos</th>
-                        <th scope="col">Total</th>
-                        <th scope="col">Año</th>
+                        <th scope="col" style="font-size:13px;">Clave</th>
+                        <th scope="col" style="font-size:13px;">Nombre</th>
+                        <th scope="col" style="font-size:13px;">Puntos</th>
+                        <th scope="col" style="font-size:13px;">Total</th>
+                        <th scope="col" style="font-size:13px;">Año</th>
                         @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-difusiondivulgacion-index"))
-                            <th scope="col">Evidencias</th>
+                            <th scope="col" style="font-size:13px;">Evidencias</th>
                         @endif
                     </tr>
                 </thead>
@@ -118,13 +119,13 @@
                             // console.log(permissions);
                             if(dataGeneralCriterio1.username == authUser || permissions == 1){
                                     row += "<tr>";
-                                    row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio1.clave + '</td>';
-                                    row += '<td width="40%">' + dataGeneralCriterio1.nombre + "</td>";
-                                    row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.puntos + '</td>';
-                                    row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.total_puntos + '</td>';
-                                    row += '<td class="text-center" width="10%">' + dataGeneralCriterio1.year + '</td>';
+                                    row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataGeneralCriterio1.clave + '</td>';
+                                    row += '<td style="font-size:12px;" width="40%">' + dataGeneralCriterio1.nombre + "</td>";
+                                    row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataGeneralCriterio1.puntos + '</td>';
+                                    row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataGeneralCriterio1.total_puntos + '</td>';
+                                    row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataGeneralCriterio1.year + '</td>';
                                     if(permissions == 1){
-                                        row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio1(' + dataGeneralCriterio1.year + ', ' + dataGeneralCriterio1.clave + ')"><i class="fa fa-edit"></i></a></td>';
+                                        row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio1(' + dataGeneralCriterio1.year + ', ' + dataGeneralCriterio1.clave + ')"><i class="fa fa-edit"></i></a></td>';
                                     }
                                     row += "</tr>";
                             }

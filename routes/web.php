@@ -21,10 +21,14 @@ use App\Http\Controllers\Estimulos\Evaluaciones\PersonalApoyoController;
 use App\Http\Controllers\Estimulos\Evaluaciones\SubdirectoresController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\PosgradoDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\FormacionRHDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\AcreditacionesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\ColaboracionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionBDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
 
 /*
@@ -131,6 +135,14 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDGController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH', [FormacionRHDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    /** Rutas para las evidencias de estimulos Dirección general->Acreditaciones */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/acreditaciones/listAcreditaciones', [AcreditacionesController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.acreditaciones');
+    /** Rutas para las evidencias de estimulos Dirección general->Investigación cientifica tabla B */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacionB/listInvestigacion', [InvestigacionBDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.investigacionB');
+    /** Rutas para las evidencias de estimulos Dirección general->Sostenibilidad economica tabla B */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/listSostenibilidad', [SostentabilidadBDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.sostenibilidadB');
+    /** Rutas para las evidencias de estimulos Dirección general->Transferencia de conocimiento e innovacion tabla B */
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/listTransferencia', [TransferenciaBDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.tranferenciaB');
 
     /** Rutas para las evaluaciones... */
     //Ruta para visualizar los lineamientos de estimulos...
