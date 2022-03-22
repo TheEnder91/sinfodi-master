@@ -28,6 +28,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaBD
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -114,5 +115,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => InvestigacionBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Investigación cientifica B', 'description' => 'A user can list general direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => SostentabilidadBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Sostentatibilidad economica B', 'description' => 'A user can list general direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => TransferenciaBDGController::PERMISSIONS['index']], ['slug' => 'Listar D. Gral->Transferencia de conocimiento B', 'description' => 'A user can list general direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        /** Permisos para el catalogo de evaluaciones de la Direccion de administracion... */
+        Permission::updateOrCreate(['name' => DifusionDivulgacionDAController::PERMISSIONS['index']], ['slug' => 'Listar D. Admin->Difusion y Divulgacion', 'description' => 'A user can list administration direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }

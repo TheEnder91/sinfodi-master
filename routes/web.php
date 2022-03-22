@@ -30,6 +30,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaBD
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,14 @@ Route::middleware(['login'])->group(function(){
     Route::delete('/modulos/colaboracion/destroyColaboracion/{id}', [ColaboracionController::class, "destroy"])->name('modulos.colaboracion');
 
     /** Rutas para las evaluaciones... */
+    /** Rutas para las evaluaciones de estimulos Direccion de administración->Difusion y divulgacion... */
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/DifDiv/listDifDIv', [DifusionDivulgacionDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionDAController::class, "search"])->name('estimulos.evaluaciones.direccionAdministracion.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionAdministracion/DifDiv/saveDatosDifDiv', [DifusionDivulgacionDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/DifDiv/datosDifDiv/{year}/{criterio}', [DifusionDivulgacionDAController::class, "datosDifDiv"])->name('estimulos.evaluaciones.direccionAdministracion.DivDif');
+
+
+
 
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
