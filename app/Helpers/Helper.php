@@ -122,39 +122,39 @@ function GetDireccionAdministracion(){
     return $datosDA;
 }
 
+function GetDireccionPosgrado(){
+    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($data);
+    foreach($array->unidad_administrativa->direccion_de_posgrado as $item){
+        $datosDP[]= [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'categoria'=>$item->organigrama->categoria->nombre,
+            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'puesto'=>'Direccion_Posgrado',
+        ];
+    }
+    return $datosDP;
+}
+
+function GetDireccionCiencia(){
+    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($data);
+    foreach($array->unidad_administrativa->direccion_de_ciencia as $item){
+        $datosDC[]= [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'categoria'=>$item->organigrama->categoria->nombre,
+            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'puesto'=>'Direccion_Ciencia',
+        ];
+    }
+    return $datosDC;
+}
+
 // function GetRestoPersonal(){
-//     $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
-//     $array = json_decode($data);
-//     foreach($array->data->unidad_administrativa->direccion_general as $item){
-//         $datosDG[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_General',
-//         ];
-//     }
-//     foreach($array->data->unidad_administrativa->direccion_de_ciencia as $item){
-//         $datosDC[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_Ciencia',
-//         ];
-//     }
-//     foreach($array->data->unidad_administrativa->direccion_de_administracion as $item){
-//         $datosDA[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_Admin',
-//         ];
-//     }
 //     foreach($array->data->unidad_administrativa->direccion_de_tecnologia as $item){
 //         $datosDT[]= [
 //             'clave'=>$item->clave,
@@ -175,23 +175,13 @@ function GetDireccionAdministracion(){
 //             'puesto'=>'Direccion_Servicios_Tecno',
 //         ];
 //     }
-//     foreach($array->data->unidad_administrativa->direccion_de_posgrado as $item){
-//         $datosDP[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_Posgrado',
-//         ];
-//     }
 //     $GetDatosDirecciones = array_merge($datosDG, $datosDC, $datosDA, $datosDT, $datosDST, $datosDP);
 //     return $GetDatosDirecciones;
 // }
 
 function saveEvaluados(){
     $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
-    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion());
+    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia());
     if(count($queryDatos) >= 1){
         if(DB::table('sinfodi_evaluados')->delete()){
             DB::table('sinfodi_evaluados')->truncate();
@@ -213,6 +203,10 @@ function existeUsuario($usuario, $tipo, $criterio){
         $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
     }elseif($tipo == 'administracion'){
         $queryExiste = DB::table('sinfodi_evaluacion_administracion')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    }elseif($tipo == 'posgrado'){
+        $queryExiste = DB::table('sinfodi_evaluacion_posgrado')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    }elseif($tipo == 'ciencia'){
+        $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }
     // elseif($tipo == 'ciencia'){
     //     $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
