@@ -85,7 +85,6 @@ Route::middleware(['login'])->group(function(){
     Route::delete('/panelControl/destroyRol/{id}', [RolesController::class, "destroy"])->name('panelControl.roles');
     //Rutas para el modulo de permisos...
     Route::get('/panelControl/listPermissions', [PermissionsController::class, "index"])->name('panelControl.permissions');
-
     /** Rutas para los modulos faltantes para completar las evaluaciones... */
     /** Sostentabilidad economica... */
     Route::get('/modulos/sostenibilidad/listSostenibilidad', [SostentabilidadEconomicaController::class, "index"])->name('modulos.sostenibilidad');
@@ -176,8 +175,6 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/puntos', [PersonalApoyoController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/store', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/{year}', [PersonalApoyoController::class, "getPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-
-
     /** Rutas para las evaluaciones... */
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
@@ -189,8 +186,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/obtenerEvidenciasDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/puntosDifDiv/{id}/{objetivo}', [DifusionDivulgacionController::class, "puntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/DifDiv/savePuntos', [DifusionDivulgacionController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
-    Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/updateDatosDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
-    Route::delete('/estimulos/evaluaciones/DireccionGeneral/DifDiv/deletePuntosDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionGeneral/DifDiv/updateDatosDifDiv', [DifusionDivulgacionController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionGeneral/DifDiv/updateDatosPuntos', [DifusionDivulgacionController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
+
+
+
+
     /** Rutas para las evaluaciones de estimulos Direccion general->Posgrado... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/listPosgrado', [PosgradoDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/posgrado/searchPosgrado/{year}/{criterio}', [PosgradoDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.posgrado');

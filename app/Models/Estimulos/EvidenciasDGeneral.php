@@ -9,6 +9,6 @@ class EvidenciasDGeneral extends Model
     public $table = 'sinfodi_evidencias_general';
 
     protected $fillable = [
-        'clave', 'clave_evidencia', 'puntos', 'total_puntos', 'year', 'id_criterio',
+        'clave', 'evidencias', 'puntos', 'total_puntos', 'year', 'id_criterio',
     ];
 }

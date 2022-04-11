@@ -109,7 +109,7 @@ class DifusionDivulgacionController extends Controller
         if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->where('direccion', '=', 'DGeneral')->count() == 0){
             $nuevo = new EvaluacionDGeneral();
             $nuevo->create($request->all());
-            $data['response'] = true;
+            $data['response'] = $nuevo;
             return $this->response($data);
         }
     }
@@ -167,10 +167,6 @@ class DifusionDivulgacionController extends Controller
         $obtener = EvidenciasDGeneral::where('clave', '=', $clave)
                                         ->where('id_criterio', '=', $criterio)
                                         ->where('year', '=', $year)
-                                        ->where(function($query){
-                                            $query->orWhere('clave_evidencia', 'like', 'EAD%')
-                                                  ->orWhere('clave_evidencia', 'like', 'DIF%');
-                                        })
                                         ->get();
         $data['response'] = $obtener;
         return $this->response($data);
@@ -182,8 +178,8 @@ class DifusionDivulgacionController extends Controller
                                         ->where('id_criterio', '=', $criterio)
                                         ->where('year', '=', $year)
                                         ->where(function($query){
-                                            $query->orWhere('clave_evidencia', 'like', 'EAD%')
-                                                  ->orWhere('clave_evidencia', 'like', 'DIF%');
+                                            $query->orWhere('evidencias', 'like', 'EAD%')
+                                                  ->orWhere('evidencias', 'like', 'DIF%');
                                         })
                                         ->count();
         if($contar == 0){
@@ -221,14 +217,12 @@ class DifusionDivulgacionController extends Controller
     }
 
     /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year, $criterio){
-        $obtener = DB::table('sinfodi_evidencias_general')->select('puntos', 'total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->take(1)->get();
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-        }
-        EvaluacionDGeneral::where('clave', '=', $clave)->where('id_criterio', '=',  $criterio)->where('year', '=', $year)->update( array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
-        return true;
+    public static function updateDatosGeneral(Request $request){
+        $actualizar = EvidenciasDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -242,5 +236,20 @@ class DifusionDivulgacionController extends Controller
         DB::table('sinfodi_evidencias_general')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
         $data['response'] = true;
         return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }

@@ -16,7 +16,7 @@ class CreateSinfodiEvidenciasGeneralTable extends Migration
         Schema::create('sinfodi_evidencias_general', function (Blueprint $table) {
             $table->id();
             $table->integer('clave');
-            $table->string('clave_evidencia');
+            $table->string('evidencias');
             $table->integer('puntos');
             $table->integer('total_puntos');
             $table->year('year');
