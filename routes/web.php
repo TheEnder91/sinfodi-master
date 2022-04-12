@@ -218,6 +218,20 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionPosgrado/DifDiv/updateDatosDifDiv', [DifusionDivulgacionController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionPosgrado.DivDif');
     Route::put('/estimulos/evaluaciones/DireccionPosgrado/DifDiv/updateDatosPuntos', [DifusionDivulgacionController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionPosgrado.DivDif');
 
+    /** Rutas para las evaluaciones de la direccion de Ciencia... */
+    /** Rutas para las evaluaciones de estimulos Direccion de Ciencia->Difusion y divulgacion... */
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/listDifDIv', [DifusionDivulgacionDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionDCController::class, "search"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionCiencia/DifDiv/saveDatosDifDiv', [DifusionDivulgacionDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/datosDifDiv/{year}/{criterio}', [DifusionDivulgacionDCController::class, "datosDifDiv"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/searchEvidenciasDifDiv/{year}/{clave}', [DifusionDivulgacionDCController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/getEvidenciasDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionDCController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/obtenerEvidenciasDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionDCController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/puntosDifDiv/{id}/{objetivo}', [DifusionDivulgacionDCController::class, "puntos"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionCiencia/DifDiv/savePuntos', [DifusionDivulgacionDCController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionCiencia/DifDiv/updateDatosDifDiv', [DifusionDivulgacionDCController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionCiencia/DifDiv/updateDatosPuntos', [DifusionDivulgacionDCController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+
 
 
 
@@ -390,12 +404,7 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evidencias de estimulos Dirección posgrado->Transferencia de conocimiento e innovacion tabla B */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/tranferenciaB/listTransferencia', [TransferenciaDPController::class, "indexB"])->name('estimulos.evaluaciones.direccionPosgrado.tranferenciaB');
 
-    /** Rutas para las evaluaciones de la direccion de Ciencia... */
-    /** Rutas para las evaluaciones de estimulos Direccion de Ciencia->Difusion y divulgacion... */
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/listDifDIv', [DifusionDivulgacionDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionDCController::class, "search"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
-    Route::post('/estimulos/evaluaciones/DireccionCiencia/DifDiv/saveDatosDifDiv', [DifusionDivulgacionDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/DifDiv/datosDifDiv/{year}/{criterio}', [DifusionDivulgacionDCController::class, "datosDifDiv"])->name('estimulos.evaluaciones.direccionCiencia.DivDif');
+
     /** Rutas para las evaluaciones de estimulos Direccion de ciencia->Posgrado... */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/posgrado/listPosgrado', [PosgradoDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.posgrado');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/posgrado/searchPosgrado/{year}/{criterio}', [PosgradoDCController::class, "search"])->name('estimulos.evaluaciones.direccionCiencia.posgrado');
