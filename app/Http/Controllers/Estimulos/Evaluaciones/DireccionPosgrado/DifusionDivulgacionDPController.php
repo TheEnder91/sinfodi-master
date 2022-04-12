@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDPosgrado;
+use App\Models\Estimulos\EvidenciasDPosgrado;
 
 class DifusionDivulgacionDPController extends Controller
 {
@@ -123,5 +124,131 @@ class DifusionDivulgacionDPController extends Controller
         $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'Dposgrado')->get();
         $data['response'] = $datos;
         return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function searchEvidencias($year, $clave)
+    {
+        $fechaInicial = $year.'-01-01';
+        $fechaFinal = $year.'-12-31';
+        $queryDIF = DB::connection('sinfodiDB')->table('sinfodi_dif_persona')
+                        ->selectRaw('sinfodi_dif_persona.dif_clave_personal AS numeroPersonal,
+                                     sinfodi_dif_persona.dif_clave_dif_personal AS clave,
+                                     SUBSTRING(sinfodi_dif_persona.dif_clave_dif_personal, 1, 3) AS abreviatura,
+                                     sinfodi_dif.dif_fecha_inicio as fechaini,
+                                     sinfodi_dif.dif_fecha_fin as fechafin')
+                        ->leftJoin('sinfodi_dif', 'sinfodi_dif.dif_clave', '=', 'sinfodi_dif_persona.dif_clave_dif_personal');
+        $queryEAD = DB::connection('sinfodiDB')->table('sinfodi_ead_personas')
+                        ->selectRaw('sinfodi_ead_personas.ead_clave_personal AS numeroPersonal,
+                                     sinfodi_ead_personas.ead_clave_ead_persona AS clave,
+                                     SUBSTRING(sinfodi_ead_personas.ead_clave_ead_persona, 1, 3) AS abreviatura,
+                                     sinfodi_ead.ead_fecha_inicio as fechaini,
+                                     sinfodi_ead.ead_fecha_fin as fechafin')
+                        ->leftJoin('sinfodi_ead', 'sinfodi_ead.ead_clave', '=', 'sinfodi_ead_personas.ead_clave_ead_persona')
+                        ->unionAll($queryDIF);
+        $queryGral = DB::connection('sinfodiDB')->table($queryEAD)
+                        ->selectRaw('numeroPersonal, clave, abreviatura, fechaini, fechafin')
+                        ->whereBetween('fechaini', [$fechaInicial, $fechaFinal])
+                        ->whereBetween('fechafin', [$fechaInicial, $fechaFinal])
+                        ->where('numeroPersonal', '=', $clave)
+                        ->orderBy('clave', 'ASC')
+                        ->get();
+        return $queryGral;
+    }
+
+    //** Codigo personal */
+    public function getEvidenciasGeneral($clave, $year, $criterio){
+        $obtener = EvidenciasDPosgrado::where('clave', '=', $clave)
+                                        ->where('id_criterio', '=', $criterio)
+                                        ->where('year', '=', $year)
+                                        ->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidenciasGeneral($clave, $year, $criterio){
+        $contar = EvidenciasDPosgrado::where('clave', '=', $clave)
+                                        ->where('id_criterio', '=', $criterio)
+                                        ->where('year', '=', $year)
+                                        ->where(function($query){
+                                            $query->orWhere('evidencias', 'like', 'EAD%')
+                                                  ->orWhere('evidencias', 'like', 'DIF%');
+                                        })
+                                        ->count();
+        if($contar == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function savePuntos(Request $request)
+    {
+        EvidenciasDPosgrado::create($request->all());
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatosGeneral(Request $request){
+        $actualizar = EvidenciasDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deletePuntos($clave, $year, $criterio)
+    {
+        DB::table('sinfodi_evidencias_general')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }
