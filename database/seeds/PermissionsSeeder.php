@@ -52,6 +52,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\DifusionDivulg
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\AcreditacionesDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\SostenibilidadDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 
 class PermissionsSeeder extends Seeder
 {
@@ -162,7 +163,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => InvestigacionDPController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Posgrado->Investigación cientifica B', 'description' => 'A user can list postgraduate direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => SostenibilidadDPController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Posgrado->Sostentatibilidad economica B', 'description' => 'A user can list postgraduate direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => TransferenciaDPController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Posgrado->Transferencia de conocimiento B', 'description' => 'A user can list postgraduate direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
-        /** Permisos para el catalogo de evaluaciones de la Direccion de posgrado... */
+        /** Permisos para el catalogo de evaluaciones de la Direccion de ciencia... */
         Permission::updateOrCreate(['name' => DifusionDivulgacionDCController::PERMISSIONS['index']], ['slug' => 'Listar D. Ciencia->Difusion y Divulgacion', 'description' => 'A user can list science direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => PosgradoDCController::PERMISSIONS['index']], ['slug' => 'Listar D. Ciencia->Posgrado', 'description' => 'A user can list science direction->Postgraduate', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => InvestigacionDCController::PERMISSIONS['index']], ['slug' => 'Listar D. Ciencia->Investigación cientifica', 'description' => 'A user can list science direction->Scientific investigation', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
@@ -174,5 +175,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => InvestigacionDCController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Ciencia->Investigación cientifica B', 'description' => 'A user can list science direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => SostenibilidadDCController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Ciencia->Sostentatibilidad economica B', 'description' => 'A user can list science direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => TransferenciaDCController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Ciencia->Transferencia de conocimiento B', 'description' => 'A user can list science direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        /** Permisos para el catalogo de evaluaciones de la Direccion de ciencia... */
+        Permission::updateOrCreate(['name' => DifusionDivulgacionDSTController::PERMISSIONS['index']], ['slug' => 'Listar D. Serv. Tec.->Difusion y Divulgacion', 'description' => 'A user can list technological services direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }
