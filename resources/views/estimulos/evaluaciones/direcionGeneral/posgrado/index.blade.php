@@ -18,10 +18,10 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
                     <select class="custom-select" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>
@@ -46,7 +46,7 @@
                                             Graduado entre 37 y 42 meses
                                         @endif
                                         @if ($item->id == 5)
-                                            Graduado entre 43 y 48 meses
+                                            Graduado entre 43 y 60 meses
                                         @endif
                                     </a>
                                 </li>
