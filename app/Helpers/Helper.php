@@ -170,34 +170,25 @@ function GetDireccionServTec(){
     return $datosDST;
 }
 
-// function GetRestoPersonal(){
-//     foreach($array->data->unidad_administrativa->direccion_de_tecnologia as $item){
-//         $datosDT[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_Tecnologia',
-//         ];
-//     }
-//     foreach($array->data->unidad_administrativa->direccion_de_servicios_tecnologicos as $item){
-//         $datosDST[]= [
-//             'clave'=>$item->clave,
-//             'nombre'=>$item->nombre,
-//             'usuario'=>$item->usuario,
-//             'categoria'=>$item->organigrama->categoria->nombre,
-//             'unidad_admin'=>$item->tipo_actividad->nombre,
-//             'puesto'=>'Direccion_Servicios_Tecno',
-//         ];
-//     }
-//     $GetDatosDirecciones = array_merge($datosDG, $datosDC, $datosDA, $datosDT, $datosDST, $datosDP);
-//     return $GetDatosDirecciones;
-// }
+function GetDireccionProyTec(){
+    $data = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($data);
+    foreach($array->unidad_administrativa->direccion_de_tecnologia as $item){
+        $datosDPT[]= [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'categoria'=>$item->organigrama->categoria->nombre,
+            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'puesto'=>'Direccion_Proyectos_Tecno',
+        ];
+    }
+    return $datosDPT;
+}
 
 function saveEvaluados(){
     $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
-    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia(), GetDireccionServTec());
+    $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia(), GetDireccionServTec(), GetDireccionProyTec());
     if(count($queryDatos) >= 1){
         if(DB::table('sinfodi_evaluados')->delete()){
             DB::table('sinfodi_evaluados')->truncate();
@@ -216,7 +207,7 @@ function existeUsuario($usuario, $tipo, $criterio){
     if($tipo == 'responsabilidades'){
         $queryExiste = DB::table('sinfodi_evaluacion_responsabilidades')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'general'){
-        $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
+        $queryExiste = DB::table('sinfodi_evaluacion_general')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'administracion'){
         $queryExiste = DB::table('sinfodi_evaluacion_administracion')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'posgrado'){
@@ -225,14 +216,9 @@ function existeUsuario($usuario, $tipo, $criterio){
         $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }elseif($tipo == 'servicios'){
         $queryExiste = DB::table('sinfodi_evaluacion_serv_tecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
+    }elseif($tipo == 'proyectos'){
+        $queryExiste = DB::table('sinfodi_evaluacion_proy_tecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
     }
-    // elseif($tipo == 'ciencia'){
-    //     $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    // }elseif($tipo == 'servTecno'){
-    //     $queryExiste = DB::table('sinfodi_evaluacion_servtecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    // }elseif($tipo == 'proyTecno'){
-    //     $queryExiste = DB::table('sinfodi_evaluacion_proytecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    // }
     if(count($queryExiste) >= 1){
         return true;
     }else{

@@ -55,6 +55,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Acredita
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\SostenibilidadDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\DifusionDivulgacionDPTController;
 
 /*
 |--------------------------------------------------------------------------
@@ -246,6 +247,20 @@ Route::middleware(['login'])->group(function(){
     Route::post('/estimulos/evaluaciones/DireccionServTec/DifDiv/savePuntos', [DifusionDivulgacionDSTController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionServTec.DivDif');
     Route::put('/estimulos/evaluaciones/DireccionServTec/DifDiv/updateDatosDifDiv', [DifusionDivulgacionDSTController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionServTec.DivDif');
     Route::put('/estimulos/evaluaciones/DireccionServTec/DifDiv/updateDatosPuntos', [DifusionDivulgacionDSTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionServTec.DivDif');
+
+    /** Rutas para las evaluaciones de la direccion de proyectos tecnologicos... */
+    /** Rutas para las evaluaciones de estimulos Direccion de proyectos tecnologicos->Difusion y divulgacion... */
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/listDifDIv', [DifusionDivulgacionDPTController::class, "index"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionDPTController::class, "search"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionProyTec/DifDiv/saveDatosDifDiv', [DifusionDivulgacionDPTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/datosDifDiv/{year}/{criterio}', [DifusionDivulgacionDPTController::class, "datosDifDiv"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/searchEvidenciasDifDiv/{year}/{clave}', [DifusionDivulgacionDPTController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/getEvidenciasDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionDPTController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/obtenerEvidenciasDifDiv/{clave}/{year}/{criterio}', [DifusionDivulgacionDPTController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/DifDiv/puntosDifDiv/{id}/{objetivo}', [DifusionDivulgacionDPTController::class, "puntos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::post('/estimulos/evaluaciones/DireccionProyTec/DifDiv/savePuntos', [DifusionDivulgacionDPTController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionProyTec/DifDiv/updateDatosDifDiv', [DifusionDivulgacionDPTController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    Route::put('/estimulos/evaluaciones/DireccionProyTec/DifDiv/updateDatosPuntos', [DifusionDivulgacionDPTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
 
 
 
