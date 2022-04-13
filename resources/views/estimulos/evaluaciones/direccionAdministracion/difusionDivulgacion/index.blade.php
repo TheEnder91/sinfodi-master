@@ -216,28 +216,31 @@
                             type: 'GET',
                             dataType: 'json',
                             ok: function(getEvidenciasCriterio1){
-                                var evidencias = [];
-                                var serieEvidencias = "";
-                                $('input.evidenciasCriterio1:checked').each(function(){
-                                    evidencias.push(this.value);
-                                });
-                                let desmarcar = serieEvidencias.split(',');
-                                if(desmarcar != ""){
-                                    for(var i = 0; i < desmarcar.length; i++){
-                                        // console.log(desmarcar[i]);
-                                        document.getElementById("evidenciasCriterio1"+desmarcar[i]).checked = false;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio1:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio1"+desmarcar[i]).checked = false;
+                                        }
                                     }
-                                }
-                                $(".evidenciasCriterio1").prop("checked", this.checked);
-                                var dataEvidencias = getEvidenciasCriterio1.response[0];
-                                // console.log(getEvidenciasCriterio1.response[0]);
-                                let str = dataEvidencias.evidencias;
-                                let arr = str.split(',');
-                                //dividir la cadena de texto por una coma
-                                // console.log(arr);
-                                for(var i = 0; i < arr.length; i++){
-                                    // console.log(arr[i]);
-                                    document.getElementById("evidenciasCriterio1"+arr[i]).checked = true;
+                                    $(".evidenciasCriterio1").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio1.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio1"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidad').val(dataEvidencias.puntos);
+                                    $('#txtTotal').val(dataEvidencias.total_puntos);
                                 }
                             },
                         });
