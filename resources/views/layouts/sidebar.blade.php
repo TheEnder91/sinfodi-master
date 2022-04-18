@@ -466,7 +466,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/posgrado/listPosgrado') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.posgrado') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Posgrado</p>
+                                                    <p>Posgrado->FRH</p>
                                                 </a>
                                             </li>
                                         @endif
