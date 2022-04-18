@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec;
 
 use Illuminate\Http\Request;
 use App\Traits\SingleResponse;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Estimulos\EvaluacionDServTec;
 
 class PosgradoDSTController extends Controller
 {
@@ -13,4 +15,161 @@ class PosgradoDSTController extends Controller
     const PERMISSIONS = [
         'index' => 'estimulo-evaluaciones-servicios-posgrado-index',
     ];
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $criterios = self::Get_Criterios_Investigacion();
+        return view('estimulos.evaluaciones.direccionServTec.posgrado.index', [
+            'criterios' => $criterios,
+        ]);
+    }
+
+    /** Funcion para obtener los criterios para la investigacion cientifica... */
+    public static function Get_Criterios_Investigacion(){
+        $query = DB::table('sinfodi_criterios')
+                    ->select('id', 'nombre', 'id_objetivo')
+                    ->where('observaciones', '=', 'Tabla 1. Actividad A.')
+                    ->where('id_objetivo', '=', 2)
+                    ->get();
+        return $query;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function search($year, $criterio)
+    {
+        $queryEvaluados = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'puesto')
+                            ->where('puesto', '=', 'Direccion_Servicios_Tecno')
+                            ->orderby('clave', 'ASC')
+                            ->get();
+        foreach($queryEvaluados as $itemEvaluados){
+            $clave[] = $itemEvaluados->clave;
+        }
+        $fechaInicial = $year.'-01-01';
+        $fechaFinal = $year.'-12-31';
+        if($criterio == 2){
+            $evaluacion_posgrado = self::Evaluacion_Objetivo2_Criterio2_Posgrado($clave, $fechaInicial, $fechaFinal);
+        }if($criterio == 3){
+            $evaluacion_posgrado = self::Evaluacion_Objetivo2_Criterio3_Posgrado($clave, $fechaInicial, $fechaFinal);
+        }if($criterio == 4){
+            $evaluacion_posgrado = self::Evaluacion_Objetivo2_Criterio4_Posgrado($clave, $fechaInicial, $fechaFinal);
+        }if($criterio == 5){
+            $evaluacion_posgrado = self::Evaluacion_Objetivo2_Criterio5_Posgrado($clave, $fechaInicial, $fechaFinal);
+        }
+        $data['response'] = $evaluacion_posgrado;
+        return $this->response($data);
+    }
+
+    /** Funciones para obtener los datos necesarios para la evaluacion de posgrado... */
+    public static function Evaluacion_Objetivo2_Criterio2_Posgrado($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio2 = DB::connection('posgradoDB')->table('dfa_alumnos')
+                            ->selectRaw('id_asesor AS numero_personal,
+                                         Nom_asesor AS nombre')
+                            ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                            ->where('Nivel', '=', "Tesis de Maestría")
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 20 AND 30')
+                            ->whereIn('id_asesor', $clave)
+                            ->groupBy('id_asesor')
+                            ->groupBy('Nom_asesor')
+                            ->get();
+        return $queryCriterio2;
+    }
+
+    public static function Evaluacion_Objetivo2_Criterio3_Posgrado($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio3 = DB::connection('posgradoDB')->table('dfa_alumnos')
+                            ->selectRaw('id_asesor AS numero_personal,
+                                         Nom_asesor AS nombre')
+                            ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                            ->where('Nivel', '=', "Tesis de Maestría")
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 31 AND 36')
+                            ->whereIn('id_asesor', $clave)
+                            ->groupBy('id_asesor')
+                            ->groupBy('Nom_asesor')
+                            ->get();
+        return $queryCriterio3;
+    }
+
+    public static function Evaluacion_Objetivo2_Criterio4_Posgrado($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio4 = DB::connection('posgradoDB')->table('dfa_alumnos')
+                            ->selectRaw('id_asesor AS numero_personal,
+                                         Nom_asesor AS nombre')
+                            ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                            ->where('Nivel', '=', "Tesis de Doctorado")
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 37 AND 42')
+                            ->whereIn('id_asesor', $clave)
+                            ->groupBy('id_asesor')
+                            ->groupBy('Nom_asesor')
+                            ->get();
+        return $queryCriterio4;
+    }
+
+    public static function Evaluacion_Objetivo2_Criterio5_Posgrado($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio5 = DB::connection('posgradoDB')->table('dfa_alumnos')
+                            ->selectRaw('id_asesor AS numero_personal,
+                                         Nom_asesor AS nombre')
+                            ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                            ->where('Nivel', '=', "Tesis de Doctorado")
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 60')
+                            ->whereIn('id_asesor', $clave)
+                            ->groupBy('id_asesor')
+                            ->groupBy('Nom_asesor')
+                            ->get();
+        return $queryCriterio5;
+    }
+
+    /** Funcion para obtener el username de los participantes... */
+    public function searchUsername($clave){
+        $queryUsername = DB::table('sinfodi_evaluados')
+                            ->select('*')
+                            ->where('clave', '=', $clave)
+                            ->get();
+        $data['response'] = $queryUsername;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function saveDatos(Request $request)
+    {
+        if(EvaluacionDServTec::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+            $nuevo = new EvaluacionDServTec();
+            $nuevo->create($request->all());
+            return response()->json('exito');
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function datosPosgrado($year, $criterio)
+    {
+        if($criterio == 2){
+            $datos = DB::table('sinfodi_evaluacion_serv_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+        }if($criterio == 3){
+            $datos = DB::table('sinfodi_evaluacion_serv_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+        }if($criterio == 4){
+            $datos = DB::table('sinfodi_evaluacion_serv_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+        }if($criterio == 5){
+            $datos = DB::table('sinfodi_evaluacion_serv_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+        }
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
 }

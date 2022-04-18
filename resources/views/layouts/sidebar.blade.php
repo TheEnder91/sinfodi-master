@@ -44,7 +44,7 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-colaboracion-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-sostentabilidadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index'))
                     <li class="nav-header" style="font-size:13px;">ESTIMULOS</li>
                 @endif
                 @can('estimulo-lineamientos-index')
@@ -164,7 +164,7 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-colaboracion-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-sostentabilidadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index'))
                     <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
                             <i class="far fa-arrow-alt-circle-down"></i>
@@ -670,7 +670,8 @@
                                         <p><b>Dirección Serv. Tec.</b><i class="right fas fa-angle-left"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index'))
                                             <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA A</li>
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
@@ -678,6 +679,14 @@
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/DifDiv/listDifDIv') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.DivDif') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Difusión y Divulgación</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index'))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/posgrado/listPosgrado') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.posgrado') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Posgrado->FRH</p>
                                                 </a>
                                             </li>
                                         @endif
