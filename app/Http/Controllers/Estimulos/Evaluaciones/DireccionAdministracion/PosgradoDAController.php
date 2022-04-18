@@ -119,7 +119,7 @@ class PosgradoDAController extends Controller
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                             ->where('Nivel', '=', "Tesis de Doctorado")
-                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 60')
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
