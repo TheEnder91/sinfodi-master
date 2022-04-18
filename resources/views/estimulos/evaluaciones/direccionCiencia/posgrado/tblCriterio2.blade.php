@@ -1,15 +1,15 @@
 <div class="table-responsive">
-    <table id="tblCriterio2" class="table table-bordered table-striped">
-        <caption>Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses.</caption>
+    <table id="tblCriterio2" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
                 @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-posgrado-index"))
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,40 +28,45 @@
                 var datosCriterio2 = datosCritero2.response;
                 // console.log(datosCritero2);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio2.length; i++){
-                    var dataCriterio2 = datosCriterio2[i];
-                    // console.log(dataCriterio2);
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/searchUsernamePosgrado/" + dataCriterio2.numero_personal,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(datosCritero2Username){
-                            // Codigo para guardar en el sistema...
-                            var username = datosCritero2Username.response[0];
-                            // console.log(username.clave + "->" + username.usuario);
-                            var options = {
-                                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/saveDatosPosgrado",
-                                json: {
-                                    clave: username.clave,
-                                    nombre: username.nombre,
-                                    id_objetivo: 2,
-                                    id_criterio: 2,
-                                    direccion: "DCiencia",
-                                    puntos: 0,
-                                    total_puntos: 0,
-                                    year: year,
-                                    username: username.usuario,
-                                    _token: "{{ csrf_token() }}",
-                                },
-                                type: 'POST',
-                                dateType: 'json',
-                            };
-                            // console.log(options); // e comenta para futuras pruebas...
-                            guardarAutomatico(options);
-                            verTablaCriterio2(year, 2);
-                            // Finaliza codigo para guardar en el sistema...
-                        },
-                    });
+                if(datosCriterio2.length > 0){
+                    for(var i = 0; i < datosCriterio2.length; i++){
+                        var dataCriterio2 = datosCriterio2[i];
+                        // console.log(dataCriterio2.numero_personal);
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/searchUsernamePosgrado/" + dataCriterio2.numero_personal,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(datosCritero2Username){
+                                // Codigo para guardar en el sistema...
+                                var username = datosCritero2Username.response[0];
+                                // console.log(username.usuario);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/saveDatosPosgrado",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: username.clave,
+                                        nombre: username.nombre,
+                                        id_objetivo: 2,
+                                        id_criterio: criterio,
+                                        direccion: "DGeneral",
+                                        puntos: 0,
+                                        total_puntos: 0,
+                                        year: year,
+                                        username: username.usuario
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        verTablaCriterio2(year, 2);
+                                    }
+                                });
+                            },
+                        });
+                    }
+                }else{
+                    verTablaCriterio2(year, 2);
                 }
             },
         });
@@ -84,13 +89,13 @@
                     // console.log(permissions);
                     if(dataGeneralCriterio2.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio2.clave + '</td>';
-                        row += '<td width="40%">' + dataGeneralCriterio2.nombre + "</td>";
-                        row += '<td class="text-center" width="10%">' + dataGeneralCriterio2.puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataGeneralCriterio2.total_puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataGeneralCriterio2.year + '</td>';
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio2.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio2.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio2.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio2.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio2.year + '</td>';
                         if(permissions == 1){
-                            row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio2(' + dataGeneralCriterio2.year + ', ' + dataGeneralCriterio2.clave + ', ' + 2 +')"><i class="fa fa-edit"></i></a></td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio2(' + dataGeneralCriterio2.year + ', ' + dataGeneralCriterio2.clave + ', ' + 2 +')"><i class="fa fa-edit"></i></a></td>';
                         }
                         row += "</tr>";
                     }
