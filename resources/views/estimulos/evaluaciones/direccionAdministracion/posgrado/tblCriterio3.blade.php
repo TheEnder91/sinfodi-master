@@ -49,7 +49,7 @@
                                         nombre: username.nombre,
                                         id_objetivo: 2,
                                         id_criterio: criterio,
-                                        direccion: "DGeneral",
+                                        direccion: "DAdministracion",
                                         puntos: 0,
                                         total_puntos: 0,
                                         year: year,
