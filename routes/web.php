@@ -56,6 +56,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Sostenib
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\DifusionDivulgacionDPTController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\PosgradoDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\PosgradoDSTController;
 
 /*
@@ -292,6 +293,12 @@ Route::middleware(['login'])->group(function(){
     Route::post('/estimulos/evaluaciones/DireccionProyTec/DifDiv/savePuntos', [DifusionDivulgacionDPTController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
     Route::put('/estimulos/evaluaciones/DireccionProyTec/DifDiv/updateDatosDifDiv', [DifusionDivulgacionDPTController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
     Route::put('/estimulos/evaluaciones/DireccionProyTec/DifDiv/updateDatosPuntos', [DifusionDivulgacionDPTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionProyTec.DivDif');
+    /** Rutas para las evaluaciones de estimulos Direccion de servicios tecnologicos->Posgrado... */
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/posgrado/listPosgrado', [PosgradoDPTController::class, "index"])->name('estimulos.evaluaciones.direccionProyTec.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/posgrado/searchPosgrado/{year}/{criterio}', [PosgradoDPTController::class, "search"])->name('estimulos.evaluaciones.direccionProyTec.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/posgrado/searchUsernamePosgrado/{clave}', [PosgradoDPTController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionProyTec.posgrado');
+    Route::post('/estimulos/evaluaciones/DireccionProyTec/posgrado/saveDatosPosgrado', [PosgradoDPTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionProyTec.posgrado');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/posgrado/datosposgrado/{year}/{criterio}', [PosgradoDPTController::class, "datosPosgrado"])->name('estimulos.evaluaciones.direccionProyTec.posgrado');
 
 
 

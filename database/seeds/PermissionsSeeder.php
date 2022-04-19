@@ -37,6 +37,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\InvestigacionBD
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\TransferenciaBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\InvestigacionDPController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\TransferenciaDPController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\PosgradoDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\PosgradoDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\PosgradoDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadDGController;
@@ -197,6 +198,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => TransferenciaDSTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Serv. Tec.->Transferencia de conocimiento B', 'description' => 'A user can list technological services direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         /** Permisos para el catalogo de evaluaciones de la Direccion de proyectos tecnologicos... */
         Permission::updateOrCreate(['name' => DifusionDivulgacionDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Difusion y Divulgacion', 'description' => 'A user can list technological projects direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => PosgradoDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Posgrado', 'description' => 'A user can list technological projects direction->Postgraduate', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
 
     }
 }
