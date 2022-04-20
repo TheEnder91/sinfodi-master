@@ -7,7 +7,7 @@
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/') }}">Inicio</a></li>
-        <li class="breadcrumb-item active">Evaluaciones a la dirección general</li>
+        <li class="breadcrumb-item active">Evaluaciones a la dirección general->Investigación cientifica</li>
     </ol>
 @endsection
 

@@ -1,15 +1,15 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
-    <table id="tblCriterio6" class="table table-bordered table-striped">
-        <caption>Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto hasta 2.0.</caption>
+    <table id="tblCriterio6" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto hasta 2.0.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-administracion-investigacion-index"))
-                    <th scope="col">Evidencias</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
+                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacion-index"))
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,152 +28,218 @@
                 var datosCriterio6 = datosCritero6.response;
                 // console.log(datosCritero6);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio6.length; i++){
-                    var dataCriterio6 = datosCriterio6[i];
-                    // Codigo para guardar en el sistema...
-                    var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/saveDatosInvestigacion",
-                        json: {
-                            clave: dataCriterio6.numero_personal,
-                            nombre: dataCriterio6.nombre,
-                            id_objetivo: 3,
-                            id_criterio: 6,
-                            direccion: "DAdministracion",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: year,
-                            username: dataCriterio6.username,
-                            _token: "{{ csrf_token() }}",
-                        },
-                        type: 'POST',
-                        dateType: 'json',
-                    };
-                    guardarAutomatico(options);
-                    // console.log(options); // e comenta para futuras pruebas...
-                    // Finaliza codigo para guardar en el sistema...
-                }
-                consultarDatos({
-                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/datosInvestigacion/" + year + "/" + criterio,
-                    type: 'GET',
-                    dataType: 'json',
-                    ok: function(datosAdministracionCriterio6){
-                        // console.log(datosAdministracionCriterio6);
-                        var datosAdministracionCriterio6 = datosAdministracionCriterio6.response;
-                        var row = "";
-                        for(var i = 0; i < datosAdministracionCriterio6.length; i++){
-                            var dataAdministracionCriterio6 = datosAdministracionCriterio6[i];
-                            // console.log(dataAdministracionCriterio6);
-                            var authUser = '<?= Auth::user()->usuario ?>';
-                            var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-administracion-investigacion-index") ?>';
-                            // console.log(permissions);
-                            if(dataAdministracionCriterio6.username == authUser || permissions == 1){
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="10%">' + dataAdministracionCriterio6.clave + '</td>';
-                                row += '<td width="40%">' + dataAdministracionCriterio6.nombre + "</td>";
-                                row += '<td class="text-center" width="10%">' + dataAdministracionCriterio6.puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + dataAdministracionCriterio6.total_puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + dataAdministracionCriterio6.year + '</td>';
-                                if(permissions == 1){
-                                    row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio6(' + dataAdministracionCriterio6.year + ', ' + dataAdministracionCriterio6.clave + ', ' + 6 +')"><i class="fa fa-edit"></i></a></td>';
-                                }
-                                row += "</tr>";
-                            }
-                        }
-                        if ($.fn.dataTable.isDataTable("#tblCriterio6")) {
-                            tblDifusionDivulgacion = $("#tblCriterio6").DataTable();
-                            tblDifusionDivulgacion.destroy();
-                        }
-                        $('#tblCriterio6 > tbody').html('');
-                        $('#tblCriterio6 > tbody').append(row);
-                        $('#tblCriterio6').DataTable({
-                            "order":[[0, "asc"]],
-                            "language":{
-                              "lengthMenu": "Mostrar _MENU_ registros por página.",
-                              "info": "Página _PAGE_ de _PAGES_",
-                              "infoEmpty": "No se encontraron registros.",
-                              "infoFiltered": "(filtrada de _MAX_ registros)",
-                              "loadingRecords": "Cargando...",
-                              "processing":     "Procesando...",
-                              "search": "Buscar:",
-                              "zeroRecords":    "No se encontraron registros.",
-                              "paginate": {
-                                              "next":       ">",
-                                              "previous":   "<"
-                                          },
+                if(datosCriterio6.length > 0){
+                    for(var i = 0; i < datosCriterio6.length; i++){
+                        var dataCriterio6 = datosCriterio6[i];
+                        // console.log(dataCriterio6);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/saveDatosInvestigacion",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: dataCriterio6.numero_personal,
+                                nombre: dataCriterio6.nombre,
+                                id_objetivo: 3,
+                                id_criterio: 6,
+                                direccion: "DAdministracion",
+                                puntos: 0,
+                                total_puntos: 0,
+                                year: year,
+                                username: dataCriterio6.username,
                             },
-                            lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                verTablaCriterio6(year, criterio);
+                            }
                         });
+                    }
+                }else{
+                    verTablaCriterio6(year, criterio);
+                }
+            },
+        });
+    }
+
+    function verTablaCriterio6(year, criterio){
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/datosInvestigacion/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(datosAdministracionCriterio6){
+                // console.log(datosAdministracionCriterio6);
+                var datosAdministracionCriterio6 = datosAdministracionCriterio6.response;
+                var row = "";
+                for(var i = 0; i < datosAdministracionCriterio6.length; i++){
+                    var dataAdministracionCriterio6 = datosAdministracionCriterio6[i];
+                    // console.log(dataAdministracionCriterio6);
+                    var authUser = '<?= Auth::user()->usuario ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-administracion-investigacion-index") ?>';
+                    // console.log(permissions);
+                    if(dataAdministracionCriterio6.username == authUser || permissions == 1){
+                        row += "<tr>";
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataAdministracionCriterio6.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataAdministracionCriterio6.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataAdministracionCriterio6.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataAdministracionCriterio6.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataAdministracionCriterio6.year + '</td>';
+                        if(permissions == 1){
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio6(' + dataAdministracionCriterio6.year + ', ' + dataAdministracionCriterio6.clave + ', ' + 6 +')"><i class="fa fa-edit"></i></a></td>';
+                        }
+                        row += "</tr>";
+                    }
+                }
+                if ($.fn.dataTable.isDataTable("#tblCriterio6")) {
+                    tblDifusionDivulgacion = $("#tblCriterio6").DataTable();
+                    tblDifusionDivulgacion.destroy();
+                }
+                $('#tblCriterio6 > tbody').html('');
+                $('#tblCriterio6 > tbody').append(row);
+                $('#tblCriterio6').DataTable({
+                    "order":[[0, "asc"]],
+                    "language":{
+                      "lengthMenu": "Mostrar _MENU_ registros por página.",
+                      "info": "Página _PAGE_ de _PAGES_",
+                      "infoEmpty": "No se encontraron registros.",
+                      "infoFiltered": "(filtrada de _MAX_ registros)",
+                      "loadingRecords": "Cargando...",
+                      "processing":     "Procesando...",
+                      "search": "Buscar:",
+                      "zeroRecords":    "No se encontraron registros.",
+                      "paginate": {
+                                      "next":       ">",
+                                      "previous":   "<"
+                                  },
                     },
+                    lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                 });
             },
         });
     }
 
     function verEvidenciasCriterio6(year, clave, criterio){
+        var objetivo = 3;
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
             type: 'GET',
             dataType: 'json',
             ok: function(dataEvidenciasCriterio6){
                 // console.log(dataEvidenciasCriterio6); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio6').modal({backdrop: 'static', keyboard: false});
                 consultarDatos({
-                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
                     type: 'GET',
                     dataType: 'json',
-                    ok: function(getEvidenciasCriterio6){
-                        for(var i = 0; i < getEvidenciasCriterio6.response.length; i++){
-                            // console.log(getEvidenciasCriterio6.response[i].clave_evidencia); // Se comenta para futuras pruebas...
-                            var seleccion = getEvidenciasCriterio6.response[i].clave_evidencia;
-                            $('input[value="' + seleccion + '"]').prop('checked', true);
+                    ok: function(puntosCriterio6){
+                        puntos = puntosCriterio6.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio6').val(puntos);
+                        var datos = dataEvidenciasCriterio6.response;
+                        var row = "";
+                        $('#claveCriterio6').val(clave);
+                        $('#txtYearCriterio6').val(year);
+                        // console.log(datos);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            // console.log(claveData.clave);
+                            row += '<div class="col-12 col-md-2 text-center">';
+                            row += '<a href="http://127.106.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
+                            row += '</a><br>';
+                            row += '<b><input type="checkbox" class="evidenciasCriterio6" name="evidenciasCriterio6[]" id="evidenciasCriterio6'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio6('+puntos+');"> ' + claveData.clave + '</b>';
+                            row += '</div>';
                         }
+                        $("#contenedorCriterio6").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio6){
+                                var array = getEvidenciasCriterio6.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio6:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio6"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio6").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio6.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio6"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidad').val(dataEvidencias.puntos);
+                                    $('#txtTotal').val(dataEvidencias.total_puntos);
+                                }
+                            },
+                        });
                     },
                 });
-                $('#modalEvidenciasCriterio6').modal('show');
-                var datos = dataEvidenciasCriterio6.response;
-                var row = "";
-                $('#clave').val(clave);
-                $('#year').val(year);
-                for(var i = 0; i < datos.length; i++){
-                    // console.log(data); //Comentamos para futuras pruebas...
-                    var claveData = datos[i];
-                    row += '<div class="col-12 col-md-2 text-center">';
-                    row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
-                    row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
-                    row += '</a><br>';
-                    row += '<b><input type="checkbox" class="evidencias" name="evidencias[]" id="evidencias'+claveData.clave+'" value="'+claveData.clave+'"> ' + claveData.clave + '</b>';
-                    row += '</div>';
-                }
-                $("#contenedor").html(row).fadeIn('slow');
             },
         });
     }
 
-    function actualizarEvidenciasCriterio6(){
-        var clave = $('#clave').val();
-        var year = $('#year').val();
+    function contarEvidenciasCriterio6(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
         var evidencias = [];
+        $('input.evidenciasCriterio6:checked').each(function(){
+            evidencias.push(this.value);
+        });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio6').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio6').val(totalPuntos);
+    }
+
+    function actualizarEvidenciasCriterio6(){
+        var clave = $('#claveCriterio6').val();
+        var year = $('#txtYearCriterio6').val();
+        var cantidad = $('#txtCantidadCriterio6').val();
+        var total = $('#txtTotalCriterio6').val();
+        var evidenciasCriterio6 = [];
         var puntos = 0;
-        var id = 6;
+        var criterio = 6;
         var objetivo = 3;
         consultarDatos({
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/obtenerEvidenciasInvestigacion/" + clave + "/" + year + "/" + id,
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/obtenerEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
             type: 'GET',
             dataType: 'json',
             ok: function(searchEvidenciasCriterio6){
-                // console.log(searchEvidenciasCriterio6.response);
                 var existe = searchEvidenciasCriterio6.response;
                 // console.log(existe);
                 consultarDatos({
-                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/puntosinvestigacion/" + id + "/" + objetivo,
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
                     type: 'GET',
                     dataType: 'json',
                     ok: function(puntosCriterio6){
-                        // console.log(puntosCriterio6.response[0].puntos); // Comentamos para futuras pruebas...
-                        $('input.evidencias:checked').each(function(){
+                        puntos = puntosCriterio6.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        var evidencias = [];
+                        var serieEvidencias = "";
+                        $('input.evidenciasCriterio6:checked').each(function(){
                             evidencias.push(this.value);
-                            puntos = puntos + parseInt(puntosCriterio6.response[0].puntos);
                         });
-                        if(puntos == 0){
+                        for(var i = 0; i < evidencias.length; i++){
+                            var serieEvidencias = evidencias.join(',');
+                        }
+                        // console.log(serieEvidencias);
+                        var cantidadEvidencias = $('#txtCantidadCriterio6').val();
+                        // console.log(cantidadEvidencias);
+                        if(cantidadEvidencias == 0){
                             swal({
                                 type: 'warning',
                                 title: 'Favor de seleccionar las evidencias.',
@@ -182,82 +248,117 @@
                             }).catch(swal.noop);
                         }else{
                             if(existe == 0){
-                                for(var i = 0; i < evidencias.length; i++){
-                                    // console.log(evidencias[i]); // Se comenta para futuras pruebas...
-                                    var options = {
-                                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/savePuntos",
-                                        json: {
-                                            clave: clave,
-                                            clave_evidencia: evidencias[i],
-                                            puntos: puntos / parseInt(puntosCriterio6.response[0].puntos),
-                                            total_puntos: puntos,
-                                            year: year,
-                                            id_criterio: id,
-                                            _token: "{{ csrf_token() }}",
-                                        },
-                                        type: 'POST',
-                                        dateType: 'json',
-                                        mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-                                    };
-                                    // console.log(options);
-                                    peticionGeneralAjax(options);
-                                }
-                                actualizarDatosAdministracionCriterio6(clave, year, 6)
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/savePuntos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidadEvidencias,
+                                        total_puntos: total,
+                                        year: year
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio6){
+                                                var getPuntos = getEvidenciasCriterio6.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio6').modal('hide');
+                                                        verTablaCriterio6(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
                             }else{
-                                deletePuntosEvidenciaCriterio6(clave, year, 6);
-                                for(var i = 0; i < evidencias.length; i++){
-                                    // console.log(evidencias[i]); // Se comenta para futuras pruebas...
-                                    var options = {
-                                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/savePuntos",
-                                        json: {
-                                            clave: clave,
-                                            clave_evidencia: evidencias[i],
-                                            puntos: puntos / parseInt(puntosCriterio6.response[0].puntos),
-                                            total_puntos: puntos,
-                                            year: year,
-                                            id_criterio: id,
-                                            _token: "{{ csrf_token() }}",
-                                        },
-                                        type: 'POST',
-                                        dateType: 'json',
-                                        mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-                                    };
-                                    // console.log(options);
-                                    peticionGeneralAjax(options);
-                                }
-                                actualizarDatosAdministracionCriterio6(clave, year, 6)
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidad,
+                                        total_puntos: total,
+                                        year: year,
+                                        id_criterio: criterio
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio6){
+                                                var getPuntos = getEvidenciasCriterio6.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio6').modal('hide');
+                                                        verTablaCriterio6(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
                             }
                         }
                     },
                 });
             },
         });
-    }
-
-    function actualizarDatosAdministracionCriterio6(clave, year, criterio){
-        // console.log(criterio);
-        consultarDatos({
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosInvestigacion/" + clave + "/" + year + "/" + criterio,
-            type: 'GET',
-            dataType: 'json',
-            ok: function(data){
-                console.log("Puntos actualizados");
-            },
-        });
-    }
-
-    function deletePuntosEvidenciaCriterio6(clave, year, criterio){
-        var optionsDelete = {
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/investigacion/deletePuntosInvestigacion/" + clave + "/" + year + "/" + criterio,
-            json: {
-                _token: "{{ csrf_token() }}",
-                _method: 'DELETE',
-            },
-            type: 'POST',
-            dateType: 'json',
-        };
-        guardarAutomatico(optionsDelete);
     }
 </script>

@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDAdministracion;
+use App\Models\Estimulos\EvidenciasDAdministracion;
 
 class InvestigacionDAController extends Controller
 {
@@ -422,7 +423,7 @@ class InvestigacionDAController extends Controller
 
     //** Codigo personal */
     public function obtenerEvidenciasGeneral($clave, $year, $criterio){
-        if(EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'ART%')->count() == 0){
+        if(EvidenciasDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
             $count = 0;
         }else{
             $count = 1;
@@ -451,16 +452,25 @@ class InvestigacionDAController extends Controller
      */
     public function savePuntos(Request $request)
     {
-        EvaluacionDAdministracion::create($request->all());
+        EvidenciasDAdministracion::create($request->all());
         $data['response'] = true;
         return $this->response($data);
     }
 
     //** Codigo personal */
-    public function getEvidenciasGeneral($clave, $year, $criterio){
-        $obtener = EvaluacionDAdministracion::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->orWhere('clave_evidencia', 'like', 'ART%')->get();
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDAdministracion::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
         $data['response'] = $obtener;
         return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDAdministracion::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -469,26 +479,13 @@ class InvestigacionDAController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year, $criterio)
+    public function updateDatosPuntos(Request $request)
     {
-        EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
-        $data['response'] = true;
-        return $this->response($data);
-    }
-
-    /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year, $criterio){
-        if(EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'ART%')->count() > 1){
-            $obtener = DB::table('sinfodi_evaluacion_administracion')->selectRaw('SUM(puntos) AS puntos, SUM(total_puntos) AS total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
-        }else{
-            $obtener = DB::table('sinfodi_evaluacion_administracion')->selectRaw('puntos AS puntos, total_puntos AS total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
-        }
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-        }
-        EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->update(array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
-        return true;
+        $actualizar = EvaluacionDAdministracion::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /** Apartir de aqui es codigo para la tabla B... */

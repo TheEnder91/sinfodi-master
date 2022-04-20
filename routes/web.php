@@ -231,6 +231,18 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/posgrado/searchUsernamePosgrado/{clave}', [PosgradoDAController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionAdministracion.posgrado');
     Route::post('/estimulos/evaluaciones/DireccionAdministracion/posgrado/saveDatosPosgrado', [PosgradoDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.posgrado');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/posgrado/datosposgrado/{year}/{criterio}', [PosgradoDAController::class, "datosPosgrado"])->name('estimulos.evaluaciones.direccionAdministracion.posgrado');
+    /** Rutas para las evaluaciones de estimulos Direccion administracion->Investigacion Cientifica... */
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/listInvestigacion', [InvestigacionDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/searchInvestigacion/{year}/{criterio}', [InvestigacionDAController::class, "search"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::post('/estimulos/evaluaciones/DireccionAdministracion/investigacion/saveDatosInvestigacion', [InvestigacionDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/datosInvestigacion/{year}/{criterio}', [InvestigacionDAController::class, "datosInvestigacion"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/searchEvidenciasInvestigacion/{year}/{clave}/{criterio}', [InvestigacionDAController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/obtenerEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/puntosinvestigacion/{id}/{objetivo}', [InvestigacionDAController::class, "puntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::post('/estimulos/evaluaciones/DireccionAdministracion/investigacion/savePuntos', [InvestigacionDAController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::put('/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosPuntos', [InvestigacionDAController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
 
     /** Rutas para las evaluaciones de la direccion de posgrado... */
     /** Rutas para las evaluaciones de estimulos Direccion de posgrado->Difusion y divulgacion... */
@@ -251,6 +263,21 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/posgrado/searchUsernamePosgrado/{clave}', [PosgradoDPController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionPosgrado.posgrado');
     Route::post('/estimulos/evaluaciones/DireccionPosgrado/posgrado/saveDatosPosgrado', [PosgradoDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.posgrado');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/posgrado/datosposgrado/{year}/{criterio}', [PosgradoDPController::class, "datosPosgrado"])->name('estimulos.evaluaciones.direccionPosgrado.posgrado');
+    /** Rutas para las evaluaciones de estimulos Direccion posgrado->Investigacion Cientifica... */
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/listInvestigacion', [InvestigacionDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/searchInvestigacion/{year}/{criterio}', [InvestigacionDPController::class, "search"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::post('/estimulos/evaluaciones/DireccionPosgrado/investigacion/saveDatosInvestigacion', [InvestigacionDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/datosInvestigacion/{year}/{criterio}', [InvestigacionDPController::class, "datosInvestigacion"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/searchEvidenciasInvestigacion/{year}/{clave}/{criterio}', [InvestigacionDPController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/obtenerEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/puntosinvestigacion/{id}/{objetivo}', [InvestigacionDPController::class, "puntos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::post('/estimulos/evaluaciones/DireccionPosgrado/investigacion/savePuntos', [InvestigacionDPController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/getEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+    Route::put('/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosPuntos', [InvestigacionDPController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+
+
 
     /** Rutas para las evaluaciones de la direccion de Ciencia... */
     /** Rutas para las evaluaciones de estimulos Direccion de Ciencia->Difusion y divulgacion... */
@@ -360,18 +387,7 @@ Route::middleware(['login'])->group(function(){
 
 
 
-    /** Rutas para las evaluaciones de estimulos Direccion administracion->Investigacion Cientifica... */
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/listInvestigacion', [InvestigacionDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/searchInvestigacion/{year}/{criterio}', [InvestigacionDAController::class, "search"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::post('/estimulos/evaluaciones/DireccionAdministracion/investigacion/saveDatosInvestigacion', [InvestigacionDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/datosInvestigacion/{year}/{criterio}', [InvestigacionDAController::class, "datosInvestigacion"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/searchEvidenciasInvestigacion/{year}/{clave}/{criterio}', [InvestigacionDAController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/obtenerEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/puntosinvestigacion/{id}/{objetivo}', [InvestigacionDAController::class, "puntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::post('/estimulos/evaluaciones/DireccionAdministracion/investigacion/savePuntos', [InvestigacionDAController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/getEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::delete('/estimulos/evaluaciones/DireccionAdministracion/investigacion/deletePuntosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDAController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionAdministracion.investigacion');
+
     /** Rutas para las evaluaciones de estimulos Direccion administracion->Sostentabilidad */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/listSostentabilidad', [SostenibilidadDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDAController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
@@ -410,18 +426,7 @@ Route::middleware(['login'])->group(function(){
 
 
 
-    /** Rutas para las evaluaciones de estimulos Direccion posgrado->Investigacion Cientifica... */
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/listInvestigacion', [InvestigacionDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/searchInvestigacion/{year}/{criterio}', [InvestigacionDPController::class, "search"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::post('/estimulos/evaluaciones/DireccionPosgrado/investigacion/saveDatosInvestigacion', [InvestigacionDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/datosInvestigacion/{year}/{criterio}', [InvestigacionDPController::class, "datosInvestigacion"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/searchEvidenciasInvestigacion/{year}/{clave}/{criterio}', [InvestigacionDPController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/obtenerEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "obtenerEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/puntosinvestigacion/{id}/{objetivo}', [InvestigacionDPController::class, "puntos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::post('/estimulos/evaluaciones/DireccionPosgrado/investigacion/savePuntos', [InvestigacionDPController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/getEvidenciasInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "getEvidenciasGeneral"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::delete('/estimulos/evaluaciones/DireccionPosgrado/investigacion/deletePuntosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "deletePuntos"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacion/updateDatosInvestigacion/{clave}/{year}/{criterio}', [InvestigacionDPController::class, "updateDatosGeneral"])->name('estimulos.evaluaciones.direccionPosgrado.investigacion');
+
     /** Rutas para las evaluaciones de estimulos Direccion posgrado->Sostentabilidad */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/listSostentabilidad', [SostenibilidadDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDPController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionPosgrado.sostentabilidad');

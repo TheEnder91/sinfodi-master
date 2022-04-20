@@ -260,7 +260,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/investigacion/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.investigacion') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Investigación Cientifica</p>
+                                                    <p>Investigación científica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -372,7 +372,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/investigacion/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.investigacion') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Investigación</p>
+                                                    <p>Investigación científica</p>
                                                 </a>
                                             </li>
                                         @endif
