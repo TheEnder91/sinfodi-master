@@ -7,21 +7,21 @@
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/') }}">Inicio</a></li>
-        <li class="breadcrumb-item active">Evaluaciones a la dirección de Ciencia</li>
+        <li class="breadcrumb-item active">Evaluaciones a la dirección general</li>
     </ol>
 @endsection
 
 @section('content')
     @component('components.card')
-        @slot('title_card', 'Evaluaciones a la dirección de Ciencia->Investigación cientifica.')
+        @slot('title_card', 'Evaluaciones a la dirección general->Investigación cientifica.')
         <div class="row">
-            <div class="col-3">
+            <div class="col-2">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>

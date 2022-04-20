@@ -1,15 +1,15 @@
 <div class="table-responsive" width = "100%">
-    <table id="tblCriterio8" class="table table-bordered table-striped">
-        <caption>Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto mayor de 4.0.</caption>
+    <table id="tblCriterio8" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto mayor de 4.0.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
                 @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacion-index"))
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,79 +28,162 @@
                 var datosCriterio8 = datosCritero8.response;
                 // console.log(datosCritero8);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio8.length; i++){
-                    var dataCriterio8 = datosCriterio8[i];
-                    var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/saveDatosInvestigacion",
-                        json: {
-                            clave: dataCriterio8.numero_personal,
-                            nombre: dataCriterio8.nombre,
-                            id_objetivo: 3,
-                            id_criterio: 8,
-                            direccion: "DGeneral",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: year,
-                            username: dataCriterio8.username,
-                            _token: "{{ csrf_token() }}",
-                        },
-                        type: 'POST',
-                        dateType: 'json',
-                    };
-                    // console.log(options); // e comenta para futuras pruebas...
-                    guardarAutomatico(options);
-                    // Finaliza codigo para guardar en el sistema...
+                if(datosCriterio8.length > 0){
+                    for(var i = 0; i < datosCriterio8.length; i++){
+                        var dataCriterio8 = datosCriterio8[i];
+                        // console.log(dataCriterio8);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: dataCriterio8.numero_personal,
+                                nombre: dataCriterio8.nombre,
+                                id_objetivo: 3,
+                                id_criterio: 8,
+                                direccion: "DGeneral",
+                                puntos: 0,
+                                total_puntos: 0,
+                                year: year,
+                                username: dataCriterio8.username,
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                verTablaCriterio8(year, criterio);
+                            }
+                        });
+                    }
+                }else{
+                    verTablaCriterio8(year, criterio);
                 }
+            },
+        });
+    }
+
+    function verTablaCriterio8(year, criterio){
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/datosInvestigacion/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(datosGeneralCriterio8){
+                // console.log(datosGeneralCriterio8);
+                var datosGeneralCriterio8 = datosGeneralCriterio8.response;
+                var row = "";
+                for(var i = 0; i < datosGeneralCriterio8.length; i++){
+                    var dataGeneralCriterio8 = datosGeneralCriterio8[i];
+                    // console.log(dataGeneralCriterio8);
+                    var authUser = '<?= Auth::user()->usuario ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacion-index") ?>';
+                    // console.log(permissions);
+                    if(dataGeneralCriterio8.username == authUser || permissions == 1){
+                        row += "<tr>";
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio8.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio8.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio8.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio8.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio8.year + '</td>';
+                        if(permissions == 1){
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio8(' + dataGeneralCriterio8.year + ', ' + dataGeneralCriterio8.clave + ', ' + 8 +')"><i class="fa fa-edit"></i></a></td>';
+                        }
+                        row += "</tr>";
+                    }
+                }
+                if ($.fn.dataTable.isDataTable("#tblCriterio8")) {
+                    tblDifusionDivulgacion = $("#tblCriterio8").DataTable();
+                    tblDifusionDivulgacion.destroy();
+                }
+                $('#tblCriterio8 > tbody').html('');
+                $('#tblCriterio8 > tbody').append(row);
+                $('#tblCriterio8').DataTable({
+                    "order":[[0, "asc"]],
+                    "language":{
+                      "lengthMenu": "Mostrar _MENU_ registros por página.",
+                      "info": "Página _PAGE_ de _PAGES_",
+                      "infoEmpty": "No se encontraron registros.",
+                      "infoFiltered": "(filtrada de _MAX_ registros)",
+                      "loadingRecords": "Cargando...",
+                      "processing":     "Procesando...",
+                      "search": "Buscar:",
+                      "zeroRecords":    "No se encontraron registros.",
+                      "paginate": {
+                                      "next":       ">",
+                                      "previous":   "<"
+                                  },
+                    },
+                    lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                });
+            },
+        });
+    }
+
+    function verEvidenciasCriterio8(year, clave, criterio){
+        var objetivo = 3;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(dataEvidenciasCriterio8){
+                // console.log(dataEvidenciasCriterio8); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio8').modal({backdrop: 'static', keyboard: false});
                 consultarDatos({
-                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/datosInvestigacion/" + year + "/" + criterio,
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
                     type: 'GET',
                     dataType: 'json',
-                    ok: function(datosGeneralCriterio8){
-                        // console.log(datosGeneralCriterio8);
-                        var datosGeneralCriterio8 = datosGeneralCriterio8.response;
+                    ok: function(puntosCriterio8){
+                        puntos = puntosCriterio8.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio8').val(puntos);
+                        var datos = dataEvidenciasCriterio8.response;
                         var row = "";
-                        for(var i = 0; i < datosGeneralCriterio8.length; i++){
-                            var dataGeneralCriterio8 = datosGeneralCriterio8[i];
-                            // console.log(dataGeneralCriterio8);
-                            var authUser = '<?= Auth::user()->usuario ?>';
-                            var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacion-index") ?>';
-                            // console.log(permissions);
-                            if(dataGeneralCriterio8.username == authUser || permissions == 1){
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="10%">' + dataGeneralCriterio8.clave + '</td>';
-                                row += '<td width="40%">' + dataGeneralCriterio8.nombre + "</td>";
-                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio8.puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio8.total_puntos + '</td>';
-                                row += '<td class="text-center" width="10%">' + dataGeneralCriterio8.year + '</td>';
-                                if(permissions == 1){
-                                    row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio8(' + dataGeneralCriterio8.year + ', ' + dataGeneralCriterio8.clave + ', ' + 8 +')"><i class="fa fa-edit"></i></a></td>';
+                        $('#claveCriterio8').val(clave);
+                        $('#txtYearCriterio8').val(year);
+                        // console.log(datos);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            // console.log(claveData.clave);
+                            row += '<div class="col-12 col-md-2 text-center">';
+                            row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
+                            row += '</a><br>';
+                            row += '<b><input type="checkbox" class="evidenciasCriterio8" name="evidenciasCriterio8[]" id="evidenciasCriterio8'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio8('+puntos+');"> ' + claveData.clave + '</b>';
+                            row += '</div>';
+                        }
+                        $("#contenedorCriterio8").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio8){
+                                var array = getEvidenciasCriterio8.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio8:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio8"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio8").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio8.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio8"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidad').val(dataEvidencias.puntos);
+                                    $('#txtTotal').val(dataEvidencias.total_puntos);
                                 }
-                                row += "</tr>";
-                            }
-                        }
-                        if ($.fn.dataTable.isDataTable("#tblCriterio8")) {
-                            tblDifusionDivulgacion = $("#tblCriterio8").DataTable();
-                            tblDifusionDivulgacion.destroy();
-                        }
-                        $('#tblCriterio8 > tbody').html('');
-                        $('#tblCriterio8 > tbody').append(row);
-                        $('#tblCriterio8').DataTable({
-                            "order":[[0, "asc"]],
-                            "language":{
-                              "lengthMenu": "Mostrar _MENU_ registros por página.",
-                              "info": "Página _PAGE_ de _PAGES_",
-                              "infoEmpty": "No se encontraron registros.",
-                              "infoFiltered": "(filtrada de _MAX_ registros)",
-                              "loadingRecords": "Cargando...",
-                              "processing":     "Procesando...",
-                              "search": "Buscar:",
-                              "zeroRecords":    "No se encontraron registros.",
-                              "paginate": {
-                                              "next":       ">",
-                                              "previous":   "<"
-                                          },
                             },
-                            lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                         });
                     },
                 });
@@ -108,47 +191,25 @@
         });
     }
 
-    function verEvidenciasCriterio8(year, clave, criterio){
-        consultarDatos({
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
-            type: 'GET',
-            dataType: 'json',
-            ok: function(dataEvidenciasCriterio8){
-                // console.log(dataEvidenciasCriterio8); //Comentamos para futuras pruebas...
-                consultarDatos({
-                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
-                    type: 'GET',
-                    dataType: 'json',
-                    ok: function(getEvidenciasCriterio8){
-                        for(var i = 0; i < getEvidenciasCriterio8.response.length; i++){
-                            var seleccion = getEvidenciasCriterio8.response[i].clave_evidencia;
-                            $('input[value="' + seleccion + '"]').prop('checked', true);
-                        }
-                    },
-                });
-                $('#modalEvidenciasCriterio8').modal('show');
-                var datos = dataEvidenciasCriterio8.response;
-                var row = "";
-                $('#clave').val(clave);
-                $('#year').val(year);
-                for(var i = 0; i < datos.length; i++){
-                    var claveData = datos[i];
-                    // console.log(claveData); //Comentamos para futuras pruebas...
-                    row += '<div class="col-12 col-md-2 text-center">';
-                    row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
-                    row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
-                    row += '</a><br>';
-                    row += '<b><input type="checkbox" class="evidenciasCriterio8" name="evidenciasCriterio8[]" id="evidenciasCriterio8'+claveData.clave+'" value="'+claveData.clave+'"> ' + claveData.clave + '</b>';
-                    row += '</div>';
-                }
-                $("#contenedorCriterio8").html(row).fadeIn('slow');
-            },
+    function contarEvidenciasCriterio8(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
+        var evidencias = [];
+        $('input.evidenciasCriterio8:checked').each(function(){
+            evidencias.push(this.value);
         });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio8').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio8').val(totalPuntos);
     }
 
     function actualizarEvidenciasCriterio8(){
-        var clave = $('#clave').val();
-        var year = $('#year').val();
+        var clave = $('#claveCriterio8').val();
+        var year = $('#txtYearCriterio8').val();
+        var cantidad = $('#txtCantidadCriterio8').val();
+        var total = $('#txtTotalCriterio8').val();
         var evidenciasCriterio8 = [];
         var puntos = 0;
         var criterio = 8;
@@ -165,12 +226,20 @@
                     type: 'GET',
                     dataType: 'json',
                     ok: function(puntosCriterio8){
-                        // console.log(puntosCriterio8.response[0].puntos); // Comentamos para futuras pruebas...
+                        puntos = puntosCriterio8.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        var evidencias = [];
+                        var serieEvidencias = "";
                         $('input.evidenciasCriterio8:checked').each(function(){
-                            evidenciasCriterio8.push(this.value);
-                            puntos = puntos + parseInt(puntosCriterio8.response[0].puntos);
+                            evidencias.push(this.value);
                         });
-                        if(puntos == 0){
+                        for(var i = 0; i < evidencias.length; i++){
+                            var serieEvidencias = evidencias.join(',');
+                        }
+                        // console.log(serieEvidencias);
+                        var cantidadEvidencias = $('#txtCantidadCriterio8').val();
+                        // console.log(cantidadEvidencias);
+                        if(cantidadEvidencias == 0){
                             swal({
                                 type: 'warning',
                                 title: 'Favor de seleccionar las evidencias.',
@@ -179,82 +248,117 @@
                             }).catch(swal.noop);
                         }else{
                             if(existe == 0){
-                                for(var i = 0; i < evidenciasCriterio8.length; i++){
-                                    console.log(evidenciasCriterio8[i]); // Se comenta para futuras pruebas...
-                                    var options = {
-                                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/savePuntos",
-                                        json: {
-                                            clave: clave,
-                                            clave_evidencia: evidenciasCriterio8[i],
-                                            puntos: puntos / parseInt(puntosCriterio8.response[0].puntos),
-                                            total_puntos: puntos,
-                                            year: year,
-                                            id_criterio: criterio,
-                                            _token: "{{ csrf_token() }}",
-                                        },
-                                        type: 'POST',
-                                        dateType: 'json',
-                                        mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-                                    };
-                                    // console.log(options);
-                                    peticionGeneralAjax(options);
-                                }
-                                actualizarDatosGeneralCriterio8(clave, year, 8)
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/savePuntos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidadEvidencias,
+                                        total_puntos: total,
+                                        year: year
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio8){
+                                                var getPuntos = getEvidenciasCriterio8.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio8').modal('hide');
+                                                        verTablaCriterio8(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
                             }else{
-                                deletePuntosEvidenciaCriterio8(clave, year, 8);
-                                for(var i = 0; i < evidenciasCriterio8.length; i++){
-                                    console.log(evidenciasCriterio8[i]); // Se comenta para futuras pruebas...
-                                    var options = {
-                                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/savePuntos",
-                                        json: {
-                                            clave: clave,
-                                            clave_evidencia: evidenciasCriterio8[i],
-                                            puntos: puntos / parseInt(puntosCriterio8.response[0].puntos),
-                                            total_puntos: puntos,
-                                            year: year,
-                                            id_criterio: criterio,
-                                            _token: "{{ csrf_token() }}",
-                                        },
-                                        type: 'POST',
-                                        dateType: 'json',
-                                        mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-                                    };
-                                    // console.log(options);
-                                    peticionGeneralAjax(options);
-                                }
-                                actualizarDatosGeneralCriterio8(clave, year, 8)
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidad,
+                                        total_puntos: total,
+                                        year: year,
+                                        id_criterio: criterio
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio8){
+                                                var getPuntos = getEvidenciasCriterio8.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio8').modal('hide');
+                                                        verTablaCriterio8(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
                             }
                         }
                     },
                 });
             },
         });
-    }
-
-    function actualizarDatosGeneralCriterio8(clave, year, criterio){
-        // console.log(criterio);
-        consultarDatos({
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatosInvestigacion/" + clave + "/" + year + "/" + criterio,
-            type: 'GET',
-            dataType: 'json',
-            ok: function(data){
-                console.log("Puntos actualizados");
-            },
-        });
-    }
-
-    function deletePuntosEvidenciaCriterio8(clave, year, criterio){
-        var optionsDelete = {
-            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/deletePuntosInvestigacion/" + clave + "/" + year + "/" + criterio,
-            json: {
-                _token: "{{ csrf_token() }}",
-                _method: 'DELETE',
-            },
-            type: 'POST',
-            dateType: 'json',
-        };
-        guardarAutomatico(optionsDelete);
     }
 </script>

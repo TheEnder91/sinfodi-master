@@ -16,5 +16,4 @@
 </style>
 <div id="content">
 	<h2>Sin información por el momento</h2>
-	<p>Este apartado queda deshabilitado por falta de informacion, en cualquier momento se rehabilitara.</p>
 </div>

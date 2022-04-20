@@ -9,15 +9,33 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="clave" id="clave">
-                <input type="hidden" name="year" id="year">
-                <div class="row" id="contenedor">
+                <div class="row">
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Valor punto:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="valor" id="txtValor" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Cantidad:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="cantidad" id="txtCantidad" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Total:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotal" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Año:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYear" readonly>
+                    </div>
+                </div>
+                <br>
+                <div class="row" id="contenedorCriterio6">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{-- @can('estimulo-evaluaciones-general-difusiondivulgacion-update') --}}
+                @can('estimulo-evaluaciones-general-investigacion-index')
                     <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio6"/>
-                {{-- @endcan --}}
+                @endcan
             </div>
         </div>
     </div>
