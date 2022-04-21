@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDPosgrado;
+use App\Models\Estimulos\EvidenciasDPosgrado;
 
 class InvestigacionDPController extends Controller
 {
@@ -84,7 +85,7 @@ class InvestigacionDPController extends Controller
                                  sinfodi_master.sinfodi_evaluados.usuario as username')
                     ->join('sinfodi_master.sinfodi_evaluados', function($join){
                         $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_personal')
-                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
                     ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
@@ -107,7 +108,7 @@ class InvestigacionDPController extends Controller
                                  sinfodi_master.sinfodi_evaluados.usuario as username')
                     ->join('sinfodi_master.sinfodi_evaluados', function($join){
                         $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_personal')
-                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
                     ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
@@ -131,7 +132,7 @@ class InvestigacionDPController extends Controller
                                  sinfodi_master.sinfodi_evaluados.usuario as username')
                     ->join('sinfodi_master.sinfodi_evaluados', function($join){
                         $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_personal')
-                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
                     ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
@@ -154,7 +155,7 @@ class InvestigacionDPController extends Controller
                                  productivo_sinfodi.sinfodi_evaluados.usuario as username')
                     ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
                         $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_lfc', 'sinfodidb.sinfodi_lfc.lfc_clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_lfc_persona')
                     ->where('sinfodidb.sinfodi_lfc.lfc_eliminado', '=', 0)
@@ -177,7 +178,7 @@ class InvestigacionDPController extends Controller
                                  productivo_sinfodi.sinfodi_evaluados.usuario AS username')
                     ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
                         $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_mem', 'sinfodidb.sinfodi_mem.mem_clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_mem_persona')
                     ->where('sinfodidb.sinfodi_mem.mem_eliminado', '=', 0)
@@ -200,7 +201,7 @@ class InvestigacionDPController extends Controller
                                  productivo_sinfodi.sinfodi_evaluados.usuario AS username')
                     ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
                         $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_mem', 'sinfodidb.sinfodi_mem.mem_clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_mem_persona')
                     ->where('sinfodidb.sinfodi_mem.mem_eliminado', '=', 0)
@@ -223,7 +224,7 @@ class InvestigacionDPController extends Controller
                                  productivo_sinfodi.sinfodi_evaluados.usuario as username')
                     ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
                         $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_Posgrado');
                     })
                     ->leftJoin('sinfodidb.sinfodi_lfc', 'sinfodidb.sinfodi_lfc.lfc_clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_lfc_persona')
                     ->where('sinfodidb.sinfodi_lfc.lfc_eliminado', '=', 0)
@@ -263,19 +264,19 @@ class InvestigacionDPController extends Controller
     public function datosInvestigacion($year, $criterio)
     {
         if($criterio == 6){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 7){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 8){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 9){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 10){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 11){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }elseif($criterio == 13){
-            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
         }
         $data['response'] = $datos;
         return $this->response($data);
@@ -413,7 +414,7 @@ class InvestigacionDPController extends Controller
                     ->where('sinfodi_lfc.lfc_editorial_recon', '=', 1)
                     ->where('sinfodi_lfc.lfc_tipo_pub', '=', 1)
                     ->whereBetween('sinfodi_lfc.lfc_fecha_pub', [$inicial, $final])
-                    ->whereIn('sinfodi_lfc_personas.lfc_clave_persona', $clave)
+                    ->where('sinfodi_lfc_personas.lfc_clave_persona', '=', $clave)
                     ->orderBy('sinfodi_lfc_personas.lfc_clave_persona', 'ASC')
                     ->distinct()
                     ->get();
@@ -421,13 +422,12 @@ class InvestigacionDPController extends Controller
     }
 
     //** Codigo personal */
-    public function obtenerEvidenciasGeneral($clave, $year, $criterio){
-        // if(EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'ART%')->count() == 0){
-        //     $count = 0;
-        // }else{
-        //     $count = 1;
-        // }
-        $count = 0;
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDPosgrado::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
         $data['response'] = $count;
         return $this->response($data);
     }
@@ -452,16 +452,25 @@ class InvestigacionDPController extends Controller
      */
     public function savePuntos(Request $request)
     {
-        // EvaluacionDAdministracion::create($request->all());
+        EvidenciasDPosgrado::create($request->all());
         $data['response'] = true;
         return $this->response($data);
     }
 
     //** Codigo personal */
-    public function getEvidenciasGeneral($clave, $year, $criterio){
-        // $obtener = EvaluacionDAdministracion::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->orWhere('clave_evidencia', 'like', 'ART%')->get();
-        $data['response'] = true;
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDPosgrado::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
+        $data['response'] = $obtener;
         return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -470,39 +479,12 @@ class InvestigacionDPController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year, $criterio)
+    public function updateDatosPuntos(Request $request)
     {
-        // EvaluacionDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
-        $data['response'] = true;
-        return $this->response($data);
-    }
-
-    /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year, $criterio){
-        if(EvaluacionDPosgrado::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'ART%')->count() > 1){
-            $obtener = DB::table('sinfodi_evaluacion_posgrado')->selectRaw('SUM(puntos) AS puntos, SUM(total_puntos) AS total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
-        }else{
-            $obtener = DB::table('sinfodi_evaluacion_posgrado')->selectRaw('puntos AS puntos, total_puntos AS total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->get();
-        }
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-        }
-        EvaluacionDPosgrado::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->update(array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
-        return true;
-    }
-
-    /** Apartir de aqui es codigo para la tabla B... */
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function indexB()
-    {
-        $criterios = self::Get_Criterios_Investigacion();
-        return view('estimulos.evaluaciones.direccionPosgrado.investigacionB.index', [
-            'criterios' => $criterios,
-        ]);
+        $actualizar = EvaluacionDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }
