@@ -45,16 +45,22 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\Acreditaciones
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\SostenibilidadDPController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\SostentabilidadBDGController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulgacionController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\FormacionRHDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\FormacionRHDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\FormacionRHDAController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\ColaboracionDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\ColaboracionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\ColaboracionDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionCiencia\DifusionDivulgacionDCController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\InvestigacionDPTController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\TransferenciaDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\InvestigacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\TransferenciaDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\InvestigacionDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\TransferenciaDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\DifusionDivulgacionDPController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\AcreditacionesDPTController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\SostenibilidadDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\AcreditacionesDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\SostenibilidadDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\AcreditacionesDAController;
@@ -199,6 +205,14 @@ class PermissionsSeeder extends Seeder
         /** Permisos para el catalogo de evaluaciones de la Direccion de proyectos tecnologicos... */
         Permission::updateOrCreate(['name' => DifusionDivulgacionDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Difusion y Divulgacion', 'description' => 'A user can list technological projects direction->diffusion and dissemination', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => PosgradoDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Posgrado', 'description' => 'A user can list technological projects direction->Postgraduate', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
-
+        Permission::updateOrCreate(['name' => InvestigacionDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Investigación cientifica', 'description' => 'A user can list technological projects direction->Scientific investigation', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => SostenibilidadDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Sostentatibilidad economica', 'description' => 'A user can list technological projects direction->economic sustainability', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => TransferenciaDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Transferencia de conocimiento', 'description' => 'A user can list technological projects direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => FormacionRHDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Formación recursos humanos', 'description' => 'A user can list technological projects direction->Training of human resources', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => ColaboracionDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Colaboración institucional', 'description' => 'A user can list technological projects direction->Institutional collaboration', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => AcreditacionesDPTController::PERMISSIONS['index']], ['slug' => 'Listar D. Proy. Tec.->Acreditaciones', 'description' => 'A user can list technological projects direction->accreditations', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => InvestigacionDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Investigación cientifica B', 'description' => 'A user can list technological projects direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => SostenibilidadDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Sostentatibilidad economica B', 'description' => 'A user can list technological projects direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        Permission::updateOrCreate(['name' => TransferenciaDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Transferencia de conocimiento B', 'description' => 'A user can list technological projects direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }

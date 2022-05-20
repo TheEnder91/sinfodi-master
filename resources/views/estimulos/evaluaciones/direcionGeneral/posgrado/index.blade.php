@@ -18,9 +18,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px; text-align:center;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -84,6 +84,10 @@
 
         function initVer(){
             VerDatos(0);
+            $('#btnActualizarCriterio2').on('click', actualizarEvidenciasCriterio2);
+            $('#btnActualizarCriterio3').on('click', actualizarEvidenciasCriterio3);
+            $('#btnActualizarCriterio4').on('click', actualizarEvidenciasCriterio4);
+            $('#btnActualizarCriterio5').on('click', actualizarEvidenciasCriterio5);
         }
 
         function ShowSelected(){

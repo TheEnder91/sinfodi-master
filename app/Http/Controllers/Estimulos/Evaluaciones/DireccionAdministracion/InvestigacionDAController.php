@@ -496,9 +496,6 @@ class InvestigacionDAController extends Controller
      */
     public function indexB()
     {
-        $criterios = self::Get_Criterios_Investigacion();
-        return view('estimulos.evaluaciones.direccionAdministracion.investigacionB.index', [
-            'criterios' => $criterios,
-        ]);
+        return view('estimulos.evaluaciones.direccionAdministracion.investigacionB.index');
     }
 }

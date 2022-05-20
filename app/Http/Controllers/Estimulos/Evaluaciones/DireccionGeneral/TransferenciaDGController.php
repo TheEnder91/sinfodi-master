@@ -476,14 +476,14 @@ class TransferenciaDGController extends Controller
 
     //** Codigo personal */
     public function getEvidenciasGeneral($clave, $year, $criterio){
-        $obtener = EvidenciasDGeneral::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->orWhere('clave_evidencia', 'like', 'PAT%')->get();
+        $obtener = EvidenciasDGeneral::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
         $data['response'] = $obtener;
         return $this->response($data);
     }
 
     //** Codigo personal */
     public function obtenerEvidenciasGeneral($clave, $year, $criterio){
-        if(EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'PAT%')->count() == 0){
+        if(EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('evidencias', 'like', 'PAT%')->count() == 0){
             $count = 0;
         }else{
             $count = 1;
@@ -518,14 +518,12 @@ class TransferenciaDGController extends Controller
     }
 
     /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year, $criterio){
-        $obtener = DB::table('sinfodi_evidencias_general')->select('puntos', 'total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->take(1)->get();
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-            EvaluacionDGeneral::where('clave', '=', $clave)->where('id_criterio', '=',  $criterio)->where('year', '=', $year)->update( array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
-        }
-        return true;
+    public static function updateDatosGeneral(Request $request){
+        $actualizar = EvidenciasDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -534,10 +532,12 @@ class TransferenciaDGController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year, $criterio)
+    public function updateDatosPuntos(Request $request)
     {
-        EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
-        $data['response'] = true;
-        return $this->response($data);
+        $actualizar = EvaluacionDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }

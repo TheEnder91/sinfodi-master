@@ -18,9 +18,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
-                    <select class="custom-select text-center" id="year" onChange="ShowSelected();">
+                    <select class="custom-select text-center" id="year" onChange="ShowSelected();" style="font-size:13px;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -58,8 +58,56 @@
             obtenerCriterio32(year);
         }
 
-        function verTabla(year){
+        function obtenerCriterio32(year){
+            if(year === 0){
+                var año = document.getElementById("year").value;
+            }else{
+                var año = year;
+            }
+            // console.log(año);
             var criterio = 32;
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/colaboracion/searchColaboradores/" + año,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosCritero32){
+                    var datosCriterio32 = datosCritero32.response;
+                    // console.log(datosCritero32);
+                    // Codigo para guardar en el sistema...
+                    if(datosCriterio32.length > 0){
+                        for(var i = 0; i < datosCriterio32.length; i++){
+                            var dataCriterio32 = datosCriterio32[i];
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/colaboracion/saveDatos",
+                                data: {
+                                    token: $('#txtTokenRepo').val(),
+                                    clave: dataCriterio32.clave,
+                                    nombre: dataCriterio32.nombre,
+                                    id_objetivo: 7,
+                                    id_criterio: criterio,
+                                    direccion: "DPosgrado",
+                                    puntos: dataCriterio32.cantidad,
+                                    total_puntos: dataCriterio32.total,
+                                    year: año,
+                                    username: dataCriterio32.usuario,
+                                },
+                                headers: {
+                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                },
+                                success: function(data){
+                                    verTablaCriterio32(year, 32);
+                                }
+                            });
+                        }
+                    }else{
+                        verTablaCriterio32(year, 32);
+                    }
+                },
+            });
+        }
+
+        function verTablaCriterio32(year, criterio) {
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/colaboracion/datosColaboradores/" + year + "/" + criterio,
                 type: 'GET',
@@ -77,7 +125,7 @@
                         if(dataPosgradoCriterio32.username == authUser || permissions == 1){
                                 row += "<tr>";
                                 row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataPosgradoCriterio32.clave + '</td>';
-                                row += '<td width="77%" style="font-size:12px;">' + dataPosgradoCriterio32.nombre + "</td>";
+                                row += '<td width="77%" style="font-size:12px;">' + dataPosgradoCriterio32.nombre.toUpperCase() + "</td>";
                                 row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataPosgradoCriterio32.puntos) + '</td>';
                                 row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataPosgradoCriterio32.total_puntos) + '</td>';
                                 row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataPosgradoCriterio32.year + '</td>';
@@ -108,51 +156,6 @@
                         },
                         lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
-                },
-            });
-        }
-
-        function obtenerCriterio32(year){
-            if(year === 0){
-                var año = document.getElementById("year").value;
-            }else{
-                var año = year;
-            }
-            // console.log(año);
-            var criterio = 32;
-            verTabla(año, criterio);
-            consultarDatos({
-                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/colaboracion/searchColaboradores/" + año,
-                type: 'GET',
-                dataType: 'json',
-                ok: function(datosCritero32){
-                    var datosCriterio32 = datosCritero32.response;
-                    // console.log(datosCritero32);
-                    // Codigo para guardar en el sistema...
-                    for(var i = 0; i < datosCriterio32.length; i++){
-                        var dataCriterio32 = datosCriterio32[i];
-                        var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/DifDiv/saveDatosDifDiv",
-                            json: {
-                                clave: dataCriterio32.clave,
-                                nombre: dataCriterio32.nombre,
-                                id_objetivo: 7,
-                                id_criterio: criterio,
-                                direccion: "DPosgrado",
-                                puntos: dataCriterio32.cantidad,
-                                total_puntos: dataCriterio32.total,
-                                year: año,
-                                username: dataCriterio32.usuario,
-                                _token: "{{ csrf_token() }}",
-                            },
-                            type: 'POST',
-                            dateType: 'json',
-                        };
-                        // console.log(options); // e comenta para futuras pruebas...
-                        guardarAutomatico(options);
-                        verTabla(año, criterio);
-                        // Finaliza codigo para guardar en el sistema...
-                    }
                 },
             });
         }

@@ -1,15 +1,15 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
-    <table id="tblCriterio30" class="table table-bordered table-striped">
-        <caption>Atención a alumnos de tesis de maestría concluida.</caption>
+    <table id="tblCriterio30" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Atención a alumnos de tesis de maestría concluida.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
                 @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-formacion-index"))
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,47 +28,51 @@
                 var datosCriterio30 = datosCritero30.response;
                 // console.log(datosCritero30);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio30.length; i++){
-                    var dataCriterio30 = datosCriterio30[i];
-                    // console.log(dataCriterio30);
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchUsernameFormacionRH/" + dataCriterio30.numero_personal,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(datosCritero30Username){
-                            // Codigo para guardar en el sistema...
-                            var username = datosCritero30Username.response[0];
-                            // console.log(username.clave + "->" + username.usuario);
-                            var options = {
-                                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/formacionRH/saveDatosFormacionRH",
-                                json: {
-                                    clave: username.clave,
-                                    nombre: username.nombre,
-                                    id_objetivo: 6,
-                                    id_criterio: 30,
-                                    direccion: "DCiencia",
-                                    puntos: 0,
-                                    total_puntos: 0,
-                                    year: year,
-                                    username: username.usuario,
-                                    _token: "{{ csrf_token() }}",
-                                },
-                                type: 'POST',
-                                dateType: 'json',
-                            };
-                            // console.log(options); // e comenta para futuras pruebas...
-                            guardarAutomatico(options);
-                            verTablaCriterio(year, 30);
-                            // Finaliza codigo para guardar en el sistema...
-                        },
-                    });
+                if(datosCriterio30.length > 0){
+                    for(var i = 0; i < datosCriterio30.length; i++){
+                        var dataCriterio30 = datosCriterio30[i];
+                        // console.log(dataCriterio30);
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchUsernameFormacionRH/" + dataCriterio30.numero_personal,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(datosCritero30Username){
+                                // Codigo para guardar en el sistema...
+                                var username = datosCritero30Username.response[0];
+                                // console.log(username.clave + "->" + username.usuario);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/formacionRH/saveDatosFormacionRH",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: username.clave,
+                                        nombre: username.nombre,
+                                        id_objetivo: 6,
+                                        id_criterio: 30,
+                                        direccion: "DCiencia",
+                                        puntos: 0,
+                                        total_puntos: 0,
+                                        year: year,
+                                        username: username.usuario,
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        verTablaCriterio30(year, 30);
+                                    }
+                                });
+                            },
+                        });
+                    }
+                }else{
+                    verTablaCriterio30(year, 30);
                 }
-                verTablaCriterio(year, 30);
             },
         });
     }
 
-    function verTablaCriterio(year, criterio){
+    function verTablaCriterio30(year, criterio){
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/formacionRH/datosFormacionRH/" + year + "/" + criterio,
             type: 'GET',
@@ -85,13 +89,13 @@
                     // console.log(permissions);
                     if(dataCienciaCriterio30.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%">' + dataCienciaCriterio30.clave + '</td>';
-                        row += '<td width="40%">' + dataCienciaCriterio30.nombre + "</td>";
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio30.puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio30.total_puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio30.year + '</td>';
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio30.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataCienciaCriterio30.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio30.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio30.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio30.year + '</td>';
                         if(permissions == 1){
-                            row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio30(' + dataCienciaCriterio30.year + ', ' + dataCienciaCriterio30.clave + ', ' + 30 +')"><i class="fa fa-edit"></i></a></td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio30(' + dataCienciaCriterio30.year + ', ' + dataCienciaCriterio30.clave + ', ' + 30 +')"><i class="fa fa-edit"></i></a></td>';
                         }
                         row += "</tr>";
                     }

@@ -18,9 +18,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -115,15 +115,15 @@
 
         function initVer(){
             VerDatos(0);
-            // $('#btnActualizarCriterio15').on('click', actualizarEvidenciasCriterio15);
-            // $('#btnActualizarCriterio16').on('click', actualizarEvidenciasCriterio16);
-            // $('#btnActualizarCriterio17').on('click', actualizarEvidenciasCriterio17);
-            // $('#btnActualizarCriterio18').on('click', actualizarEvidenciasCriterio18);
-            // $('#btnActualizarCriterio19').on('click', actualizarEvidenciasCriterio19);
-            // $('#btnActualizarCriterio20').on('click', actualizarEvidenciasCriterio20);
-            // $('#btnActualizarCriterio21').on('click', actualizarEvidenciasCriterio21);
-            // $('#btnActualizarCriterio22').on('click', actualizarEvidenciasCriterio22);
-            // $('#btnActualizarCriterio23').on('click', actualizarEvidenciasCriterio23);
+            $('#btnActualizarCriterio15').on('click', actualizarEvidenciasCriterio15);
+            $('#btnActualizarCriterio16').on('click', actualizarEvidenciasCriterio16);
+            $('#btnActualizarCriterio17').on('click', actualizarEvidenciasCriterio17);
+            $('#btnActualizarCriterio18').on('click', actualizarEvidenciasCriterio18);
+            $('#btnActualizarCriterio19').on('click', actualizarEvidenciasCriterio19);
+            $('#btnActualizarCriterio20').on('click', actualizarEvidenciasCriterio20);
+            $('#btnActualizarCriterio21').on('click', actualizarEvidenciasCriterio21);
+            $('#btnActualizarCriterio22').on('click', actualizarEvidenciasCriterio22);
+            $('#btnActualizarCriterio23').on('click', actualizarEvidenciasCriterio23);
         }
 
         function ShowSelected(){

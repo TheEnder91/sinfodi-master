@@ -31,6 +31,7 @@ class CreateSinfodiSostentabilidadTable extends Migration
             $table->string('remanente');
             $table->string('interinstitucional');
             $table->string('interareas');
+            $table->string('interdirecciones');
             $table->float('puntos_totales');
             $table->float('puntos_lider');
             $table->float('nuevos_puntos_totales');

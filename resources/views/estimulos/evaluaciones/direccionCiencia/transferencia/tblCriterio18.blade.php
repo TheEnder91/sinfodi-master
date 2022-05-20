@@ -1,15 +1,15 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
-    <table id="tblCriterio18" class="table table-bordered table-striped">
-        <caption>Registro de diseño industrial solicitado.</caption>
+    <table id="tblCriterio18" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Registro de diseño industrial solicitado.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
                 @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-transferencia-index"))
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,32 +28,36 @@
                 var datosCriterio18 = datosCritero18.response;
                 // console.log(datosCritero18);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio18.length; i++){
-                    var dataCriterio18 = datosCriterio18[i];
-                    // console.log(dataCriterio18);
-                    // Codigo para guardar en el sistema...
-                    var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/saveDatosTransferencia",
-                        json: {
-                            clave: dataCriterio18.numero_personal,
-                            nombre: dataCriterio18.nombre,
-                            id_objetivo: 5,
-                            id_criterio: 18,
-                            direccion: "DCiencia",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: year,
-                            username: dataCriterio18.username,
-                            _token: "{{ csrf_token() }}",
-                        },
-                        type: 'POST',
-                        dateType: 'json',
-                    };
-                    guardarAutomatico(options);
-                    // console.log(options); // e comenta para futuras pruebas...
-                    // Finaliza codigo para guardar en el sistema...
+                if(datosCriterio18.length > 0){
+                    for(var i = 0; i < datosCriterio18.length; i++){
+                        var dataCriterio18 = datosCriterio18[i];
+                        // console.log(dataCriterio18);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/saveDatosTransferencia",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: dataCriterio18.numero_personal,
+                                nombre: dataCriterio18.nombre,
+                                id_objetivo: 5,
+                                id_criterio: 18,
+                                direccion: "DCiencia",
+                                puntos: 0,
+                                total_puntos: 0,
+                                year: year,
+                                username: dataCriterio18.username,
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                verTablaCriterio18(year, criterio);
+                            }
+                        });
+                    }
+                }else{
+                    verTablaCriterio18(year, criterio);
                 }
-                verTablaCriterio18(year, 18);
             },
         });
     }
@@ -75,13 +79,13 @@
                     // console.log(permissions);
                     if(dataCienciaCriterio18.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%">' + dataCienciaCriterio18.clave + '</td>';
-                        row += '<td width="40%">' + dataCienciaCriterio18.nombre + "</td>";
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio18.puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio18.total_puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio18.year + '</td>';
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio18.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataCienciaCriterio18.nombre + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio18.puntos + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio18.total_puntos + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio18.year + '</td>';
                         if(permissions == 1){
-                            row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio18(' + dataCienciaCriterio18.year + ', ' + dataCienciaCriterio18.clave + ', ' + 18 +')"><i class="fa fa-edit"></i></a></td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio18(' + dataCienciaCriterio18.year + ', ' + dataCienciaCriterio18.clave + ', ' + 18 +')"><i class="fa fa-edit"></i></a></td>';
                         }
                         row += "</tr>";
                     }
@@ -114,159 +118,254 @@
         });
     }
 
-    // function verEvidenciasCriterio18(year, clave, criterio){
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/searchEvidenciasTransferencia/" + year + "/" + clave + "/" + criterio,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(dataEvidenciasCriterio18){
-    //             // console.log(dataEvidenciasCriterio18); //Comentamos para futuras pruebas...
-    //             consultarDatos({
-    //                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/getEvidenciasTransferencia/" + clave + "/" + year + "/" + criterio,
-    //                 type: 'GET',
-    //                 dataType: 'json',
-    //                 ok: function(getEvidenciasCriterio18){
-    //                     for(var i = 0; i < getEvidenciasCriterio18.response.length; i++){
-    //                         // console.log(getEvidenciasCriterio18.response[i].clave_evidencia); // Se comenta para futuras pruebas...
-    //                         var seleccion = getEvidenciasCriterio18.response[i].clave_evidencia;
-    //                         $('input[value="' + seleccion + '"]').prop('checked', true);
-    //                     }
-    //                 },
-    //             });
-    //             $('#modalEvidenciasCriterio18').modal('show');
-    //             var datos = dataEvidenciasCriterio18.response;
-    //             var row = "";
-    //             $('#clave').val(clave);
-    //             $('#year').val(year);
-    //             for(var i = 0; i < datos.length; i++){
-    //                 var claveData = datos[i];
-    //                 // console.log(claveData); //Comentamos para futuras pruebas...
-    //                 if(claveData.status == 1){
-    //                     var tipo = "-R";
-    //                 }else{
-    //                     var tipo = "-O";
-    //                 }
-    //                 row += '<div class="col-12 col-md-2 text-center">';
-    //                 row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-PropiedadIntelectual/' + claveData.clave + tipo + '.pdf" target="_blank">';
-    //                 row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
-    //                 row += '</a><br>';
-    //                 row += '<b><input type="checkbox" class="evidenciasCriterio18" name="evidenciasCriterio18[]" id="evidenciasCriterio18'+claveData.clave+tipo+'" value="'+claveData.clave+tipo+'"> ' + claveData.clave+tipo+ '</b>';
-    //                 row += '</div>';
-    //             }
-    //             $("#contenedorCriterio18").html(row).fadeIn('slow');
-    //         },
-    //     });
-    // }
+    function verEvidenciasCriterio18(year, clave, criterio){
+        var objetivo = 5;
+        $('#txtCantidadCriterio18').val(0);
+        $('#txtTotalCriterio18').val(0);
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/searchEvidenciasTransferencia/" + year + "/" + clave + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(dataEvidenciasCriterio18){
+                // console.log(dataEvidenciasCriterio18); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio18').modal({backdrop: 'static', keyboard: false});
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/puntosTransferencia/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio18){
+                        puntos = puntosCriterio18.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio18').val(puntos);
+                        var datos = dataEvidenciasCriterio18.response;
+                        var row = "";
+                        $('#claveCriterio18').val(clave);
+                        $('#txtYearCriterio18').val(year);
+                        // console.log(datos);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            if(claveData.status == 1){
+                                var tipo = "-R";
+                            }else{
+                                var tipo = "-O";
+                            }
+                            // console.log(claveData.clave);
+                            row += '<div class="col-12 col-md-2 text-center">';
+                            row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-PropiedadIntelectual/' + claveData.clave + tipo + '.pdf" target="_blank">';
+                            row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
+                            row += '</a><br>';
+                            row += '<b><input type="checkbox" class="evidenciasCriterio18" name="evidenciasCriterio18[]" id="evidenciasCriterio18'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio18('+puntos+');"> ' + claveData.clave + tipo + '</b>';
+                            row += '</div>';
+                        }
+                        $("#contenedorCriterio18").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/getEvidenciasTransferencia/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio18){
+                                var array = getEvidenciasCriterio18.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio18:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio18"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio18").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio18.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio18"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidadCriterio18').val(dataEvidencias.puntos);
+                                    $('#txtTotalCriterio18').val(dataEvidencias.total_puntos);
+                                }
+                            },
+                        });
+                    },
+                });
+            },
+        });
+    }
 
-    // function actualizarEvidenciasCriterio18(){
-    //     var clave = $('#clave').val();
-    //     var year = $('#year').val();
-    //     var evidencias = [];
-    //     var puntos = 0;
-    //     var id = 18;
-    //     var objetivo = 5;
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/obtenerEvidenciasTransferencia/" + clave + "/" + year + "/" + id,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(searchEvidenciasCriterio18){
-    //             var existe = searchEvidenciasCriterio18.response;
-    //             // console.log(existe);
-    //             consultarDatos({
-    //                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/puntosTransferencia/" + id + "/" + objetivo,
-    //                 type: 'GET',
-    //                 dataType: 'json',
-    //                 ok: function(puntosCriterio18){
-    //                     // console.log(puntosCriterio18.response[0].puntos); // Comentamos para futuras pruebas...
-    //                     $('input.evidenciasCriterio18:checked').each(function(){
-    //                         evidencias.push(this.value);
-    //                         puntos = puntos + parseInt(puntosCriterio18.response[0].puntos);
-    //                     });
-    //                     if(puntos == 0){
-    //                         swal({
-    //                             type: 'warning',
-    //                             title: 'Favor de seleccionar las evidencias.',
-    //                             showConfirmButton: false,
-    //                             timer: 1800
-    //                         }).catch(swal.noop);
-    //                     }else{
-    //                         if(existe == 0){
-    //                             for(var i = 0; i < evidencias.length; i++){
-    //                                 // console.log(evidencias[i]); // Se comenta para futuras pruebas...
-    //                                 var savePuntos = {
-    //                                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/savePuntos",
-    //                                     json: {
-    //                                         clave: clave,
-    //                                         clave_evidencia: evidencias[i],
-    //                                         puntos: puntos / parseInt(puntosCriterio18.response[0].puntos),
-    //                                         total_puntos: puntos,
-    //                                         year: year,
-    //                                         id_criterio: id,
-    //                                         _token: "{{ csrf_token() }}",
-    //                                     },
-    //                                     type: 'POST',
-    //                                     dateType: 'json',
-    //                                 };
-    //                                 // console.log(savePuntos);
-    //                                 guardarAutomatico(savePuntos);
-    //                             }
-    //                             actualizarDatosCienciaCriterio18(clave, year, 18);
-    //                             obtenerCriterio18(year, 18);
-    //                             $('#modalEvidenciasCriterio18').modal('hide');
-    //                         }else{
-    //                             deletePuntosEvidenciaCriterio18(clave, year, 18);
-    //                             for(var i = 0; i < evidencias.length; i++){
-    //                                 // console.log(evidencias[i]); // Se comenta para futuras pruebas...
-    //                                 var savePuntos = {
-    //                                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/savePuntos",
-    //                                     json: {
-    //                                         clave: clave,
-    //                                         clave_evidencia: evidencias[i],
-    //                                         puntos: puntos / parseInt(puntosCriterio18.response[0].puntos),
-    //                                         total_puntos: puntos,
-    //                                         year: year,
-    //                                         id_criterio: id,
-    //                                         _token: "{{ csrf_token() }}",
-    //                                     },
-    //                                     type: 'POST',
-    //                                     dateType: 'json',
-    //                                 };
-    //                                 // console.log(savePuntos);
-    //                                 guardarAutomatico(savePuntos);
-    //                             }
-    //                             actualizarDatosCienciaCriterio18(clave, year, 18);
-    //                             obtenerCriterio18(year, 18);
-    //                             $('#modalEvidenciasCriterio18').modal('hide');
-    //                         }
-    //                     }
-    //                 },
-    //             });
-    //         },
-    //     });
-    // }
+    function contarEvidenciasCriterio18(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
+        var evidencias = [];
+        $('input.evidenciasCriterio18:checked').each(function(){
+            evidencias.push(this.value);
+        });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio18').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio18').val(totalPuntos);
+    }
 
-    // function actualizarDatosCienciaCriterio18(clave, year, criterio){
-    //     // console.log(criterio);
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/updateDatosTransferencia/" + clave + "/" + year + "/" + criterio,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(data){
-    //             console.log("Puntos actualizados");
-    //         },
-    //     });
-    // }
-
-    // function deletePuntosEvidenciaCriterio18(clave, year, criterio){
-    //     var optionsDelete = {
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/deletePuntosTransferencia/" + clave + "/" + year + "/" + criterio,
-    //         json: {
-    //             _token: "{{ csrf_token() }}",
-    //             _method: 'DELETE',
-    //         },
-    //         type: 'POST',
-    //         dateType: 'json',
-    //     };
-    //     guardarAutomatico(optionsDelete);
-    // }
+    function actualizarEvidenciasCriterio18(){
+        var clave = $('#claveCriterio18').val();
+        var year = $('#txtYearCriterio18').val();
+        var cantidad = $('#txtCantidad').val();
+        var total = $('#txtTotalCriterio18').val();
+        var evidenciasCriterio18 = [];
+        var puntos = 0;
+        var criterio = 18;
+        var objetivo = 5;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/obtenerEvidenciasTransferencia/" + clave + "/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(searchEvidenciasCriterio18){
+                var existe = searchEvidenciasCriterio18.response;
+                // console.log(existe);
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/puntosTransferencia/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio18){
+                        puntos = puntosCriterio18.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        var evidencias = [];
+                        var serieEvidencias = "";
+                        $('input.evidenciasCriterio18:checked').each(function(){
+                            evidencias.push(this.value);
+                        });
+                        for(var i = 0; i < evidencias.length; i++){
+                            var serieEvidencias = evidencias.join(',');
+                        }
+                        // console.log(serieEvidencias);
+                        var cantidadEvidencias = $('#txtCantidadCriterio18').val();
+                        // console.log(cantidadEvidencias);
+                        if(cantidadEvidencias == 0){
+                            swal({
+                                type: 'warning',
+                                title: 'Favor de seleccionar las evidencias.',
+                                showConfirmButton: false,
+                                timer: 1800
+                            }).catch(swal.noop);
+                        }else{
+                            if(existe == 0){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/savePuntos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidadEvidencias,
+                                        total_puntos: total,
+                                        year: year
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/getEvidenciasTransferencia/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio18){
+                                                var getPuntos = getEvidenciasCriterio18.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio18').modal('hide');
+                                                        verTablaCriterio18(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
+                            }else{
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/updateDatosTransferencia",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidadEvidencias,
+                                        total_puntos: total,
+                                        year: year,
+                                        id_criterio: criterio
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/getEvidenciasTransferencia/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio18){
+                                                var getPuntos = getEvidenciasCriterio18.response[0];
+                                                // console.log(getPuntos.puntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio18').modal('hide');
+                                                        verTablaCriterio18(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    },
+                });
+            },
+        });
+    }
 </script>

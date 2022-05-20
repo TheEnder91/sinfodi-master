@@ -18,9 +18,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -29,7 +29,7 @@
             </div>
         </div><br>
         <div class="table-responsive">
-            <table id="tblCriterio14" class="table table-bordered table-striped">
+            <table id="tblCriterio14" class="table table-bordered table-striped" style="font-size:13px;">
                 <caption style="font-size:13px;">Monto ingresado a CIDETEQ por proyectos patrocinados, comercializados, servicios especiales, cursos.</caption>
                 <thead>
                     <tr class="text-center">
@@ -75,30 +75,35 @@
                     var datosCriterio14 = datosCritero14.response;
                     // console.log(datosCritero14);
                     // Codigo para guardar en el sistema...
-                    for(var i = 0; i < datosCriterio14.length; i++){
-                        var dataCriterio14 = datosCriterio14[i];
-                        var options = {
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/saveDatosSostentabilidad",
-                            json: {
-                                clave: dataCriterio14.clave_participante,
-                                nombre: dataCriterio14.nombre_participante,
-                                id_objetivo: 4,
-                                id_criterio: criterio,
-                                direccion: "DCiencia",
-                                puntos: 0,
-                                total_puntos: dataCriterio14.total,
-                                year: dataCriterio14.year,
-                                username: dataCriterio14.usuario_participante,
-                                _token: "{{ csrf_token() }}",
-                            },
-                            type: 'POST',
-                            dateType: 'json',
-                        };
-                        // console.log(options); // e comenta para futuras pruebas...
-                        guardarAutomatico(options);
-                        // Finaliza codigo para guardar en el sistema...
+                    if(datosCriterio14.length > 0){
+                        for(var i = 0; i < datosCriterio14.length; i++){
+                            var dataCriterio14 = datosCriterio14[i];
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/saveDatosSostentabilidad",
+                                data: {
+                                    token: $('#txtTokenRepo').val(),
+                                    clave: dataCriterio14.clave_participante,
+                                    nombre: dataCriterio14.nombre_participante,
+                                    id_objetivo: 4,
+                                    id_criterio: criterio,
+                                    direccion: "DCiencia",
+                                    puntos: 0,
+                                    total_puntos: dataCriterio14.total,
+                                    year: dataCriterio14.year,
+                                    username: dataCriterio14.usuario_participante,
+                                },
+                                headers: {
+                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                },
+                                success: function(data){
+                                    verTablaCriterio14(año, 14);
+                                }
+                            });
+                        }
+                    }else{
+                        verTablaCriterio14(año, 14);
                     }
-                    verTablaCriterio14(año, 14);
                 },
             });
         }

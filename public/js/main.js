@@ -53,7 +53,7 @@ function peticionGeneralAjax(options){
             if(data){
                 swal({
                     type: 'success',
-                    title: options.mensajeConfirm,
+                    text: options.mensajeConfirm,
                     showConfirmButton: false,
                     timer: 1800
                 }).catch(swal.noop)

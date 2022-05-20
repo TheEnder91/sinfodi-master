@@ -231,19 +231,6 @@ class DifusionDivulgacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year, $criterio)
-    {
-        DB::table('sinfodi_evidencias_general')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
-        $data['response'] = true;
-        return $this->response($data);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function updateDatosPuntos(Request $request)
     {
         $actualizar = EvaluacionDGeneral::where('clave', $request->clave)

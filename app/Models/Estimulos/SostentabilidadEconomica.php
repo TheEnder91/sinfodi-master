@@ -28,6 +28,7 @@ class SostentabilidadEconomica extends Model
         'remanente',
         'interinstitucional',
         'interareas',
+        'interdirecciones',
         'puntos_totales',
         'puntos_lider',
         'nuevos_puntos_totales',

@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDCiencia;
+use App\Models\Estimulos\EvidenciasDCiencia;
 
 class InvestigacionDCController extends Controller
 {
@@ -279,6 +280,212 @@ class InvestigacionDCController extends Controller
         }
         $data['response'] = $datos;
         return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function searchEvidencias($year, $clave, $criterio)
+    {
+        $fechaInicial = $year.'-01-01';
+        $fechaFinal = $year.'-12-31';
+        if($criterio == 6){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio6_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 7){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio7_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 8){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio8_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 9){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio9_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 10){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio10_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 11){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio11_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 13){
+            $evidencias = self::Get_Evidencias_Obj3_Criterio13_InvCientifica($clave, $fechaInicial, $fechaFinal);
+        }
+        $data['response'] = $evidencias;
+        return $this->response($data);
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio6_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
+                    ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
+                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
+                    ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
+                    ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
+                    ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
+                    ->where('sinfodi_art_cuartiles.art_factor_impacto', '<=', 2.0)
+                    ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
+                    ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio7_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
+                    ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
+                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
+                    ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
+                    ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
+                    ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
+                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 2.0)
+                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '<=', 4.0)
+                    ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
+                    ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio8_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
+                    ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
+                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
+                    ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
+                    ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
+                    ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
+                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 4.0)
+                    ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
+                    ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio9_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_lfc_personas')
+                    ->select('sinfodi_lfc_personas.lfc_clave_persona AS numero_personal', 'sinfodi_lfc_personas.lfc_clave_lfc_persona AS clave')
+                    ->leftJoin('sinfodi_lfc', 'sinfodi_lfc.lfc_clave', '=', 'sinfodi_lfc_personas.lfc_clave_lfc_persona')
+                    ->where('sinfodi_lfc.lfc_eliminado', '=', 0)
+                    ->where('sinfodi_lfc_personas.lfc_clave_persona', '<>', 0)
+                    ->where('sinfodi_lfc.lfc_editorial_recon', '=', 1)
+                    ->where('sinfodi_lfc.lfc_tipo_pub', '=', 2)
+                    ->whereBetween('sinfodi_lfc.lfc_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_lfc_personas.lfc_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_lfc_personas.lfc_clave_persona', 'ASC')
+                    ->distinct()
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio10_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_mem_personas')
+                    ->select('sinfodi_mem_personas.mem_clave_personal AS numero_personal', 'sinfodi_mem_personas.mem_clave_mem_persona AS clave')
+                    ->leftJoin('sinfodi_mem', 'sinfodi_mem.mem_clave', '=', 'sinfodi_mem_personas.mem_clave_mem_persona')
+                    ->where('sinfodi_mem.mem_eliminado', '=', 0)
+                    ->where('sinfodi_mem_personas.mem_clave_personal', '<>', 0)
+                    ->where('sinfodi_mem.mem_circulacion', '=', 2)
+                    ->where('sinfodi_mem.mem_arbitraje', '=', 1)
+                    ->whereBetween('sinfodi_mem.mem_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_mem_personas.mem_clave_personal', '=', $clave)
+                    ->orderBy('sinfodi_mem_personas.mem_clave_personal', 'ASC')
+                    ->distinct()
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio11_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_mem_personas')
+                    ->select('sinfodi_mem_personas.mem_clave_personal AS numero_personal', 'sinfodi_mem_personas.mem_clave_mem_persona AS clave')
+                    ->leftJoin('sinfodi_mem', 'sinfodi_mem.mem_clave', '=', 'sinfodi_mem_personas.mem_clave_mem_persona')
+                    ->where('sinfodi_mem.mem_eliminado', '=', 0)
+                    ->where('sinfodi_mem_personas.mem_clave_personal', '<>', 0)
+                    ->where('sinfodi_mem.mem_circulacion', '=', 1)
+                    ->where('sinfodi_mem.mem_arbitraje', '=', 1)
+                    ->whereBetween('sinfodi_mem.mem_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_mem_personas.mem_clave_personal', '=', $clave)
+                    ->orderBy('sinfodi_mem_personas.mem_clave_personal', 'ASC')
+                    ->distinct()
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj3_Criterio13_InvCientifica($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_lfc_personas')
+                    ->select('sinfodi_lfc_personas.lfc_clave_persona AS numero_personal', 'sinfodi_lfc_personas.lfc_clave_lfc_persona AS clave')
+                    ->leftJoin('sinfodi_lfc', 'sinfodi_lfc.lfc_clave', '=', 'sinfodi_lfc_personas.lfc_clave_lfc_persona')
+                    ->where('sinfodi_lfc.lfc_eliminado', '=', 0)
+                    ->where('sinfodi_lfc_personas.lfc_clave_persona', '<>', 0)
+                    ->where('sinfodi_lfc.lfc_editorial_recon', '=', 1)
+                    ->where('sinfodi_lfc.lfc_tipo_pub', '=', 1)
+                    ->whereBetween('sinfodi_lfc.lfc_fecha_pub', [$inicial, $final])
+                    ->where('sinfodi_lfc_personas.lfc_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_lfc_personas.lfc_clave_persona', 'ASC')
+                    ->distinct()
+                    ->get();
+        return $query;
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDCiencia::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function savePuntos(Request $request)
+    {
+        EvidenciasDCiencia::create($request->all());
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDCiencia::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDCiencia::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDCiencia::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /** Apartir de aqui es codigo para la tabla B... */

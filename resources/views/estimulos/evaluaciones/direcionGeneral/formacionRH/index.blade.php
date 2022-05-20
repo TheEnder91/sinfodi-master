@@ -18,10 +18,10 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>

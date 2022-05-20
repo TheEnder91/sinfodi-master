@@ -19,6 +19,18 @@
                         <p>Colaboración institucional</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                        <p>Puntos totales</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/recursosPropios/listRecursosPropios') }}" class="nav-link {{ isRouteActive('modulos.recursosPropios') }}">
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                        <p>Recursos propios</p>
+                    </a>
+                </li>
 
 
 
@@ -45,7 +57,12 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-sostentabilidadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index'))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacion-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferencia-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index'))
                     <li class="nav-header" style="font-size:13px;">ESTIMULOS</li>
                 @endif
                 @can('estimulo-lineamientos-index')
@@ -166,7 +183,12 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-sostentabilidadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index'))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacion-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferencia-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index'))
                     <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
                             <i class="far fa-arrow-alt-circle-down"></i>
@@ -220,24 +242,19 @@
                             @endif
                         </ul>
                         <ul class="nav nav-treeview">
-                            @if (existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidad-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-formacion-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-acreditaciones-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidadB-index') ||
-                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferenciaB-index'))
+                            @if (existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferencia-index') ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-acreditaciones-index') ||
+                                 Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferenciaB-index'))
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.direccionGeneral') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral') }}">
                                         <i class="far fa-arrow-alt-circle-down"></i>
                                         <p><b>Dirección general</b><i class="right fas fa-angle-left"></i></p>
                                     </a>
                                     <ul class="nav nav-treeview">
-                                        @if (existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidad-index') ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-formacion-index') ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-acreditaciones-index'))
+                                        @if (existeUsuario(Auth::user()->usuario, 'general', "Direccion_General") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-direccionGral-posgrado-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-transferencia-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-acreditaciones-index'))
                                              <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA A</li>
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
@@ -276,7 +293,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.transferencia') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia de conocimiento</p>
+                                                    <p>Transferencia conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -310,7 +327,7 @@
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-investigacionB-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                             <li class="nav-item">
-                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/investigacionB/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.investigacionB') }}">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.investigacionCientificaB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Investigación Científica</p>
                                                 </a>
@@ -318,7 +335,7 @@
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-general-sostentabilidadB-index') || existeUsuario(Auth::user()->usuario, 'general', "Direccion_General"))
                                             <li class="nav-item">
-                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.sostenibilidadB') }}">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.sostenibilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Sostenibilidad Económica</p>
                                                 </a>
@@ -328,7 +345,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.tranferenciaB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia de Conocimiento</p>
+                                                    <p>Transferencia Conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -376,11 +393,19 @@
                                                 </a>
                                             </li>
                                         @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-administracion-sostentabilidad-index') || existeUsuario(Auth::user()->usuario, 'administracion', "DAdministracion"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.sostentabilidad') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Sostentabilidad</p>
+                                                </a>
+                                            </li>
+                                        @endif
                                         @if (existeUsuario(Auth::user()->usuario, 'administracion', "DAdministracion") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-administracion-transferencia-index'))
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.transferencia') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia</p>
+                                                    <p>Transferencia conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -416,7 +441,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.investigacionB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Investigacion B</p>
+                                                    <p>Investigación Científica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -424,7 +449,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostenibilidad B</p>
+                                                    <p>Sostenibilidad Económica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -432,7 +457,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.tranferenciaB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia B</p>
+                                                    <p>Transferencia Conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -492,7 +517,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.transferencia') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia</p>
+                                                    <p>Transferencia conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -528,7 +553,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.investigacionB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Investigación B</p>
+                                                    <p>Investigación Científica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -536,7 +561,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostenibilidad B</p>
+                                                    <p>Sostenibilidad Económica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -544,7 +569,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.transferenciaB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia B</p>
+                                                    <p>Transferencia Conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -604,7 +629,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.transferencia') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia</p>
+                                                    <p>Transferencia conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -640,7 +665,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.investigacionB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Investigación B</p>
+                                                    <p>Investigación Científica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -648,7 +673,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostenibilidad B</p>
+                                                    <p>Sostenibilidad Económica</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -656,7 +681,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.transferenciaB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Transferencia B</p>
+                                                    <p>Transferencia Conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -664,7 +689,12 @@
                                 </li>
                             </ul>
                         @endif
-                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                        @if (existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacion-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferencia-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.direccionServTec') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec') }}">
@@ -673,7 +703,10 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index'))
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacion-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferencia-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index'))
                                             <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA A</li>
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
@@ -692,12 +725,91 @@
                                                 </a>
                                             </li>
                                         @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/investigacion/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.investigacion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Investigación Cientifica</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidad-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.sostentabilidad') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Sostentabilidad</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferencia-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.transferencia') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Transferencia conocimiento</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/formacionRH/listFormacionRH') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.formacion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Formacion RH</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/colaboracion/listColaboracion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.colaboracion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Colaboración</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/acreditaciones/listAcreditaciones') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.acreditaciones') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Acreditaciones</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno") ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index'))
+                                            <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA B</li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.investigacionB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Investigación B</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.sostenibilidadB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Sostenibilidad Económica</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || existeUsuario(Auth::user()->usuario, 'servicios', "Direccion_Servicios_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.transferenciaB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Transferencia Conocimiento</p>
+                                                </a>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </li>
                             </ul>
                         @endif
-                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") ||
-                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index'))
+                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') ||
+                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones.direccionProyTec') }}">
                                     <a style="font-size: 15px;" href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec') }}">
@@ -706,7 +818,9 @@
                                     </a>
                                     <ul class="nav nav-treeview">
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") ||
-                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index'))
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-posgrado-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacion-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidad-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index'))
                                             <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA A</li>
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-difusiondivulgacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
@@ -722,6 +836,82 @@
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/posgrado/listPosgrado') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.posgrado') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Posgrado->FRH</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/investigacion/listInvestigacion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.investigacion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Investigación Cientifica</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidad-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.sostentabilidad') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Sostentabilidad</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/transferencia/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.transferencia') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Transferencia conocimiento</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/formacionRH/listFormacionRH') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.formacion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Formacion RH</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-colaboracion-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/colaboracion/listColaboracion') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.colaboracion') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Colaboración</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/acreditaciones/listAcreditaciones') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.acreditaciones') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Acreditaciones</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') ||
+                                             Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index'))
+                                            <li class="nav-header" style="font-size:13px;">ACTIVIDADES->TABLA B</li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/investigacionB/listInvestigacionB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.investigacionB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Investigación B</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.sostenibilidadB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Sostenibilidad Económica</p>
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index') || existeUsuario(Auth::user()->usuario, 'proyectos', "Direccion_Proyectos_Tecno"))
+                                            <li class="nav-item">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/listTransferencia') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.transferenciaB') }}">
+                                                    <i class="far fa-arrow-alt-circle-right"></i>
+                                                    <p>Transferencia Conocimiento</p>
                                                 </a>
                                             </li>
                                         @endif

@@ -30,7 +30,7 @@ class SostenibilidadDAController extends Controller
     public function searchSostentabilidad($year){
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
-                            ->where('puesto', '=', 'Direccion_General')
+                            ->where('puesto', '=', 'Direccion_Administracion')
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -63,7 +63,7 @@ class SostenibilidadDAController extends Controller
      */
     public function saveDatos(Request $request)
     {
-        if(EvaluacionDAdministracion::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->where('direccion', '=', 'DGeneral')->count() == 0){
+        if(EvaluacionDAdministracion::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->where('direccion', '=', 'DAdministracion')->count() == 0){
             $nuevo = new EvaluacionDAdministracion();
             $nuevo->create($request->all());
             $data['response'] = true;
@@ -79,7 +79,7 @@ class SostenibilidadDAController extends Controller
      */
     public function datosSostentabilidad($year, $criterio)
     {
-        $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DGeneral')->get();
+        $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
         $data['response'] = $datos;
         return $this->response($data);
     }
@@ -92,5 +92,56 @@ class SostenibilidadDAController extends Controller
     public function indexB()
     {
         return view('estimulos.evaluaciones.direccionAdministracion.sostentabilidadB.index');
+    }
+
+    public function searchSostenibilidadB($year){
+        $queryEvaluados = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'puesto')
+                            ->where('puesto', '=', 'Direccion_Administracion')
+                            ->orderby('clave', 'ASC')
+                            ->get();
+        foreach($queryEvaluados as $itemEvaluados){
+            $clave[] = $itemEvaluados->clave;
+        }
+        $evaluacion_Criterio37 = self::Evaluaciones_Criterio37($clave, $year);
+        $data['response'] = $evaluacion_Criterio37;
+        return $this->response($data);
+    }
+
+    /** Codigo personal... */
+    public static function Evaluaciones_Criterio37($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'remanente', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public function saveDatosB(Request $request){
+        if(EvaluacionDAdministracion::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+            $nuevo = new EvaluacionDAdministracion();
+            $nuevo->create($request->all());
+            return response()->json('exito');
+        }
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntosB($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    public function datosSostenibilidadB($year, $criterio){
+        $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
+        $data['response'] = $datos;
+        return $this->response($data);
     }
 }

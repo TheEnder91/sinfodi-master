@@ -8,34 +8,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="clave" id="clave">
-                <input type="hidden" name="year" id="year">
-                <div class="row" id="contenedorCriterio4">
-                    <style type="text/css">
-                        h2 {
-                            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                            color: #B8860B;
-                            font-weight: normal;
-                            padding-left: 0px;
-                        }
-
-                        #content {
-                            max-width: 600px;
-                            background: #FFF;
-                            padding: 20px 40px;
-                            margin: 80px auto;
-                            border: 1px solid #D9D9D6;
-                        }
-                    </style>
-                    <div id="content">
-                        <h2>Sin información por el momento</h2>
-                        <p>Este apartado queda deshabilitado por falta de informacion, en cualquier momento se rehabilitara.</p>
+                <input type="hidden" name="claveCriterio4" id="claveCriterio4">
+                <div class="row">
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Valor punto:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="valorCriterio4" id="txtValorCriterio4" readonly>
                     </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Cantidad:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="cantidadCriterio4" id="txtCantidadCriterio4" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Total:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="totalCriterio4" id="txtTotalCriterio4" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Año:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="yearCriterio4" id="txtYearCriterio4" readonly>
+                    </div>
+                </div>
+                <br>
+                <div class="row" id="contenedorCriterio4">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{-- <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio4"/> --}}
+                @can('estimulo-evaluaciones-posgrado-posgrado-index')
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio4"/>
+                @endcan
             </div>
         </div>
     </div>

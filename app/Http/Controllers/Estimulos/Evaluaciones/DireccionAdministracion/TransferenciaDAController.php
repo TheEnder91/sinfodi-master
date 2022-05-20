@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDAdministracion;
+use App\Models\Estimulos\EvidenciasDAdministracion;
 
 class TransferenciaDAController extends Controller
 {
@@ -475,21 +476,19 @@ class TransferenciaDAController extends Controller
     }
 
     //** Codigo personal */
-    public function getEvidenciasGeneral($clave, $year, $criterio){
-        // $obtener = EvidenciasDGeneral::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->orWhere('clave_evidencia', 'like', 'PAT%')->get();
-        $obtener = true;
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDAdministracion::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
         $data['response'] = $obtener;
         return $this->response($data);
     }
 
     //** Codigo personal */
-    public function obtenerEvidenciasGeneral($clave, $year, $criterio){
-        // if(EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('clave_evidencia', 'like', 'PAT%')->count() == 0){
-        //     $count = 0;
-        // }else{
-        //     $count = 1;
-        // }
-        $count = 0;
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDAdministracion::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
         $data['response'] = $count;
         return $this->response($data);
     }
@@ -514,20 +513,18 @@ class TransferenciaDAController extends Controller
      */
     public function savePuntos(Request $request)
     {
-        // EvidenciasDGeneral::create($request->all());
+        EvidenciasDAdministracion::create($request->all());
         $data['response'] = true;
         return $this->response($data);
     }
 
     /** Codigo personal */
-    public static function updateDatosGeneral($clave, $year, $criterio){
-        $obtener = DB::table('sinfodi_evidencias_general')->select('puntos', 'total_puntos')->where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->take(1)->get();
-        foreach ($obtener as $item){
-            $puntos = $item->puntos;
-            $total_puntos = $item->total_puntos;
-            EvaluacionDAdministracion::where('clave', '=', $clave)->where('id_criterio', '=',  $criterio)->where('year', '=', $year)->update( array('puntos'=>$puntos, 'total_puntos'=>$total_puntos));
-        }
-        return true;
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDAdministracion::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -536,11 +533,13 @@ class TransferenciaDAController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function deletePuntos($clave, $year, $criterio)
+    public function updateDatosPuntos(Request $request)
     {
-        // EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->delete();
-        $data['response'] = true;
-        return $this->response($data);
+        $actualizar = EvaluacionDAdministracion::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 
     /**
@@ -550,17 +549,99 @@ class TransferenciaDAController extends Controller
      */
     public function indexB()
     {
-        $criterios = self::Get_Criterios_acreditacionesB();
+        $criterios = self::Get_Criterios_tranferenciaB();
         return view('estimulos.evaluaciones.direccionAdministracion.transferenciaB.index', compact('criterios'));
     }
 
-    /** Funcion para obtener los criterios para la acreditaciones... */
-    public static function Get_Criterios_acreditacionesB(){
+    /** Funcion para obtener los criterios para la tranferenciaB... */
+    public static function Get_Criterios_tranferenciaB(){
         $query = DB::table('sinfodi_criterios')
                     ->select('id', 'nombre', 'id_objetivo')
                     ->where('observaciones', '=', 'Tabla 1. Actividad B.')
                     ->where('id_objetivo', '=', 5)
                     ->get();
         return $query;
+    }
+
+    public function searchTransferenciaB($year, $criterio){
+        $queryEvaluados = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'puesto')
+                            ->where('puesto', '=', 'Direccion_Administracion')
+                            ->orderby('clave', 'ASC')
+                            ->get();
+        foreach($queryEvaluados as $itemEvaluados){
+            $clave[] = $itemEvaluados->clave;
+        }
+        if($criterio == 38){
+            $evaluacion = self::Evaluaciones_Criterio38($clave, $year);
+        }elseif($criterio == 39){
+            $evaluacion = self::Evaluaciones_Criterio39($clave, $year);
+        }elseif($criterio == 40){
+            $evaluacion = self::Evaluaciones_Criterio40($clave, $year);
+        }
+        $data['response'] = $evaluacion;
+        return $this->response($data);
+    }
+
+    public static function Evaluaciones_Criterio38($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interinstitucional', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio39($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interdirecciones', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio40($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interareas', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntosB($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    public function saveDatosB(Request $request){
+        if(EvaluacionDAdministracion::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+            $nuevo = new EvaluacionDAdministracion();
+            $nuevo->create($request->all());
+            return response()->json('exito');
+        }
+    }
+
+    public function datosTransferenciaB($year, $criterio){
+        if($criterio == 38){
+            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
+        }elseif($criterio == 39){
+            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
+        }elseif($criterio == 40){
+            $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
+        }
+        $data['response'] = $datos;
+        return $this->response($data);
     }
 }

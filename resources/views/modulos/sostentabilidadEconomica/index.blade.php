@@ -59,9 +59,9 @@
                                         <label class="col-form-label"  style="font-size:13px;">Usuario:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="usuarioLider" id="txtUsuarioLider" readonly>
                                     </div>
-                                    <div class="col-5">
+                                    <div class="col-6">
                                         <label class="col-form-label"  style="font-size:13px;">Seleccione una opción:</label>
-                                        <div style="column-count:3; list-style: none;">
+                                        <div style="column-count:4; list-style: none;">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input remanente" name="remanente[]" id="remanente" value="remanente">
                                                 <label class="custom-control-label" for="remanente" style="font-weight: normal; font-size:13px;">Remanente</label>
@@ -72,7 +72,11 @@
                                             </div>
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input interareas" name="interareas[]" id="interareas" value="interareas">
-                                                <label class="custom-control-label" for="interareas" style="font-weight: normal; font-size:13px;">Inter-Áreas</label>
+                                                <label class="custom-control-label" for="interareas" style="font-weight: normal; font-size:13px;">Inter-áreas</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input interdirecciones" name="interdirecciones[]" id="interdirecciones" value="interdirecciones">
+                                                <label class="custom-control-label" for="interdirecciones" style="font-weight: normal; font-size:13px;">Inter-direcciones</label>
                                             </div>
                                         </div>
                                     </div>
@@ -657,6 +661,11 @@
             }else{
                 var interareas = "No";
             }
+            if($('#interdirecciones').prop('checked')){
+                var interdirecciones = "Si"
+            }else{
+                var interdirecciones = "No";
+            }
             var claveParticipante = $('#txtClave').val();
             var nombreParticipante = $('#txtNombre').val();
             var usuarioParticipante = $('#txtUsuario').val();
@@ -709,6 +718,7 @@
                     remanente: remanente,
                     interinstitucional: interinstitucional,
                     interareas: interareas,
+                    interdirecciones: interdirecciones,
                     puntos_totales: puntosTotales,
                     puntos_lider: puntosLider,
                     nuevos_puntos_totales: nuevosPuntos,
@@ -745,6 +755,7 @@
             document.getElementById("remanente").checked = false;
             document.getElementById("interinstitucional").checked = false;
             document.getElementById("interareas").checked = false;
+            document.getElementById("direcciones").checked = false;
             document.getElementById("lider").checked = false;
         }
 
@@ -780,6 +791,11 @@
                         $("#interareas").prop('checked', false);
                     }else{
                         $("#interareas").prop('checked', true);
+                    }
+                    if(getSostentabilidad.interdirecciones == 'No'){
+                        $("#interdirecciones").prop('checked', false);
+                    }else{
+                        $("#interdirecciones").prop('checked', true);
                     }
                     $('#txtClave').val(getSostentabilidad.clave_participante);
                     $('#txtNombre').val(getSostentabilidad.nombre_participante);
@@ -823,6 +839,11 @@
                 var interareas = "Si"
             }else{
                 var interareas = "No";
+            }
+            if($('#interdirecciones').prop('checked')){
+                var interdirecciones = "Si"
+            }else{
+                var interdirecciones = "No";
             }
             var claveParticipante = $('#txtClave').val();
             var nombreParticipante = $('#txtNombre').val();
@@ -883,6 +904,7 @@
                         remanente: remanente,
                         interinstitucional: interinstitucional,
                         interareas: interareas,
+                        interdirecciones: interdirecciones,
                         puntos_totales: puntosTotales,
                         puntos_lider: puntosLider,
                         nuevos_puntos_totales: nuevosPuntos,

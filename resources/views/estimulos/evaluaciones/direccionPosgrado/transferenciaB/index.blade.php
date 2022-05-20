@@ -7,18 +7,18 @@
 @section('breadcrumb')
     <ol class="breadcrumb float-sm-right">
         <li class="breadcrumb-item"><a href="{{ \App\Traits\Principal::getUrlToken('/') }}">Inicio</a></li>
-        <li class="breadcrumb-item active">Evaluaciones a la dirección de posgrado->Acreditaciones</li>
+        <li class="breadcrumb-item active">Evaluaciones a la dirección de posgrado->Transferencia de conocimiento B</li>
     </ol>
 @endsection
 
 @section('content')
     @component('components.card')
-        @slot('title_card', 'Evaluaciones a la dirección de posgrado->Acreditaciones')
+        @slot('title_card', 'Evaluaciones a la dirección de posgrado->Transferencia de conocimiento B')
         <div class="row">
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="year" onChange="ShowSelected();">
                         @for ($i = date('Y'); $i >= 2021; $i--)
@@ -101,7 +101,6 @@
             obtenerCriterio38(año, 38);
             obtenerCriterio39(año, 39);
             obtenerCriterio40(año, 40);
-            obtenerCriterio41(año, 41);
         }
     </script>
 @endsection

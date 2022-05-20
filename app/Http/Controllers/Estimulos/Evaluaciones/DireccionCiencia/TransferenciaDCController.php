@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDCiencia;
+use App\Models\Estimulos\EvidenciasDCiencia;
 
 class TransferenciaDCController extends Controller
 {
@@ -307,6 +308,241 @@ class TransferenciaDCController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function searchEvidencias($year, $clave, $criterio)
+    {
+        $fechaInicial = $year.'-01-01';
+        $fechaFinal = $year.'-12-31';
+        if($criterio == 15){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio15_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 16){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio16_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 17){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio17_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 18){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio18_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 19){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio19_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 20){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio20_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 21){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio21_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 22){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio22_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 23){
+            $evidencias = self::Get_Evidencias_Obj5_Criterio23_TransferenciaConocimiento($clave, $fechaInicial, $fechaFinal);
+        }
+        $data['response'] = $evidencias;
+        return $this->response($data);
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio15_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 1)
+                    ->where('sinfodi_pat.pat_status', '=', 1)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio16_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 2)
+                    ->where('sinfodi_pat.pat_status', '=', 1)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio17_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 2)
+                    ->where('sinfodi_pat.pat_status', '=', 2)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio18_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 3)
+                    ->where('sinfodi_pat.pat_status', '=', 1)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio19_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 3)
+                    ->where('sinfodi_pat.pat_status', '=', 1)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio20_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 5)
+                    ->where('sinfodi_pat.pat_status', '=', 1)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio21_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 5)
+                    ->where('sinfodi_pat.pat_status', '=', 2)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio22_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 1)
+                    ->where('sinfodi_pat.pat_status', '=', 2)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '=', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_pat_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    public static function Get_Evidencias_Obj5_Criterio23_TransferenciaConocimiento($clave, $inicial, $final){
+        $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
+                    ->where('sinfodi_pat.pat_eliminado', '=', 0)
+                    ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
+                    ->where('sinfodi_pat.pat_tipo', '=', 3)
+                    ->where('sinfodi_pat.pat_status', '=', 4)
+                    ->whereBetween('sinfodi_pat.pat_fecha', [$inicial, $final])
+                    ->whereIn('sinfodi_pat_personas.pat_clave_persona', $clave)
+                    ->orderBy('sinfodi_pat_personas.pat_clave_persona', 'ASC')
+                    ->get();
+        return $query;
+    }
+
+    //** Codigo personal */
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDCiencia::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDCiencia::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function savePuntos(Request $request)
+    {
+        EvidenciasDCiencia::create($request->all());
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDCiencia::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDCiencia::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -325,5 +561,87 @@ class TransferenciaDCController extends Controller
                     ->where('id_objetivo', '=', 5)
                     ->get();
         return $query;
+    }
+
+    public function searchTransferenciaB($year, $criterio){
+        $queryEvaluados = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'puesto')
+                            ->where('puesto', '=', 'Direccion_Ciencia')
+                            ->orderby('clave', 'ASC')
+                            ->get();
+        foreach($queryEvaluados as $itemEvaluados){
+            $clave[] = $itemEvaluados->clave;
+        }
+        if($criterio == 38){
+            $evaluacion = self::Evaluaciones_Criterio38($clave, $year);
+        }elseif($criterio == 39){
+            $evaluacion = self::Evaluaciones_Criterio39($clave, $year);
+        }elseif($criterio == 40){
+            $evaluacion = self::Evaluaciones_Criterio40($clave, $year);
+        }
+        $data['response'] = $evaluacion;
+        return $this->response($data);
+    }
+
+    public static function Evaluaciones_Criterio38($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interinstitucional', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio39($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interdirecciones', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio40($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interareas', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntosB($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    public function saveDatosB(Request $request){
+        if(EvaluacionDCiencia::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+            $nuevo = new EvaluacionDCiencia();
+            $nuevo->create($request->all());
+            return response()->json('exito');
+        }
+    }
+
+    public function datosTransferenciaB($year, $criterio){
+        if($criterio == 38){
+            $datos = DB::table('sinfodi_evaluacion_ciencia')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DCiencia')->get();
+        }elseif($criterio == 39){
+            $datos = DB::table('sinfodi_evaluacion_ciencia')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DCiencia')->get();
+        }elseif($criterio == 40){
+            $datos = DB::table('sinfodi_evaluacion_ciencia')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DCiencia')->get();
+        }
+        $data['response'] = $datos;
+        return $this->response($data);
     }
 }

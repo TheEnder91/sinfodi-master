@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDGeneral;
+use App\Models\Estimulos\EvidenciasDGeneral;
 
 class AcreditacionesController extends Controller
 {
@@ -66,51 +67,47 @@ class AcreditacionesController extends Controller
 
     public static function Evaluacion_Criterio33($clave, $inicial, $final){
         $queryCriterio33 = DB::connection('acreditaciones')->table('performancetests')
-                            ->selectRaw('persons.employees_name_p AS nombre_personal,
-                                         persons.employees_number AS numero_personal,
-                                         performancetests.date_start AS fecha_inicio,
-                                         performancetests.date_end AS fecha_fin')
+                            ->selectRaw('persons.employees_number AS numero_personal,
+                                         persons.employees_name_p AS nombre_personal')
                             ->join('persons', 'performancetests.groups_id', '=', 'persons.groups_id')
                             ->whereBetween('performancetests.date_start', [$inicial, $final])
                             ->whereBetween('performancetests.date_end', [$inicial, $final])
                             ->whereIn('persons.employees_number', $clave)
+                            ->distinct()
                             ->get();
         return $queryCriterio33;
     }
 
     public static function Evaluacion_Criterio34($clave, $inicial, $final){
         $queryCriterio34 = DB::connection('acreditaciones')->table('accreditedtechniques')
-                            ->selectRaw('persons.employees_name_p AS nombre_personal,
-                                         persons.employees_number AS numero_personal,
-                                         accreditedtechniques.date_start AS fecha_inicio,
-                                         accreditedtechniques.date_end AS fecha_fin')
-                            ->join('persons', 'accreditedtechniques.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('accreditedtechniques.date_start', [$inicial, $final])
-                            ->whereBetween('accreditedtechniques.date_end', [$inicial, $final])
-                            ->whereIn('persons.employees_number', $clave)
-                            ->get();
+                                ->selectRaw('persons.employees_number AS numero_personal,
+                                             persons.employees_name_p AS nombre_personal')
+                                ->join('persons', 'accreditedtechniques.groups_id', '=', 'persons.groups_id')
+                                ->whereBetween('accreditedtechniques.date_start', [$inicial, $final])
+                                ->whereBetween('accreditedtechniques.date_end', [$inicial, $final])
+                                ->whereIn('persons.employees_number', $clave)
+                                ->distinct()
+                                ->get();
         return $queryCriterio34;
     }
 
     public static function Evaluacion_Criterio35($clave, $inicial, $final){
         $queryCriterio35 = DB::connection('acreditaciones')->table('interlaboratorytests')
-                            ->selectRaw('persons.employees_name_p AS nombre_personal,
-                                         persons.employees_number AS numero_personal,
-                                         interlaboratorytests.date_start AS fecha_inicio,
-                                         interlaboratorytests.date_end AS fecha_fin')
-                            ->join('persons', 'interlaboratorytests.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('interlaboratorytests.date_start', [$inicial, $final])
-                            ->whereBetween('interlaboratorytests.date_end', [$inicial, $final])
-                            ->whereIn('persons.employees_number', $clave)
-                            ->take(1)
-                            ->get();
+                                ->selectRaw('persons.employees_number AS numero_personal,
+                                             persons.employees_name_p AS nombre_personal')
+                                ->join('persons', 'interlaboratorytests.groups_id', '=', 'persons.groups_id')
+                                ->whereBetween('interlaboratorytests.date_start', [$inicial, $final])
+                                ->whereBetween('interlaboratorytests.date_end', [$inicial, $final])
+                                ->whereIn('persons.employees_number', $clave)
+                                ->distinct()
+                                ->get();
         return $queryCriterio35;
     }
 
     /** Funcion para obtener el username de los participantes... */
     public function searchUsername($clave){
         $queryUsername = DB::table('sinfodi_evaluados')
-                            ->select('*')
+                            ->select('username')
                             ->where('clave', '=', $clave)
                             ->get();
         $data['response'] = $queryUsername;
@@ -161,17 +158,31 @@ class AcreditacionesController extends Controller
         $fechaInicial = $year.'-01-01';
         $fechaFinal = $year.'-12-31';
         if($criterio == 33){
-            $evidencias_acreditaciones = self::Evaluacion_Criterio33($clave, $fechaInicial, $fechaFinal);
+            $evidencias_acreditaciones = self::Evidencias_Criterio33($clave, $fechaInicial, $fechaFinal);
         }elseif($criterio == 34){
             $evidencias_acreditaciones = self::Evidencias_Criterio34($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 35){
+            $evidencias_acreditaciones = self::Evidencias_Criterio35($clave, $fechaInicial, $fechaFinal);
         }
         $data['response'] = $evidencias_acreditaciones;
         return $this->response($data);
     }
 
+    public static function Evidencias_Criterio33($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio34 = DB::connection('acreditaciones')->table('performancetests')
+                            ->selectRaw('performancetests.name AS nombre,
+                                         performancetests.file AS archivo')
+                            ->join('persons', 'performancetests.groups_id', '=', 'persons.groups_id')
+                            ->whereBetween('performancetests.date_start', [$fechaInicial, $fechaFinal])
+                            ->whereBetween('performancetests.date_end', [$fechaInicial, $fechaFinal])
+                            ->where('persons.employees_number', '=', $clave)
+                            ->get();
+        return $queryCriterio34;
+    }
+
     public static function Evidencias_Criterio34($clave, $fechaInicial, $fechaFinal){
         $queryCriterio34 = DB::connection('acreditaciones')->table('accreditedtechniques')
-                            ->selectRaw('persons.employees_number AS numero_personal,
+                            ->selectRaw('accreditedtechniques.name AS nombre,
                                          accreditedtechniques.file AS archivo')
                             ->join('persons', 'accreditedtechniques.groups_id', '=', 'persons.groups_id')
                             ->whereBetween('accreditedtechniques.date_start', [$fechaInicial, $fechaFinal])
@@ -179,5 +190,84 @@ class AcreditacionesController extends Controller
                             ->where('persons.employees_number', '=', $clave)
                             ->get();
         return $queryCriterio34;
+    }
+
+    public static function Evidencias_Criterio35($clave, $fechaInicial, $fechaFinal){
+        $queryCriterio35 = DB::connection('acreditaciones')->table('interlaboratorytests')
+                            ->selectRaw('interlaboratorytests.name AS nombre,
+                                         interlaboratorytests.file AS archivo')
+                            ->join('persons', 'interlaboratorytests.groups_id', '=', 'persons.groups_id')
+                            ->whereBetween('interlaboratorytests.date_start', [$fechaInicial, $fechaFinal])
+                            ->whereBetween('interlaboratorytests.date_end', [$fechaInicial, $fechaFinal])
+                            ->where('persons.employees_number', '=', $clave)
+                            ->get();
+        return $queryCriterio35;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDGeneral::where('clave', '=', $clave)->where('id_criterio', '=', $criterio)->where('year', '=', $year)->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDGeneral::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function savePuntos(Request $request)
+    {
+        EvidenciasDGeneral::create($request->all());
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDGeneral::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }

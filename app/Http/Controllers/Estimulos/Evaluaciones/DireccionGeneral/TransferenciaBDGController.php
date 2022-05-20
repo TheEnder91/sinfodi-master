@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Estimulos\EvaluacionDGeneral;
 
 class TransferenciaBDGController extends Controller
 {
@@ -20,7 +21,7 @@ class TransferenciaBDGController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexB()
     {
         $criterios = self::Get_Criterios_acreditaciones();
         return view('estimulos.evaluaciones.direcionGeneral.transferenciaB.index', compact('criterios'));
@@ -36,36 +37,54 @@ class TransferenciaBDGController extends Controller
         return $query;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function searchTransferenciaB($year, $criterio){
+        $queryEvaluados = DB::table('sinfodi_evaluados')
+                            ->select('clave', 'puesto')
+                            ->where('puesto', '=', 'Direccion_General')
+                            ->orderby('clave', 'ASC')
+                            ->get();
+        foreach($queryEvaluados as $itemEvaluados){
+            $clave[] = $itemEvaluados->clave;
+        }
+        if($criterio == 38){
+            $evaluacion = self::Evaluaciones_Criterio38($clave, $year);
+        }elseif($criterio == 39){
+            $evaluacion = self::Evaluaciones_Criterio39($clave, $year);
+        }elseif($criterio == 40){
+            $evaluacion = self::Evaluaciones_Criterio40($clave, $year);
+        }
+        $data['response'] = $evaluacion;
+        return $this->response($data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public static function Evaluaciones_Criterio38($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interinstitucional', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public static function Evaluaciones_Criterio39($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interdirecciones', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio40($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interareas', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
     }
 
     /**
@@ -74,31 +93,29 @@ class TransferenciaBDGController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function puntosB($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function saveDatosB(Request $request){
+        if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+            $nuevo = new EvaluacionDGeneral();
+            $nuevo->create($request->all());
+            return response()->json('exito');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function datosTransferenciaB($year, $criterio){
+        if($criterio == 38){
+            $datos = DB::table('sinfodi_evaluacion_general')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DGeneral')->get();
+        }elseif($criterio == 39){
+            $datos = DB::table('sinfodi_evaluacion_general')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DGeneral')->get();
+        }elseif($criterio == 40){
+            $datos = DB::table('sinfodi_evaluacion_general')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DGeneral')->get();
+        }
+        $data['response'] = $datos;
+        return $this->response($data);
     }
 }

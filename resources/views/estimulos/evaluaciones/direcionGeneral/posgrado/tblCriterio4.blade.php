@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table id="tblCriterio4" class="table table-bordered table-striped">
+    <table id="tblCriterio4" class="table table-bordered table-striped" style="font-size:13px;">
         <caption style="font-size:13px;">Alumno del programa de doctorado del CIDETEQ graduado entre 37 y 42 meses.</caption>
         <thead>
             <tr class="text-center">
@@ -129,6 +129,271 @@
     }
 
     function verEvidenciasCriterio4(year, clave, criterio){
-        $('#modalEvidenciasCriterio4').modal('show');
+        var objetivo = 2;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/searchEvidenciasPosgrado/" + year + "/" + clave + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(dataEvidenciasCriterio4){
+                // console.log(dataEvidenciasCriterio4); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio4').modal({backdrop: 'static', keyboard: false});
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/puntosPosgrado/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio4){
+                        puntos = puntosCriterio4.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio4').val(puntos);
+                        var datos = dataEvidenciasCriterio4.response;
+                        var row = "";
+                        $('#claveCriterio4').val(clave);
+                        $('#txtYearCriterio4').val(year);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            // console.log(claveData);
+                            if(claveData.evidencias != null){
+                                // Obtener la clave de la cadena de la URL...
+                                var evidencias = claveData.evidencias.substring(claveData.evidencias.lastIndexOf("/") + 1);
+                                var claveEvidencia = evidencias.substring(0, evidencias.indexOf('.pdf'));
+                                // Obtenemos solo la fecha sin formato de horas...
+                                var fechaInicial = claveData.FechaInicial;
+                                var nuevaFechaInicial = fechaInicial.split(" ")[0].split("-").reverse().join("-");
+                                // Obtenemos solo la fecha sin formato de horas...
+                                var fechaFinal = claveData.FechaFinal;
+                                var nuevaFechaFinal = fechaFinal.split(" ")[0].split("-").reverse().join("-");
+                                // console.log(claveEvidencia);
+                                if(year == '2020'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio4(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio4" name="evidenciasCriterio4[]" id="evidenciasCriterio4'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio4('+puntos+');"> ' + claveEvidencia + '</b>';
+                                    row += '</div>';
+                                }else if (year <= '2021'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio4(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio4" name="evidenciasCriterio4[]" id="evidenciasCriterio4'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio4('+puntos+');"> ' + claveEvidencia + '</b>';
+                                    row += '</div>';
+                                }
+                            }
+                        }
+                        $("#contenedorCriterio4").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/getEvidenciasPosgrado/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio4){
+                                var array = getEvidenciasCriterio4.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio4:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio4"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio4").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio4.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio4"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidadCriterio4').val(dataEvidencias.puntos);
+                                    $('#txtTotalCriterio4').val(dataEvidencias.total_puntos);
+                                }
+                            },
+                        });
+                    },
+                });
+            },
+        });
+    }
+
+    function mostrarMensajeCriterio4(fechaInicial, fechaFinal, meses, evidencias){
+        // console.log(fechaInicial+'->'+fechaFinal+'->'+meses+'->'+evidencias);
+        swal({
+            title:'Información:',
+            html:
+              '<b>Fecha inicial: </b>' + fechaInicial + '<br>' +
+              '<b>Fecha final: </b>' + fechaFinal + '<br>' +
+              '<b>Meses transcurridos: </b>' + meses,
+            showCloseButton: true,
+            focusConfirm: false,
+            confirmButtonText:
+              '<a href="'+evidencias+'" target="_blank" style="color:white;"><i class="fa fa-eye"></i> Ver documento.</a>',
+        });
+    }
+
+    function contarEvidenciasCriterio4(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
+        var evidencias = [];
+        $('input.evidenciasCriterio4:checked').each(function(){
+            evidencias.push(this.value);
+        });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio4').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio4').val(totalPuntos);
+    }
+
+    function actualizarEvidenciasCriterio4(){
+        var clave = $('#claveCriterio4').val();
+        var year = $('#txtYearCriterio4').val();
+        var cantidad = $('#txtCantidadCriterio4').val();
+        var total = $('#txtTotalCriterio4').val();
+        var evidenciasCriterio6 = [];
+        var puntos = 0;
+        var criterio = 4;
+        var objetivo = 2;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/obtenerEvidenciasPosgrado/" + clave + "/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(searchEvidenciasCriterio4){
+                var existe = searchEvidenciasCriterio4.response;
+                // console.log(existe);
+                var evidencias = [];
+                var serieEvidencias = "";
+                $('input.evidenciasCriterio4:checked').each(function(){
+                    evidencias.push(this.value);
+                });
+                for(var i = 0; i < evidencias.length; i++){
+                    var serieEvidencias = evidencias.join(',');
+                }
+                // console.log(serieEvidencias);
+                var cantidadEvidencias = $('#txtCantidadCriterio4').val();
+                // console.log(cantidadEvidencias);
+                if(cantidadEvidencias == 0){
+                    swal({
+                        type: 'warning',
+                        text: 'Favor de seleccionar las evidencias.',
+                        showConfirmButton: false,
+                        timer: 1800
+                    }).catch(swal.noop);
+                }else{
+                    if(existe == 0){
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/savePuntos",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: clave,
+                                evidencias: serieEvidencias,
+                                id_criterio: criterio,
+                                puntos: cantidadEvidencias,
+                                total_puntos: total,
+                                year: year
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                // console.log('OK');
+                                consultarDatos({
+                                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/getEvidenciasPosgrado/" + clave + "/" + year + "/" + criterio,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    ok: function(getEvidenciasCriterio4){
+                                        var getPuntos = getEvidenciasCriterio4.response[0];
+                                        // console.log(getPuntos);
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/updateDatosPuntos",
+                                            data: {
+                                                token: $('#txtTokenRepo').val(),
+                                                clave: clave,
+                                                id_criterio: criterio,
+                                                puntos: getPuntos.puntos,
+                                                total_puntos: getPuntos.total_puntos,
+                                                year: year
+                                            },
+                                            headers: {
+                                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                            },
+                                            success: function(data){
+                                                swal({
+                                                    type: 'success',
+                                                    text: 'Se han actualizado los puntos con exito',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).catch(swal.noop);
+                                                $('#modalEvidenciasCriterio4').modal('hide');
+                                                verTablaCriterio4(year, criterio);
+                                            }
+                                        });
+                                    },
+                                });
+                            }
+                        });
+                    }else{
+                        $.ajax({
+                            type: 'PUT',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/updateDatos",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: clave,
+                                evidencias: serieEvidencias,
+                                id_criterio: criterio,
+                                puntos: cantidadEvidencias,
+                                total_puntos: total,
+                                year: year
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                // console.log('OK');
+                                consultarDatos({
+                                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/getEvidenciasPosgrado/" + clave + "/" + year + "/" + criterio,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    ok: function(getEvidenciasCriterio4){
+                                        var getPuntos = getEvidenciasCriterio4.response[0];
+                                        // console.log(getPuntos);
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/updateDatosPuntos",
+                                            data: {
+                                                token: $('#txtTokenRepo').val(),
+                                                clave: clave,
+                                                id_criterio: criterio,
+                                                puntos: getPuntos.puntos,
+                                                total_puntos: getPuntos.total_puntos,
+                                                year: year
+                                            },
+                                            headers: {
+                                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                            },
+                                            success: function(data){
+                                                swal({
+                                                    type: 'success',
+                                                    text: 'Se han actualizado los puntos con exito',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).catch(swal.noop);
+                                                $('#modalEvidenciasCriterio4').modal('hide');
+                                                verTablaCriterio4(year, criterio);
+                                            }
+                                        });
+                                    },
+                                });
+                            }
+                        });
+                    }
+                }
+            },
+        });
     }
 </script>

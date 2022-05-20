@@ -487,4 +487,13 @@ class InvestigacionDPController extends Controller
                                             ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
         return $actualizar;
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexB(){
+        return view('estimulos.evaluaciones.direccionPosgrado.investigacionB.index');
+    }
 }

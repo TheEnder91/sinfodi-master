@@ -1,15 +1,15 @@
 <div class="table-responsive" width = "100%">
-    <table id="tblCriterio13" class="table table-bordered table-striped">
-        <caption>Autor Publicación de capítulos de investigación en libros científicos en editoriales de reconocido prestigio.</caption>
+    <table id="tblCriterio13" class="table table-bordered table-striped" style="font-size:13px;">
+        <caption style="font-size:13px;">Autor Publicación de capítulos de investigación en libros científicos en editoriales de reconocido prestigio.</caption>
         <thead>
             <tr class="text-center">
-                <th scope="col">Clave</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Puntos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Año</th>
+                <th scope="col" style="font-size:13px;">Clave</th>
+                <th scope="col" style="font-size:13px;">Nombre</th>
+                <th scope="col" style="font-size:13px;">Puntos</th>
+                <th scope="col" style="font-size:13px;">Total</th>
+                <th scope="col" style="font-size:13px;">Año</th>
                 @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-investigacion-index"))
-                    <th scope="col">Evidencias</th>
+                    <th scope="col" style="font-size:13px;">Evidencias</th>
                 @endif
             </tr>
         </thead>
@@ -28,30 +28,36 @@
                 var datosCriterio13 = datosCritero13.response;
                 // console.log(datosCritero13);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio13.length; i++){
-                    var dataCriterio13 = datosCriterio13[i];
-                    var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/saveDatosInvestigacion",
-                        json: {
-                            clave: dataCriterio13.numero_personal,
-                            nombre: dataCriterio13.nombre,
-                            id_objetivo: 3,
-                            id_criterio: 13,
-                            direccion: "DCiencia",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: year,
-                            username: dataCriterio13.username,
-                            _token: "{{ csrf_token() }}",
-                        },
-                        type: 'POST',
-                        dateType: 'json',
-                    };
-                    // console.log(options); // e comenta para futuras pruebas...
-                    guardarAutomatico(options);
-                    // Finaliza codigo para guardar en el sistema...
+                if(datosCriterio13.length > 0){
+                    for(var i = 0; i < datosCriterio13.length; i++){
+                        var dataCriterio13 = datosCriterio13[i];
+                        // console.log(dataCriterio13);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/saveDatosInvestigacion",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: dataCriterio13.numero_personal,
+                                nombre: dataCriterio13.nombre,
+                                id_objetivo: 3,
+                                id_criterio: 13,
+                                direccion: "DCiencia",
+                                puntos: 0,
+                                total_puntos: 0,
+                                year: year,
+                                username: dataCriterio13.username,
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                verTablaCriterio13(year, criterio);
+                            }
+                        });
+                    }
+                }else{
+                    verTablaCriterio13(year, criterio);
                 }
-                verTablaCriterio13(year, 13);
             },
         });
     }
@@ -73,13 +79,13 @@
                     // console.log(permissions);
                     if(dataCienciaCriterio13.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%">' + dataCienciaCriterio13.clave + '</td>';
-                        row += '<td width="40%">' + dataCienciaCriterio13.nombre + "</td>";
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio13.puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio13.total_puntos + '</td>';
-                        row += '<td class="text-center" width="10%">' + dataCienciaCriterio13.year + '</td>';
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio13.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataCienciaCriterio13.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio13.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio13.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio13.year + '</td>';
                         if(permissions == 1){
-                            row += '<td class="text-center" width="10%"><a href="javascript:verEvidenciasCriterio13(' + dataCienciaCriterio13.year + ', ' + dataCienciaCriterio13.clave + ', ' + 13 +')"><i class="fa fa-edit"></i></a></td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio13(' + dataCienciaCriterio13.year + ', ' + dataCienciaCriterio13.clave + ', ' + 13 +')"><i class="fa fa-edit"></i></a></td>';
                         }
                         row += "</tr>";
                     }
@@ -112,153 +118,250 @@
         });
     }
 
-    // function verEvidenciasCriterio13(year, clave, criterio){
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(dataEvidenciasCriterio13){
-    //             // console.log(dataEvidenciasCriterio13); //Comentamos para futuras pruebas...
-    //             consultarDatos({
-    //                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
-    //                 type: 'GET',
-    //                 dataType: 'json',
-    //                 ok: function(getEvidenciasCriterio13){
-    //                     for(var i = 0; i < getEvidenciasCriterio13.response.length; i++){
-    //                         var seleccion = getEvidenciasCriterio13.response[i].clave_evidencia;
-    //                         $('input[value="' + seleccion + '"]').prop('checked', true);
-    //                     }
-    //                 },
-    //             });
-    //             $('#modalEvidenciasCriterio13').modal('show');
-    //             var datos = dataEvidenciasCriterio13.response;
-    //             var row = "";
-    //             $('#clave').val(clave);
-    //             $('#year').val(year);
-    //             for(var i = 0; i < datos.length; i++){
-    //                 var claveData = datos[i];
-    //                 // console.log(claveData); //Comentamos para futuras pruebas...
-    //                 row += '<div class="col-12 col-md-2 text-center">';
-    //                 row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
-    //                 row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
-    //                 row += '</a><br>';
-    //                 row += '<b><input type="checkbox" class="evidenciasCriterio13" name="evidenciasCriterio13[]" id="evidenciasCriterio13'+claveData.clave+'" value="'+claveData.clave+'"> ' + claveData.clave + '</b>';
-    //                 row += '</div>';
-    //             }
-    //             $("#contenedorCriterio13").html(row).fadeIn('slow');
-    //         },
-    //     });
-    // }
+    function verEvidenciasCriterio13(year, clave, criterio){
+        var objetivo = 3;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(dataEvidenciasCriterio13){
+                // console.log(dataEvidenciasCriterio13); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio13').modal({backdrop: 'static', keyboard: false});
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio13){
+                        puntos = puntosCriterio13.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio13').val(puntos);
+                        var datos = dataEvidenciasCriterio13.response;
+                        var row = "";
+                        $('#claveCriterio13').val(clave);
+                        $('#txtYearCriterio13').val(year);
+                        // console.log(datos);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            // console.log(claveData.clave);
+                            row += '<div class="col-12 col-md-2 text-center">';
+                            row += '<a href="http://127.106.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
+                            row += '</a><br>';
+                            row += '<b><input type="checkbox" class="evidenciasCriterio13" name="evidenciasCriterio13[]" id="evidenciasCriterio13'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio13('+puntos+');"> ' + claveData.clave + '</b>';
+                            row += '</div>';
+                        }
+                        $("#contenedorCriterio13").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio13){
+                                var array = getEvidenciasCriterio13.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio13:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio13"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio13").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio13.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio13"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidadCriterio13').val(dataEvidencias.puntos);
+                                    $('#txtTotalCriterio13').val(dataEvidencias.total_puntos);
+                                }else{
+                                    $('#txtCantidadCriterio13').val(0);
+                                    $('#txtTotalCriterio13').val(0);
+                                }
+                            },
+                        });
+                    },
+                });
+            },
+        });
+    }
 
-    // function actualizarEvidenciasCriterio13(){
-    //     var clave = $('#clave').val();
-    //     var year = $('#year').val();
-    //     var evidenciasCriterio13 = [];
-    //     var puntos = 0;
-    //     var criterio = 13;
-    //     var objetivo = 3;
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/obtenerEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(searchEvidenciasCriterio13){
-    //             var existe = searchEvidenciasCriterio13.response;
-    //             // console.log(existe);
-    //             consultarDatos({
-    //                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
-    //                 type: 'GET',
-    //                 dataType: 'json',
-    //                 ok: function(puntosCriterio13){
-    //                     // console.log(puntosCriterio13.response[0].puntos); // Comentamos para futuras pruebas...
-    //                     $('input.evidenciasCriterio13:checked').each(function(){
-    //                         evidenciasCriterio13.push(this.value);
-    //                         puntos = puntos + parseInt(puntosCriterio13.response[0].puntos);
-    //                     });
-    //                     if(puntos == 0){
-    //                         swal({
-    //                             type: 'warning',
-    //                             title: 'Favor de seleccionar las evidencias.',
-    //                             showConfirmButton: false,
-    //                             timer: 1800
-    //                         }).catch(swal.noop);
-    //                     }else{
-    //                         if(existe == 0){
-    //                             for(var i = 0; i < evidenciasCriterio13.length; i++){
-    //                                 console.log(evidenciasCriterio13[i]); // Se comenta para futuras pruebas...
-    //                                 var options = {
-    //                                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/savePuntos",
-    //                                     json: {
-    //                                         clave: clave,
-    //                                         clave_evidencia: evidenciasCriterio13[i],
-    //                                         puntos: puntos / parseInt(puntosCriterio13.response[0].puntos),
-    //                                         total_puntos: puntos,
-    //                                         year: year,
-    //                                         id_criterio: criterio,
-    //                                         _token: "{{ csrf_token() }}",
-    //                                     },
-    //                                     type: 'POST',
-    //                                     dateType: 'json',
-    //                                     mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-    //                                     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-    //                                 };
-    //                                 // console.log(options);
-    //                                 peticionGeneralAjax(options);
-    //                             }
-    //                             actualizarDatosCienciaCriterio13(clave, year, 13);
-    //                         }else{
-    //                             deletePuntosEvidenciaCriterio13(clave, year, 13);
-    //                             for(var i = 0; i < evidenciasCriterio13.length; i++){
-    //                                 console.log(evidenciasCriterio13[i]); // Se comenta para futuras pruebas...
-    //                                 var options = {
-    //                                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/savePuntos",
-    //                                     json: {
-    //                                         clave: clave,
-    //                                         clave_evidencia: evidenciasCriterio13[i],
-    //                                         puntos: puntos / parseInt(puntosCriterio13.response[0].puntos),
-    //                                         total_puntos: puntos,
-    //                                         year: year,
-    //                                         id_criterio: criterio,
-    //                                         _token: "{{ csrf_token() }}",
-    //                                     },
-    //                                     type: 'POST',
-    //                                     dateType: 'json',
-    //                                     mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
-    //                                     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/listInvestigacion?token={{ Session::get('token') }}"
-    //                                 };
-    //                                 // console.log(options);
-    //                                 peticionGeneralAjax(options);
-    //                             }
-    //                             actualizarDatosCienciaCriterio13(clave, year, 13);
-    //                         }
-    //                     }
-    //                 },
-    //             });
-    //         },
-    //     });
-    // }
+    function contarEvidenciasCriterio13(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
+        var evidencias = [];
+        $('input.evidenciasCriterio13:checked').each(function(){
+            evidencias.push(this.value);
+        });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio13').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio13').val(totalPuntos);
+    }
 
-    // function actualizarDatosCienciaCriterio13(clave, year, criterio){
-    //     // console.log(criterio);
-    //     consultarDatos({
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/updateDatosInvestigacion/" + clave + "/" + year + "/" + criterio,
-    //         type: 'GET',
-    //         dataType: 'json',
-    //         ok: function(data){
-    //             console.log("Puntos actualizados");
-    //         },
-    //     });
-    // }
-
-    // function deletePuntosEvidenciaCriterio13(clave, year, criterio){
-    //     var optionsDelete = {
-    //         action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/deletePuntosInvestigacion/" + clave + "/" + year + "/" + criterio,
-    //         json: {
-    //             _token: "{{ csrf_token() }}",
-    //             _method: 'DELETE',
-    //         },
-    //         type: 'POST',
-    //         dateType: 'json',
-    //     };
-    //     guardarAutomatico(optionsDelete);
-    // }
+    function actualizarEvidenciasCriterio13(){
+        var clave = $('#claveCriterio13').val();
+        var year = $('#txtYearCriterio13').val();
+        var cantidad = $('#txtCantidadCriterio13').val();
+        var total = $('#txtTotalCriterio13').val();
+        var evidenciasCriterio13 = [];
+        var puntos = 0;
+        var criterio = 13;
+        var objetivo = 3;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/obtenerEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(searchEvidenciasCriterio13){
+                var existe = searchEvidenciasCriterio13.response;
+                // console.log(existe);
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio13){
+                        puntos = puntosCriterio13.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        var evidencias = [];
+                        var serieEvidencias = "";
+                        $('input.evidenciasCriterio13:checked').each(function(){
+                            evidencias.push(this.value);
+                        });
+                        for(var i = 0; i < evidencias.length; i++){
+                            var serieEvidencias = evidencias.join(',');
+                        }
+                        // console.log(serieEvidencias);
+                        var cantidadEvidencias = $('#txtCantidadCriterio13').val();
+                        // console.log(cantidadEvidencias);
+                        if(cantidadEvidencias == 0){
+                            swal({
+                                type: 'warning',
+                                title: 'Favor de seleccionar las evidencias.',
+                                showConfirmButton: false,
+                                timer: 1800
+                            }).catch(swal.noop);
+                        }else{
+                            if(existe == 0){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/savePuntos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidadEvidencias,
+                                        total_puntos: total,
+                                        year: year
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio13){
+                                                var getPuntos = getEvidenciasCriterio13.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio13').modal('hide');
+                                                        verTablaCriterio13(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
+                            }else{
+                                $.ajax({
+                                    type: 'PUT',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/updateDatos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: clave,
+                                        evidencias: serieEvidencias,
+                                        id_criterio: criterio,
+                                        puntos: cantidad,
+                                        total_puntos: total,
+                                        year: year,
+                                        id_criterio: criterio
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        consultarDatos({
+                                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/getEvidenciasInvestigacion/" + clave + "/" + year + "/" + criterio,
+                                            type: 'GET',
+                                            dataType: 'json',
+                                            ok: function(getEvidenciasCriterio13){
+                                                var getPuntos = getEvidenciasCriterio13.response[0];
+                                                // console.log(getPuntos);
+                                                $.ajax({
+                                                    type: 'PUT',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/updateDatosPuntos",
+                                                    data: {
+                                                        token: $('#txtTokenRepo').val(),
+                                                        clave: clave,
+                                                        id_criterio: criterio,
+                                                        puntos: getPuntos.puntos,
+                                                        total_puntos: getPuntos.total_puntos,
+                                                        year: year
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        swal({
+                                                            type: 'success',
+                                                            text: 'Se han actualizado los puntos con exito',
+                                                            showConfirmButton: false,
+                                                            timer: 2000
+                                                        }).catch(swal.noop);
+                                                        $('#modalEvidenciasCriterio13').modal('hide');
+                                                        verTablaCriterio13(year, criterio);
+                                                    }
+                                                });
+                                            },
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                    },
+                });
+            },
+        });
+    }
 </script>

@@ -18,10 +18,10 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>
@@ -29,8 +29,8 @@
             </div>
         </div><br>
         <div class="table-responsive">
-            <table id="tblCriterio14" class="table table-bordered table-striped">
-                <caption>Monto ingresado a CIDETEQ por proyectos patrocinados, comercializados, servicios especiales, cursos.</caption>
+            <table id="tblCriterio14" class="table table-bordered table-striped" style="font-size:13px;">
+                <caption style="font-size:13px;">Monto ingresado a CIDETEQ por proyectos patrocinados, comercializados, servicios especiales, cursos.</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
@@ -75,78 +75,87 @@
                     var datosCriterio14 = datosCritero14.response;
                     // console.log(datosCritero14);
                     // Codigo para guardar en el sistema...
-                    for(var i = 0; i < datosCriterio14.length; i++){
-                        var dataCriterio14 = datosCriterio14[i];
-                        var options = {
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
-                            json: {
-                                clave: dataCriterio14.clave_participante,
-                                nombre: dataCriterio14.nombre_participante,
-                                id_objetivo: 4,
-                                id_criterio: criterio,
-                                direccion: "DGeneral",
-                                puntos: 0,
-                                total_puntos: dataCriterio14.total,
-                                year: dataCriterio14.year,
-                                username: dataCriterio14.usuario_participante,
-                                _token: "{{ csrf_token() }}",
-                            },
-                            type: 'POST',
-                            dateType: 'json',
-                        };
-                        // console.log(options); // e comenta para futuras pruebas...
-                        guardarAutomatico(options);
-                        // Finaliza codigo para guardar en el sistema...
-                    }
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/" + año + "/" + criterio,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(datosGeneralCriterio14){
-                            // console.log(datosGeneralCriterio14);
-                            var datosGeneralCriterio14 = datosGeneralCriterio14.response;
-                            var row = "";
-                            for(var i = 0; i < datosGeneralCriterio14.length; i++){
-                                var dataGeneralCriterio14 = datosGeneralCriterio14[i];
-                                // console.log(dataGeneralCriterio14);
-                                var authUser = '<?= Auth::user()->usuario ?>';
-                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-sostentabilidad-index") ?>';
-                                // console.log(permissions);
-                                if(dataGeneralCriterio14.username == authUser || permissions == 1){
-                                        row += "<tr>";
-                                        row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio14.clave + '</td>';
-                                        row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio14.nombre + "</td>";
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.puntos + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.total_puntos + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.year + '</td>';
-                                        row += "</tr>";
-                                }
-                            }
-                            if ($.fn.dataTable.isDataTable("#tblCriterio14")) {
-                                tblDifusionDivulgacion = $("#tblCriterio14").DataTable();
-                                tblDifusionDivulgacion.destroy();
-                            }
-                            $('#tblCriterio14 > tbody').html('');
-                            $('#tblCriterio14 > tbody').append(row);
-                            $('#tblCriterio14').DataTable({
-                                "order":[[0, "asc"]],
-                                "language":{
-                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
-                                  "info": "Página _PAGE_ de _PAGES_",
-                                  "infoEmpty": "No se encontraron registros.",
-                                  "infoFiltered": "(filtrada de _MAX_ registros)",
-                                  "loadingRecords": "Cargando...",
-                                  "processing":     "Procesando...",
-                                  "search": "Buscar:",
-                                  "zeroRecords":    "No se encontraron registros.",
-                                  "paginate": {
-                                                  "next":       ">",
-                                                  "previous":   "<"
-                                              },
+                    if(datosCriterio14.length > 0){
+                        for(var i = 0; i < datosCriterio14.length; i++){
+                            var dataCriterio14 = datosCriterio14[i];
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad",
+                                data: {
+                                    token: $('#txtTokenRepo').val(),
+                                    clave: dataCriterio14.clave_participante,
+                                    nombre: dataCriterio14.nombre_participante,
+                                    id_objetivo: 4,
+                                    id_criterio: criterio,
+                                    direccion: "DGeneral",
+                                    puntos: 0,
+                                    total_puntos: dataCriterio14.total,
+                                    year: dataCriterio14.year,
+                                    username: dataCriterio14.usuario_participante,
                                 },
-                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                                headers: {
+                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                },
+                                success: function(data){
+                                    verTablaCriterio14(año, 14);
+                                }
                             });
+                        }
+                    }else{
+                        verTablaCriterio14(año, 14);
+                    }
+                },
+            });
+        }
+
+        function verTablaCriterio14(year, criterio){
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/" + year + "/" + criterio,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosGeneralCriterio14){
+                    // console.log(datosGeneralCriterio14);
+                    var datosGeneralCriterio14 = datosGeneralCriterio14.response;
+                    var row = "";
+                    for(var i = 0; i < datosGeneralCriterio14.length; i++){
+                        var dataGeneralCriterio14 = datosGeneralCriterio14[i];
+                        // console.log(dataGeneralCriterio14);
+                        var authUser = '<?= Auth::user()->usuario ?>';
+                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-sostentabilidad-index") ?>';
+                        // console.log(permissions);
+                        if(dataGeneralCriterio14.username == authUser || permissions == 1){
+                                row += "<tr>";
+                                row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio14.clave + '</td>';
+                                row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio14.nombre + "</td>";
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.puntos + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.total_puntos + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.year + '</td>';
+                                row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblCriterio14")) {
+                        tblDifusionDivulgacion = $("#tblCriterio14").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblCriterio14 > tbody').html('');
+                    $('#tblCriterio14 > tbody').append(row);
+                    $('#tblCriterio14').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
                         },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });

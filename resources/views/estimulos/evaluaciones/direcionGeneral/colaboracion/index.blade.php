@@ -18,10 +18,10 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
-                    <select class="custom-select text-center" id="year" onChange="ShowSelected();">
-                        @for ($i = date('Y'); $i >= 2020; $i--)
+                    <select class="custom-select text-center" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                        @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>
@@ -29,7 +29,8 @@
             </div>
         </div><br>
         <div class="table-responsive">
-            <table id="tblCriterio32" class="table table-bordered table-striped">
+            <table id="tblCriterio32" class="table table-bordered table-striped" style="font-size:13px;">
+                <caption style="font-size:13px;">Puntos par las personas que participan en algun grupo institucional</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
@@ -74,78 +75,87 @@
                     var datosCriterio32 = datosCritero32.response;
                     // console.log(datosCritero32);
                     // Codigo para guardar en el sistema...
-                    for(var i = 0; i < datosCriterio32.length; i++){
-                        var dataCriterio32 = datosCriterio32[i];
-                        var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
-                            json: {
-                                clave: dataCriterio32.clave,
-                                nombre: dataCriterio32.nombre,
-                                id_objetivo: 7,
-                                id_criterio: criterio,
-                                direccion: "DGeneral",
-                                puntos: dataCriterio32.cantidad,
-                                total_puntos: dataCriterio32.total,
-                                year: año,
-                                username: dataCriterio32.usuario,
-                                _token: "{{ csrf_token() }}",
-                            },
-                            type: 'POST',
-                            dateType: 'json',
-                        };
-                        // console.log(options); // e comenta para futuras pruebas...
-                        guardarAutomatico(options);
-                        // Finaliza codigo para guardar en el sistema...
-                    }
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/" + año + "/" + criterio,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(datosGeneralCriterio32){
-                            // console.log(datosGeneralCriterio32);
-                            var datosGeneralCriterio32 = datosGeneralCriterio32.response;
-                            var row = "";
-                            for(var i = 0; i < datosGeneralCriterio32.length; i++){
-                                var dataGeneralCriterio32 = datosGeneralCriterio32[i];
-                                // console.log(dataGeneralCriterio32);
-                                var authUser = '<?= Auth::user()->usuario ?>';
-                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-colaboracion-index") ?>';
-                                // console.log(permissions);
-                                if(dataGeneralCriterio32.username == authUser || permissions == 1){
-                                        row += "<tr>";
-                                        row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio32.clave + '</td>';
-                                        row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio32.nombre + "</td>";
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.puntos) + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.total_puntos) + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio32.year + '</td>';
-                                        row += "</tr>";
-                                }
-                            }
-                            if ($.fn.dataTable.isDataTable("#tblCriterio32")) {
-                                tblDifusionDivulgacion = $("#tblCriterio32").DataTable();
-                                tblDifusionDivulgacion.destroy();
-                            }
-                            $('#tblCriterio32 > tbody').html('');
-                            $('#tblCriterio32 > tbody').append(row);
-                            $('#tblCriterio32').DataTable({
-                                "order":[[0, "asc"]],
-                                "language":{
-                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
-                                  "info": "Página _PAGE_ de _PAGES_",
-                                  "infoEmpty": "No se encontraron registros.",
-                                  "infoFiltered": "(filtrada de _MAX_ registros)",
-                                  "loadingRecords": "Cargando...",
-                                  "processing":     "Procesando...",
-                                  "search": "Buscar:",
-                                  "zeroRecords":    "No se encontraron registros.",
-                                  "paginate": {
-                                                  "next":       ">",
-                                                  "previous":   "<"
-                                              },
+                    if(datosCriterio32.length > 0){
+                        for(var i = 0; i < datosCriterio32.length; i++){
+                            var dataCriterio32 = datosCriterio32[i];
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/colaboracion/saveDatos",
+                                data: {
+                                    token: $('#txtTokenRepo').val(),
+                                    clave: dataCriterio32.clave,
+                                    nombre: dataCriterio32.nombre,
+                                    id_objetivo: 7,
+                                    id_criterio: criterio,
+                                    direccion: "DGeneral",
+                                    puntos: dataCriterio32.cantidad,
+                                    total_puntos: dataCriterio32.total,
+                                    year: año,
+                                    username: dataCriterio32.usuario,
                                 },
-                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                                headers: {
+                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                },
+                                success: function(data){
+                                    verTablaCriterio32(year, 32);
+                                }
                             });
+                        }
+                    }else{
+                        verTablaCriterio32(year, 32);
+                    }
+                },
+            });
+        }
+
+        function verTablaCriterio32(year, criterio){
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/" + year + "/" + criterio,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosGeneralCriterio32){
+                    // console.log(datosGeneralCriterio32);
+                    var datosGeneralCriterio32 = datosGeneralCriterio32.response;
+                    var row = "";
+                    for(var i = 0; i < datosGeneralCriterio32.length; i++){
+                        var dataGeneralCriterio32 = datosGeneralCriterio32[i];
+                        // console.log(dataGeneralCriterio32);
+                        var authUser = '<?= Auth::user()->usuario ?>';
+                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-colaboracion-index") ?>';
+                        // console.log(permissions);
+                        if(dataGeneralCriterio32.username == authUser || permissions == 1){
+                                row += "<tr>";
+                                row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio32.clave + '</td>';
+                                row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio32.nombre.toUpperCase() + "</td>";
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.puntos) + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataGeneralCriterio32.total_puntos) + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio32.year + '</td>';
+                                row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblCriterio32")) {
+                        tblDifusionDivulgacion = $("#tblCriterio32").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblCriterio32 > tbody').html('');
+                    $('#tblCriterio32 > tbody').append(row);
+                    $('#tblCriterio32').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
                         },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });

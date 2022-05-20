@@ -8,8 +8,26 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="clave" id="clave">
-                <input type="hidden" name="year" id="year">
+                <input type="hidden" name="claveCriterio16" id="claveCriterio16">
+                <div class="row">
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Valor punto:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="valor" id="txtValorCriterio16" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Cantidad:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="cantidad" id="txtCantidadCriterio16" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Total:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotalCriterio16" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Año:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYearCriterio16" readonly>
+                    </div>
+                </div>
+                <br>
                 <div class="row" id="contenedorCriterio16">
                 </div>
             </div>
