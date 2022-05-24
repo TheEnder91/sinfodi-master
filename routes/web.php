@@ -265,6 +265,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDGController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH', [FormacionRHDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDGController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDGController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDGController::class, "puntos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDGController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDGController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionGeneral/formacionRH/savePuntos', [FormacionRHDGController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionGeneral/formacionRH/updateDatosFormacionRH', [FormacionRHDGController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionGeneral/formacionRH/updateDatosPuntos', [FormacionRHDGController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionGeneral.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección general->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/listColaboracion', [ColaboracionDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
@@ -359,6 +366,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDAController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/saveDatosFormacionRH', [FormacionRHDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDAController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDAController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDAController::class, "puntos"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDAController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDAController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/savePuntos', [FormacionRHDAController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/updateDatosFormacionRH', [FormacionRHDAController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionAdministracion/formacionRH/updateDatosPuntos', [FormacionRHDAController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionAdministracion.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección administracion->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/listColaboracion', [ColaboracionDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/searchColaboradores/{year}', [ColaboracionDAController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
@@ -453,6 +467,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDPController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/saveDatosFormacionRH', [FormacionRHDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDPController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDPController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDPController::class, "puntos"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDPController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDPController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/savePuntos', [FormacionRHDPController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/updateDatosFormacionRH', [FormacionRHDPController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionPosgrado/formacionRH/updateDatosPuntos', [FormacionRHDPController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionPosgrado.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección posgrado->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/listColaboracion', [ColaboracionDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/searchColaboradores/{year}', [ColaboracionDPController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
@@ -547,6 +568,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDCController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionCiencia/formacionRH/saveDatosFormacionRH', [FormacionRHDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDCController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDCController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDCController::class, "puntos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDCController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDCController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionCiencia/formacionRH/savePuntos', [FormacionRHDCController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionCiencia/formacionRH/updateDatosFormacionRH', [FormacionRHDCController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionCiencia/formacionRH/updateDatosPuntos', [FormacionRHDCController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección de ciencia->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/colaboracion/listColaboracion', [ColaboracionDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/colaboracion/searchColaboradores/{year}', [ColaboracionDCController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
@@ -641,6 +669,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDSTController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionServTec/formacionRH/saveDatosFormacionRH', [FormacionRHDSTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDSTController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDSTController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDSTController::class, "puntos"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDSTController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDSTController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionServTec/formacionRH/savePuntos', [FormacionRHDSTController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionServTec/formacionRH/updateDatosFormacionRH', [FormacionRHDSTController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionServTec/formacionRH/updateDatosPuntos', [FormacionRHDSTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionServTec.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección de servicios tecnologicos->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionServTec/colaboracion/listColaboracion', [ColaboracionDSTController::class, "index"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionServTec/colaboracion/searchColaboradores/{year}', [ColaboracionDSTController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
@@ -735,6 +770,13 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDPTController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionProyTec/formacionRH/saveDatosFormacionRH', [FormacionRHDPTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDPTController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDPTController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDPTController::class, "puntos"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDPTController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDPTController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::post('/estimulos/evaluaciones/DireccionProyTec/formacionRH/savePuntos', [FormacionRHDPTController::class, "savePuntos"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionProyTec/formacionRH/updateDatosFormacionRH', [FormacionRHDPTController::class, "updateDatos"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
+    Route::put('/estimulos/evaluaciones/DireccionProyTec/formacionRH/updateDatosPuntos', [FormacionRHDPTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionProyTec.formacionRH');
     /** Rutas para las evidencias de estimulos Dirección de proyetos tecnologicos->Colaboracion institucional */
     Route::get('/estimulos/evaluaciones/DireccionProyTec/colaboracion/listColaboracion', [ColaboracionDPTController::class, "index"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/colaboracion/searchColaboradores/{year}', [ColaboracionDPTController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
@@ -767,62 +809,6 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/puntos/{id}/{objetivo}', [TransferenciaDPTController::class, "puntosB"])->name('estimulos.evaluaciones.direccionProyTec.tranferenciaB');
     Route::post('/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/saveDatos', [TransferenciaDPTController::class, "saveDatosB"])->name('estimulos.evaluaciones.direccionProyTec.tranferenciaB');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/datosTransferenciaB/{year}/{criterio}', [TransferenciaDPTController::class, "datosTransferenciaB"])->name('estimulos.evaluaciones.direccionProyTec.tranferenciaB');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /** Rutas para las evidencias de estimulos Dirección administracion->Sostenibilidad economica tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/listSostenibilidad', [SostenibilidadDAController::class, "indexB"])->name('estimulos.evaluaciones.direccionAdministracion.sostenibilidadB');
-    /** Rutas para las evidencias de estimulos Dirección general->Transferencia de conocimiento e innovacion tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionAdministracion/tranferenciaB/listTransferencia', [TransferenciaDAController::class, "indexB"])->name('estimulos.evaluaciones.direccionAdministracion.tranferenciaB');
-
-
-
-
-
-
-
-
-
-
-    /** Rutas para las evidencias de estimulos Dirección posgrado->Sostenibilidad economica tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/listSostenibilidad', [SostenibilidadDPController::class, "indexB"])->name('estimulos.evaluaciones.direccionPosgrado.sostenibilidadB');
-    /** Rutas para las evidencias de estimulos Dirección posgrado->Transferencia de conocimiento e innovacion tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionPosgrado/tranferenciaB/listTransferencia', [TransferenciaDPController::class, "indexB"])->name('estimulos.evaluaciones.direccionPosgrado.tranferenciaB');
-
-
-
-
-
-
-
-
-
-
-    /** Rutas para las evidencias de estimulos Dirección de ciencia->Sostenibilidad economica tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/listSostenibilidad', [SostenibilidadDCController::class, "indexB"])->name('estimulos.evaluaciones.direccionCiencia.sostenibilidadB');
-    /** Rutas para las evidencias de estimulos Dirección de ciencia->Transferencia de conocimiento e innovacion tabla B */
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/listTransferencia', [TransferenciaDCController::class, "indexB"])->name('estimulos.evaluaciones.direccionCiencia.tranferenciaB');
 });
 
 Route::post('buscar-colaborador', [ColaboracionController::class, 'buscarColaborador'])->name('buscar.colaborador');

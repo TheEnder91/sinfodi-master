@@ -129,6 +129,245 @@
     }
 
     function verEvidenciasCriterio28(year, clave, criterio){
-        $('#modalEvidenciasCriterio28').modal('show');
+        $('#txtCantidadCriterio28').val(0);
+        $('#txtTotalCriterio28').val(0);
+        var objetivo = 6;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/searchEvidenciasFormacionRH/" + year + "/" + clave + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(dataEvidenciasCriterio28){
+                // console.log(dataEvidenciasCriterio28); //Comentamos para futuras pruebas...
+                $('#modalEvidenciasCriterio28').modal({backdrop: 'static', keyboard: false});
+                consultarDatos({
+                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/puntosFormacionRH/" + criterio + "/" + objetivo,
+                    type: 'GET',
+                    dataType: 'json',
+                    ok: function(puntosCriterio28){
+                        puntos = puntosCriterio28.response[0].puntos;
+                        // console.log(puntos); // Comentamos para futuras pruebas...
+                        $('#txtValorCriterio28').val(puntos);
+                        var datos = dataEvidenciasCriterio28.response;
+                        var row = "";
+                        $('#claveCriterio28').val(clave);
+                        $('#txtYearCriterio28').val(year);
+                        for(var i = 0; i < datos.length; i++){
+                            var claveData = datos[i];
+                            // console.log(claveData);
+                            if(claveData.evidencias != null){
+                                // Obtener la clave de la cadena de la URL...
+                                var claveEvidencias = claveData.evidencias.substring(claveData.evidencias.lastIndexOf("/") + 1);
+                                // var claveEvidencia = evidencias.substring(0, evidencias.indexOf('.pdf'));
+                                // console.log(evidencias);
+                                row += '<div class="col-12 col-md-2 text-center">';
+                                row += '<a href="' + claveData.evidencias + '" target="_blank">';
+                                row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px"></a>';
+                                row += '<br>';
+                                row += '<b><input type="checkbox" class="evidenciasCriterio28" name="evidenciasCriterio28[]" id="evidenciasCriterio28'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio28('+puntos+');"> ' + claveEvidencias + '</b>';
+                                row += '</div>';
+                            }
+                        }
+                        $("#contenedorCriterio28").html(row).fadeIn('slow');
+                        consultarDatos({
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/getEvidenciasFormacionRH/" + clave + "/" + year + "/" + criterio,
+                            type: 'GET',
+                            dataType: 'json',
+                            ok: function(getEvidenciasCriterio28){
+                                var array = getEvidenciasCriterio28.response;
+                                if(array.length > 0){
+                                    var evidencias = [];
+                                    var serieEvidencias = "";
+                                    $('input.evidenciasCriterio28:checked').each(function(){
+                                        evidencias.push(this.value);
+                                    });
+                                    let desmarcar = serieEvidencias.split(',');
+                                    if(desmarcar != ""){
+                                        for(var i = 0; i < desmarcar.length; i++){
+                                            // console.log(desmarcar[i]);
+                                            document.getElementById("evidenciasCriterio28"+desmarcar[i]).checked = false;
+                                        }
+                                    }
+                                    $(".evidenciasCriterio28").prop("checked", this.checked);
+                                    var dataEvidencias = getEvidenciasCriterio28.response[0];
+                                    let str = dataEvidencias.evidencias;
+                                    let arr = str.split(',');
+                                    //dividir la cadena de texto por una coma
+                                    // console.log(arr);
+                                    for(var i = 0; i < arr.length; i++){
+                                        // console.log(arr[i]);
+                                        document.getElementById("evidenciasCriterio28"+arr[i]).checked = true;
+                                    }
+                                    $('#txtCantidadCriterio28').val(dataEvidencias.puntos);
+                                    $('#txtTotalCriterio28').val(dataEvidencias.total_puntos);
+                                }
+                            },
+                        });
+                    },
+                });
+            },
+        });
+    }
+
+    function contarEvidenciasCriterio28(puntos){
+        // Parte para contar la cantidad de evidencias a la que pertenece...
+        var evidencias = [];
+        $('input.evidenciasCriterio28:checked').each(function(){
+            evidencias.push(this.value);
+        });
+        var cantidad = evidencias.length;
+        $('#txtCantidadCriterio28').val(cantidad);
+        //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
+        // console.log(puntos);
+        var totalPuntos = cantidad * puntos;
+        $('#txtTotalCriterio28').val(totalPuntos);
+    }
+
+    function actualizarEvidenciasCriterio28(){
+        var clave = $('#claveCriterio28').val();
+        var year = $('#txtYearCriterio28').val();
+        var cantidad = $('#txtCantidadCriterio28').val();
+        var total = $('#txtTotalCriterio28').val();
+        var evidenciasCriterio6 = [];
+        var puntos = 0;
+        var criterio = 28;
+        var objetivo = 6;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/posgrado/obtenerEvidenciasPosgrado/" + clave + "/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(searchEvidenciasCriterio28){
+                var existe = searchEvidenciasCriterio28.response;
+                // console.log(existe);
+                var evidencias = [];
+                var serieEvidencias = "";
+                $('input.evidenciasCriterio28:checked').each(function(){
+                    evidencias.push(this.value);
+                });
+                for(var i = 0; i < evidencias.length; i++){
+                    var serieEvidencias = evidencias.join(',');
+                }
+                // console.log(serieEvidencias);
+                var cantidadEvidencias = $('#txtCantidadCriterio28').val();
+                // console.log(cantidadEvidencias);
+                if(cantidadEvidencias == 0){
+                    swal({
+                        type: 'warning',
+                        text: 'Favor de seleccionar las evidencias.',
+                        showConfirmButton: false,
+                        timer: 1800
+                    }).catch(swal.noop);
+                }else{
+                    if(existe == 0){
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/savePuntos",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: clave,
+                                evidencias: serieEvidencias,
+                                id_criterio: criterio,
+                                puntos: cantidadEvidencias,
+                                total_puntos: total,
+                                year: year
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                // console.log('OK');
+                                consultarDatos({
+                                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/getEvidenciasFormacionRH/" + clave + "/" + year + "/" + criterio,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    ok: function(getEvidenciasCriterio28){
+                                        var getPuntos = getEvidenciasCriterio28.response[0];
+                                        // console.log(getPuntos);
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/updateDatosPuntos",
+                                            data: {
+                                                token: $('#txtTokenRepo').val(),
+                                                clave: clave,
+                                                id_criterio: criterio,
+                                                puntos: getPuntos.puntos,
+                                                total_puntos: getPuntos.total_puntos,
+                                                year: year
+                                            },
+                                            headers: {
+                                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                            },
+                                            success: function(data){
+                                                swal({
+                                                    type: 'success',
+                                                    text: 'Se han actualizado los puntos con exito',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).catch(swal.noop);
+                                                $('#modalEvidenciasCriterio28').modal('hide');
+                                                verTablaCriterio28(year, criterio);
+                                            }
+                                        });
+                                    },
+                                });
+                            }
+                        });
+                    }else{
+                        $.ajax({
+                            type: 'PUT',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/updateDatosFormacionRH",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: clave,
+                                evidencias: serieEvidencias,
+                                id_criterio: criterio,
+                                puntos: cantidadEvidencias,
+                                total_puntos: total,
+                                year: year
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                // console.log('OK');
+                                consultarDatos({
+                                    action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/getEvidenciasFormacionRH/" + clave + "/" + year + "/" + criterio,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    ok: function(getEvidenciasCriterio28){
+                                        var getPuntos = getEvidenciasCriterio28.response[0];
+                                        // console.log(getPuntos);
+                                        $.ajax({
+                                            type: 'PUT',
+                                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/formacionRH/updateDatosPuntos",
+                                            data: {
+                                                token: $('#txtTokenRepo').val(),
+                                                clave: clave,
+                                                id_criterio: criterio,
+                                                puntos: getPuntos.puntos,
+                                                total_puntos: getPuntos.total_puntos,
+                                                year: year
+                                            },
+                                            headers: {
+                                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                            },
+                                            success: function(data){
+                                                swal({
+                                                    type: 'success',
+                                                    text: 'Se han actualizado los puntos con exito',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                }).catch(swal.noop);
+                                                $('#modalEvidenciasCriterio28').modal('hide');
+                                                verTablaCriterio28(year, criterio);
+                                            }
+                                        });
+                                    },
+                                });
+                            }
+                        });
+                    }
+                }
+            },
+        });
     }
 </script>

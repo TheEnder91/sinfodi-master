@@ -109,6 +109,14 @@
 
         function initVer(){
             VerDatos(0);
+            $('#btnActualizarCriterio24').on('click', actualizarEvidenciasCriterio24);
+            $('#btnActualizarCriterio25').on('click', actualizarEvidenciasCriterio25);
+            $('#btnActualizarCriterio26').on('click', actualizarEvidenciasCriterio26);
+            $('#btnActualizarCriterio27').on('click', actualizarEvidenciasCriterio27);
+            $('#btnActualizarCriterio28').on('click', actualizarEvidenciasCriterio28);
+            $('#btnActualizarCriterio29').on('click', actualizarEvidenciasCriterio29);
+            $('#btnActualizarCriterio30').on('click', actualizarEvidenciasCriterio30);
+            $('#btnActualizarCriterio31').on('click', actualizarEvidenciasCriterio31);
         }
 
         function ShowSelected(){

@@ -7,6 +7,7 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Estimulos\EvaluacionDPosgrado;
+use App\Models\Estimulos\EvidenciasDPosgrado;
 
 class FormacionRHDPController extends Controller
 {
@@ -81,7 +82,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Verano")
+                            ->where('Id_TipoAlumno', '=', 1)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -94,7 +95,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Servicio Social")
+                            ->where('Id_TipoAlumno', '=', 2)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -107,7 +108,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Practicas Profesionales")
+                            ->where('Id_TipoAlumno', '=', 3)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -120,7 +121,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Residencia Profesional")
+                            ->where('Id_TipoAlumno', '=', 11)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -133,7 +134,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Tesis de TSU")
+                            ->where('Id_TipoAlumno', '=', 10)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -146,7 +147,7 @@ class FormacionRHDPController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('TipoAlumno', '=', "Tesis de Licenciatura")
+                            ->where('Id_TipoAlumno', '=', 4)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -155,11 +156,11 @@ class FormacionRHDPController extends Controller
     }
 
     public static function Evaluacion_Objetivo5_Criterio30_FormacionRH($clave, $inicial, $final){
-        $queryCriterio30 = DB::connection('posgradoDB')->table('dfa_alumnos')
+        $queryCriterio30 = DB::connection('posgradoDB')->table('va_alumnospregrado')
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('Nivel', '=', "Tesis de Maestría")
+                            ->where('Id_TipoAlumno', '=', 6)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -168,11 +169,11 @@ class FormacionRHDPController extends Controller
     }
 
     public static function Evaluacion_Objetivo5_Criterio31_FormacionRH($clave, $inicial, $final){
-        $queryCriterio31 = DB::connection('posgradoDB')->table('dfa_alumnos')
+        $queryCriterio31 = DB::connection('posgradoDB')->table('va_alumnospregrado')
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('Nivel', '=', "Tesis de Doctorado")
+                            ->where('Id_TipoAlumno', '=', 8)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -232,5 +233,210 @@ class FormacionRHDPController extends Controller
         }
         $data['response'] = $datos;
         return $this->response($data);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $year
+     * @return \Illuminate\Http\Response
+     */
+    public function searchEvidencias($year, $clave, $criterio)
+    {
+        $fechaInicial = $year.'-01-01';
+        $fechaFinal = $year.'-12-31';
+        if($criterio == 24){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio24_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 25){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio25_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 26){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio26_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 27){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio27_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 28){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio28_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 29){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio29_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 30){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio30_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }elseif($criterio == 31){
+            $evidencias_formacion = self::Evidencias_Objetivo6_Criterio31_FormacionRH($clave, $fechaInicial, $fechaFinal);
+        }
+        $data['response'] = $evidencias_formacion;
+        return $this->response($data);
+    }
+
+    public static function Evidencias_Objetivo6_Criterio24_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 1)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio25_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 2)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio26_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 3)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio27_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 11)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio28_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 10)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio29_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 4)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio30_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 6)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    public static function Evidencias_Objetivo6_Criterio31_FormacionRH($clave, $fechaInicial, $fechaFinal){
+        $query = DB::connection('posgradoDB')->table('va_alumnospregrado')
+                    ->selectRaw('IdAlumnoPregrado,
+                                 Id_asesor AS numero_personal,
+                                 Nom_asesor AS nombre,
+                                 Evidencia AS evidencias')
+                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                    ->where('Id_TipoAlumno', '=', 8)
+                    ->where('id_asesor', '=', $clave)
+                    ->get();
+        return $query;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function puntos($id, $objetivo) {
+        $puntos = DB::table('sinfodi_criterios')->select('puntos')->where('id', '=', $id)->where('id_objetivo', '=', $objetivo)->get();
+        $data['response'] = $puntos;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function obtenerEvidencias($clave, $year, $criterio){
+        if(EvidenciasDPosgrado::where('clave', '=', $clave)->where('year', '=', $year)->where('id_criterio', '=', $criterio)->count() == 0){
+            $count = 0;
+        }else{
+            $count = 1;
+        }
+        $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    //** Codigo personal */
+    public function getEvidencias($clave, $year, $criterio){
+        $obtener = EvidenciasDPosgrado::where('clave', '=', $clave)
+                                        ->where('id_criterio', '=', $criterio)
+                                        ->where('year', '=', $year)
+                                        ->get();
+        $data['response'] = $obtener;
+        return $this->response($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function savePuntos(Request $request)
+    {
+        EvidenciasDPosgrado::create($request->all());
+        $data['response'] = true;
+        return $this->response($data);
+    }
+
+    /** Codigo personal */
+    public static function updateDatos(Request $request){
+        $actualizar = EvidenciasDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['evidencias' => $request->evidencias, 'puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDatosPuntos(Request $request)
+    {
+        $actualizar = EvaluacionDPosgrado::where('clave', $request->clave)
+                                            ->where('id_criterio', $request->id_criterio)
+                                            ->where('year', $request->year)
+                                            ->update(['puntos' => $request->puntos, 'total_puntos' => $request->total_puntos]);
+        return $actualizar;
     }
 }

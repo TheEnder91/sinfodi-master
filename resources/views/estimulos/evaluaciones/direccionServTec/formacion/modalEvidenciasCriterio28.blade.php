@@ -2,40 +2,40 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="modalEvidenciasCriterio28Label">Seleccione las evidencias</h2>
+                <h5 class="modal-title" id="modalEvidenciasCriterio28Label">Seleccione las evidencias</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" name="clave" id="clave">
-                <input type="hidden" name="year" id="year">
-                <div class="row" id="contenedorCriterio28">
-                    <style type="text/css">
-                        h2 {
-                            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                            color: #B8860B;
-                            font-weight: normal;
-                            padding-left: 0px;
-                        }
-
-                        #content {
-                            max-width: 600px;
-                            background: #FFF;
-                            padding: 20px 40px;
-                            margin: 80px auto;
-                            border: 1px solid #D9D9D6;
-                        }
-                    </style>
-                    <div id="content">
-                        <h2>Sin información por el momento</h2>
-                        <p>Este apartado queda deshabilitado por falta de informacion, en cualquier momento se rehabilitara.</p>
+                <input type="hidden" name="claveCriterio28" id="claveCriterio28">
+                <div class="row">
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Valor punto:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="valorCriterio28" id="txtValorCriterio28" readonly>
                     </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Cantidad:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="cantidadCriterio28" id="txtCantidadCriterio28" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Total:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="totalCriterio28" id="txtTotalCriterio28" value="0" readonly>
+                    </div>
+                    <div class="col-2">
+                        <label class="col-form-label" style="font-size:13px;">Año:</label>
+                        <input type="text" class="form-control form-control-sm text-center" name="yearCriterio28" id="txtYearCriterio28" readonly>
+                    </div>
+                </div>
+                <br>
+                <div class="row" id="contenedorCriterio28">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{-- <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio28"/> --}}
+                @can('estimulo-evaluaciones-servicios-formacion-index')
+                    <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio28"/>
+                @endcan
             </div>
         </div>
     </div>
