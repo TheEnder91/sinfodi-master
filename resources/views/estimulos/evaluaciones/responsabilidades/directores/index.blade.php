@@ -18,9 +18,9 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
+                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a evaluar:</label>
                     </div>
-                    <select class="custom-select text-center" style="font-size:13px;" id="year" onChange="ShowSelected();">
+                    <select class="custom-select text-center" style="font-size:13px; text-align:center;" id="year" onChange="ShowSelected();">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -29,7 +29,7 @@
             </div>
         </div><br>
         <div class="table-responsive">
-            <table id="tblDirectores" class="table table-bordered table-striped">
+            <table id="tblDirectores" class="table table-bordered table-striped" style="font-size:13px;">
                 <caption style="font-size:13px;">Listado de directores y sus respectivos puntos.</caption>
                 <thead>
                     <tr class="text-center">
@@ -67,14 +67,14 @@
                 var año = year;
             }
             // console.log(año);
-            var direccion = 'Director';
+            var direccion = 'Directores';
             // Para saber si hay registros en la base de datos...
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/existe/"+año+"/"+direccion,
                 type: 'GET',
                 dataType: 'json',
                 ok: function(existe){
-                    // console.log(existe.response);
+                    console.log(existe.response);
                     if(existe.response == 0){
                         consultarDatos({
                             action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/searchDirectores",
@@ -88,79 +88,91 @@
                                     dataType: 'json',
                                     ok: function(puntos){
                                         // console.log(puntos[0].puntos);
-                                        for(var i = 0; i < searchDirectores.length; i++){
-                                            var dataDirectores = searchDirectores[i];
-                                            // console.log(dataDirectores.clave);
-                                            var options = {
-                                                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/store",
-                                                json: {
-                                                    clave: dataDirectores.clave,
-                                                    nombre: dataDirectores.nombre,
-                                                    direccion: dataDirectores.puesto,
-                                                    responsabilidad: 'Director de área o equivalente',
-                                                    puntos: puntos[0].puntos,
-                                                    year: año,
-                                                    username: dataDirectores.usuario,
-                                                    _token: "{{ csrf_token() }}",
-                                                },
-                                            };
-                                            // console.log(options); // Se comenta para futuras pruebas...
-                                            guardarAutomatico(options);
-                                            // Finaliza codigo para guardar en el sistema...
+                                        if(searchDirectores.length > 0){
+                                            for(var i = 0; i < searchDirectores.length; i++){
+                                                var dataDirectores = searchDirectores[i];
+                                                // console.log(dataDirectores.clave);
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/store",
+                                                    data: {
+                                                        clave: dataDirectores.clave,
+                                                        nombre: dataDirectores.nombre,
+                                                        direccion: direccion,
+                                                        responsabilidad: 'Director de área o equivalente',
+                                                        puntos: puntos[0].puntos,
+                                                        year: año,
+                                                        username: dataDirectores.usuario,
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        verTablaDirectores(año);
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            verTablaDirectores(año);
                                         }
                                     },
                                 });
                             },
                         });
+                    }else{
+                        verTablaDirectores(año);
                     }
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/getDirectores/" + año,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(getDirectores){
-                            var getDirectores = getDirectores.response;
-                            var row = "";
-                            // console.log(getDirectores);
-                            for(var i = 0; i < getDirectores.length; i++){
-                                var dataDirectores = getDirectores[i];
-                                // console.log(dataDirectores);
-                                var authUser = '<?= Auth::user()->usuario ?>';
-                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-directores-index") ?>';
-                                if(dataDirectores.username == authUser || permissions == 1){
-                                        row += "<tr>";
-                                        row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataDirectores.clave + '</td>';
-                                        row += '<td width="62%" style="font-size:12px;">' + dataDirectores.nombre.toUpperCase() + "</td>";
-                                        row += '<td class="text-center" width="20%" style="font-size:12px;">' + dataDirectores.responsabilidad.toUpperCase() + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataDirectores.puntos) + '</td>';
-                                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataDirectores.year + '</td>';
-                                        row += "</tr>";
-                                }
-                            }
-                            if ($.fn.dataTable.isDataTable("#tblDirectores")) {
-                                tblDifusionDivulgacion = $("#tblDirectores").DataTable();
-                                tblDifusionDivulgacion.destroy();
-                            }
-                            $('#tblDirectores > tbody').html('');
-                            $('#tblDirectores > tbody').append(row);
-                            $('#tblDirectores').DataTable({
-                                "order":[[0, "asc"]],
-                                "language":{
-                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
-                                  "info": "Página _PAGE_ de _PAGES_",
-                                  "infoEmpty": "No se encontraron registros.",
-                                  "infoFiltered": "(filtrada de _MAX_ registros)",
-                                  "loadingRecords": "Cargando...",
-                                  "processing":     "Procesando...",
-                                  "search": "Buscar:",
-                                  "zeroRecords":    "No se encontraron registros.",
-                                  "paginate": {
-                                                  "next":       ">",
-                                                  "previous":   "<"
-                                              },
-                                },
-                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
-                            });
+                },
+            });
+        }
+
+        function verTablaDirectores(year){
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/getDirectores/" + year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getDirectores){
+                    var getDirectores = getDirectores.response;
+                    var row = "";
+                    // console.log(getDirectores);
+                    for(var i = 0; i < getDirectores.length; i++){
+                        var dataDirectores = getDirectores[i];
+                        // console.log(dataDirectores);
+                        var authUser = '<?= Auth::user()->usuario ?>';
+                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-directores-index") ?>';
+                        if(dataDirectores.username == authUser || permissions == 1){
+                                row += "<tr>";
+                                row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataDirectores.clave + '</td>';
+                                row += '<td width="62%" style="font-size:12px;">' + dataDirectores.nombre.toUpperCase() + "</td>";
+                                row += '<td class="text-center" width="20%" style="font-size:12px;">' + dataDirectores.responsabilidad.toUpperCase() + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataDirectores.puntos) + '</td>';
+                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataDirectores.year + '</td>';
+                                row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblDirectores")) {
+                        tblDifusionDivulgacion = $("#tblDirectores").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblDirectores > tbody').html('');
+                    $('#tblDirectores > tbody').append(row);
+                    $('#tblDirectores').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
                         },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });

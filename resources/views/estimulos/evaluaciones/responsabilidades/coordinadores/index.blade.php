@@ -66,7 +66,7 @@
                 var año = year;
             }
             // console.log(año);
-            var direccion = 'Coordinador';
+            var direccion = 'Coordinadores';
             // Para saber si hay registros en la base de datos...
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/existe/"+año+"/"+direccion,
@@ -88,79 +88,91 @@
                                     dataType: 'json',
                                     ok: function(puntos){
                                         // console.log(puntos[0].puntos);
-                                        for(var i = 0; i < searchCoordinadores.length; i++){
-                                            var dataCoordinadores = searchCoordinadores[i];
-                                            // console.log(dataCoordinadores.clave);
-                                            var options = {
-                                                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/store",
-                                                json: {
-                                                    clave: dataCoordinadores.clave,
-                                                    nombre: dataCoordinadores.nombre,
-                                                    direccion: dataCoordinadores.puesto,
-                                                    responsabilidad: 'Coordinador de área o equivalente',
-                                                    puntos: puntos[0].puntos,
-                                                    year: año,
-                                                    username: dataCoordinadores.usuario,
-                                                    _token: "{{ csrf_token() }}",
-                                                },
-                                            };
-                                            // console.log(options); // Se comenta para futuras pruebas...
-                                            guardarAutomatico(options);
-                                            // Finaliza codigo para guardar en el sistema...
+                                        if(searchCoordinadores.length > 0){
+                                            for(var i = 0; i < searchCoordinadores.length; i++){
+                                                var dataCoordinadores = searchCoordinadores[i];
+                                                // console.log(dataCoordinadores.clave);
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/store",
+                                                    data: {
+                                                        clave: dataCoordinadores.clave,
+                                                        nombre: dataCoordinadores.nombre,
+                                                        direccion: direccion,
+                                                        responsabilidad: 'Coordinador de área o equivalente',
+                                                        puntos: puntos[0].puntos,
+                                                        year: año,
+                                                        username: dataCoordinadores.usuario,
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        verTablaCoordinadores(año);
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            verTablaCoordinadores(año);
                                         }
                                     },
                                 });
                             },
                         });
+                    }else{
+                        verTablaCoordinadores(año);
                     }
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/getCoordinadores/" + año,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(getCoordinadores){
-                            var getCoordinadores = getCoordinadores.response;
-                            var row = "";
-                            // console.log(getCoordinadores);
-                            for(var i = 0; i < getCoordinadores.length; i++){
-                                var dataCoordinadores = getCoordinadores[i];
-                                // console.log(dataCoordinadores);
-                                var authUser = '<?= Auth::user()->usuario ?>';
-                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-directores-index") ?>';
-                                if(dataCoordinadores.username == authUser || permissions == 1){
-                                    row += "<tr>";
-                                    row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataCoordinadores.clave + '</td>';
-                                    row += '<td width="62%" style="font-size:12px;">' + dataCoordinadores.nombre.toUpperCase() + "</td>";
-                                    row += '<td class="text-center" width="20%" style="font-size:12px;">' + dataCoordinadores.responsabilidad.toUpperCase() + '</td>';
-                                    row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataCoordinadores.puntos) + '</td>';
-                                    row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataCoordinadores.year + '</td>';
-                                    row += "</tr>";
-                                }
-                            }
-                            if ($.fn.dataTable.isDataTable("#tblCoordinadores")) {
-                                tblDifusionDivulgacion = $("#tblCoordinadores").DataTable();
-                                tblDifusionDivulgacion.destroy();
-                            }
-                            $('#tblCoordinadores > tbody').html('');
-                            $('#tblCoordinadores > tbody').append(row);
-                            $('#tblCoordinadores').DataTable({
-                                "order":[[0, "asc"]],
-                                "language":{
-                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
-                                  "info": "Página _PAGE_ de _PAGES_",
-                                  "infoEmpty": "No se encontraron registros.",
-                                  "infoFiltered": "(filtrada de _MAX_ registros)",
-                                  "loadingRecords": "Cargando...",
-                                  "processing":     "Procesando...",
-                                  "search": "Buscar:",
-                                  "zeroRecords":    "No se encontraron registros.",
-                                  "paginate": {
-                                                  "next":       ">",
-                                                  "previous":   "<"
-                                              },
-                                },
-                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
-                            });
+                },
+            });
+        }
+
+        function verTablaCoordinadores(year){
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/getCoordinadores/" + year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getCoordinadores){
+                    var getCoordinadores = getCoordinadores.response;
+                    var row = "";
+                    // console.log(getCoordinadores);
+                    for(var i = 0; i < getCoordinadores.length; i++){
+                        var dataCoordinadores = getCoordinadores[i];
+                        // console.log(dataCoordinadores);
+                        var authUser = '<?= Auth::user()->usuario ?>';
+                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-directores-index") ?>';
+                        if(dataCoordinadores.username == authUser || permissions == 1){
+                            row += "<tr>";
+                            row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataCoordinadores.clave + '</td>';
+                            row += '<td width="62%" style="font-size:12px;">' + dataCoordinadores.nombre.toUpperCase() + "</td>";
+                            row += '<td class="text-center" width="20%" style="font-size:12px;">' + dataCoordinadores.responsabilidad.toUpperCase() + '</td>';
+                            row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataCoordinadores.puntos) + '</td>';
+                            row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataCoordinadores.year + '</td>';
+                            row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblCoordinadores")) {
+                        tblDifusionDivulgacion = $("#tblCoordinadores").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblCoordinadores > tbody').html('');
+                    $('#tblCoordinadores > tbody').append(row);
+                    $('#tblCoordinadores').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
                         },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });

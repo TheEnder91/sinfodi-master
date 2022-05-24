@@ -72,7 +72,7 @@ class CoordinadoresController extends Controller
         $queryDirectores = DB::table('sinfodi_evaluacion_responsabilidades')
                                 ->select('*')
                                 ->where('year', '=', $year)
-                                ->where('direccion', '=', 'Coordinador')
+                                ->where('direccion', '=', 'Coordinadores')
                                 ->get();
         $data['response'] = $queryDirectores;
         return $this->response($data);

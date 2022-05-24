@@ -76,7 +76,7 @@ class DirectoresController extends Controller
         $queryDirectores = DB::table('sinfodi_evaluacion_responsabilidades')
                                 ->select('*')
                                 ->where('year', '=', $year)
-                                ->where('direccion', '=', 'Director')
+                                ->where('direccion', '=', 'Directores')
                                 ->get();
         $data['response'] = $queryDirectores;
         return $this->response($data);

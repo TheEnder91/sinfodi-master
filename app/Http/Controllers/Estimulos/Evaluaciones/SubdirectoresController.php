@@ -72,7 +72,7 @@ class SubdirectoresController extends Controller
         $querySubdirectores = DB::table('sinfodi_evaluacion_responsabilidades')
                                 ->select('*')
                                 ->where('year', '=', $year)
-                                ->where('direccion', '=', 'Subdirector')
+                                ->where('direccion', '=', 'Subdirectores')
                                 ->get();
         $data['response'] = $querySubdirectores;
         return $this->response($data);

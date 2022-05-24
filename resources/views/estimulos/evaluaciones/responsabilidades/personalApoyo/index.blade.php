@@ -88,79 +88,91 @@
                                     dataType: 'json',
                                     ok: function(puntos){
                                         // console.log(puntos[0].puntos);
-                                        for(var i = 0; i < searchPersonalApoyo.length; i++){
-                                            var dataPersonalApoyo = searchPersonalApoyo[i];
-                                            // console.log(dataPersonalApoyo.clave);
-                                            var options = {
-                                                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/store",
-                                                json: {
-                                                    clave: dataPersonalApoyo.clave,
-                                                    nombre: dataPersonalApoyo.nombre,
-                                                    direccion: dataPersonalApoyo.puesto,
-                                                    responsabilidad: 'Personal de apoyo de área o equivalentes',
-                                                    puntos: puntos[0].puntos,
-                                                    year: año,
-                                                    username: dataPersonalApoyo.usuario,
-                                                    _token: "{{ csrf_token() }}",
-                                                },
-                                            };
-                                            // console.log(options); // Se comenta para futuras pruebas...
-                                            guardarAutomatico(options);
-                                            // Finaliza codigo para guardar en el sistema...
+                                        if(searchPersonalApoyo.length > 0){
+                                            for(var i = 0; i < searchPersonalApoyo.length; i++){
+                                                var dataPersonalApoyo = searchPersonalApoyo[i];
+                                                // console.log(dataPersonalApoyo.clave);
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/store",
+                                                    data: {
+                                                        clave: dataPersonalApoyo.clave,
+                                                        nombre: dataPersonalApoyo.nombre,
+                                                        direccion: dataPersonalApoyo.puesto,
+                                                        responsabilidad: 'Personal de apoyo de área o equivalentes',
+                                                        puntos: puntos[0].puntos,
+                                                        year: año,
+                                                        username: dataPersonalApoyo.usuario,
+                                                    },
+                                                    headers: {
+                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    },
+                                                    success: function(data){
+                                                        verTablaPersonalApoyo(año);
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            verTablaPersonalApoyo(año);
                                         }
                                     },
                                 });
                             },
                         });
+                    }else{
+                        verTablaPersonalApoyo(año);
                     }
-                    consultarDatos({
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/" + año,
-                        type: 'GET',
-                        dataType: 'json',
-                        ok: function(getPersonalApoyo){
-                            var getPersonalApoyo = getPersonalApoyo.response;
-                            var row = "";
-                            // console.log(getPersonalApoyo);
-                            for(var i = 0; i < getPersonalApoyo.length; i++){
-                                var dataPersonalApoyo = getPersonalApoyo[i];
-                                // console.log(dataPersonalApoyo);
-                                var authUser = '<?= Auth::user()->usuario ?>';
-                                var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-apoyo-index") ?>';
-                                if(dataPersonalApoyo.username == authUser || permissions == 1){
-                                    row += "<tr>";
-                                    row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataPersonalApoyo.clave + '</td>';
-                                    row += '<td width="57%" style="font-size:12px;">' + dataPersonalApoyo.nombre.toUpperCase() + "</td>";
-                                    row += '<td class="text-center" width="25%" style="font-size:12px;">' + dataPersonalApoyo.responsabilidad.toUpperCase() + '</td>';
-                                    row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataPersonalApoyo.puntos) + '</td>';
-                                    row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataPersonalApoyo.year + '</td>';
-                                    row += "</tr>";
-                                }
-                            }
-                            if ($.fn.dataTable.isDataTable("#tblPersonalApoyo")) {
-                                tblDifusionDivulgacion = $("#tblPersonalApoyo").DataTable();
-                                tblDifusionDivulgacion.destroy();
-                            }
-                            $('#tblPersonalApoyo > tbody').html('');
-                            $('#tblPersonalApoyo > tbody').append(row);
-                            $('#tblPersonalApoyo').DataTable({
-                                "order":[[0, "asc"]],
-                                "language":{
-                                  "lengthMenu": "Mostrar _MENU_ registros por página.",
-                                  "info": "Página _PAGE_ de _PAGES_",
-                                  "infoEmpty": "No se encontraron registros.",
-                                  "infoFiltered": "(filtrada de _MAX_ registros)",
-                                  "loadingRecords": "Cargando...",
-                                  "processing":     "Procesando...",
-                                  "search": "Buscar:",
-                                  "zeroRecords":    "No se encontraron registros.",
-                                  "paginate": {
-                                                  "next":       ">",
-                                                  "previous":   "<"
-                                              },
-                                },
-                                lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
-                            });
+                },
+            });
+        }
+
+        function verTablaPersonalApoyo(year){
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/" + year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getPersonalApoyo){
+                    var getPersonalApoyo = getPersonalApoyo.response;
+                    var row = "";
+                    // console.log(getPersonalApoyo);
+                    for(var i = 0; i < getPersonalApoyo.length; i++){
+                        var dataPersonalApoyo = getPersonalApoyo[i];
+                        // console.log(dataPersonalApoyo);
+                        var authUser = '<?= Auth::user()->usuario ?>';
+                        var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-apoyo-index") ?>';
+                        if(dataPersonalApoyo.username == authUser || permissions == 1){
+                            row += "<tr>";
+                            row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataPersonalApoyo.clave + '</td>';
+                            row += '<td width="57%" style="font-size:12px;">' + dataPersonalApoyo.nombre.toUpperCase() + "</td>";
+                            row += '<td class="text-center" width="25%" style="font-size:12px;">' + dataPersonalApoyo.responsabilidad.toUpperCase() + '</td>';
+                            row += '<td class="text-center" width="5%" style="font-size:12px;">' + Math.trunc(dataPersonalApoyo.puntos) + '</td>';
+                            row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataPersonalApoyo.year + '</td>';
+                            row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblPersonalApoyo")) {
+                        tblDifusionDivulgacion = $("#tblPersonalApoyo").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblPersonalApoyo > tbody').html('');
+                    $('#tblPersonalApoyo > tbody').append(row);
+                    $('#tblPersonalApoyo').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
                         },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
                 },
             });

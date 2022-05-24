@@ -203,22 +203,8 @@ function saveEvaluados(){
     }
 }
 
-function existeUsuario($usuario, $tipo, $criterio){
-    if($tipo == 'responsabilidades'){
-        $queryExiste = DB::table('sinfodi_evaluacion_responsabilidades')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'general'){
-        $queryExiste = DB::table('sinfodi_evaluacion_general')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'administracion'){
-        $queryExiste = DB::table('sinfodi_evaluacion_administracion')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'posgrado'){
-        $queryExiste = DB::table('sinfodi_evaluacion_posgrado')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'ciencia'){
-        $queryExiste = DB::table('sinfodi_evaluacion_ciencia')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'servicios'){
-        $queryExiste = DB::table('sinfodi_evaluacion_serv_tecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }elseif($tipo == 'proyectos'){
-        $queryExiste = DB::table('sinfodi_evaluacion_proy_tecno')->select('username')->where('username', '=', $usuario)->where('direccion', '=', $criterio)->get();
-    }
+function existeUsuario($usuario, $criterio){
+    $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
     if(count($queryExiste) >= 1){
         return true;
     }else{
