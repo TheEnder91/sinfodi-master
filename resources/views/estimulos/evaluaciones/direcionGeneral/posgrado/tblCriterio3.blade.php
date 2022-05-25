@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-direccionGral-posgrado-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-posgrado-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -85,7 +85,7 @@
                     var dataGeneralCriterio3 = datosGeneralCriterio3[i];
                     // console.log(dataGeneralCriterio3);
                     var authUser = '<?= Auth::user()->usuario ?>';
-                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-direccionGral-posgrado-index") ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-posgrado-index") ?>';
                     // console.log(permissions);
                     if(dataGeneralCriterio3.username == authUser || permissions == 1){
                         row += "<tr>";
@@ -94,9 +94,9 @@
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio3.puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio3.total_puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio3.year + '</td>';
-                        if(permissions == 1){
+                        // if(permissions == 1){
                             row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio3(' + dataGeneralCriterio3.year + ', ' + dataGeneralCriterio3.clave + ', ' + criterio +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        // }
                         row += "</tr>";
                     }
                 }

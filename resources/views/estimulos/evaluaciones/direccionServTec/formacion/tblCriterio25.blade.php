@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-formacion-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-formacion-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -94,9 +94,9 @@
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio25.puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio25.total_puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio25.year + '</td>';
-                        if(permissions == 1){
+                        // if(permissions == 1){
                             row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio25(' + dataCienciaCriterio25.year + ', ' + dataCienciaCriterio25.clave + ', ' + 25 +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        // }
                         row += "</tr>";
                     }
                 }

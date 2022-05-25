@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -76,26 +76,26 @@
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/acreditaciones/datosAcreditaciones/" + year + "/" + criterio,
             type: 'GET',
             dataType: 'json',
-            ok: function(datosGeneralCriterio33){
-                // console.log(datosGeneralCriterio33);
-                var datosGeneralCriterio33 = datosGeneralCriterio33.response;
+            ok: function(datosCienciaCriterio33){
+                // console.log(datosCienciaCriterio33);
+                var datosCienciaCriterio33 = datosCienciaCriterio33.response;
                 var row = "";
-                for(var i = 0; i < datosGeneralCriterio33.length; i++){
-                    var dataGeneralCriterio33 = datosGeneralCriterio33[i];
-                    // console.log(dataGeneralCriterio33);
+                for(var i = 0; i < datosCienciaCriterio33.length; i++){
+                    var dataCienciaCriterio33 = datosCienciaCriterio33[i];
+                    // console.log(dataCienciaCriterio33);
                     var authUser = '<?= Auth::user()->usuario ?>';
                     var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index") ?>';
                     // console.log(permissions);
-                    if(dataGeneralCriterio33.username == authUser || permissions == 1){
+                    if(dataCienciaCriterio33.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio33.clave + '</td>';
-                        row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio33.nombre.toUpperCase() + "</td>";
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio33.puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio33.total_puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio33.year + '</td>';
-                        if(permissions == 1){
-                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio33(' + dataGeneralCriterio33.year + ', ' + dataGeneralCriterio33.clave + ', ' + 33 +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio33.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataCienciaCriterio33.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio33.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio33.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio33.year + '</td>';
+                        // if(permissions == 1){
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio33(' + dataCienciaCriterio33.year + ', ' + dataCienciaCriterio33.clave + ', ' + 33 +')"><i class="fa fa-edit"></i></a></td>';
+                        // }
                         row += "</tr>";
                     }
                 }

@@ -15,7 +15,7 @@ class PosgradoDGController extends Controller
     use SingleResponse;
 
     const PERMISSIONS = [
-        'index' => 'estimulo-evaluaciones-direccionGral-posgrado-index',
+        'index' => 'estimulo-evaluaciones-general-posgrado-index',
     ];
 
     /**

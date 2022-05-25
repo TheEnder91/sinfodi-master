@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-proyectos-acreditaciones-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-proyectos-acreditaciones-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -85,7 +85,7 @@
                     var dataGeneralCriterio35 = datosGeneralCriterio35[i];
                     // console.log(dataGeneralCriterio35);
                     var authUser = '<?= Auth::user()->usuario ?>';
-                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-acreditaciones-index") ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-proyectos-acreditaciones-index") ?>';
                     // console.log(permissions);
                     if(dataGeneralCriterio35.username == authUser || permissions == 1){
                         row += "<tr>";
@@ -94,9 +94,9 @@
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.total_puntos) + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.year + '</td>';
-                        if(permissions == 1){
+                        // if(permissions == 1){
                             row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio35(' + dataGeneralCriterio35.year + ', ' + dataGeneralCriterio35.clave + ', ' + 35 +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        // }
                         row += "</tr>";
                     }
                 }

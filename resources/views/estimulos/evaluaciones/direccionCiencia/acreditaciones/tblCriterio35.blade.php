@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -77,26 +77,26 @@
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/acreditaciones/datosAcreditaciones/" + year + "/" + criterio,
             type: 'GET',
             dataType: 'json',
-            ok: function(datosGeneralCriterio35){
-                // console.log(datosGeneralCriterio35);
-                var datosGeneralCriterio35 = datosGeneralCriterio35.response;
+            ok: function(datosCienciaCriterio35){
+                // console.log(datosCienciaCriterio35);
+                var datosCienciaCriterio35 = datosCienciaCriterio35.response;
                 var row = "";
-                for(var i = 0; i < datosGeneralCriterio35.length; i++){
-                    var dataGeneralCriterio35 = datosGeneralCriterio35[i];
-                    // console.log(dataGeneralCriterio35);
+                for(var i = 0; i < datosCienciaCriterio35.length; i++){
+                    var dataCienciaCriterio35 = datosCienciaCriterio35[i];
+                    // console.log(dataCienciaCriterio35);
                     var authUser = '<?= Auth::user()->usuario ?>';
-                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-acreditaciones-index") ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-acreditaciones-index") ?>';
                     // console.log(permissions);
-                    if(dataGeneralCriterio35.username == authUser || permissions == 1){
+                    if(dataCienciaCriterio35.username == authUser || permissions == 1){
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.clave + '</td>';
-                        row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio35.nombre.toUpperCase() + "</td>";
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.total_puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.year + '</td>';
-                        if(permissions == 1){
-                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio35(' + dataGeneralCriterio35.year + ', ' + dataGeneralCriterio35.clave + ', ' + 35 +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio35.clave + '</td>';
+                        row += '<td width="40%" style="font-size:12px;">' + dataCienciaCriterio35.nombre.toUpperCase() + "</td>";
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio35.puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataCienciaCriterio35.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataCienciaCriterio35.year + '</td>';
+                        // if(permissions == 1){
+                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio35(' + dataCienciaCriterio35.year + ', ' + dataCienciaCriterio35.clave + ', ' + 35 +')"><i class="fa fa-edit"></i></a></td>';
+                        // }
                         row += "</tr>";
                     }
                 }

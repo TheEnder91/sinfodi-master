@@ -8,9 +8,9 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
-                @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-transferencia-index"))
+                {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-transferencia-index")) --}}
                     <th scope="col" style="font-size:13px;">Evidencias</th>
-                @endif
+                {{-- @endif --}}
             </tr>
         </thead>
         <tbody></tbody>
@@ -84,9 +84,9 @@
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataServiciosCriterio18.puntos + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataServiciosCriterio18.total_puntos + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataServiciosCriterio18.year + '</td>';
-                        if(permissions == 1){
+                        // if(permissions == 1){
                             row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio18(' + dataServiciosCriterio18.year + ', ' + dataServiciosCriterio18.clave + ', ' + 18 +')"><i class="fa fa-edit"></i></a></td>';
-                        }
+                        // }
                         row += "</tr>";
                     }
                 }
