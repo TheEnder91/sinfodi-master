@@ -23,9 +23,9 @@
                         <th style="font-size:13px;">Nombre</th>
                         <th style="font-size:13px;">Usuario</th>
                         <th style="font-size:13px;">Fecha de acceso</th>
-                        @if (Auth::user()->hasPermissionTo('admin-user-show'))
+                        {{-- @if (Auth::user()->hasPermissionTo('admin-user-show')) --}}
                             <th width="10%" style="font-size:13px;">Acciones</th>
-                        @endif
+                        {{-- @endif --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -35,13 +35,13 @@
                             <td width="55%" style="font-size:12px;">{{ $user->nombre }}</td>
                             <td width="10%" style="font-size:12px;">{{ $user->usuario }}</td>
                             <td width="15%" style="font-size:12px;">{{ $user->created_at }}</td>
-                            @if (Auth::user()->hasPermissionTo('admin-user-show'))
+                            {{-- @if (Auth::user()->hasPermissionTo('admin-user-show')) --}}
                                 <td width="5%" style="font-size:12px;">
-                                    @can('admin-user-show')
+                                    {{-- @can('admin-user-show') --}}
                                         <a href="javascript:getUrlToken('/panelControl/showUser/{{ $user->id }}', true)"><i class="fa fa-edit"></i></a>
-                                    @endcan
+                                    {{-- @endcan --}}
                                 </td>
-                            @endif
+                            {{-- @endif --}}
                         </tr>
                     @endforeach
                 </tbody>
