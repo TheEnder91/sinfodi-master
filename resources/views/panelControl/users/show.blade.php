@@ -52,9 +52,9 @@
             <div class="col-12">
                 <div class="float-right">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/panelControl/listUsers') }}" class="btn btn-outline-danger" style="font-size:13px;">Cancelar</a>
-                    {{-- @can('admin-user-edit') --}}
+                    @can('admin-user-edit')
                         <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizar" style="font-size:13px;"/>
-                    {{-- @endcan --}}
+                    @endcan
                 </div>
             </div>
         </div>
