@@ -203,9 +203,9 @@ function saveEvaluados(){
     }
 }
 
-function existeUsuario($usuario, $criterio){
-    $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->get();
-    if(count($queryExiste) >= 1){
+function existeUsuario($usuario, $tipo, $criterio){
+    $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->count();
+    if($queryExiste >= 1){
         return true;
     }else{
         return false;
