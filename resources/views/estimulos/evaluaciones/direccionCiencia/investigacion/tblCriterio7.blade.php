@@ -28,31 +28,36 @@
                 var datosCriterio7 = datosCritero7.response;
                 // console.log(datosCritero7);
                 // Codigo para guardar en el sistema...
-                for(var i = 0; i < datosCriterio7.length; i++){
-                    var dataCriterio7 = datosCriterio7[i];
-                    // Codigo para guardar en el sistema...
-                    var options = {
-                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/saveDatosInvestigacion",
-                        json: {
-                            clave: dataCriterio7.numero_personal,
-                            nombre: dataCriterio7.nombre,
-                            id_objetivo: 3,
-                            id_criterio: 7,
-                            direccion: "DCiencia",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: year,
-                            username: dataCriterio7.username,
-                            _token: "{{ csrf_token() }}",
-                        },
-                        type: 'POST',
-                        dateType: 'json',
-                    };
-                    // console.log(options); // e comenta para futuras pruebas...
-                    guardarAutomatico(options);
-                    // Finaliza codigo para guardar en el sistema...
+                if(datosCriterio7.length > 0){
+                    for(var i = 0; i < datosCriterio7.length; i++){
+                        var dataCriterio7 = datosCriterio7[i];
+                        // console.log(dataCriterio7);
+                        $.ajax({
+                            type: 'POST',
+                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/saveDatosInvestigacion",
+                            data: {
+                                token: $('#txtTokenRepo').val(),
+                                clave: dataCriterio7.numero_personal,
+                                nombre: dataCriterio7.nombre,
+                                id_objetivo: 3,
+                                id_criterio: 7,
+                                direccion: "DCiencia",
+                                puntos: 0,
+                                total_puntos: 0,
+                                year: year,
+                                username: dataCriterio7.username,
+                            },
+                            headers: {
+                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            },
+                            success: function(data){
+                                verTablaCriterio7(year, criterio);
+                            }
+                        });
+                    }
+                }else{
+                    verTablaCriterio7(year, criterio);
                 }
-                verTablaCriterio7(year, 7);
             },
         });
     }
@@ -139,7 +144,7 @@
                             var claveData = datos[i];
                             // console.log(claveData.clave);
                             row += '<div class="col-12 col-md-2 text-center">';
-                            row += '<a href="http://127.106.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
                             row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
                             row += '</a><br>';
                             row += '<b><input type="checkbox" class="evidenciasCriterio7" name="evidenciasCriterio7[]" id="evidenciasCriterio7'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio7('+puntos+');"> ' + claveData.clave + '</b>';

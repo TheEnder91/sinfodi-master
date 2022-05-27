@@ -565,10 +565,10 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evidencias de estimulos Dirección de ciencia->Formación de recursos humanos */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/listFormacionRH', [FormacionRHDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchFormacionRH/{year}/{criterio}', [FormacionRHDCController::class, "search"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
-    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDCController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::post('/estimulos/evaluaciones/DireccionCiencia/formacionRH/saveDatosFormacionRH', [FormacionRHDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/datosFormacionRH/{year}/{criterio}', [FormacionRHDCController::class, "datosFormacionRH"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchEvidenciasFormacionRH/{year}/{clave}/{criterio}', [FormacionRHDCController::class, "searchEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/searchUsernameFormacionRH/{clave}', [FormacionRHDCController::class, "searchUsername"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/puntosFormacionRH/{id}/{objetivo}', [FormacionRHDCController::class, "puntos"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/obtenerEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDCController::class, "obtenerEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/formacionRH/getEvidenciasFormacionRH/{clave}/{year}/{criterio}', [FormacionRHDCController::class, "getEvidencias"])->name('estimulos.evaluaciones.direccionCiencia.formacionRH');

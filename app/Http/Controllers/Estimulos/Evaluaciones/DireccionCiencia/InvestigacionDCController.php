@@ -80,24 +80,23 @@ class InvestigacionDCController extends Controller
 
     public static function Evaluacion_Objetivo3_Criterio6_Invest_Cientifica($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_art_personas')
-                    ->selectRaw('sinfodidb.sinfodi_art_personas.art_clave_personal AS numero_personal,
-                                 sinfodidb.sinfodi_art_personas.art_nombre AS nombre,
-                                 sinfodi_master.sinfodi_evaluados.usuario as username')
-                    ->join('sinfodi_master.sinfodi_evaluados', function($join){
-                        $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_personal')
-                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Ciencia');
-                    })
-                    ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
-                    ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
-                    ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
-                    ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
-                    ->whereBetween('sinfodidb.sinfodi_art.art_fecha_pub', [$inicial, $final])
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '<=', 2.0)
-                    ->whereIn('sinfodidb.sinfodi_art_personas.art_clave_personal', $clave)
-                    ->groupBy('sinfodidb.sinfodi_art_personas.art_clave_personal')
-                    ->groupBy('sinfodidb.sinfodi_art_personas.art_nombre')
-                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
-                    ->get();
+                ->selectRaw('sinfodidb.sinfodi_art_personas.art_clave_personal AS numero_personal,
+                             sinfodidb.sinfodi_art_personas.art_nombre AS nombre,
+                             sinfodi_master.sinfodi_evaluados.usuario as username')
+                ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                    $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_personal')
+                         ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Ciencia');
+                })
+                ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
+                ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
+                ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
+                ->whereBetween('sinfodidb.sinfodi_art.art_fecha_pub', [$inicial, $final])
+                ->where('sinfodidb.sinfodi_art.art_factor', '<=', 2.0)
+                ->whereIn('sinfodidb.sinfodi_art_personas.art_clave_personal', $clave)
+                ->groupBy('sinfodidb.sinfodi_art_personas.art_clave_personal')
+                ->groupBy('sinfodidb.sinfodi_art_personas.art_nombre')
+                ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
+                ->get();
         return $query;
     }
 
@@ -111,12 +110,11 @@ class InvestigacionDCController extends Controller
                              ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Ciencia');
                     })
                     ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
-                    ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
                     ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
                     ->whereBetween('sinfodidb.sinfodi_art.art_fecha_pub', [$inicial, $final])
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 2.0)
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '<=', 4.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '>', 2.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '<=', 4.0)
                     ->whereIn('sinfodidb.sinfodi_art_personas.art_clave_personal', $clave)
                     ->groupBy('sinfodidb.sinfodi_art_personas.art_clave_personal')
                     ->groupBy('sinfodidb.sinfodi_art_personas.art_nombre')
@@ -135,11 +133,10 @@ class InvestigacionDCController extends Controller
                              ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_Ciencia');
                     })
                     ->leftJoin('sinfodidb.sinfodi_art', 'sinfodidb.sinfodi_art.art_clave', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
-                    ->leftJoin('sinfodidb.sinfodi_art_cuartiles', 'sinfodidb.sinfodi_art_cuartiles.art_clave_art_cuartil', '=', 'sinfodidb.sinfodi_art_personas.art_clave_art_persona')
                     ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
                     ->whereBetween('sinfodidb.sinfodi_art.art_fecha_pub', [$inicial, $final])
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 4.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '>', 4.0)
                     ->whereIn('sinfodidb.sinfodi_art_personas.art_clave_personal', $clave)
                     ->groupBy('sinfodidb.sinfodi_art_personas.art_clave_personal')
                     ->groupBy('sinfodidb.sinfodi_art_personas.art_nombre')
@@ -314,11 +311,10 @@ class InvestigacionDCController extends Controller
     public static function Get_Evidencias_Obj3_Criterio6_InvCientifica($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
                     ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
-                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
                     ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
                     ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
-                    ->where('sinfodi_art_cuartiles.art_factor_impacto', '<=', 2.0)
+                    ->where('sinfodi_art.art_factor', '<=', 2.0)
                     ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
                     ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
                     ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')
@@ -329,12 +325,11 @@ class InvestigacionDCController extends Controller
     public static function Get_Evidencias_Obj3_Criterio7_InvCientifica($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
                     ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
-                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
                     ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
                     ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 2.0)
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '<=', 4.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '>', 2.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '<=', 4.0)
                     ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
                     ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
                     ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')
@@ -345,11 +340,10 @@ class InvestigacionDCController extends Controller
     public static function Get_Evidencias_Obj3_Criterio8_InvCientifica($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_art_personas')
                     ->select('sinfodi_art_personas.art_clave_personal AS numero_personal', 'sinfodi_art_personas.art_clave_art_persona AS clave')
-                    ->leftJoin('sinfodi_art_cuartiles', 'sinfodi_art_personas.art_clave_art_persona', '=', 'sinfodi_art_cuartiles.art_clave_art_cuartil')
                     ->leftJoin('sinfodi_art', 'sinfodi_art.art_clave', '=', 'sinfodi_art_personas.art_clave_art_persona')
                     ->where('sinfodidb.sinfodi_art.art_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_art_personas.art_clave_personal', '<>', 0)
-                    ->where('sinfodidb.sinfodi_art_cuartiles.art_factor_impacto', '>', 4.0)
+                    ->where('sinfodidb.sinfodi_art.art_factor', '>', 4.0)
                     ->whereBetween('sinfodi_art.art_fecha_pub', [$inicial, $final])
                     ->where('sinfodi_art_personas.art_clave_personal', '=', $clave)
                     ->orderBy('sinfodi_art_personas.art_clave_personal', 'ASC')

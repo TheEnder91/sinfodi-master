@@ -144,7 +144,7 @@
                             var claveData = datos[i];
                             // console.log(claveData.clave);
                             row += '<div class="col-12 col-md-2 text-center">';
-                            row += '<a href="http://127.106.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Memorias/' + claveData.clave + '.pdf" target="_blank">';
                             row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
                             row += '</a><br>';
                             row += '<b><input type="checkbox" class="evidenciasCriterio10" name="evidenciasCriterio10[]" id="evidenciasCriterio10'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio10('+puntos+');"> ' + claveData.clave + '</b>';

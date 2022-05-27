@@ -444,7 +444,7 @@
                                         @endif
                                         @if (existeUsuario(Auth::user()->usuario, 'administracion', "Direccion_Administracion") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-administracion-sostentabilidadB-index'))
                                             <li class="nav-item">
-                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.sostentabilidadB') }}">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Sostenibilidad Económica</p>
                                                 </a>
@@ -556,7 +556,7 @@
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-posgrado-sostentabilidadB-index') || existeUsuario(Auth::user()->usuario, 'posgrado', "Direccion_Posgrado"))
                                             <li class="nav-item">
-                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.sostentabilidadB') }}">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Sostenibilidad Económica</p>
                                                 </a>
@@ -668,7 +668,7 @@
                                         @endif
                                         @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-sostentabilidadB-index') || existeUsuario(Auth::user()->usuario, 'ciencia', "Direccion_Ciencia"))
                                             <li class="nav-item">
-                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/listSostenibilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.sostentabilidadB') }}">
+                                                <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/listSostenibilidadB') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.sostentabilidadB') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
                                                     <p>Sostenibilidad Económica</p>
                                                 </a>

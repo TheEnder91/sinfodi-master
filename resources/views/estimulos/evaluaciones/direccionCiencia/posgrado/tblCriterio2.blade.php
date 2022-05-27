@@ -224,7 +224,8 @@
     function mostrarMensajeCriterio2(fechaInicial, fechaFinal, meses, evidencias){
         // console.log(fechaInicial+'->'+fechaFinal+'->'+meses+'->'+evidencias);
         swal({
-            title:'Información:',
+            direction: 'top',
+            title: 'Información:',
             html:
               '<b>Fecha inicial: </b>' + fechaInicial + '<br>' +
               '<b>Fecha final: </b>' + fechaFinal + '<br>' +
@@ -232,8 +233,10 @@
             showCloseButton: true,
             focusConfirm: false,
             confirmButtonText:
-              '<a href="'+evidencias+'" target="_blank" style="color:white;"><i class="fa fa-eye"></i> Ver documento.</a>',
-        });
+                '<a href="'+evidencias+'" target="_blank" style="color:white;">'+
+                    '<i class="fa fa-eye"></i> Ver documento.'+
+                '</a>',
+        }).catch(swal.noop);
     }
 
     function contarEvidenciasCriterio2(puntos){

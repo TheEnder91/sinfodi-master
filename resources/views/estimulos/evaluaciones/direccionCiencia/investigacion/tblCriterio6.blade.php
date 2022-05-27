@@ -26,7 +26,7 @@
             dataType: 'json',
             ok: function(datosCritero6){
                 var datosCriterio6 = datosCritero6.response;
-                // console.log(datosCritero6);
+                // console.log(datosCriterio6);
                 // Codigo para guardar en el sistema...
                 if(datosCriterio6.length > 0){
                     for(var i = 0; i < datosCriterio6.length; i++){
@@ -143,7 +143,7 @@
                         for(var i = 0; i < datos.length; i++){
                             var claveData = datos[i];
                             row += '<div class="col-12 col-md-2 text-center">';
-                            row += '<a href="http://127.106.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
+                            row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-Articulos/' + claveData.clave + '.pdf" target="_blank">';
                             row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
                             row += '</a><br>';
                             row += '<b><input type="checkbox" class="evidenciasCriterio6" name="evidenciasCriterio6[]" id="evidenciasCriterio6'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio6('+puntos+');"> ' + claveData.clave + '</b>';

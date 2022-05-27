@@ -52,13 +52,13 @@
                                             Tesis de TSU
                                         @endif
                                         @if ($item->id == 29)
-                                            Tesis de licenciatura concluida
+                                            Tesis de licenciatura
                                         @endif
                                         @if ($item->id == 30)
-                                            Tesis de maestría concluida
+                                            Tesis de maestría
                                         @endif
                                         @if ($item->id == 31)
-                                            Tesis de doctorado concluida
+                                            Tesis de doctorado
                                         @endif
                                     </a>
                                 </li>

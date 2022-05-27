@@ -156,11 +156,11 @@ class FormacionRHDGController extends Controller
     }
 
     public static function Evaluacion_Objetivo5_Criterio30_FormacionRH($clave, $inicial, $final){
-        $queryCriterio30 = DB::connection('posgradoDB')->table('va_alumnospregrado')
+        $queryCriterio30 = DB::connection('posgradoDB')->table('dfa_alumnos')
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('Id_TipoAlumno', '=', 6)
+                            ->where('Id_Nivel', '=', 6)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -169,11 +169,11 @@ class FormacionRHDGController extends Controller
     }
 
     public static function Evaluacion_Objetivo5_Criterio31_FormacionRH($clave, $inicial, $final){
-        $queryCriterio31 = DB::connection('posgradoDB')->table('va_alumnospregrado')
+        $queryCriterio31 = DB::connection('posgradoDB')->table('dfa_alumnos')
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('Id_TipoAlumno', '=', 8)
+                            ->where('Id_Nivel', '=', 8)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
