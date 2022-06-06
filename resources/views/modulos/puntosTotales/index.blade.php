@@ -252,7 +252,13 @@
                 },
             });
             consultarDatos({
-
+                action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosA/"+year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(totalPuntosA){
+                    var totalPuntosA = totalPuntosA[0].totalCiencia;
+                    console.log(totalPuntosA);
+                }
             });
         }
 

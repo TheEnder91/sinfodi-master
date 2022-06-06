@@ -62,4 +62,26 @@ class PuntosTotalesController extends Controller
         $data['response'] = $datos;
         return $this->response($data);
     }
+
+    public function verTotalPuntosA($year){
+        $puntosTotalesCiencia = self::TotalesPuntosCiencia($year);
+        $data['response'] = $puntosTotalesCiencia;
+        return $this->response($data);
+    }
+
+    public static function TotalesPuntosCiencia($year){
+        $totalPuntosACiencia = DB::select('
+            SELECT SUM(contar.total_puntos) * 0.3 AS totalCiencia
+            FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
+                  FROM sinfodi_evaluacion_general
+                  WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                  GROUP BY clave, nombre
+                  UNION ALL
+                  SELECT clave, nombre, "0" AS total_puntos
+                  FROM sinfodi_evaluacion_responsabilidades
+                  WHERE responsabilidad = "Dirección General" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  GROUP BY clave, nombre) AS contar
+        ');
+        return $totalPuntosACiencia;
+    }
 }
