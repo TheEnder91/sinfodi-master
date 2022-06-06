@@ -1,12 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ \App\Traits\Principal::getUrlToken('/') }}" class="brand-link">
         <img src="{{ asset('img/cideteq.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light"><b>S I N F O D I</b></span>
+        <span class="brand-text font-weight-light"><b>ESTIMULOS {{ date("Y") - 1 }}</b></span>
     </a>
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                {{-- <li class="nav-header" style="font-size:13px;">MODULOS</li>
+                <li class="nav-header" style="font-size:13px;">MODULOS</li>
                 <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/sostenibilidad/listSostenibilidad') }}" class="nav-link {{ isRouteActive('modulos.sostentabilidad') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -30,7 +30,7 @@
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Recursos propios</p>
                     </a>
-                </li> --}}
+                </li>
                 @if (Auth::user()->hasPermissionTo('estimulo-lineamientos-index') || Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-responsabilidad-index') || Auth::user()->hasPermissionTo('estimulo-meta-index') || Auth::user()->hasPermissionTo('estimulo-impacto-index') ||
                      Auth::user()->hasPermissionTo('estimulo-desempeño-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Director") ||

@@ -99,6 +99,7 @@ class SostentabilidadEconomicaController extends Controller
         $actualizar->remanente = $request->remanente;
         $actualizar->interinstitucional = $request->interinstitucional;
         $actualizar->interareas = $request->interareas;
+        $actualizar->interdirecciones = $request->interdirecciones;
         $actualizar->puntos_totales = $request->puntos_totales;
         $actualizar->puntos_lider = $request->puntos_lider;
         $actualizar->nuevos_puntos_totales = $request->nuevos_puntos_totales;

@@ -68,12 +68,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos A:</th>
+                                    <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos A * 0.3:</th>
                                     <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalA" id="txtTotalPuntosTotalA" value="0" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos B:</th>
+                                    <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos B * 0.7:</th>
                                     <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalB" id="txtTotalPuntosTotalB" value="0" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
@@ -94,7 +94,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Año:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="year" id="txtYear" value="{{ date("Y") - 2 }}" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                             </tbody>
@@ -250,6 +250,9 @@
                         $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(valorPuntoResponsabilidad.toFixed(2)));
                     }
                 },
+            });
+            consultarDatos({
+
             });
         }
 

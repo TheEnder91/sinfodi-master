@@ -40,7 +40,7 @@ class CoordinadoresController extends Controller
 
     public static function searchCoordinadores(){
         $queryDirectores = DB::table('sinfodi_evaluados')
-                            ->select('clave', 'nombre', 'usuario', 'puesto')
+                            ->select('clave', 'nombre', 'usuario', 'puesto', 'unidad_admin')
                             ->where('puesto', '=', 'Coordinador')
                             ->get();
         return $queryDirectores;

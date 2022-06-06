@@ -35,8 +35,9 @@ function GetDirectores(){
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
             'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'unidad_admin'=>$item->unidad_administrativa->nombre,
             'puesto'=>'Director',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDirectores;
@@ -51,8 +52,9 @@ function GetSubdirectores(){
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
             'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'unidad_admin'=>$item->unidad_administrativa->nombre,
             'puesto'=>'Subdirector',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosSubdirectores;
@@ -67,8 +69,9 @@ function GetCoordinadores(){
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
             'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'unidad_admin'=>$item->unidad_administrativa->nombre,
             'puesto'=>'Coordinador',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosCoordinadores;
@@ -83,8 +86,9 @@ function GetPersonalApoyo(){
             'nombre'=>$item->nombre,
             'usuario'=>$item->usuario,
             'categoria'=>$item->organigrama->categoria->nombre,
-            'unidad_admin'=>$item->tipo_actividad->nombre,
+            'unidad_admin'=>$item->unidad_administrativa->nombre,
             'puesto'=>'Personal_Apoyo',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosPersonalApoyo;
@@ -101,6 +105,7 @@ function GetDireccionGeneral(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_General',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDG;
@@ -117,6 +122,7 @@ function GetDireccionAdministracion(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_Administracion',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDA;
@@ -133,6 +139,7 @@ function GetDireccionPosgrado(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_Posgrado',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDP;
@@ -149,6 +156,7 @@ function GetDireccionCiencia(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_Ciencia',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDC;
@@ -165,6 +173,7 @@ function GetDireccionServTec(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_Servicios_Tecno',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDST;
@@ -181,6 +190,7 @@ function GetDireccionProyTec(){
             'categoria'=>$item->organigrama->categoria->nombre,
             'unidad_admin'=>$item->tipo_actividad->nombre,
             'puesto'=>'Direccion_Proyectos_Tecno',
+            'year'=>date("Y")-1,
         ];
     }
     return $datosDPT;

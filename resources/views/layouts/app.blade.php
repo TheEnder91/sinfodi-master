@@ -21,7 +21,7 @@
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1>@yield('title_page', 'Bienvendo')</h1>
+                                <h1>@yield('title_page', 'Bienvenido')</h1>
                             </div>
                             <div class="col-sm-6">
                                 @yield('breadcrumb')

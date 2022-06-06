@@ -15,7 +15,7 @@
     @component('components.card')
         @slot('title_card', 'Evaluaciones a la dirección general->Investigación cientifica.')
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
