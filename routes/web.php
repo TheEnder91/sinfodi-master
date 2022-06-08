@@ -129,6 +129,7 @@ Route::middleware(['login'])->group(function(){
     Route::post('/modulos/puntosTotales/guardarTotalPuntos', [PuntosTotalesController::class, "guardarTotalPuntos"])->name('modulos.puntosTotales');
     Route::get('/modulos/puntosTotales/verTotalPuntos/{id}/{year}', [PuntosTotalesController::class, "verTotalPuntos"])->name('modulos.puntosTotales');
     Route::get('/modulos/puntosTotales/verTotalPuntosA/{year}', [PuntosTotalesController::class, "verTotalPuntosA"])->name('modulos.puntosTotales');
+    Route::get('/modulos/puntosTotales/verTotalPuntosB/{year}', [PuntosTotalesController::class, "verTotalPuntosB"])->name('modulos.puntosTotales');
     /** Recursos propios... */
     Route::get('/modulos/recursosPropios/listRecursosPropios', [RecursosPropiosController::class, "index"])->name('modulos.recursosPropios');
     Route::get('/modulos/recursosPropios/ObtenerDatos/{year}', [RecursosPropiosController::class, "obtenerDatos"])->name('modulos.recursosPropios');

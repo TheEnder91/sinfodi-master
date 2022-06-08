@@ -99,7 +99,7 @@
                                                         clave: dataPersonalApoyo.clave,
                                                         nombre: dataPersonalApoyo.nombre,
                                                         direccion: dataPersonalApoyo.puesto,
-                                                        responsabilidad: dataPersonalApoyo.unidad_admin,
+                                                        responsabilidad: 'Personal de apoyo de área o equivalente',
                                                         puntos: puntos[0].puntos,
                                                         year: año,
                                                         username: dataPersonalApoyo.usuario,

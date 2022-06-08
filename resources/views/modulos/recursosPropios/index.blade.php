@@ -15,23 +15,9 @@
     @component('components.card')
         @slot('title_card', 'Crear registro->Recursos propios')
         <div class="row">
-            <div class="col-3">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año a calcular:</label>
-                    </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
-                        @for ($i = date('Y'); $i >= 2021; $i--)
-                            <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
-                        @endfor
-                    </select>
-                </div>
-            </div>
-        </div><br>
-        <div class="row">
             <div class="col-2" style="text-align: justify;">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="direcciones" id="direccionGeneral" value="direccionGeneral" checked>
+                    <input class="form-check-input" type="radio" name="direcciones" id="direccionGeneral" value="direccionGeneral">
                     <label class="form-check-label" for="direccionGeneral">Direccion general</label>
                 </div>
                 <div class="form-check">
@@ -53,6 +39,15 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="direcciones" id="direccionTecnologia" value="direccionTecnologia">
                     <label class="form-check-label" for="direccionTecnologia">Direccion de tecnología</label>
+                </div><br>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="button" class="btn btn-warning" style="width:100%;" value="Calcular" id="btnCalcular" onclick="calcularPuntos();"/>
+                        <input type="button" class="btn btn-primary" style="width:100%;" value="Nuevo registro" id="btnNuevo" onclick="nuevoRegistro();"/>
+                    </div>
+                    <div class="col-6">
+                        <input type="button" class="btn btn-primary" style="width:100%;" value="Guardar" id="btnGuardar"/>
+                    </div>
                 </div>
             </div>
             <div class="col-4">
@@ -60,45 +55,27 @@
                     <table id="tblCalculosRP" class="table table-sm">
                         <tbody>
                             <tr>
-                                <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Cantidad $:</th>
-                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="totalRecursosPropios" id="txtTotalRecursosPropios" readonly></th>
-                                {{-- <th width="25%">
-                                    <input type="button" class="btn btn-warning" style="width:50%;" value="Calcular" id="btnCalcular" onclick="calcularPuntos();"/>
-                                    <input type="button" class="btn btn-primary" style="width:50%;" value="Nuevo registro" id="btnNuevo" onclick="nuevoRegistro();"/>
-                                </th> --}}
+                                <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Facturación $:</th>
+                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="totalRecursosPropios" id="txtTotalRecursosPropios" value="0.00" readonly></th>
                             </tr>
                             <tr>
                                 <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Contribución %:</th>
-                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="contribucion" id="txtContribucion"></th>
-                                {{-- <th width="25%">
-                                    <input type="button" class="btn btn-primary" style="width:50%;" value="Guardar" id="btnGuardar"/>
-                                </th> --}}
+                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="contribucion" id="txtContribucion" value="0.00"></th>
                             </tr>
                             <tr>
                                 <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Total personas del área:</th>
-                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="totalPersonasArea" id="txtTotalPersonasArea" readonly></th>
-                                {{-- <th width="25%"></th> --}}
+                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="totalPersonasArea" id="txtTotalPersonasArea" value="0" readonly></th>
                             </tr>
                             <tr>
                                 <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Recursos propios $:</th>
-                                <td width="10%"><input type="text" class="form-control form-control-sm text-center"  name="contribucion" id="txtContribucion" readonly></th>
-                                {{-- <th width="25%"></th> --}}
+                                <td width="10%"><input type="text" class="form-control form-control-sm text-center"  name="contribucion" id="txtContribucion" value="0.00" readonly></th>
+                            </tr>
+                            <tr>
+                                <th scope="row" style="font-size:13px; vertical-align:middle;" width="10%">Año:</th>
+                                <th width="10%"><input type="text" class="form-control form-control-sm text-center"  name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly></th>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-3">
-                        <input type="button" class="btn btn-warning" style="width:100%;" value="Calcular" id="btnCalcular" onclick="calcularPuntos();"/>
-                        <input type="button" class="btn btn-primary" style="width:100%;" value="Nuevo registro" id="btnNuevo" onclick="nuevoRegistro();"/>
-                    </div>
-                </div>
-                <div class="row" style="margin-top: 5px;">
-                    <div class="col-3">
-                        <input type="button" class="btn btn-primary" style="width:100%;" value="Guardar" id="btnGuardar"/>
-                    </div>
                 </div>
             </div>
         </div>
@@ -112,37 +89,57 @@
         function initRecursosPropios(){
             obtenerDatos(0);
             $('#btnNuevo').hide();
+            $('#btnGuardar').hide();
             // $('#btnGuardar').on('click', guardarPuntosTotales);
         }
 
-        function ShowSelected(){
-            var year = document.getElementById("year").value;
-            obtenerDatos(year);
+        function obtenerDatos(){
+            // Consultamos el calculo de los recursos propios de la tabla de puntos totales
+            // consultarDatos({
+            //     action: "{{ config('app.url') }}/modulos/recursosPropios/ObtenerDatos/"+año,
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     ok: function(obtenerDatosPuntosTotales){
+            //         var dataObtenerPuntosTotales = obtenerDatosPuntosTotales[0];
+            //         // console.log(dataObtenerPuntosTotales);
+            //         if(dataObtenerPuntosTotales != null){
+            //             // console.log(dataObtenerPuntosTotales.importe_facturacion);
+            //             $('#txtTotalRecursosPropios').val(new Intl.NumberFormat().format(dataObtenerPuntosTotales.importe_facturacion));
+            //         }else{
+            //             // console.log("Sin informacion");
+            //             $('#txtTotalRecursosPropios').val('0.00');
+            //         }
+            //     },
+            // });
         }
 
-        function obtenerDatos(year){
-            if(year === 0){
-                var año = document.getElementById("year").value;
+        function calcularPuntos(){
+            let direccionGeneral = document.querySelector('#direccionGeneral');
+            let direccionAdministracion = document.querySelector('#direccionAdministracion');
+            let direccionPosgrado = document.querySelector('#direccionPosgrado');
+            let direccionCiencia = document.querySelector('#direccionCiencia');
+            let direccionServicios = document.querySelector('#direccionServicios');
+            let direccionTecnologia = document.querySelector('#direccionTecnologia');
+            let contribucion = document.getElementById('txtContribucion').value
+            if(!document.querySelector('input[name="direcciones"]:checked')){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de seleccionar al menos una dirección para continuar.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                return;
+            }else if(contribucion == "0.00"){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de ingresar el procentaje de contribución para continuar.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                return;
             }else{
-                var año = year;
+                console.log("Calculando");
             }
-            // Consultamos el calculo de los recursos propios de la tabla de puntos totales
-            consultarDatos({
-                action: "{{ config('app.url') }}/modulos/recursosPropios/ObtenerDatos/"+año,
-                type: 'GET',
-                dataType: 'json',
-                ok: function(obtenerDatosPuntosTotales){
-                    var dataObtenerPuntosTotales = obtenerDatosPuntosTotales[0];
-                    // console.log(dataObtenerPuntosTotales);
-                    if(dataObtenerPuntosTotales != null){
-                        // console.log(dataObtenerPuntosTotales.importe_facturacion);
-                        $('#txtTotalRecursosPropios').val(new Intl.NumberFormat().format(dataObtenerPuntosTotales.importe_facturacion));
-                    }else{
-                        // console.log("Sin informacion");
-                        $('#txtTotalRecursosPropios').val('0.00');
-                    }
-                },
-            });
         }
     </script>
 @endsection

@@ -54,7 +54,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos responsabilidad:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosResponsabilidad" id="txtTotalPuntosResponsabilidad" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosResponsabilidad" id="txtTotalPuntosResponsabilidad" value="0.00" readonly></td>
                                     <td width="30%">
                                         <input type="button" class="btn btn-warning" style="width:100%;" value="Calcular" id="btnCalcular" onclick="calcularPuntos();"/>
                                         <input type="button" class="btn btn-primary" style="width:100%;" value="Nuevo registro" id="btnNuevo" onclick="nuevoRegistro();"/>
@@ -62,39 +62,34 @@
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Valor punto responsabilidad:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="valorPuntoResponsabilidad" id="txtValorPuntoResponsabilidad" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="valorPuntoResponsabilidad" id="txtValorPuntoResponsabilidad" value="0.00" readonly></td>
                                     <td width="30%">
                                         <input type="button" class="btn btn-primary" style="width:100%;" value="Guardar" id="btnGuardar"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos A * 0.3:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalA" id="txtTotalPuntosTotalA" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalA" id="txtTotalPuntosTotalA" value="0.00" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos B * 0.7:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalB" id="txtTotalPuntosTotalB" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalB" id="txtTotalPuntosTotalB" value="0.00" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Total puntos A y B:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalAB" id="txtTotalPuntosTotalAB" value="0" readonly></td>
-                                    <td width="30%"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Aqui va algo:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="variableX" id="txtVariableX" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="totalPuntosTotalAB" id="txtTotalPuntosTotalAB" value="0.00" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Valor por punto($):</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="valorPunto" id="txtValorPunto" value="0" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="valorPunto" id="txtValorPunto" value="0.00" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row" style="font-size:13px; vertical-align:middle;" width="40%">Año:</th>
-                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="year" id="txtYear" value="{{ date("Y") - 2 }}" readonly></td>
+                                    <td width="30%"><input type="text" class="form-control form-control-sm text-center"  name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly></td>
                                     <td width="30%"></td>
                                 </tr>
                             </tbody>
@@ -130,6 +125,7 @@
         function initPuntosTotales(){
             verTablaPuntosTotales();
             $('#btnNuevo').hide();
+            $('#btnGuardar').hide();
             $('#btnGuardar').on('click', guardarPuntosTotales);
         }
 
@@ -222,16 +218,16 @@
             }
             // Calcular el importe de las actividades individuales(Importe total * porcentaje de la actividad individuales)
             actividadIndividual = importeTotal * porcentajeActividadIndividual;
-            $('#txtActividadIndividual').val(new Intl.NumberFormat().format(actividadIndividual));
+            $('#txtActividadIndividual').val(new Intl.NumberFormat().format(actividadIndividual.toFixed(2)));
             // Calcular el importe de la facturación(Importe total * porcentaje de facturacion)
             facturacion = importeTotal *porcentajeFacturacion;
-            $('#txtFacturacion').val(new Intl.NumberFormat().format(facturacion));
+            $('#txtFacturacion').val(new Intl.NumberFormat().format(facturacion.toFixed(2)));
             // Calcular el importe de los fondos de administracion(Importe total * porcentaje de fondos de administracion)
             fondosAdmin = importeTotal *porcentajeFondosAdmin;
-            $('#txtFondosAdmin').val(new Intl.NumberFormat().format(fondosAdmin));
+            $('#txtFondosAdmin').val(new Intl.NumberFormat().format(fondosAdmin.toFixed(2)));
             // Calcular el importe de responsabilidad(Importe total * porcentaje de responsabilidades)
             responsabilidad = importeTotal * porcentajeResponsabilidad;
-            $('#txtResponsabilidad').val(new Intl.NumberFormat().format(responsabilidad));
+            $('#txtResponsabilidad').val(new Intl.NumberFormat().format(responsabilidad.toFixed(2)));
             // Calcular la suma de todos los puntos para responsabilidades...
             var year = $('#txtYear').val();
             consultarDatos({
@@ -251,13 +247,50 @@
                     }
                 },
             });
+            // Calcular la suma de todos los puntos de las actividades de la tabla A de todas las direcciones por el 0.3 establecido...
             consultarDatos({
                 action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosA/"+year,
                 type: 'GET',
                 dataType: 'json',
                 ok: function(totalPuntosA){
-                    var totalPuntosA = totalPuntosA[0].totalCiencia;
-                    console.log(totalPuntosA);
+                    var totalPuntosGeneral = totalPuntosA.response[0].totalGeneral;
+                    var totalPuntosAdministracion = totalPuntosA.response[1].totalAdministracion;
+                    var totalPuntosPosgrado = totalPuntosA.response[2].totalPosgrado;
+                    var totalPuntosServicios = totalPuntosA.response[3].totalServicios;
+                    var totalPuntosCiencia = totalPuntosA.response[4].totalCiencia;
+                    var totalPuntosTecnologia = totalPuntosA.response[5].totalTecnologia;
+                    var puntosTotalesA = parseFloat(totalPuntosGeneral) + parseFloat(totalPuntosAdministracion) + parseFloat(totalPuntosPosgrado) + parseFloat(totalPuntosServicios) + parseFloat(totalPuntosCiencia) + parseFloat(totalPuntosTecnologia);
+                    // console.log(puntosTotalesA);
+                    $('#txtTotalPuntosTotalA').val(new Intl.NumberFormat().format(puntosTotalesA.toFixed(2)));
+                    // Calcular la suma de todos los puntos de las actividades de la tabla B de todas las direcciones por el 0.7 establecido...
+                    consultarDatos({
+                        action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosB/"+year,
+                        type: 'GET',
+                        dataType: 'json',
+                        ok: function(totalPuntosB){
+                            var totalPuntosGeneralB = totalPuntosB.response[0].totalGeneralB;
+                            var totalPuntosAdministracionB = totalPuntosB.response[1].totalAdministracionB;
+                            var totalPuntosPosgradoB = totalPuntosB.response[2].totalPosgradoB;
+                            var totalPuntosServiciosB = totalPuntosB.response[3].totalServiciosB;
+                            var totalPuntosCienciaB = totalPuntosB.response[4].totalCienciaB;
+                            var totalPuntosTecnologiaB = totalPuntosB.response[5].totalTecnologiaB;
+                            var puntosTotalesB = parseFloat(totalPuntosGeneralB) + parseFloat(totalPuntosAdministracionB) + parseFloat(totalPuntosPosgradoB) + parseFloat(totalPuntosServiciosB) + parseFloat(totalPuntosCienciaB) + parseFloat(totalPuntosTecnologiaB);
+                            // console.log(puntosTotalesB);
+                            $('#txtTotalPuntosTotalB').val(new Intl.NumberFormat().format(puntosTotalesB.toFixed(2)));
+                            // Sumar el total de puntos A mas el total de puntos B...
+                            var puntosA = $('#txtTotalPuntosTotalA').val().replace(/,/g, "");
+                            var puntosB = $('#txtTotalPuntosTotalB').val().replace(/,/g, "");
+                            var sumarPuntosAyB = parseFloat(puntosA) + parseFloat(puntosB);
+                            // console.log(sumarPuntosAyB);
+                            $('#txtTotalPuntosTotalAB').val(new Intl.NumberFormat().format(sumarPuntosAyB.toFixed(2)));
+                            // Calcular le valor del punto...
+                            var valorActividades = $('#txtActividadIndividual').val().replace(/,/g, "");
+                            var valorAyB = $('#txtTotalPuntosTotalAB').val().replace(/,/g, "");
+                            var valorPunto = parseFloat(valorActividades) / parseFloat(valorAyB);
+                            $('#txtValorPunto').val(new Intl.NumberFormat().format(valorPunto.toFixed(2)));
+                            $('#btnGuardar').show();
+                        }
+                    });
                 }
             });
         }
@@ -276,8 +309,9 @@
             var porcentajeResponsabilidad = parseInt($('#txtPorcentajeResponsabilidad').val());
             var totalPuntosResponsabilidad = parseInt($('#txtTotalPuntosResponsabilidad').val().replace(/,/g, ""));
             var valorPuntoResponsabilidad = parseFloat($('#txtValorPuntoResponsabilidad').val().replace(/,/g, ""));
+            var totalPuntosA = parseFloat($('#txtTotalPuntosTotalA').val().replace(/,/g, ""));
+            var totalPuntosB = parseFloat($('#txtTotalPuntosTotalB').val().replace(/,/g, ""));
             var totalPuntosActividades = parseFloat($('#txtTotalPuntosTotalAB').val().replace(/,/g, ""));
-            var variableX = parseFloat($('#txtVariableX').val().replace(/,/g, ""));
             var valorPuntoActividades = parseFloat($('#txtValorPunto').val().replace(/,/g, ""));
             var year = $('#txtYear').val();
             // Validamos si esta vacio el importe...
@@ -326,8 +360,9 @@
                                 porcentaje_responsabilidad: porcentajeResponsabilidad,
                                 total_puntos_responsabilidad: totalPuntosResponsabilidad,
                                 valor_punto_responsabilidad: valorPuntoResponsabilidad,
+                                total_puntos_a: totalPuntosA,
+                                total_puntos_b: totalPuntosB,
                                 total_puntos_actividades: totalPuntosActividades,
-                                cantidad: variableX,
                                 valor_punto_actividades: valorPuntoActividades,
                                 year: year,
                                 _token: "{{ csrf_token() }}",
@@ -375,8 +410,9 @@
                     document.getElementById('txtPorcentajeResponsabilidad').readOnly = true;
                     $('#txtTotalPuntosResponsabilidad').val(new Intl.NumberFormat().format(dataVerPuntosTotales.total_puntos_responsabilidad));
                     $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(dataVerPuntosTotales.valor_punto_responsabilidad));
+                    $('#txtTotalPuntosTotalA').val(new Intl.NumberFormat().format(dataVerPuntosTotales.total_puntos_a));
+                    $('#txtTotalPuntosTotalB').val(new Intl.NumberFormat().format(dataVerPuntosTotales.total_puntos_b));
                     $('#txtTotalPuntosTotalAB').val(new Intl.NumberFormat().format(dataVerPuntosTotales.total_puntos_actividades));
-                    $('#txtVariableX').val(new Intl.NumberFormat().format(dataVerPuntosTotales.cantidad));
                     $('#txtValorPunto').val(new Intl.NumberFormat().format(dataVerPuntosTotales.valor_punto_actividades));
                     $('#txtYear').val(dataVerPuntosTotales.year);
                     $('#btnCalcular').hide();
@@ -406,14 +442,15 @@
             $('#txtResponsabilidad').val('0.00');
             $('#txtPorcentajeResponsabilidad').val('0');
             document.getElementById('txtPorcentajeResponsabilidad').readOnly = false;
-            $('#txtTotalPuntosResponsabilidad').val('0');
-            $('#txtValorPuntoResponsabilidad').val('0');
-            $('#txtTotalPuntosTotalAB').val('0');
-            $('#txtVariableX').val('0');
-            $('#txtValorPunto').val('0');
+            $('#txtTotalPuntosResponsabilidad').val('0.00');
+            $('#txtValorPuntoResponsabilidad').val('0.00');
+            $('#txtTotalPuntosTotalA').val('0.00');
+            $('#txtTotalPuntosTotalB').val('0.00');
+            $('#txtTotalPuntosTotalAB').val('0.00');
+            $('#txtValorPunto').val('0.00');
             $('#txtYear').val(year - 1);
             $('#btnCalcular').show();
-            $('#btnGuardar').show();
+            $('#btnGuardar').hide();
             $('#btnNuevo').hide();
         }
     </script>

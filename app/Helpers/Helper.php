@@ -199,6 +199,7 @@ function GetDireccionProyTec(){
 function saveEvaluados(){
     $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
     $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia(), GetDireccionServTec(), GetDireccionProyTec());
+    // var_dump($datos);
     if(count($queryDatos) >= 1){
         if(DB::table('sinfodi_evaluados')->delete()){
             DB::table('sinfodi_evaluados')->truncate();
