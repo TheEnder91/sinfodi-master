@@ -376,7 +376,7 @@
                     }else{
                         swal({
                             type: 'warning',
-                            text: 'Los datos ingresados ya se encuentra registrado para el año '+year+'.',
+                            text: 'La información ya se encuentra registrado para el año '+year+'.',
                             showConfirmButton: false,
                             timer: 2500
                         }).catch(swal.noop);

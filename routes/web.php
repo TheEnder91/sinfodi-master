@@ -132,7 +132,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/puntosTotales/verTotalPuntosB/{year}', [PuntosTotalesController::class, "verTotalPuntosB"])->name('modulos.puntosTotales');
     /** Recursos propios... */
     Route::get('/modulos/recursosPropios/listRecursosPropios', [RecursosPropiosController::class, "index"])->name('modulos.recursosPropios');
+    Route::get('/modulos/recursosPropios/ObtenerRecursosPropios/', [RecursosPropiosController::class, "obtenerRecursosPropios"])->name('modulos.recursosPropios');
+    Route::get('/modulos/recursosPropios/ObtenerTotalPersonasDirecciones/{year}/{direccion}', [RecursosPropiosController::class, "obtenerTotalPersonasDireccion"])->name('modulos.recursosPropios');
     Route::get('/modulos/recursosPropios/ObtenerDatos/{year}', [RecursosPropiosController::class, "obtenerDatos"])->name('modulos.recursosPropios');
+    Route::get('/modulos/recursosPropios/existe/{year}/{id}', [RecursosPropiosController::class, "existe"])->name('modulos.recursosPropios');
+    Route::post('/modulos/recursosPropios/guardarRecursosPropios', [RecursosPropiosController::class, "guardarRecursosPropios"])->name('modulos.recursosPropios');
+    Route::get('/modulos/recursosPropios/getRecursoPropio/{year}/{id}', [RecursosPropiosController::class, "getRecursoPropio"])->name('modulos.recursosPropios');
     //Ruta para visualizar los lineamientos de estimulos...
     Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
     //Rutas para el catalogo de objetivos...
