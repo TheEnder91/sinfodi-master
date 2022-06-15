@@ -26,6 +26,7 @@
             dataType: 'json',
             ok: function(datosCritero34 ){
                 var datosCriterio34 = datosCritero34.response;
+                // console.log(datosCriterio34);
                 // Codigo para guardar en el sistema...
                 if(datosCriterio34.length > 0){
                     // console.log(datosCritero34);
@@ -33,7 +34,7 @@
                         var dataCriterio34 = datosCriterio34[i];
                         // console.log(dataCriterio34);
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/searchUsernamePosgrado/" + dataCriterio34.numero_personal,
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/searchUsernamePosgrado/" + dataCriterio34.numeroPersonal,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(datosCritero34Username){

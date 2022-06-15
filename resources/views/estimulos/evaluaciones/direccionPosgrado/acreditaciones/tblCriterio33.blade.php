@@ -32,7 +32,7 @@
                         var dataCriterio33 = datosCriterio33[i];
                         // console.log(dataCriterio33);
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/posgrado/searchUsernamePosgrado/" + dataCriterio33.numero_personal,
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/posgrado/searchUsernamePosgrado/" + dataCriterio33.numeroPersonal,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(datosCritero33Username){

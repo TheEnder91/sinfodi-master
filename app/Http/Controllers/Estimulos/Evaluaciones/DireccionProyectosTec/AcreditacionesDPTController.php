@@ -66,42 +66,84 @@ class AcreditacionesDPTController extends Controller
     }
 
     public static function Evaluacion_Criterio33($clave, $inicial, $final){
-        $queryCriterio33 = DB::connection('acreditaciones')->table('performancetests')
-                            ->selectRaw('persons.employees_number AS numero_personal,
-                                         persons.employees_name_p AS nombre_personal')
-                            ->join('persons', 'performancetests.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('performancetests.date_start', [$inicial, $final])
-                            ->whereBetween('performancetests.date_end', [$inicial, $final])
-                            ->whereIn('persons.employees_number', $clave)
-                            ->distinct()
-                            ->get();
+        $queryPersona = DB::connection('acreditaciones')->table('performancetests')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, performancetests.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'performancetests.groups_id')
+                                ->whereBetween('performancetests.date_end', [$inicial, $final])
+                                ->whereIn('persons.employees_number', $clave)
+                                ->where('performancetests.is_group_or_person', '=', 0)
+                                ->distinct();
+
+        $queryGrupo = DB::connection('acreditaciones')->table('performancetests')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, is_group_or_person')
+                                ->whereBetween('date_end', [$inicial, $final])
+                                ->whereIn('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
+                                ->distinct()
+                                ->unionAll($queryPersona);
+
+        $queryCriterio33 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal')
+                                ->distinct()
+                                ->groupBy('numeroPersonal')
+                                ->groupBy('nombrePersonal')
+                                ->orderBy('numeroPersonal', 'ASC')
+                                ->get();
         return $queryCriterio33;
     }
 
     public static function Evaluacion_Criterio34($clave, $inicial, $final){
-        $queryCriterio34 = DB::connection('acreditaciones')->table('accreditedtechniques')
-                                ->selectRaw('persons.employees_number AS numero_personal,
-                                             persons.employees_name_p AS nombre_personal')
-                                ->join('persons', 'accreditedtechniques.groups_id', '=', 'persons.groups_id')
-                                ->whereBetween('accreditedtechniques.date_start', [$inicial, $final])
+        $queryPersona = DB::connection('acreditaciones')->table('accreditedtechniques')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, accreditedtechniques.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'accreditedtechniques.groups_id')
                                 ->whereBetween('accreditedtechniques.date_end', [$inicial, $final])
                                 ->whereIn('persons.employees_number', $clave)
+                                ->where('accreditedtechniques.is_group_or_person', '=', 0)
+                                ->distinct();
+
+        $queryGrupo = DB::connection('acreditaciones')->table('accreditedtechniques')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, is_group_or_person')
+                                ->whereBetween('date_end', [$inicial, $final])
+                                ->whereIn('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
                                 ->distinct()
+                                ->unionAll($queryPersona);
+
+        $queryCriterio34 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal')
+                                ->distinct()
+                                ->groupBy('numeroPersonal')
+                                ->groupBy('nombrePersonal')
+                                ->orderBy('numeroPersonal', 'ASC')
                                 ->get();
         return $queryCriterio34;
     }
 
     public static function Evaluacion_Criterio35($clave, $inicial, $final){
-        $queryCriterio35 = DB::connection('acreditaciones')->table('interlaboratorytests')
-                                ->selectRaw('persons.employees_number AS numero_personal,
-                                             persons.employees_name_p AS nombre_personal')
-                                ->join('persons', 'interlaboratorytests.groups_id', '=', 'persons.groups_id')
-                                ->whereBetween('interlaboratorytests.date_start', [$inicial, $final])
+        $queryPersona = DB::connection('acreditaciones')->table('interlaboratorytests')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, interlaboratorytests.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'interlaboratorytests.groups_id')
                                 ->whereBetween('interlaboratorytests.date_end', [$inicial, $final])
                                 ->whereIn('persons.employees_number', $clave)
+                                ->where('interlaboratorytests.is_group_or_person', '=', 0)
+                                ->distinct();
+
+        $queryGrupo = DB::connection('acreditaciones')->table('interlaboratorytests')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, is_group_or_person')
+                                ->whereBetween('date_end', [$inicial, $final])
+                                ->whereIn('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
                                 ->distinct()
+                                ->unionAll($queryPersona);
+
+        $queryCriterio34 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal')
+                                ->distinct()
+                                ->groupBy('numeroPersonal')
+                                ->groupBy('nombrePersonal')
+                                ->orderBy('numeroPersonal', 'ASC')
                                 ->get();
-        return $queryCriterio35;
+        return $queryCriterio34;
     }
 
     /** Funcion para obtener el username de los participantes... */
@@ -169,39 +211,69 @@ class AcreditacionesDPTController extends Controller
     }
 
     public static function Evidencias_Criterio33($clave, $fechaInicial, $fechaFinal){
-        $queryCriterio34 = DB::connection('acreditaciones')->table('performancetests')
-                            ->selectRaw('performancetests.name AS nombre,
-                                         performancetests.file AS archivo')
-                            ->join('persons', 'performancetests.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('performancetests.date_start', [$fechaInicial, $fechaFinal])
-                            ->whereBetween('performancetests.date_end', [$fechaInicial, $fechaFinal])
-                            ->where('persons.employees_number', '=', $clave)
-                            ->get();
-        return $queryCriterio34;
+        $queryPersona = DB::connection('acreditaciones')->table('performancetests')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, performancetests.name AS nombre, performancetests.file AS archivo, performancetests.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'performancetests.groups_id')
+                                ->whereBetween('performancetests.date_end', [$fechaInicial, $fechaFinal])
+                                ->where('performancetests.employees_number', $clave)
+                                ->where('performancetests.is_group_or_person', '=', 0);
+
+        $queryGrupo = DB::connection('acreditaciones')->table('performancetests')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, file AS archivo, name AS nombre, is_group_or_person')
+                                ->whereBetween('date_end', [$fechaInicial, $fechaFinal])
+                                ->where('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
+                                ->unionAll($queryPersona);
+
+        $queryCriterio33 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal, archivo, nombre')
+                                ->orderBy('numeroPersonal', 'ASC')
+                                ->get();
+        return $queryCriterio33;
     }
 
     public static function Evidencias_Criterio34($clave, $fechaInicial, $fechaFinal){
-        $queryCriterio34 = DB::connection('acreditaciones')->table('accreditedtechniques')
-                            ->selectRaw('accreditedtechniques.name AS nombre,
-                                         accreditedtechniques.file AS archivo')
-                            ->join('persons', 'accreditedtechniques.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('accreditedtechniques.date_start', [$fechaInicial, $fechaFinal])
-                            ->whereBetween('accreditedtechniques.date_end', [$fechaInicial, $fechaFinal])
-                            ->where('persons.employees_number', '=', $clave)
-                            ->get();
+        $queryPersona = DB::connection('acreditaciones')->table('accreditedtechniques')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, accreditedtechniques.file AS archivo, accreditedtechniques.name AS nombre, accreditedtechniques.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'accreditedtechniques.groups_id')
+                                ->whereBetween('accreditedtechniques.date_end', [$fechaInicial, $fechaFinal])
+                                ->where('persons.employees_number', $clave)
+                                ->where('accreditedtechniques.is_group_or_person', '=', 0);
+
+        $queryGrupo = DB::connection('acreditaciones')->table('accreditedtechniques')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, file AS archivo, name AS nombre, is_group_or_person')
+                                ->whereBetween('date_end', [$fechaInicial, $fechaFinal])
+                                ->where('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
+                                ->unionAll($queryPersona);
+
+        $queryCriterio34 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal, archivo, nombre')
+                                ->orderBy('numeroPersonal', 'ASC')
+                                ->get();
         return $queryCriterio34;
     }
 
     public static function Evidencias_Criterio35($clave, $fechaInicial, $fechaFinal){
-        $queryCriterio35 = DB::connection('acreditaciones')->table('interlaboratorytests')
-                            ->selectRaw('interlaboratorytests.name AS nombre,
-                                         interlaboratorytests.file AS archivo')
-                            ->join('persons', 'interlaboratorytests.groups_id', '=', 'persons.groups_id')
-                            ->whereBetween('interlaboratorytests.date_start', [$fechaInicial, $fechaFinal])
-                            ->whereBetween('interlaboratorytests.date_end', [$fechaInicial, $fechaFinal])
-                            ->where('persons.employees_number', '=', $clave)
-                            ->get();
-        return $queryCriterio35;
+        $queryPersona = DB::connection('acreditaciones')->table('interlaboratorytests')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, interlaboratorytests.file AS archivo, interlaboratorytests.name AS nombre, interlaboratorytests.is_group_or_person')
+                                ->join('persons', 'persons.groups_id', '=', 'interlaboratorytests.groups_id')
+                                ->whereBetween('interlaboratorytests.date_end', [$fechaInicial, $fechaFinal])
+                                ->where('persons.employees_number', $clave)
+                                ->where('interlaboratorytests.is_group_or_person', '=', 0);
+
+        $queryGrupo = DB::connection('acreditaciones')->table('interlaboratorytests')
+                                ->selectRaw('employees_number AS numeroPersonal, employees_name AS nombrePersonal, file AS archivo, name AS nombre, is_group_or_person')
+                                ->whereBetween('date_end', [$fechaInicial, $fechaFinal])
+                                ->where('employees_number', $clave)
+                                ->where('is_group_or_person', '=', 1)
+                                ->unionAll($queryPersona);
+
+        $queryCriterio34 = DB::connection('acreditaciones')->table($queryGrupo)
+                                ->selectRaw('numeroPersonal, nombrePersonal, archivo, nombre')
+                                ->orderBy('numeroPersonal', 'ASC')
+                                ->get();
+        return $queryCriterio34;
     }
 
     /**

@@ -32,7 +32,7 @@
                         var dataCriterio33 = datosCriterio33[i];
                         // console.log(dataCriterio33);
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/searchUsernamePosgrado/" + dataCriterio33.numero_personal,
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/searchUsernamePosgrado/" + dataCriterio33.numeroPersonal,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(datosCritero33Username){
@@ -150,6 +150,7 @@
                         $('#txtYearCriterio33').val(year);
                         var datos = dataEvidenciasCriterio33.response;
                         for(var i = 0; i < datos.length; i++){
+                            // console.log(datos[i]);
                             var nombreData = datos[i];
                             var extension = nombreData.archivo.split(".");
                             extension = extension[1];

@@ -13,6 +13,7 @@ use App\Http\Controllers\Estimulos\Factor2\MetasController;
 use App\Http\Controllers\Modulos\RecursosPropiosController;
 use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
+use App\Http\Controllers\Modulos\FondosAdministracionController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
 use App\Http\Controllers\Modulos\SostentabilidadEconomicaController;
@@ -52,6 +53,8 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionGeneral\DifusionDivulga
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\FormacionRHDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\FormacionRHDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\FormacionRHDAController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\ColaboracionDPTController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\ColaboracionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\ColaboracionDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionCiencia\DifusionDivulgacionDCController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\InvestigacionDPTController;
@@ -61,17 +64,15 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\Transferen
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\InvestigacionDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\TransferenciaDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionPosgrado\DifusionDivulgacionDPController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\AcreditacionesDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\SostenibilidadDPTController;
+use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\AcreditacionesDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\SostenibilidadDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\AcreditacionesDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\SostenibilidadDAController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\DifusionDivulgacionDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
-use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\AcreditacionesDPTController;
-use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\ColaboracionDPTController;
-use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\AcreditacionesDSTController;
-use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\ColaboracionDSTController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,6 +139,9 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/recursosPropios/existe/{year}/{id}', [RecursosPropiosController::class, "existe"])->name('modulos.recursosPropios');
     Route::post('/modulos/recursosPropios/guardarRecursosPropios', [RecursosPropiosController::class, "guardarRecursosPropios"])->name('modulos.recursosPropios');
     Route::get('/modulos/recursosPropios/getRecursoPropio/{year}/{id}', [RecursosPropiosController::class, "getRecursoPropio"])->name('modulos.recursosPropios');
+    /** fondos en administracion... */
+    Route::get('/modulos/fondosAdministracion/listFondosAdministracion', [FondosAdministracionController::class, "index"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/ObtenerTotalFondosAdministracion/', [FondosAdministracionController::class, "obtenerTotalFondosAdministracion"])->name('modulos.fondosAdministracion');
     //Ruta para visualizar los lineamientos de estimulos...
     Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
     //Rutas para el catalogo de objetivos...
