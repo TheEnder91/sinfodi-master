@@ -207,6 +207,7 @@
         }
 
         function calcularPuntos(){
+            var txtContribucion = $('#txtContribucion').val();
             if(!document.querySelector('input[name="direcciones"]:checked')){
                 swal({
                     type: 'warning',
@@ -215,7 +216,7 @@
                     timer: 2000
                 }).catch(swal.noop);
                 return;
-            }else if(contribucion == "0.00"){
+            }else if(txtContribucion == "0.00"){
                 swal({
                     type: 'warning',
                     text: 'Favor de ingresar el procentaje de contribución para continuar.',
@@ -275,7 +276,7 @@
                             },
                             type: 'POST',
                             dateType: 'json',
-                            mensajeConfirm: 'La información se registro en la base de datos.',
+                            mensajeConfirm: 'La información se registro en el sistema.',
                             url: "{{ config('app.url') }}/modulos/recursosPropios/listRecursosPropios?token={{ Session::get('token') }}"
                         };
                         // console.log(options);

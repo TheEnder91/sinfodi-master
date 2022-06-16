@@ -141,7 +141,12 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/recursosPropios/getRecursoPropio/{year}/{id}', [RecursosPropiosController::class, "getRecursoPropio"])->name('modulos.recursosPropios');
     /** fondos en administracion... */
     Route::get('/modulos/fondosAdministracion/listFondosAdministracion', [FondosAdministracionController::class, "index"])->name('modulos.fondosAdministracion');
-    Route::get('/modulos/fondosAdministracion/ObtenerTotalFondosAdministracion/', [FondosAdministracionController::class, "obtenerTotalFondosAdministracion"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/verFondosAdministracion/', [FondosAdministracionController::class, "verFondosAdministracion"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/ObtenerTotalFondosAdministracion/{year}', [FondosAdministracionController::class, "obtenerTotalFondosAdministracion"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/ObtenerTotalPersonasDirecciones/{year}/{direccion}', [FondosAdministracionController::class, "obtenerTotalPersonasDireccion"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/existe/{year}/{id}', [FondosAdministracionController::class, "existe"])->name('modulos.fondosAdministracion');
+    Route::post('/modulos/fondosAdministracion/guardarFondosAdministracion', [FondosAdministracionController::class, "guardarFondosAdministracion"])->name('modulos.fondosAdministracion');
+    Route::get('/modulos/fondosAdministracion/getFondosAdministracion/{year}/{id}', [FondosAdministracionController::class, "getFondosAdministracion"])->name('modulos.fondosAdministracion');
     //Ruta para visualizar los lineamientos de estimulos...
     Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
     //Rutas para el catalogo de objetivos...

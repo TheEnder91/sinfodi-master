@@ -84,7 +84,7 @@
             </div>
             <div class="col-6">
                 <div class="table-responsive">
-                    <table id="tblRecursosPropios" class="table table-sm">
+                    <table id="tblFondosAdministracion" class="table table-sm">
                         <thead>
                             <tr class="text-center">
                                 <th scope="col" style="font-size:13px;">#</th>
@@ -109,17 +109,68 @@
 
         function initFondosAdministracion(){
             var year = $('#txtYear').val();
-            // obtenerFondosAdministracion(year);
-            // obtenerFondosAdministracion();
+            obtenerFondosAdministracion(year);
+            verFondosAdministracion();
             $('#btnNuevo').hide();
             $('#btnGuardar').show();
-            // $('#btnGuardar').on('click', guardarFondosAdministracion);
+            $('#btnGuardar').on('click', guardarFondosAdministracion);
+        }
+
+        function verFondosAdministracion(){
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/fondosAdministracion/verFondosAdministracion/",
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosFondosAdministracion){
+                    var dataFondosAdministracion = datosFondosAdministracion.response;
+                    // console.log(dataFondosAdministracion);
+                    var row = "";
+                    for(var i = 0; i < dataFondosAdministracion.length; i++){
+                        var getFondosAdministracion = dataFondosAdministracion[i];
+                        // console.log(getFondosAdministracion);
+                        row += "<tr>";
+                        row += '<th scope="row" class="text-center" width="2%" style="font-size:13px; vertical-align:middle;">' + getFondosAdministracion.id + '</td>';
+                        row += '<th scope="row" class="text-left" width="28%" style="font-size:13px; vertical-align:middle;">' + getFondosAdministracion.direccion + '</td>';
+                        row += '<td width="30%" class="text-center" style="font-size:13px; vertical-align:middle;">' + "$"+new Intl.NumberFormat().format(getFondosAdministracion.facturacion) + "</td>";
+                        row += '<td width="20%" class="text-center" style="font-size:13px; vertical-align:middle;">' + "$"+new Intl.NumberFormat().format(getFondosAdministracion.fondos_admin) + "</td>";
+                        row += '<td width="10%" class="text-center" style="font-size:13px; vertical-align:middle;">' + getFondosAdministracion.year + "</td>";
+                        row += '<td width="10%" class="text-center" style="font-size:13px; vertical-align:middle;">' +
+                                    '<a href="javascript:getFondosAdministracion('+ getFondosAdministracion.year +', '+getFondosAdministracion.id_direccion+')"><i class="fa fa-eye"></i></a>&nbsp;&nbsp;'+
+                                '</td>';
+                        row += "</tr>";
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblFondosAdministracion")) {
+                        tblDifusionDivulgacion = $("#tblFondosAdministracion").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblFondosAdministracion > tbody').html('');
+                    $('#tblFondosAdministracion > tbody').append(row);
+                    $('#tblFondosAdministracion').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
+                        },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                    });
+                }
+            });
         }
 
         function obtenerFondosAdministracion(year){
             // Consultamos el calculo de los recursos propios de la tabla de puntos totales...
             consultarDatos({
-                action: "{{ config('app.url') }}/modulos/recursosPropios/ObtenerDatos/" + year,
+                action: "{{ config('app.url') }}/modulos/fondosAdministracion/ObtenerTotalFondosAdministracion/" + year,
                 type: 'GET',
                 dataType: 'json',
                 ok: function(obtenerDatosFondosAdministracion){
@@ -127,13 +178,173 @@
                     // console.log(dataObtenerFondosAdministracion);
                     if(dataObtenerFondosAdministracion != null){
                         // console.log(dataObtenerFondosAdministracion.importe_FondosAdministracion);
-                        $('#txtTotalFondosAdministracion').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.importe_facturacion));
+                        $('#txtTotalFondosAdministracion').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.importe_fondos_admin));
                     }else{
                         // console.log("Sin informacion");
                         $('#txtTotalFondosAdministracion').val('0.00');
                     }
                 },
             });
+        }
+
+        function showSelected(direccion, idDireccion) {
+            // console.log(direccion);
+            var year = $('#txtYear').val();
+            let area = $('input[name="direcciones"]:checked').val();
+            // console.log(idDireccion+' -> '+year);
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/fondosAdministracion/ObtenerTotalPersonasDirecciones/" + year + "/" + direccion,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(obtenerTotalPersonasDireccion){
+                    var personas = obtenerTotalPersonasDireccion[0].totalPersonas;
+                    // console.log(personas);
+                    $('#txtTotalPersonasArea').val(personas);
+                    $('#txtDireccion').val(area);
+                    $('#txtIdDireccion').val(idDireccion);
+                },
+            });
+        }
+
+        function calcularPuntos(){
+            var txtContribucion = $('#txtContribucion').val();
+            if(!document.querySelector('input[name="direcciones"]:checked')){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de seleccionar al menos una dirección para continuar.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                return;
+            }else if(txtContribucion == "0.00"){
+                swal({
+                    type: 'warning',
+                    text: 'Favor de ingresar el procentaje de contribución para continuar.',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                return;
+            }else{
+                var facturacion = $('#txtTotalFondosAdministracion').val().replace(/,/g, "");
+                var contribucion = ($('#txtContribucion').val().replace(/,/g, "")) / 100;
+                var totalPersonasDireccion = $('#txtTotalPersonasArea').val().replace(/,/g, "");
+                var x = facturacion * contribucion;
+                var fondosAdministracion = x / totalPersonasDireccion;
+                $('#txtFondosAdministracion').val(new Intl.NumberFormat().format(fondosAdministracion.toFixed(2)));
+                // console.log(fondosAdministracion);
+            }
+        }
+
+        function guardarFondosAdministracion(){
+            var direccion = $('#txtDireccion').val();
+            var idDireccion = parseInt($('#txtIdDireccion').val());
+            var facturacion = parseFloat($('#txtTotalFondosAdministracion').val().replace(/,/g, ""));
+            var contribucion = parseFloat($('#txtContribucion').val().replace(/,/g, ""));
+            var personasDireccion = parseInt($('#txtTotalPersonasArea').val());
+            var fondosAdministracion = parseFloat($('#txtFondosAdministracion').val().replace(/,/g, ""));
+            var year = $('#txtYear').val();
+            if(direccion == "" || contribucion == "0.00" || fondosAdministracion == "0.00"){
+                swal({
+                    type: 'warning',
+                    text: 'Ingrese la información y click en calcular..',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                return;
+            }
+            // Consulta para validar si ya existe el registro correspondiente al año...
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/fondosAdministracion/existe/" + year + "/" + idDireccion,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(existeRecursoPropio){
+                    var existe = existeRecursoPropio.response;
+                    // console.log(existe);
+                    if(existe == 0){
+                        // Guardamos los datos en la base de datos...
+                        var options = {
+                            action: "{{ config('app.url') }}/modulos/fondosAdministracion/guardarFondosAdministracion",
+                            json: {
+                                id_direccion: idDireccion,
+                                direccion: direccion,
+                                facturacion: facturacion,
+                                contribucion: contribucion,
+                                personas_direccion: personasDireccion,
+                                fondos_admin: fondosAdministracion,
+                                year: year,
+                                _token: "{{ csrf_token() }}",
+                            },
+                            type: 'POST',
+                            dateType: 'json',
+                            mensajeConfirm: 'La información se registro en el sistema.',
+                            url: "{{ config('app.url') }}/modulos/fondosAdministracion/listFondosAdministracion?token={{ Session::get('token') }}"
+                        };
+                        // console.log(options);
+                        peticionGeneralAjax(options);
+                    }else{
+                        swal({
+                            type: 'warning',
+                            text: 'La información ya se encuentra registrado para el año '+year+'.',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).catch(swal.noop);
+                    }
+                },
+            });
+        }
+
+        function getFondosAdministracion(year, idDireccion){
+            $('#btnNuevo').show();
+            $('#btnGuardar').hide();
+            $('#btnCalcular').hide();
+            // console.log(idDireccion + "->" + year);
+            // Consulta para validar si ya existe el registro correspondiente al año...
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/fondosAdministracion/getFondosAdministracion/" + year + "/" + idDireccion,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(getFondosAdministracion){
+                    // console.log(getFondosAdministracion);
+                    var dataObtenerFondosAdministracion = getFondosAdministracion.response[0];
+                    // console.log(dataObtenerFondosAdministracion.direccion);
+                    if(dataObtenerFondosAdministracion.id_direccion == 1){
+                        document.querySelector('#direccionGeneral').checked = true;
+                    }else if(dataObtenerFondosAdministracion.id_direccion == 2){
+                        document.querySelector('#direccionAdministracion').checked = true;
+                    }else if(dataObtenerFondosAdministracion.id_direccion == 3){
+                        document.querySelector('#direccionPosgrado').checked = true;
+                    }else if(dataObtenerFondosAdministracion.id_direccion == 4){
+                        document.querySelector('#direccionCiencia').checked = true;
+                    }else if(dataObtenerFondosAdministracion.id_direccion == 5){
+                        document.querySelector('#direccionServicios').checked = true;
+                    }else if(dataObtenerFondosAdministracion.id_direccion == 6){
+                        document.querySelector('#direccionTecnologia').checked = true;
+                    }
+                    $('#txtTotalFondosAdministracion').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.facturacion));
+                    $('#txtContribucion').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.contribucion));
+                    $('#txtTotalPersonasArea').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.personas_direccion));
+                    $('#txtFondosAdministracion').val(new Intl.NumberFormat().format(dataObtenerFondosAdministracion.fondos_admin));
+                    $('#txtYear').val(dataObtenerFondosAdministracion.year);
+                },
+            });
+        }
+
+        function nuevoRegistro(){
+            document.querySelector('#direccionGeneral').checked = false;
+            document.querySelector('#direccionAdministracion').checked = false;
+            document.querySelector('#direccionPosgrado').checked = false;
+            document.querySelector('#direccionCiencia').checked = false;
+            document.querySelector('#direccionServicios').checked = false;
+            document.querySelector('#direccionTecnologia').checked = false;
+            var year = {{ date("Y") - 1 }};
+            obtenerFondosAdministracion(year);
+            $('#txtContribucion').val('0.00');
+            $('#txtTotalPersonasArea').val('0');
+            $('#txtFondosAdministracion').val('0.00');
+            $('#txtYear').val({{ date("Y") - 1 }});
+            $('#btnNuevo').hide();
+            $('#btnGuardar').show();
+            $('#btnCalcular').show();
         }
     </script>
 @endsection
