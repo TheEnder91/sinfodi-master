@@ -198,6 +198,14 @@
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">
+                                    <i class="fa fa-hands-helping nav-icon"></i>
+                                    <p>Acuses</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
                             @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Director") ||
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirector") ||
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-coordinadores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Coordinador") ||
@@ -604,7 +612,7 @@
                                                 </a>
                                             </li>
                                         @endif
-                                        @if (existeUsuario(Auth::user()->usuario, 'posgrado', "Direccion_Ciencia") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-posgrado-index'))
+                                        @if (existeUsuario(Auth::user()->usuario, 'ciencia', "Direccion_Ciencia") || Auth::user()->hasPermissionTo('estimulo-evaluaciones-ciencia-posgrado-index'))
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/posgrado/listPosgrado') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.posgrado') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>

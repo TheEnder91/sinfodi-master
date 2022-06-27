@@ -215,10 +215,270 @@ function saveEvaluados(){
 }
 
 function existeUsuario($usuario, $tipo, $criterio){
-    $queryExiste = DB::table('sinfodi_evaluados')->select('usuario')->where('usuario', '=', $usuario)->where('puesto', '=', $criterio)->count();
-    if($queryExiste >= 1){
-        return true;
-    }else{
+    // if($usuario == 'yunnm017' && $tipo == 'responsabilidades'){
+    //     return false;
+    // }
+    if($tipo == 'responsabilidades'){
+        if($usuario == 'yunnm017'){
+            return false;
+        }else{
+            $queryExiste = DB::table('sinfodi_evaluados')
+                    ->select('usuario')
+                    ->where('usuario', '=', $usuario)
+                    ->where('puesto', '=', $criterio)
+                    ->count();
+            if($queryExiste >= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+    if($tipo == 'administracion'){
         return false;
     }
+    if($tipo == 'general' && $criterio == 'Direccion_General'){
+        if($usuario == 'yunnm017'){
+            $queryExiste = DB::table('sinfodi_evaluados')
+                            ->select('usuario')
+                            ->where('usuario', '=', $usuario)
+                            ->where('puesto', '<>', 'Personal_Apoyo')
+                            ->where('puesto', '=', $criterio)
+                            ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                            ->count();
+            if($queryExiste >= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            $queryExiste = DB::table('sinfodi_evaluados')
+                            ->select('usuario')
+                            ->where('usuario', '=', $usuario)
+                            ->where('puesto', '<>', 'Coordinador')
+                            ->where('puesto', '<>', 'Personal_Apoyo')
+                            ->where('puesto', '=', $criterio)
+                            ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                            ->where('categoria', '<>', 'Coordinador')
+                            ->count();
+            if($queryExiste >= 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }elseif($tipo == 'posgrado' && $criterio == 'Direccion_Posgrado'){
+        $queryExiste = DB::table('sinfodi_evaluados')
+                        ->select('usuario')
+                        ->where('usuario', '=', $usuario)
+                        ->where('puesto', '<>', 'Coordinador')
+                        ->where('puesto', '<>', 'Personal_Apoyo')
+                        ->where('categoria', '<>', 'Subdirector')
+                        ->where('puesto', '=', $criterio)
+                        ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                        ->where('categoria', '<>', 'Coordinador')
+                        ->count();
+        if($queryExiste >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }elseif($tipo == 'ciencia' && $criterio == 'Direccion_Ciencia'){
+        $queryExiste = DB::table('sinfodi_evaluados')
+                        ->select('usuario')
+                        ->where('usuario', '=', $usuario)
+                        ->where('puesto', '<>', 'Coordinador')
+                        ->where('puesto', '<>', 'Personal_Apoyo')
+                        ->where('puesto', '=', $criterio)
+                        ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                        ->where('categoria', '<>', 'Coordinador')
+                        ->count();
+        if($queryExiste >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }elseif($tipo == 'servicios' && $criterio == 'Direccion_Servicios_Tecno'){
+        $queryExiste = DB::table('sinfodi_evaluados')
+                        ->select('usuario')
+                        ->where('usuario', '=', $usuario)
+                        ->where('puesto', '<>', 'Coordinador')
+                        ->where('puesto', '<>', 'Personal_Apoyo')
+                        ->where('puesto', '=', $criterio)
+                        ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                        ->where('categoria', '<>', 'Coordinador')
+                        ->count();
+        if($queryExiste >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }elseif($tipo == 'proyectos' && $criterio == 'Direccion_Proyectos_Tecno'){
+        $queryExiste = DB::table('sinfodi_evaluados')
+                        ->select('usuario')
+                        ->where('usuario', '=', $usuario)
+                        ->where('puesto', '<>', 'Coordinador')
+                        ->where('puesto', '<>', 'Personal_Apoyo')
+                        ->where('puesto', '=', $criterio)
+                        ->where('unidad_admin', '<>', 'Personal de Apoyo')
+                        ->where('categoria', '<>', 'Coordinador')
+                        ->count();
+        if($queryExiste >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    // if($criterio == 'Direccion_General'){
+    //     $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '=', $criterio)
+    //                     ->count();
+    // }
+}
+    // if($tipo == 'administracion'){
+    //     $queryEvaluados = DB::table('sinfodi_evaluados')
+    //                             ->select('clave')
+    //                             ->whereOr('puesto', '=', 'Direccion_Administracion')
+    //                             ->whereOr('puesto', '=', 'Coordinador')
+    //                             ->orderBy('clave', 'ASC')
+    //                             ->get();
+    //     foreach($queryEvaluados as $itemEvaluados){
+    //         $clave[] = $itemEvaluados->clave;
+    //     }
+    //     $queryExiste = DB::table('sinfodi_evaluados')
+    //                         ->select('usuario')
+    //                         ->where('usuario', '=', $usuario)
+    //                         ->where('puesto', '=', $criterio)
+    //                         ->whereNotIn('clave', $clave)
+    //                         ->groupBy('usuario')
+    //                         ->count();
+    //     // var_dump($queryExiste);
+    //     if($queryExiste >= 1){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }else{
+    //     $queryExiste = DB::table('sinfodi_evaluados')
+    //                         ->select('usuario')
+    //                         ->where('usuario', '=', $usuario)
+    //                         ->where('puesto', '=', $criterio)
+    //                         ->groupBy('usuario')
+    //                         ->count();
+    //     if($queryExiste >= 1){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
+    // if($tipo !== 'responsabilidades'){
+    //     // var_dump($tipo);
+    //     $queryEvaluados = DB::table('sinfodi_evaluados')
+    //                     ->select('clave')
+    //                     ->whereOr('puesto', '=', 'Coordinador')
+    //                     ->whereOr('puesto', '=', 'Personal_Apoyo')
+    //                     ->whereOr('puesto', '=', 'Direccion_Administracion')
+    //                     ->get();
+    //     foreach($queryEvaluados as $itemEvaluados){
+    //         $clave[] = $itemEvaluados->clave;
+    //     }
+    //     $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '=', $criterio)
+    //                     ->whereNotIn('clave', $clave)
+    //                     ->groupBy('usuario')
+    //                     ->count();
+    // }else{
+    //     if($tipo == 'administracion'){
+    //         $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '=', $criterio)
+    //                     ->groupBy('usuario')
+    //                     ->count();
+    //     }else{
+    //         $queryExiste = 0;
+    //     }
+    // }
+
+    // var_dump($queryExiste);
+    // if($tipo <> 'responsabilidades'){
+    //     $queryEvaluados = DB::table('sinfodi_evaluacion_responsabilidades')
+    //                         ->select('clave')
+    //                         ->where('direccion', '=', 'Coordinadores')
+    //                         ->whereOr('dirección', '=', 'Personal_Apoyo')
+    //                         ->whereOr('responsabilidad', '=', 'Direccion administracion')
+    //                         ->groupBy('clave')
+    //                         ->orderby('clave', 'ASC')
+    //                         ->get();
+    //     foreach($queryEvaluados as $itemEvaluados){
+    //         $clave[] = $itemEvaluados->clave;
+    //     }
+    //     $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '=', $criterio)
+    //                     ->whereNotIn('clave', $clave)
+    //                     ->count();
+    // }
+    // if($tipo = 'responsabilidades'){
+    //     if($criterio == 'Direccion_Administracion'){
+    //         $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '<>', 'Direccion_Administracion')
+    //                     ->groupBy('usuario')
+    //                     ->count();
+    //     }else{
+    //         $queryExiste = DB::table('sinfodi_evaluados')
+    //                     ->select('usuario')
+    //                     ->where('usuario', '=', $usuario)
+    //                     ->where('puesto', '=', $criterio)
+    //                     ->groupBy('usuario')
+    //                     ->count();
+    //     }
+    // }
+    // if($queryExiste >= 1){
+    //     return true;
+    // }else{
+    //     return false;
+    // }
+
+function eliminar_acentos($cadena){
+    //Reemplazamos la A y a
+    $cadena = str_replace(
+    array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+    array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+    $cadena
+    );
+    //Reemplazamos la E y e
+    $cadena = str_replace(
+    array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+    array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+    $cadena );
+    //Reemplazamos la I y i
+    $cadena = str_replace(
+    array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+    array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+    $cadena );
+    //Reemplazamos la O y o
+    $cadena = str_replace(
+    array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+    array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+    $cadena );
+    //Reemplazamos la U y u
+    $cadena = str_replace(
+    array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+    array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+    $cadena );
+    //Reemplazamos la N, n, C y c
+    // $cadena = str_replace(
+    // array('Ñ', 'ñ', 'Ç', 'ç'),
+    // array('N', 'n', 'C', 'c'),
+    // $cadena
+    // );
+    return $cadena;
 }

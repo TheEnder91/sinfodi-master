@@ -12,6 +12,7 @@ use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Evaluaciones\AcusesPDFController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
 use App\Http\Controllers\Estimulos\Evaluaciones\CoordinadoresController;
@@ -214,5 +215,7 @@ class PermissionsSeeder extends Seeder
         Permission::updateOrCreate(['name' => InvestigacionDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Investigación cientifica B', 'description' => 'A user can list technological projects direction->Scientific investigation B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => SostenibilidadDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Sostentatibilidad economica B', 'description' => 'A user can list technological projects direction->economic sustainability B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
         Permission::updateOrCreate(['name' => TransferenciaDPTController::PERMISSIONS['indexB']], ['slug' => 'Listar D. Proy. Tec.->Transferencia de conocimiento B', 'description' => 'A user can list technological projects direction->>knowledge transfer B', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
+        /** Permisos para los acuses... */
+        Permission::updateOrCreate(['name' => AcusesPDFController::PERMISSIONS['index']], ['slug' => 'Obtener los acuses', 'description' => 'Get the acknowledgments', 'id_categoria' => 2, 'categoria' => 'Estimulos']);
     }
 }

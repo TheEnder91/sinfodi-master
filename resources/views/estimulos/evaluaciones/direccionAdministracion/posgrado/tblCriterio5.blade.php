@@ -85,7 +85,7 @@
                     var dataAdministracionCriterio5 = datosAdministracionCriterio5[i];
                     // console.log(dataAdministracionCriterio5);
                     var authUser = '<?= Auth::user()->usuario ?>';
-                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-direccionGral-posgrado-index") ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-administracion-posgrado-index") ?>';
                     // console.log(permissions);
                     if(dataAdministracionCriterio5.username == authUser || permissions == 1){
                         row += "<tr>";

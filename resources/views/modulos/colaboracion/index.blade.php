@@ -49,15 +49,10 @@
         </div>
         <div class="row">
             <div class="col-11">
-                <label class="col-form-label"><span style="font-size:13px; color:red">*</span>Seleccione un comite:</label>
-                <div style="column-count:6; list-style: none;">
-                    @foreach ($comites as $itemComites)
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input comites" name="comites[]" data-name-display="{{ $itemComites->id }}" id="comites{{ $itemComites->id }}" value="{{ $itemComites->id }}" onClick="contarComites({{ $puntos->puntos }});">
-                            <label class="custom-control-label" for="comites{{ $itemComites->id }}" style="font-size:13px;">{{ $itemComites->id.'-'.$itemComites->nombre }}</label>
-                        </div>
-                    @endforeach
-                </div>
+                <label class="col-form-label"><span style="font-size:13px; color:red">*</span>Seleccione un comite:
+                    <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a>
+                </label>
+                <div style="column-count:6; list-style: none;" id="listComites"></div>
             </div>
             <div class="col-1">
                 <div class="float-right">
@@ -85,6 +80,7 @@
                 <tbody></tbody>
             </table>
         </div>
+        @include('modulos.colaboracion.modaAgregarComite')
     @endcomponent
 @endsection
 
@@ -93,13 +89,89 @@
         $(document).ready(initColaboracion);
 
         function initColaboracion(){
+            var year = $('#txtYear').val();
+            listarComites(year);
             $('#btnActualizar').hide();
             $('#txtId').hide();
             $('#btnGuardar').show();
             ConsutarColaborador();
             obtenerDatos();
+            $('#btnGuardarComites').on('click', guardarComite);
             $('#btnGuardar').on('click', guardarColaborador);
             $('#btnActualizar').on('click', actualizarColaborador);
+        }
+
+        function listarComites(year){
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/colaboracion/listComites/"+ year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosComites){
+                    // console.log(datosComites);
+                    var row = "";
+                    for(var i = 0; i < datosComites.length; i++){
+                        var dataComites = datosComites[i];
+                        // console.log(dataComites);
+                        row += '<div class="custom-control custom-checkbox">';
+                        row += '<input type="checkbox" class="custom-control-input comites" name="comites[]" data-name-display="'+dataComites.consecutivo+'" id="comites'+dataComites.consecutivo+'" value="'+dataComites.consecutivo+'" onClick="contarComites({{ $puntos->puntos }});">';
+                        row += '<label class="custom-control-label" for="comites'+dataComites.consecutivo+'" style="font-size:13px;">'+dataComites.consecutivo+'-'+dataComites.nombre+'</label>';
+                        row += '</div>';
+                    }
+                    $("#listComites").html(row).fadeIn('slow');
+                },
+            });
+        }
+
+        function agregarComite(){
+            var year = $('#txtYearComite').val();
+            $('#modaAgregarComite').modal({backdrop: 'static', keyboard: false});
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/colaboracion/getComites",
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosGetComites){
+                    // console.log(datosGetComites);
+                    var row = "";
+                    for(var i = 0; i < datosGetComites.length; i++){
+                        var dataGetComites = datosGetComites[i];
+                        // console.log(dataGetComites);
+                        row += "<tr>";
+                        row += '<th scope="row" class="text-left" width="85%" style="font-size:12px;">' + dataGetComites.nombre + '</td>';
+                        row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="javascript:verDocumento('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+', \''+dataGetComites.url_archivo+'\')"><i class="fa fa-file"></i></a></i></td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGetComites.year + '</td>';
+                        row += '<td class="text-center" width="5%" style="font-size:12px;">'+
+                                    '<a href="javascript:editarComite('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                                    '<a href="javascript:eliminarComite('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+')"><i class="fa fa-trash-alt"></i></a>'+
+                                '</td>';
+                        row += "</tr>";
+                    }
+                    // $("#listComites").html(row).fadeIn('slow');
+                    if ($.fn.dataTable.isDataTable("#tblComites")) {
+                        tblDifusionDivulgacion = $("#tblComites").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblComites > tbody').html('');
+                    $('#tblComites > tbody').append(row);
+                    $('#tblComites').DataTable({
+                        "order":[[2, "desc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
+                        },
+                        lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
+                    });
+                },
+            });
         }
 
         function obtenerDatos(){
@@ -281,6 +353,33 @@
                     }
                 },
             });
+        }
+
+        function guardarComite(){
+            var nombreComite = $('#txtNombreComite').val();
+            var descripcionComite = $('#txtDescripcionComite').val();
+            var archivo = $("#txtDocumentoComite").val();
+            var yearComite = $('#txtYearComite').val();
+            if(nombreComite == ""){
+                swal({
+                    type: 'warning',
+                    text: 'Ingrese el nombre del comite.',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }
+            if(archivo === ""){
+                swal({
+                    type: 'warning',
+                    text: 'Seleccione el documento en formato *.pdf',
+                    showConfirmButton: false,
+                    timer: 1800
+                }).catch(swal.noop);
+                return;
+            }else{
+                var documentoComite = document.getElementById('txtDocumentoComite').files[0].name;
+            }
         }
 
         function editarColaboradores(id, claveEmpleado, year){

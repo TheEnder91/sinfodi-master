@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Models\Estimulos\SostentabilidadEconomica;
 use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Estimulos\Evaluaciones\AcusesPDFController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Modulos\ColaboracionController;
 use App\Http\Controllers\Modulos\PuntosTotalesController;
@@ -73,6 +74,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Sostenib
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\DifusionDivulgacionDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
+use App\Http\Controllers\Modulos\ComitesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,6 +117,8 @@ Route::middleware(['login'])->group(function(){
     Route::delete('/modulos/sostenibilidad/destroySostentabilidad/{id}', [SostentabilidadEconomicaController::class, "destroy"])->name('modulos.sostenibilidad');
     /** Colaboración institucional... */
     Route::get('/modulos/colaboracion/listColaboracion', [ColaboracionController::class, "index"])->name('modulos.colaboracion');
+    Route::get('/modulos/colaboracion/listComites/{year}', [ColaboracionController::class, "listarComites"])->name('modulos.comites');
+    Route::get('/modulos/colaboracion/getComites', [ColaboracionController::class, "ObtenerComites"])->name('modulos.comites');
     Route::get('/modulos/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionController::class, "existeColaboracion"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/searchColaboradores/{year}', [ColaboracionController::class, "searchColaboradores"])->name('modulos.colaboracion');
     Route::post('/modulos/colaboracion/savePuntosColaboradores', [ColaboracionController::class, "savePuntosColaboradores"])->name('modulos.colaboracion');
@@ -219,8 +223,15 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/puntos', [PersonalApoyoController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/store', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/{year}', [PersonalApoyoController::class, "getPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-
     /** Rutas para las evaluaciones... */
+    /** Ruta para obtener los acuses... */
+    Route::get('/estimulos/evaluaciones/acusesPDF', [AcusesPDFController::class, "index"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+
+
+    Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/downloadAcuse/{usuario}', [AcusesPDFController::class, "downloadAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');

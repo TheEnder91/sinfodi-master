@@ -22,10 +22,8 @@ class ColaboracionController extends Controller
      */
     public function index()
     {
-        $comites = self::Get_Comites();
         $puntos = Criterio::findOrFail(32);
         return view('modulos.colaboracion.index', [
-            'comites' => $comites,
             'puntos' => $puntos,
         ]);
     }
@@ -34,6 +32,20 @@ class ColaboracionController extends Controller
     public static function Get_Comites(){
         $query = DB::table('sinfodi_comites')
                     ->select('id', 'nombre')
+                    ->get();
+        return $query;
+    }
+
+    public function listarComites($year){
+        $query = DB::table('sinfodi_comites')
+                    ->select('consecutivo', 'nombre')
+                    ->where('year', $year)
+                    ->get();
+        return $query;
+    }
+
+    public function ObtenerComites(){
+        $query = DB::table('sinfodi_comites')
                     ->get();
         return $query;
     }

@@ -170,7 +170,7 @@
                                                 <caption>RELACIÓN DE PROYECTOS CONCLUIDOS Y CERRADOS INTERNAMENTE POR EL CTCI BAJO LOS ACUERDOS 14/05/2021-5 y 04/06/2021-6</caption>
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th scope="col" style="font-size:13px;">#</th>
+                                                        <th scope="col" style="font-size:13px; display:none;">#</th>
                                                         <th scope="col" style="font-size:13px">CGN</th>
                                                         <th scope="col" style="font-size:13px">Nombre del proyecto</th>
                                                         <th scope="col" style="font-size:13px">Lider y/o participantes</th>
@@ -281,11 +281,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
-                                            <table id="tblCriterio14ServEsp" class="table table-bordered table-striped">
+                                            <table id="tblCriterio14ServEsp" class="table table-bordered table-striped" style="width: 100%;">
                                                 <caption>RELACIÓN DE SERVICIOS ESPECIALES CONCLUIDOS EN 2020 Y CERRADOS INTERNAMENTE POR EL CTCI BAJO EL ACUERDO 04/06/2021-2</caption>
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th scope="col" style="font-size:13px">#</th>
+                                                        <th scope="col" style="font-size:13px; display:none;">#</th>
                                                         <th scope="col" style="font-size:13px">CGN</th>
                                                         <th scope="col" style="font-size:13px">Nombre del proyecto</th>
                                                         <th scope="col" style="font-size:13px">Lider y/o participantes</th>
@@ -401,7 +401,7 @@
                                                 <caption>RELACIÓN DE CURSOS CONCLUIDOS EN 2020 Y CERRADOS INTERNAMENTE POR EL CTCI BAJO EL ACUERDO 14/05/2021-2</caption>
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th scope="col" style="font-size:13px">#</th>
+                                                        <th scope="col" style="font-size:13px;">#</th>
                                                         <th scope="col" style="font-size:13px">CGN</th>
                                                         <th scope="col" style="font-size:13px">Nombre del proyecto</th>
                                                         <th scope="col" style="font-size:13px">Lider y/o participantes</th>
@@ -481,7 +481,7 @@
                         var dataProyectos = datosProyectos[i];
                         // console.log(dataProyectos);
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">' + dataProyectos.id + '</td>';
+                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; vertical-align:middle; display:none;">' + dataProyectos.id + '</td>';
                         row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + dataProyectos.cgn + '</td>';
                         row += '<td width="33%" style="font-size:12px; text-align:justify;">' + dataProyectos.nombre + "</td>";
                         if(dataProyectos.lider_responsable == "Si"){
@@ -507,7 +507,7 @@
                     $('#tblCriterio14Proys > tbody').html('');
                     $('#tblCriterio14Proys > tbody').append(row);
                     $('#tblCriterio14Proys').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[0, "desc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",
@@ -522,7 +522,7 @@
                                           "previous":   "<"
                                       },
                         },
-                        lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]]
+                        lengthMenu: [[10, 15, 20, 25, 50], [10, 15, 20, 25, 50]]
                     });
                 },
             });
@@ -731,10 +731,10 @@
                 type: 'POST',
                 dateType: 'json',
                 mensajeConfirm: 'Se ha guardado correctamente el registro.',
+                url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}"
             };
             // console.log(options);
-            guardarMensaje(options);
-            obtenerProyectos();
+            peticionGeneralAjax(options);
             // Limpiamos todos los campos...
             $('#txtCGN').val('');
             $('#txtProyecto').val('');
@@ -752,11 +752,17 @@
             $('#txtNuevosPuntosTotales').val(0);
             $('#txtNuevosPuntosParticipacion').val(0);
             $('#txtTotal').val(0);
-            document.getElementById("remanente").checked = false;
-            document.getElementById("interinstitucional").checked = false;
-            document.getElementById("interareas").checked = false;
-            document.getElementById("direcciones").checked = false;
-            document.getElementById("lider").checked = false;
+            if($('#lider').prop('checked')){
+                document.getElementById("lider").checked = false;
+            }else if($('#remanente').prop('checked')){
+                document.getElementById("remanente").checked = false;
+            }else if($('#interinstitucional').prop('checked')){
+                document.getElementById("interinstitucional").checked = false;
+            }else if($('#interareas').prop('checked')){
+                document.getElementById("interareas").checked = false;
+            }else if($('#direcciones').prop('checked')){
+                document.getElementById("direcciones").checked = false;
+            }
         }
 
         function editarProys(id, year){
@@ -932,12 +938,13 @@
             $("#remanente").prop('checked', false);
             $("#interinstitucional").prop('checked', false);
             $("#interareas").prop('checked', false);
+            $("#interdirecciones").prop('checked', false);
             $('#txtClave').val('');
             $('#txtNombre').val('');
             $('#txtUsuario').val('');
             $("#lider").prop('checked', false);
-            $('#txtPorcentaje').val('');
-            $('#txtMonto').val('');
+            $('#txtPorcentaje').val('0');
+            $('#txtMonto').val('0');
             $('#txtImporte').val('');
             $('#txtPuntosTotales').val('');
             $('#txtPuntosLider').val('');
@@ -1085,9 +1092,9 @@
                         var dataServEsp = datosServEsp[i];
                         // console.log(dataServEsp);
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">' + dataServEsp.id + '</td>';
+                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; display:none; vertical-align:middle;">' + dataServEsp.id + '</td>';
                         row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + dataServEsp.cgn + '</td>';
-                        row += '<td width="33%" style="font-size:12px; text-align:justify;">' + dataServEsp.nombre + "</td>";
+                        row += '<td width="28%" style="font-size:12px; text-align:justify;">' + dataServEsp.nombre + "</td>";
                         if(dataServEsp.lider_responsable == "Si"){
                             row += '<td class="text-center" width="15%" style="font-size:12px;background-color:yellow; vertical-align:middle;">' + dataServEsp.nombre_participante.toUpperCase() + '</td>';
                         }else{
@@ -1111,7 +1118,7 @@
                     $('#tblCriterio14ServEsp > tbody').html('');
                     $('#tblCriterio14ServEsp > tbody').append(row);
                     $('#tblCriterio14ServEsp').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[0, "desc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",
@@ -1126,7 +1133,7 @@
                                           "previous":   "<"
                                       },
                         },
-                        lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]]
+                        lengthMenu: [[10, 15, 20, 25, 50], [10, 15, 20, 25, 50]]
                     });
                 },
             });
@@ -1192,9 +1199,10 @@
                     porcentaje_participacion: porcentaje,
                     monto_ingresado: montoCTCI,
                     ingreso_participacion: montoParticipacion,
-                    remanente: "",
-                    interinstitucional: "",
-                    interareas: "",
+                    remanente: "No",
+                    interinstitucional: "No",
+                    interareas: "No",
+                    interdirecciones: "No",
                     puntos_totales: 0.00,
                     puntos_lider: 0.00,
                     nuevos_puntos_totales: 0.00,
@@ -1207,10 +1215,10 @@
                 type: 'POST',
                 dateType: 'json',
                 mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
+                url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}"
             };
             // console.log(options);
-            guardarMensaje(options);
-            obtenerServEsp();
+            peticionGeneralAjax(options);
             $('#txtCGNServEsp').val('');
             $('#txtProyectoServEsp').val('');
             $('#txtClaveResponsableServEsp').val('');
@@ -1614,9 +1622,10 @@
                     porcentaje_participacion: porcentaje,
                     monto_ingresado: montoCTCI,
                     ingreso_participacion: montoParticipacion,
-                    remanente: "",
-                    interinstitucional: "",
-                    interareas: "",
+                    remanente: "No",
+                    interinstitucional: "No",
+                    interareas: "No",
+                    interdirecciones: "No",
                     puntos_totales: 0.00,
                     puntos_lider: 0.00,
                     nuevos_puntos_totales: 0.00,
@@ -1629,10 +1638,10 @@
                 type: 'POST',
                 dateType: 'json',
                 mensajeConfirm: 'Se han actualizado los puntos para la evaluación.',
+                url: "{{ config('app.url') }}/modulos/sostenibilidad/listSostenibilidad?token={{ Session::get('token') }}"
             };
             // console.log(options);
-            guardarMensaje(options);
-            obtenerCursos()
+            peticionGeneralAjax(options);
             $('#txtCGNCursos').val('');
             $('#txtProyectoCursos').val('');
             $('#txtClaveResponsableCursos').val('');
