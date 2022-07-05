@@ -12,6 +12,6 @@ class Comites extends Model
     public $table = 'sinfodi_comites';
 
     protected $fillable = [
-        'nombre', 'descripcion', 'url_archivo', 'year',
+        'consecutivo', 'nombre', 'descripcion', 'url_archivo', 'year',
     ];
 }

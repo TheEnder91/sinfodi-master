@@ -166,7 +166,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
-                                            <table id="tblCriterio14Proys" class="table table-bordered table-striped">
+                                            <table id="tblCriterio14Proys" class="table table-bordered table-striped" width="100%">
                                                 <caption>RELACIÓN DE PROYECTOS CONCLUIDOS Y CERRADOS INTERNAMENTE POR EL CTCI BAJO LOS ACUERDOS 14/05/2021-5 y 04/06/2021-6</caption>
                                                 <thead>
                                                     <tr class="text-center">
@@ -397,11 +397,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
-                                            <table id="tblCriterio14Cursos" class="table table-bordered table-striped">
+                                            <table id="tblCriterio14Cursos" class="table table-bordered table-striped" style="width: 100%;">
                                                 <caption>RELACIÓN DE CURSOS CONCLUIDOS EN 2020 Y CERRADOS INTERNAMENTE POR EL CTCI BAJO EL ACUERDO 14/05/2021-2</caption>
                                                 <thead>
                                                     <tr class="text-center">
-                                                        <th scope="col" style="font-size:13px;">#</th>
+                                                        <th scope="col" style="font-size:13px; display:none;">#</th>
                                                         <th scope="col" style="font-size:13px">CGN</th>
                                                         <th scope="col" style="font-size:13px">Nombre del proyecto</th>
                                                         <th scope="col" style="font-size:13px">Lider y/o participantes</th>
@@ -481,7 +481,7 @@
                         var dataProyectos = datosProyectos[i];
                         // console.log(dataProyectos);
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; vertical-align:middle; display:none;">' + dataProyectos.id + '</td>';
+                        row += '<th scope="row" class="text-center" width="4%" style="font-size:12px; vertical-align:middle; display:none;">' + dataProyectos.id + '</td>';
                         row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + dataProyectos.cgn + '</td>';
                         row += '<td width="33%" style="font-size:12px; text-align:justify;">' + dataProyectos.nombre + "</td>";
                         if(dataProyectos.lider_responsable == "Si"){
@@ -1421,8 +1421,8 @@
                         var dataCursos = datosCursos[i];
                         // console.log(dataCursos);
                         row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; vertical-align:middle;">' + dataCursos.id + '</td>';
-                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + dataCursos.cgn + '</td>';
+                        row += '<th scope="row" class="text-center" width="5%" style="font-size:12px; display:none; vertical-align:middle;">' + dataCursos.id + '</th>';
+                        row += '<td scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + dataCursos.cgn + '</td>';
                         row += '<td width="33%" style="font-size:12px; text-align:justify;">' + dataCursos.nombre + "</td>";
                         if(dataCursos.lider_responsable == "Si"){
                             row += '<td class="text-center" width="15%" style="font-size:12px;background-color:yellow; vertical-align:middle;">' + dataCursos.nombre_participante.toUpperCase() + '</td>';
@@ -1447,7 +1447,7 @@
                     $('#tblCriterio14Cursos > tbody').html('');
                     $('#tblCriterio14Cursos > tbody').append(row);
                     $('#tblCriterio14Cursos').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[0, "desc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",
@@ -1462,7 +1462,7 @@
                                           "previous":   "<"
                                       },
                         },
-                        lengthMenu: [[5, 10, 15, 20, 50], [5, 10, 15, 20, 50]]
+                        lengthMenu: [[10, 15, 20, 25, 50], [10, 15, 20, 25, 50]]
                     });
                 },
             });

@@ -12,6 +12,10 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="row">
+                            <div class="col-3">
+                                <label class="col-form-label" style="font-size:13px;">Consecutivo:</label>
+                                <input type="text" class="form-control form-control-sm text-center"  name="numeroComite" id="txtNumeroComite" readonly>
+                            </div>
                             <div class="col-12">
                                 <label class="col-form-label" style="font-size:13px;">Nombre del comite:</label>
                                 <input type="text" class="form-control form-control-sm" name="nombreComite" id="txtNombreComite">
@@ -39,7 +43,6 @@
                                         <th scope="col" style="font-size:13px;">Nombre</th>
                                         <th scope="col" style="font-size:13px;">Documento</th>
                                         <th scope="col" style="font-size:13px;">Año</th>
-                                        <th scope="col" style="font-size:13px;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

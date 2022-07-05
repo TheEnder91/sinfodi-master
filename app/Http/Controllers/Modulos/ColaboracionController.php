@@ -6,6 +6,7 @@ use stdClass;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Traits\SingleResponse;
+use App\Models\Estimulos\Comites;
 use App\Models\Estimulos\Criterio;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -28,7 +29,6 @@ class ColaboracionController extends Controller
         ]);
     }
 
-    /** Funcion para obtener los criterios para la investigacion cientifica... */
     public static function Get_Comites(){
         $query = DB::table('sinfodi_comites')
                     ->select('id', 'nombre')
@@ -44,9 +44,28 @@ class ColaboracionController extends Controller
         return $query;
     }
 
+    public function ultimoComite($year){
+        $query = DB::table('sinfodi_comites')
+                    ->select('consecutivo')
+                    ->where('year', $year)
+                    ->orderBy('consecutivo', 'DESC')
+                    ->limit(1)
+                    ->get();
+        return $query;
+    }
+
     public function ObtenerComites(){
         $query = DB::table('sinfodi_comites')
                     ->get();
+        return $query;
+    }
+
+    public function existeComite($year, $ultimoConsecutivo){
+        $query = DB::table('sinfodi_comites')
+                    ->select('nombre')
+                    ->where('year', $year)
+                    ->where('consecutivo', '=', $ultimoConsecutivo)
+                    ->count();
         return $query;
     }
 
@@ -110,6 +129,15 @@ class ColaboracionController extends Controller
             $count = 1;
         }
         $data['response'] = $count;
+        return $this->response($data);
+    }
+
+    public function saveComite(Request $request){
+        // rename(string $oldname, string $newname, resource $context = ?);
+
+        $nuevo = new Comites();
+        $nuevo->create($request->all());
+        $data['response'] = true;
         return $this->response($data);
     }
 

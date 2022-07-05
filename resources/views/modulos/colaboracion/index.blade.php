@@ -107,7 +107,6 @@
                 type: 'GET',
                 dataType: 'json',
                 ok: function(datosComites){
-                    // console.log(datosComites);
                     var row = "";
                     for(var i = 0; i < datosComites.length; i++){
                         var dataComites = datosComites[i];
@@ -124,6 +123,21 @@
 
         function agregarComite(){
             var year = $('#txtYearComite').val();
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/colaboracion/ultimoComite/"+ year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(numeroUltimoComite){
+                    // console.log(numeroUltimoComite);
+                    if(numeroUltimoComite.length > 0){
+                        var ultimoConsecutivo = parseInt(numeroUltimoComite[0].consecutivo) + 1;
+                        $('#txtNumeroComite').val(ultimoConsecutivo);
+                    }else{
+                        $('#txtNumeroComite').val(1);
+                    }
+                }
+            });
+            var numeroComite = $('#txtNumeroComite').val();
             $('#modaAgregarComite').modal({backdrop: 'static', keyboard: false});
             consultarDatos({
                 action: "{{ config('app.url') }}/modulos/colaboracion/getComites",
@@ -136,13 +150,9 @@
                         var dataGetComites = datosGetComites[i];
                         // console.log(dataGetComites);
                         row += "<tr>";
-                        row += '<th scope="row" class="text-left" width="85%" style="font-size:12px;">' + dataGetComites.nombre + '</td>';
+                        row += '<th scope="row" class="text-left" width="90%" style="font-size:12px;">' + dataGetComites.nombre + '</td>';
                         row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="javascript:verDocumento('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+', \''+dataGetComites.url_archivo+'\')"><i class="fa fa-file"></i></a></i></td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGetComites.year + '</td>';
-                        row += '<td class="text-center" width="5%" style="font-size:12px;">'+
-                                    '<a href="javascript:editarComite('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
-                                    '<a href="javascript:eliminarComite('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+')"><i class="fa fa-trash-alt"></i></a>'+
-                                '</td>';
                         row += "</tr>";
                     }
                     // $("#listComites").html(row).fadeIn('slow');
@@ -356,10 +366,12 @@
         }
 
         function guardarComite(){
+            var ultimoConsecutivoComite = $('#txtNumeroComite').val();
             var nombreComite = $('#txtNombreComite').val();
             var descripcionComite = $('#txtDescripcionComite').val();
             var archivo = $("#txtDocumentoComite").val();
             var yearComite = $('#txtYearComite').val();
+            var urlArchivo = ("{{ config('app.url') }}/public/comites/"+nombreComite+"_"+yearComite+".pdf").split(' ').join('_');
             if(nombreComite == ""){
                 swal({
                     type: 'warning',
@@ -380,6 +392,40 @@
             }else{
                 var documentoComite = document.getElementById('txtDocumentoComite').files[0].name;
             }
+            consultarDatos({
+                action: "{{ config('app.url') }}/modulos/colaboracion/existeComite/" + yearComite + "/" + ultimoConsecutivoComite,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(existeDataComite){
+                    // console.log(existeDataComite);
+                    if(existeDataComite == 0){
+                        var options = {
+                            action: "{{ config('app.url') }}/modulos/colaboracion/saveComite",
+                            json: {
+                                consecutivo: ultimoConsecutivoComite,
+                                nombre: nombreComite,
+                                descripcion: descripcionComite,
+                                url_archivo: urlArchivo,
+                                year: yearComite,
+                                _token: "{{ csrf_token() }}",
+                            },
+                            type: 'POST',
+                            dateType: 'json',
+                            mensajeConfirm: 'Se ha registrado el comite con exito.',
+                            url: "{{ config('app.url') }}/modulos/colaboracion/listColaboracion?token={{ Session::get('token') }}"
+                        };
+                        // console.log(options); // Se comenta para futuras pruebas...
+                        peticionGeneralAjax(options);
+                    }else{
+                        swal({
+                            type: 'warning',
+                            text: 'El comite '+nombreComite+' ya se encuentra registrado para el año '+yearComite+'.',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).catch(swal.noop);
+                    }
+                }
+            });
         }
 
         function editarColaboradores(id, claveEmpleado, year){

@@ -118,9 +118,12 @@ Route::middleware(['login'])->group(function(){
     /** Colaboración institucional... */
     Route::get('/modulos/colaboracion/listColaboracion', [ColaboracionController::class, "index"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/listComites/{year}', [ColaboracionController::class, "listarComites"])->name('modulos.comites');
+    Route::get('/modulos/colaboracion/ultimoComite/{year}', [ColaboracionController::class, "ultimoComite"])->name('modulos.comites');
     Route::get('/modulos/colaboracion/getComites', [ColaboracionController::class, "ObtenerComites"])->name('modulos.comites');
+    Route::get('/modulos/colaboracion/existeComite/{year}/{ultimoConsecutivo}', [ColaboracionController::class, "existeComite"])->name('modulos.comites');
     Route::get('/modulos/colaboracion/existeColaboracion/{year}/{clave}', [ColaboracionController::class, "existeColaboracion"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/searchColaboradores/{year}', [ColaboracionController::class, "searchColaboradores"])->name('modulos.colaboracion');
+    Route::post('/modulos/colaboracion/saveComite', [ColaboracionController::class, "saveComite"])->name('modulos.colaboracion');
     Route::post('/modulos/colaboracion/savePuntosColaboradores', [ColaboracionController::class, "savePuntosColaboradores"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/datosColaboradores', [ColaboracionController::class, "datosColaboradores"])->name('modulos.colaboracion');
     Route::get('/modulos/colaboracion/getColaboradores/{id}/{claveEmpleado}/{year}', [ColaboracionController::class, "getColaboradores"])->name('modulos.colaboracion');
