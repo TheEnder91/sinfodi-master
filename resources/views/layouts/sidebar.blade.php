@@ -191,20 +191,23 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferencia-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-formacion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-formacion-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index'))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index') ||
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index'))
                     <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
                             <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">
-                                    <i class="fa fa-hands-helping nav-icon"></i>
-                                    <p>Acuses</p>
-                                </a>
-                            </li>
-                        </ul>
+                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index'))
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">
+                                        <i class="fa fa-hands-helping nav-icon"></i>
+                                        <p>Acuses</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endif
                         <ul class="nav nav-treeview">
                             @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Director") ||
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirector") ||
