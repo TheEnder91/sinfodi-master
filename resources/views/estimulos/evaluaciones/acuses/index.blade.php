@@ -33,12 +33,12 @@
                         <label class="input-group-text" for="direccion" style="font-size:13px;">Seleccione la dirección:</label>
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="direccion" onChange="ShowSelectedDireccion();">
-                        <option selected value="Direccion general">Dirección general</option>
-                        <option value="Direccion administracion">Dirección de administración</option>
-                        <option value="Direccion posgrado">Dirección de posgrado</option>
-                        <option value="Direccion ciencia">Dirección de ciencia</option>
-                        <option value="Direccion servicios">Dirección de servicios</option>
-                        <option value="Direccion tecnologia">Dirección de tecnología</option>
+                        <option selected value="Direccion General">Dirección general</option>
+                        <option value="Direccion Administracion">Dirección de administración</option>
+                        <option value="Direccion Posgrado">Dirección de posgrado</option>
+                        <option value="Direccion Ciencia">Dirección de ciencia</option>
+                        <option value="Direccion Servicios">Dirección de servicios</option>
+                        <option value="Direccion Tecnologia">Dirección de tecnología</option>
                     </select>
                 </div>
             </div>
