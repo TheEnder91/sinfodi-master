@@ -576,6 +576,6 @@ class AcusesPDFController extends Controller
             'criteriosA' => $queryCriterioA,
             'criteriosB' => $queryCriterioB,
         ]);
-        return $dompdf->download($nombreDoc);
+        return $dompdf->stream($nombreDoc);
     }
 }
