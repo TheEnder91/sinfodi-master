@@ -540,7 +540,7 @@ class AcusesPDFController extends Controller
             'criteriosA' => $queryCriterioA,
             'criteriosB' => $queryCriterioB,
         ]);
-        return $dompdf->stream('asdasds');
+        return $dompdf->stream('Pruebas');
         // $archivo = $dompdf->download()->getOriginalContent();
         // Storage::put("/public/".$nombreDoc, $archivo);
 
