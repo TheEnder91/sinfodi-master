@@ -18,22 +18,33 @@
             <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
+                        <label class="input-group-text" for="grupo" style="font-size:13px;">Seleccione un grupo:</label>
+                    </div>
+                    <select class="custom-select text-center" style="font-size:13px;" id="grupo" onChange="ShowSelectedGrupo();">
+                        <option value="grupo1">Grupo 1</option>
+                        <option value="grupo2">Grupo 2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
                         <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select text-center" style="font-size:13px;" id="year" onChange="ShowSelected();">
+                    <select class="custom-select text-center" style="font-size:13px;" id="year" onChange="ShowSelectedYear();">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
                     </select>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4" id="direccionContenedor">
                 <div class="input-group">
-                    <div class="input-group-prepend">
+                    <div class="input-group-prepend direccionContenedor">
                         <label class="input-group-text" for="direccion" style="font-size:13px;">Seleccione la dirección:</label>
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="direccion" onChange="ShowSelectedDireccion();">
-                        <option selected value="Direccion General">Dirección general</option>
+                        <option value="Direccion General">Dirección general</option>
                         <option value="Direccion Administracion">Dirección de administración</option>
                         <option value="Direccion Posgrado">Dirección de posgrado</option>
                         <option value="Direccion Ciencia">Dirección de ciencia</option>
@@ -49,6 +60,7 @@
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
                         <th scope="col" style="font-size:13px;">Nombre</th>
+                        <th scope="col" style="font-size:13px;">Descripción</th>
                         <th scope="col" style="font-size:13px;">Acuse</th>
                     </tr>
                 </thead>
@@ -65,49 +77,89 @@
 
         function initDirecciones(){
             var direccion = document.getElementById("direccion").value;
-            verPersonalDireccion(direccion, 0);
+            var grupo = document.getElementById("grupo").value;
+            var year = year = document.getElementById("year").value;
+            verPersonal(grupo, year, direccion);
         }
 
-        function ShowSelected(){
+        function ShowSelectedGrupo(){
+            var grupo = document.getElementById("grupo").value;
             var year = document.getElementById("year").value;
-            var direccion = document.getElementById("direccion").value;
-            verPersonalDireccion(direccion, year);
+            if(grupo == "grupo1"){
+                var direccion = document.getElementById("direccion").value;
+                document.getElementById("direccionContenedor").style.display="block";
+            }else if(grupo == "grupo2"){
+                document.getElementById("direccionContenedor").style.display="none";
+                var direccion = "direccionVacio";
+            }
+            verPersonal(grupo, year, direccion);
+        }
+
+        function ShowSelectedYear(){
+            var grupo = document.getElementById("grupo").value;
+            if(grupo == "grupo1"){
+                var direccion = document.getElementById("direccion").value;
+                document.getElementById("direccionContenedor").style.display="block";
+            }else if(grupo == "grupo2"){
+                document.getElementById("direccionContenedor").style.display="none";
+                var direccion = "direccionVacio";
+            }
+            var year = document.getElementById("year").value;
+            verPersonal(grupo, year, direccion);
         }
 
         function ShowSelectedDireccion(){
             var year = document.getElementById("year").value;
             var direccion = document.getElementById("direccion").value;
-            verPersonalDireccion(direccion, year);
+            var grupo = document.getElementById("grupo").value;
+            verPersonal(grupo, year, direccion);
         }
 
-        function verPersonalDireccion(direccion, year){
-            if(year === 0){
-                var año = document.getElementById("year").value;
-            }else{
-                var año = year;
-            }
-            // console.log(direccion+'->'+year);
+        function verPersonal(grupo, year, direccion){
+            // console.log(grupo+'->'+year+'->'+direccion);
             consultarDatos({
-                action: "{{ config('app.url') }}/estimulos/evaluaciones/getDirecciones/" + year + "/" + direccion,
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/getDirecciones/" + year + "/" + direccion + "/" + grupo,
                 type: 'GET',
                 dataType: 'json',
-                ok: function(datosDirecciones){
-                    // console.log(datosDirecciones);
+                ok: function(datosPersonal){
+                    // console.log(datosPersonal);
+                    // console.log(datosPersonal.response.length);
                     var row = "";
-                    if(datosDirecciones.length > 0){
-                        for(var i = 0; i < datosDirecciones.length; i++){
-                            var data = datosDirecciones[i];
+                    if(datosPersonal.response.length > 0){
+                        // console.log(datosPersonal.response.length);
+                        for(var i = 0; i < datosPersonal.response.length; i++){
+                            var data = datosPersonal.response[i];
+                            if(grupo == 'grupo1'){
+                                if(data.direccion == 'DGeneral'){
+                                    var puesto = "Direccion General";
+                                }else if(data.direccion == 'DAdministracion'){
+                                    var puesto = "Direccion de administración";
+                                }else if(data.direccion == 'DPosgrado'){
+                                    var puesto = "Direccion de posgrado";
+                                }else if(data.direccion == 'DCiencia'){
+                                    var puesto = "Direccion de ciencia";
+                                }else if(data.direccion == 'DServTec'){
+                                    var puesto = "Direccion de servicios tecnologicos";
+                                }else if(data.direccion == 'DProyTec'){
+                                    var puesto = "Direccion de Tecnologia";
+                                }
+                            }else if(grupo == 'grupo2'){
+                                var puesto = data.direccion;
+                            }
                             // console.log(data);
                             var authUser = '<?= Auth::user()->usuario ?>';
                             var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-acuses-index") ?>';
                             // if(data.username == authUser || permissions == 1){
                                 row += "<tr>";
                                 row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + data.clave + '</td>';
-                                row += '<td width="80%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
-                                row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + año + ')"><i class="fa fa-file-pdf"></i></a></td>';
+                                row += '<td width="60%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
+                                row += '<td class="text-center" width="20%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
+                                row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
                                 row += "</tr>";
                             // }
                         }
+                    }else{
+                        console.log(datosPersonal.response.length);
                     }
                     if ($.fn.dataTable.isDataTable("#tblDirecciones")) {
                         tblDifusionDivulgacion = $("#tblDirecciones").DataTable();
@@ -133,18 +185,19 @@
                         },
                         lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
                     });
-                },
+                }
             });
         }
 
-        function verAcuse(direccion, nombre, clave, year){
-            var url2 = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/generarAcusePDF/direccion/nombre/clave/year") }}';
+        function verAcuse(direccion, nombre, clave, year, grupo){
+            var url2 = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/generarAcusePDF/direccion/nombre/clave/year/grupo") }}';
             var link1 = url2.replace('direccion', direccion);
             var link2 = link1.replace('clave', clave);
             var link3 = link2.replace('year', year);
-            var url = link3.replace('nombre', nombre);
+            var link4 = link3.replace('grupo', grupo);
+            var url = link4.replace('nombre', nombre);
             // console.log(link3);
-            window.open(url, "_blank");
+            window.open(url);
         }
     </script>
 @endsection

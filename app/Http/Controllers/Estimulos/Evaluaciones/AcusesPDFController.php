@@ -7,14 +7,19 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Http\Request;
+use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class AcusesPDFController extends Controller
 {
     const PERMISSIONS = [
         'index' => 'estimulo-evaluaciones-acuses-index',
     ];
+
+    use SingleResponse;
 
     /**
      * Display a listing of the resource.
@@ -33,104 +38,62 @@ class AcusesPDFController extends Controller
         return $sqlQuery;
     }
 
-    public function getDirecciones($year, $direccion){
-        if($direccion == 'Direccion General'){
-            $queryGeneral = DB::table('sinfodi_evaluacion_general')
-                        ->select('clave', 'nombre')
+    public function getDirecciones($year, $direccion, $grupo){
+        if($grupo == 'grupo1'){
+            if($direccion == 'Direccion General'){
+                $query = DB::table('sinfodi_evaluacion_general')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }else if($direccion == 'Direccion Administracion'){
+                $query = DB::table('sinfodi_evaluacion_administracion')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }else if($direccion == 'Direccion Posgrado'){
+                $query = DB::table('sinfodi_evaluacion_posgrado')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }else if($direccion == 'Direccion Ciencia'){
+                $query = DB::table('sinfodi_evaluacion_ciencia')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }else if($direccion == 'Direccion Servicios'){
+                $query = DB::table('sinfodi_evaluacion_serv_tecno')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }else if($direccion == 'Direccion Tecnologia'){
+                $query = DB::table('sinfodi_evaluacion_proy_tecno')
+                            ->select('clave', 'nombre', 'direccion')
+                            ->where('year', '=', $year)
+                            ->where('total_puntos', '<>', 0.00)
+                            ->distinct()
+                            ->get();
+            }
+        }elseif($grupo == 'grupo2'){
+            $query = DB::table('sinfodi_evaluacion_responsabilidades')
+                        ->select('clave', 'nombre', 'direccion')
                         ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryGeneral);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->distinct()
-                                ->get();
-            return $queryDireccion;
-        }elseif($direccion == 'Direccion Administracion'){
-            $queryAdministracion = DB::table('sinfodi_evaluacion_administracion')
-                        ->select('clave', 'nombre')
-                        ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryAdministracion);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->distinct()
-                                ->get();
-            return $queryDireccion;
-        }elseif($direccion == 'Direccion Posgrado'){
-            $queryPosgrado = DB::table('sinfodi_evaluacion_posgrado')
-                        ->select('clave', 'nombre')
-                        ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryPosgrado);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->distinct()
-                                ->get();
-            return $queryDireccion;
-        }elseif($direccion == 'Direccion Ciencia'){
-            $queryCiencia = DB::table('sinfodi_evaluacion_ciencia')
-                        ->select('clave', 'nombre')
-                        ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryCiencia);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->groupBy('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->get();
-            return $queryDireccion;
-        }elseif($direccion == 'Direccion Servicios'){
-            $queryServicios = DB::table('sinfodi_evaluacion_serv_tecno')
-                        ->select('clave', 'nombre')
-                        ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryServicios);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->groupBy('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->get();
-            return $queryDireccion;
-        }elseif($direccion == 'Direccion Tecnologia'){
-            $queryServicios = DB::table('sinfodi_evaluacion_proy_tecno')
-                        ->select('clave', 'nombre')
-                        ->where('year', '=', $year)
-                        ->where('total_puntos', '<>', 0.00);
-            $queryResponsabilidad = DB::table('sinfodi_evaluacion_responsabilidades')
-                                        ->select('clave', 'nombre')
-                                        ->where('year', '=', $year)
-                                        ->where('responsabilidad', '=', $direccion)
-                                        ->unionAll($queryServicios);
-            $queryDireccion = DB::table($queryResponsabilidad)
-                                ->select('clave', 'nombre')
-                                ->groupBy('clave', 'nombre')
-                                ->orderBy('clave', 'ASC')
-                                ->get();
-            return $queryDireccion;
+                        ->distinct()
+                        ->get();
+        }else{
+            $query = $grupo.'->'.$year.'->'.$direccion;
         }
+        $data['response'] = $query;
+        return $this->response($data);
     }
 
 
@@ -140,7 +103,7 @@ class AcusesPDFController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function generarAcuse($direccion, $nombre, $clave, $year)
+    public function generarAcuse($direccion, $nombre, $clave, $year, $grupo)
     {
         // if($direccion == 'Direccion General'){
         //     $queryResumen = DB::select('
@@ -569,13 +532,36 @@ class AcusesPDFController extends Controller
                             ->get();
         $nombreDoc = $clave."_".$nombre.".pdf";
         $dompdf = resolve('dompdf.wrapper');
-        $dompdf->loadView('estimulos.evaluaciones.acuses.acuseResponsabilidades', [
+        $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
             'direccion' => $direccion,
             'clave' => $clave,
             'nombre' => $nombre,
+            'grupo' => $grupo,
             'criteriosA' => $queryCriterioA,
             'criteriosB' => $queryCriterioB,
         ]);
-        return $dompdf->stream($nombreDoc);
+        return $dompdf->stream('asdasds');
+        // $archivo = $dompdf->download()->getOriginalContent();
+        // Storage::put("/public/".$nombreDoc, $archivo);
+
+        // // dd(file_get_contents(storage_path("app/public/".$nombreDoc)));
+
+        // $prueba = Http::attach(
+        //     'pdf', file_get_contents(storage_path("app/public/".$nombreDoc)), $nombreDoc
+        // )->post('http://126.107.2.56/SINFODI/esignature/api/document', [
+        //     'no_employee' => $clave,
+        //     'document_type_id' => 4,
+        //     'is_private' => 1, //1 = SI, 2= NO
+        // ]);
+
+        // dd($prueba->json());
+
+        // $prueba = Http::post('http://126.107.2.56/SINFODI/esignature/api/document', [
+        //     'no_employee' => $clave,
+        //     // 'pdf' => Storage::get("/app/public/".$nombreDoc),
+        //     'document_type_id' => 4,
+        //     'is_private' => 1, //1 = SI, 2= NO
+        // ])->attach('pdf', Storage::get("/app/public/".$nombreDoc));
+        // return $dompdf->stream($nombreDoc);
     }
 }

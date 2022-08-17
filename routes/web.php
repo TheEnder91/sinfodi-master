@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Models\Estimulos\SostentabilidadEconomica;
+use App\Http\Controllers\Modulos\ComitesController;
 use App\Http\Controllers\Admin\PermissionsController;
-use App\Http\Controllers\Estimulos\Evaluaciones\AcusesPDFController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Modulos\ColaboracionController;
 use App\Http\Controllers\Modulos\PuntosTotalesController;
@@ -17,6 +17,7 @@ use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Modulos\FondosAdministracionController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesAController;
 use App\Http\Controllers\Estimulos\Factor1\ActividadesBController;
+use App\Http\Controllers\Estimulos\Evaluaciones\AcusesPDFController;
 use App\Http\Controllers\Modulos\SostentabilidadEconomicaController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DirectoresController;
 use App\Http\Controllers\Estimulos\Factor1\ResponsabilidadesController;
@@ -74,7 +75,6 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Sostenib
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionProyectosTec\DifusionDivulgacionDPTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionServiciosTec\DifusionDivulgacionDSTController;
 use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\DifusionDivulgacionDAController;
-use App\Http\Controllers\Modulos\ComitesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -229,8 +229,8 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evaluaciones... */
     /** Ruta para obtener los acuses... */
     Route::get('/estimulos/evaluaciones/acusesPDF', [AcusesPDFController::class, "index"])->name('estimulos.evaluaciones.acusesPDF');
-    Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
-    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}/{grupo}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
 
 
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
