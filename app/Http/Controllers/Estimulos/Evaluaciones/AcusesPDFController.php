@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Estimulos\Evaluaciones;
 
-use PDF;
+use Barryvdh\DomPDF\PDF;
 use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
