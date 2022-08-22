@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Estimulos\Evaluaciones;
 
+use Dompdf\Dompdf;
 use Barryvdh\DomPDF\PDF;
 use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
@@ -146,15 +147,16 @@ class AcusesPDFController extends Controller
      */
     public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
         $nombreDoc = $clave."_".$nombre.".pdf";
-        $dompdf = resolve('dompdf.wrapper');
-        $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
+        $dompdf = resolve("dompdf.wrapper");
+        $html = view('estimulos.evaluaciones.acuses.acuses', [
             'direccion' => $direccion,
             'clave' => $clave,
             'nombre' => $nombre,
             'grupo' => $grupo,
             'criteriosA' => self::consultasCriteriosA($direccion, $clave, $year, $grupo),
             'criteriosB' => self::consultasCriteriosB($direccion, $clave, $year, $grupo),
-        ]);
+        ])->render();
+        $dompdf->loadHtml($html);
         return $dompdf->stream();($nombreDoc);
 
         // if($direccion == 'Direccion General'){
