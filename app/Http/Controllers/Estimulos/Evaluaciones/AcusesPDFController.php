@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Barryvdh\DomPDF\Facade;
 
 class AcusesPDFController extends Controller
 {
@@ -96,6 +97,52 @@ class AcusesPDFController extends Controller
         return $this->response($data);
     }
 
+    public function consultasCriteriosA($direccion, $clave, $year, $grupo){
+        if($grupo == 'grupo1'){
+            if($direccion == 'Direccion General'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_general
+                        WHERE sinfodi_evaluacion_general.clave = '.$clave.' AND sinfodi_evaluacion_general.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
+            }
+        }
+        return $queryCriterioA;
+    }
+
+    public function consultasCriteriosB($direccion, $clave, $year, $grupo){
+        if($grupo == 'grupo1'){
+            if($direccion == 'Direccion General'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_general
+                        WHERE sinfodi_evaluacion_general.clave = '.$clave.' AND sinfodi_evaluacion_general.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }
+        }
+        return $queryCriterioB;
+    }
+
 
     /**
      * Display the specified resource.
@@ -103,8 +150,19 @@ class AcusesPDFController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function generarAcuse($direccion, $nombre, $clave, $year, $grupo)
-    {
+    public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
+        $nombreDoc = $clave."_".$nombre.".pdf";
+        $dompdf = resolve('dompdf.wrapper');
+        $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
+            'direccion' => $direccion,
+            'clave' => $clave,
+            'nombre' => $nombre,
+            'grupo' => $grupo,
+            'criteriosA' => self::consultasCriteriosA($direccion, $clave, $year, $grupo),
+            'criteriosB' => self::consultasCriteriosB($direccion, $clave, $year, $grupo),
+        ]);
+        return $dompdf->stream();($nombreDoc);
+
         // if($direccion == 'Direccion General'){
         //     $queryResumen = DB::select('
         //                 SELECT sinfodi_evaluados.clave AS clave,
@@ -522,25 +580,29 @@ class AcusesPDFController extends Controller
     //     return $dompdf->download($nombreDoc);
     // }
 
-        $queryCriterioA = DB::table('sinfodi_criterios')
-                            ->where('observaciones', '=', 'Tabla 1. Actividad A.')
-                            ->orderBy('id', 'ASC')
-                            ->get();
-        $queryCriterioB = DB::table('sinfodi_criterios')
-                            ->where('observaciones', '=', 'Tabla 1. Actividad B.')
-                            ->orderBy('id', 'ASC')
-                            ->get();
-        $nombreDoc = $clave."_".$nombre.".pdf";
-        $dompdf = resolve('dompdf.wrapper');
-        $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
-            'direccion' => $direccion,
-            'clave' => $clave,
-            'nombre' => $nombre,
-            'grupo' => $grupo,
-            'criteriosA' => $queryCriterioA,
-            'criteriosB' => $queryCriterioB,
-        ]);
-        return $dompdf->stream('Pruebas');
+        // $queryCriterioA = DB::table('sinfodi_criterios')
+        //                     ->where('observaciones', '=', 'Tabla 1. Actividad A.')
+        //                     ->orderBy('id', 'ASC')
+        //                     ->get();
+        // $queryCriterioB = DB::table('sinfodi_criterios')
+        //                     ->where('observaciones', '=', 'Tabla 1. Actividad B.')
+        //                     ->orderBy('id', 'ASC')
+        //                     ->get();
+        // $nombreDoc = $clave."_".$nombre.".pdf";
+        // $dompdf = resolve('dompdf.wrapper');
+        // $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
+        //     'direccion' => $direccion,
+        //     'clave' => $clave,
+        //     'nombre' => $nombre,
+        //     'grupo' => $grupo,
+        //     'criteriosA' => $queryCriterioA,
+        //     'criteriosB' => $queryCriterioB,
+        // ]);
+        // return $dompdf->download('Pruebas');
+
+
+
+
         // $archivo = $dompdf->download()->getOriginalContent();
         // Storage::put("/public/".$nombreDoc, $archivo);
 

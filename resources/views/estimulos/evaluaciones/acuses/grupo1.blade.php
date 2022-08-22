@@ -17,8 +17,8 @@
             <tbody>
                 @foreach ($criteriosA as $itemCriteriosA)
                     <tr>
-                        <td class="tbody">{{ $itemCriteriosA->nombre }}</td>
-                        <td class="tbody" style="text-align: center">{{ $itemCriteriosA->puntos }}</td>
+                        <td class="tbody">{{ $itemCriteriosA->criterio }}</td>
+                        <td class="tbody" style="text-align: center">{{ $itemCriteriosA->puntosCriterio }}</td>
                         <td class="tbody" style="text-align: center">0</td>
                         <td class="tbody" style="text-align: center">0</td>
                     </tr>
@@ -54,8 +54,8 @@
             <tbody>
                 @foreach ($criteriosB as $itemCriteriosB)
                     <tr>
-                        <td class="tbody">{{ $itemCriteriosB->nombre }}</td>
-                        <td class="tbody" style="text-align: center">{{ $itemCriteriosB->puntos }}</td>
+                        <td class="tbody">{{ $itemCriteriosB->criterio }}</td>
+                        <td class="tbody" style="text-align: center">{{ $itemCriteriosB->puntosCriterio }}</td>
                         <td class="tbody" style="text-align: center">0</td>
                         <td class="tbody" style="text-align: center">0</td>
                     </tr>

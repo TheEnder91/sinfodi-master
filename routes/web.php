@@ -231,6 +231,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/acusesPDF', [AcusesPDFController::class, "index"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}/{grupo}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
 
 
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');

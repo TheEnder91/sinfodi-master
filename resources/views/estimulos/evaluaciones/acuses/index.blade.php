@@ -62,6 +62,7 @@
                         <th scope="col" style="font-size:13px;">Nombre</th>
                         <th scope="col" style="font-size:13px;">Descripción</th>
                         <th scope="col" style="font-size:13px;">Acuse</th>
+                        <th scope="col" style="font-size:13px;">Firmar</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -155,6 +156,7 @@
                                 row += '<td width="60%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
                                 row += '<td class="text-center" width="20%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
                                 row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
+                                row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
                                 row += "</tr>";
                             // }
                         }
@@ -198,6 +200,10 @@
             var url = link4.replace('nombre', nombre);
             // console.log(link3);
             window.open(url);
+        }
+
+        function firmarAcuse(direccion, nombre, clave, year, grupo){
+
         }
     </script>
 @endsection
