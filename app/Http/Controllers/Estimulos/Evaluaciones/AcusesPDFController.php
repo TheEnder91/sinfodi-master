@@ -146,7 +146,7 @@ class AcusesPDFController extends Controller
      */
     public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
         $nombreDoc = $clave."_".$nombre.".pdf";
-        $dompdf = App::make('dompdf.wrapper');
+        $dompdf = resolve('dompdf.wrapper');
         $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
             'direccion' => $direccion,
             'clave' => $clave,
