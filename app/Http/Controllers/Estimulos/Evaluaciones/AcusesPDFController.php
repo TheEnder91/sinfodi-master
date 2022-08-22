@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Estimulos\Evaluaciones;
 use PDF;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Barryvdh\DomPDF\Facade;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Http\Request;
 use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
-use Barryvdh\DomPDF\Facade;
+use Illuminate\Support\Facades\Storage;
 
 class AcusesPDFController extends Controller
 {
@@ -152,7 +153,7 @@ class AcusesPDFController extends Controller
      */
     public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
         $nombreDoc = $clave."_".$nombre.".pdf";
-        $dompdf = resolve('dompdf.wrapper');
+        $dompdf = App::make('dompdf.wrapper');
         $dompdf->loadView('estimulos.evaluaciones.acuses.acuses', [
             'direccion' => $direccion,
             'clave' => $clave,
