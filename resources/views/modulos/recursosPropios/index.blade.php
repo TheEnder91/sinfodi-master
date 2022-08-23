@@ -146,7 +146,7 @@
                     $('#tblRecursosPropios > tbody').html('');
                     $('#tblRecursosPropios > tbody').append(row);
                     $('#tblRecursosPropios').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[4, "asc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",

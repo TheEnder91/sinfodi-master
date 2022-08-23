@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\ConcentradoExcel;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Modulos\PuntosTotalesController;
 use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Estimulos\Factor2\MetasController;
 use App\Http\Controllers\Modulos\RecursosPropiosController;
+use App\Http\Controllers\Estimulos\Evaluaciones\ExportarExcel;
 use App\Http\Controllers\Estimulos\Factor2\ImpactosController;
 use App\Http\Controllers\Estimulos\Factor3\DesempeñoController;
 use App\Http\Controllers\Modulos\FondosAdministracionController;
@@ -232,6 +235,11 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}/{grupo}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    /** Exportar excel... */
+    Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', [ExportarExcel::class, "index"])->name('estimulos.evaluaciones.exportarExcel');
+    // Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', function(){
+    //     return Excel::download(new ConcentradoExcel, 'concentrado.xlsx');
+    // });
 
 
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');

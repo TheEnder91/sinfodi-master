@@ -217,7 +217,7 @@
                     $('#tblColaboradores > tbody').html('');
                     $('#tblColaboradores > tbody').append(row);
                     $('#tblColaboradores').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[6, "desc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",

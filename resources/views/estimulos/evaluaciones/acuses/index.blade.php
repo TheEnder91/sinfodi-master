@@ -53,6 +53,13 @@
                     </select>
                 </div>
             </div>
+            {{-- <div class="col-2 text-center">
+                <section class="text-right" id="sectionDownload">
+                    <a href="javascript:downloadConcentrado();" style="font-size:13px;" class="btn btn-primary" role="button" aria-disabled="true">
+                        <i class="fa fa-download"></i> Descargar concentrado
+                    </a>
+                </section>
+            </div> --}}
         </div><br>
         <div class="table-responsive">
             <table id="tblDirecciones" class="table table-bordered table-striped" style="font-size:13px;">
@@ -89,8 +96,10 @@
             if(grupo == "grupo1"){
                 var direccion = document.getElementById("direccion").value;
                 document.getElementById("direccionContenedor").style.display="block";
+                document.getElementById("sectionDownload").style.display="block";
             }else if(grupo == "grupo2"){
                 document.getElementById("direccionContenedor").style.display="none";
+                document.getElementById("sectionDownload").style.display="none";
                 var direccion = "direccionVacio";
             }
             verPersonal(grupo, year, direccion);
@@ -101,8 +110,10 @@
             if(grupo == "grupo1"){
                 var direccion = document.getElementById("direccion").value;
                 document.getElementById("direccionContenedor").style.display="block";
+                document.getElementById("sectionDownload").style.display="block";
             }else if(grupo == "grupo2"){
                 document.getElementById("direccionContenedor").style.display="none";
+                document.getElementById("sectionDownload").style.display="none";
                 var direccion = "direccionVacio";
             }
             var year = document.getElementById("year").value;
@@ -204,6 +215,15 @@
 
         function firmarAcuse(direccion, nombre, clave, year, grupo){
 
+        }
+
+        function downloadConcentrado(){
+            var year = document.getElementById("year").value;
+            var direccion = document.getElementById("direccion").value;
+            var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/concentrado/ExcelConcentrado/direccion/year") }}';
+            var link1 = url.replace('direccion', direccion);
+            var concentrado = link1.replace('year', year);
+            window.open(concentrado);
         }
     </script>
 @endsection

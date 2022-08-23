@@ -146,7 +146,7 @@
                     $('#tblFondosAdministracion > tbody').html('');
                     $('#tblFondosAdministracion > tbody').append(row);
                     $('#tblFondosAdministracion').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[4, "asc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",
