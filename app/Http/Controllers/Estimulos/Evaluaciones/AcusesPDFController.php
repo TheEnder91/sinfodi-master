@@ -111,8 +111,10 @@ class AcusesPDFController extends Controller
                     ORDER BY criterios.id ASC
                 ');
             }
+            return $queryCriterioA;
+        }else{
+            return "";
         }
-        return $queryCriterioA;
     }
 
     public function consultasCriteriosB($direccion, $clave, $year, $grupo){
@@ -134,8 +136,10 @@ class AcusesPDFController extends Controller
                     ORDER BY criterios.id ASC
                 ');
             }
+            return $queryCriterioB;
+        }else{
+            return "";
         }
-        return $queryCriterioB;
     }
 
 
@@ -147,7 +151,7 @@ class AcusesPDFController extends Controller
      */
     public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
         $nombreDoc = $clave."_".$nombre.".pdf";
-        $dompdf = resolve("dompdf.wrapper");
+        $dompdf = \App::make("dompdf.wrapper");
         $html = view('estimulos.evaluaciones.acuses.acuses', [
             'direccion' => $direccion,
             'clave' => $clave,
