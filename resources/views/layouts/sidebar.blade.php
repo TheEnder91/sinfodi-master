@@ -6,7 +6,7 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header" style="font-size:13px;">MODULOS</li>
+                {{-- <li class="nav-header" style="font-size:13px;">MODULOS</li>
                 <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/sostenibilidad/listSostenibilidad') }}" class="nav-link {{ isRouteActive('modulos.sostentabilidad') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -18,7 +18,7 @@
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Colaboración institucional</p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -299,7 +299,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionGeneral.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -411,7 +411,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionAdministracion.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -523,7 +523,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionPosgrado.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -635,7 +635,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionCiencia.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -751,7 +751,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionServTec.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif
@@ -865,7 +865,7 @@
                                             <li class="nav-item">
                                                 <a style="font-size: 15px;" href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/listSostentabilidad') }}" class="nav-link {{ isRouteActive('estimulos.evaluaciones.direccionProyTec.sostentabilidad') }}">
                                                     <i class="far fa-arrow-alt-circle-right"></i>
-                                                    <p>Sostentabilidad</p>
+                                                    <p>Sostenibilidad</p>
                                                 </a>
                                             </li>
                                         @endif

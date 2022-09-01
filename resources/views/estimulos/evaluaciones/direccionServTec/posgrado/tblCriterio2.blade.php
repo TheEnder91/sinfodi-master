@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table id="tblCriterio2" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses.</caption>
+        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses (valor del punto: 45).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>

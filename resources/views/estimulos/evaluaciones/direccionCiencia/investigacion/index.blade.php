@@ -135,6 +135,7 @@
             obtenerCriterio9(año, 9);
             obtenerCriterio10(año, 10);
             obtenerCriterio11(año, 11);
+            obtenerCriterio12(año, 12);
             obtenerCriterio13(año, 13);
         }
     </script>

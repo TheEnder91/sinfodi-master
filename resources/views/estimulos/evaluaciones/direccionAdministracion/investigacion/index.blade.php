@@ -15,12 +15,12 @@
     @component('components.card')
         @slot('title_card', 'Evaluaciones a la dirección de administración->Investigación cientifica.')
         <div class="row">
-            <div class="col-2">
+            <div class="col-3">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                    <select class="custom-select text-center" id="year" onChange="ShowSelected();" style="font-size:13px;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -135,6 +135,7 @@
             obtenerCriterio9(año, 9);
             obtenerCriterio10(año, 10);
             obtenerCriterio11(año, 11);
+            obtenerCriterio12(año, 12);
             obtenerCriterio13(año, 13);
         }
     </script>

@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%">
     <table id="tblCriterio8" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto mayor de 4.0.</caption>
+        <caption style="font-size:13px;">Publicación de Artículos en revistas de circulación internacional con arbitraje, factor de impacto mayor de 4.0 (Valor del punto: 160).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -120,6 +120,8 @@
 
     function verEvidenciasCriterio8(year, clave, criterio){
         var objetivo = 3;
+        $('#txtCantidadCriterio8').val(0);
+        $('#txtTotalCriterio8').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
             type: 'GET',
@@ -180,8 +182,8 @@
                                         // console.log(arr[i]);
                                         document.getElementById("evidenciasCriterio8"+arr[i]).checked = true;
                                     }
-                                    $('#txtCantidad').val(dataEvidencias.puntos);
-                                    $('#txtTotal').val(dataEvidencias.total_puntos);
+                                    $('#txtCantidadCriterio8').val(dataEvidencias.puntos);
+                                    $('#txtTotalCriterio8').val(dataEvidencias.total_puntos);
                                 }
                             },
                         });

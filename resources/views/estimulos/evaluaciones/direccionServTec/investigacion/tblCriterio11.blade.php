@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%">
     <table id="tblCriterio11" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Memorias nacionales en extenso con arbitraje limitado hasta un máximo de 4.</caption>
+        <caption style="font-size:13px;">Memorias nacionales en extenso con arbitraje limitado hasta un máximo de 4 (valor del punto: 5).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -120,6 +120,8 @@
 
     function verEvidenciasCriterio11(year, clave, criterio){
         var objetivo = 3;
+        $('#txtCantidadCriterio11').val(0);
+        $('#txtTotalCriterio11').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

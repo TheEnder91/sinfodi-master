@@ -30,7 +30,7 @@
         </div><br>
         <div class="table-responsive">
             <table id="tblCriterio1" class="table table-bordered table-striped">
-                <caption style="font-size:13px;">Listado de evaluación Dirección de posgrado->Difusión y Divulgación y sus respectivos puntos.</caption>
+                <caption style="font-size:13px;">Listado de evaluación Dirección de posgrado->Difusión y Divulgación (Valor del punto: 10).</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
@@ -170,6 +170,8 @@
     function verEvidenciasCriterio1(year, clave){
         var criterio = 1;
         var objetivo = 1;
+        $('#txtCantidad').val(0);
+        $('#txtTotal').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/DifDiv/searchEvidenciasDifDiv/" + year + "/" + clave,
             type: 'GET',
@@ -360,6 +362,8 @@
                                                             timer: 2000
                                                         }).catch(swal.noop);
                                                         $('#modalEvidenciasCriterio1').modal('hide');
+                                                        $('#txtCantidad').val(0);
+                                                        $('#txtTotal').val(0);
                                                         verTablaCriterio1(year, 1);
                                                     }
                                                 });
@@ -414,6 +418,8 @@
                                                             timer: 2000
                                                         }).catch(swal.noop);
                                                         $('#modalEvidenciasCriterio1').modal('hide');
+                                                        $('#txtCantidad').val(0);
+                                                        $('#txtTotal').val(0);
                                                         verTablaCriterio1(year, 1);
                                                     }
                                                 });

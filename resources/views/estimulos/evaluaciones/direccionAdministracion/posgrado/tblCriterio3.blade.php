@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table id="tblCriterio3" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 31 y 36 meses.</caption>
+        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 31 y 36 meses (Valor del punto: 35).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -130,6 +130,8 @@
 
     function verEvidenciasCriterio3(year, clave, criterio){
         var objetivo = 2;
+        $('#txtCantidadCriterio3').val(0);
+        $('#txtTotalCriterio3').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/posgrado/searchEvidenciasPosgrado/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

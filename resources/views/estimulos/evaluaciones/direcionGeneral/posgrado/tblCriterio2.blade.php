@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table id="tblCriterio2" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses.</caption>
+        <caption style="font-size:13px;">Alumno del programa de maestría del CIDETEQ graduado entre 20 y 30 meses (Valor del punto: 45).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -332,6 +332,8 @@
                                                     timer: 2000
                                                 }).catch(swal.noop);
                                                 $('#modalEvidenciasCriterio2').modal('hide');
+                                                $('#txtCantidadCriterio2').val(0);
+                                                $('#txtTotalCriterio2').val(0);
                                                 verTablaCriterio2(year, criterio);
                                             }
                                         });
@@ -386,6 +388,8 @@
                                                     timer: 2000
                                                 }).catch(swal.noop);
                                                 $('#modalEvidenciasCriterio2').modal('hide');
+                                                $('#txtCantidadCriterio2').val(0);
+                                                $('#txtTotalCriterio2').val(0);
                                                 verTablaCriterio2(year, criterio);
                                             }
                                         });

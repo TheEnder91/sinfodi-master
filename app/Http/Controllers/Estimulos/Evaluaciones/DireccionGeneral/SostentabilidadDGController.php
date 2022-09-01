@@ -83,4 +83,54 @@ class SostentabilidadDGController extends Controller
         $data['response'] = $datos;
         return $this->response($data);
     }
+
+    public function detallesProyectos($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'puntos_totales',
+                             'lider_responsable',
+                             'puntos_lider',
+                             'nuevos_puntos_totales',
+                             'puntos_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        return $query;
+    }
+
+    public function detallesServicios($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Servicios Especiales')
+                    ->get();
+        return $query;
+    }
+
+    public function detallesCursos($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Cursos')
+                    ->get();
+        return $query;
+    }
 }

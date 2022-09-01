@@ -286,6 +286,9 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/searchSostentabilidad/{year}', [SostentabilidadDGController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad', [SostentabilidadDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostentabilidadDGController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/detallesProyectos/{year}/{clave}', [SostentabilidadDGController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/detallesServicios/{year}/{clave}', [SostentabilidadDGController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/detallesCursos/{year}/{clave}', [SostentabilidadDGController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección general->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/listTransferencia', [TransferenciaDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDGController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.transferencia');

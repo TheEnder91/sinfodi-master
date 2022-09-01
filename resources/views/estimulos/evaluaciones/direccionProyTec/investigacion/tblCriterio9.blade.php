@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%">
     <table id="tblCriterio9" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Autor de libros científicos en editoriales de reconocido prestigio.</caption>
+        <caption style="font-size:13px;">Autor de libros científicos en editoriales de reconocido prestigio (Valor del punto: 200).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -120,6 +120,8 @@
 
     function verEvidenciasCriterio9(year, clave, criterio){
         var objetivo = 3;
+        $('#txtCantidadCriterio9').val(0);
+        $('#txtTotalCriterio9').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/investigacion/searchEvidenciasInvestigacion/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

@@ -1,6 +1,6 @@
 <div class="table-responsive">
     <table id="tblCriterio4" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Alumno del programa de doctorado del CIDETEQ graduado entre 37 y 42 meses.</caption>
+        <caption style="font-size:13px;">Alumno del programa de doctorado del CIDETEQ graduado entre 37 y 42 meses (Valor del punto: 70).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -130,6 +130,8 @@
 
     function verEvidenciasCriterio4(year, clave, criterio){
         var objetivo = 2;
+        $('#txtCantidadCriterio4').val(0);
+        $('#txtTotalCriterio4').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/searchEvidenciasPosgrado/" + year + "/" + clave + "/" + criterio,
             type: 'GET',
@@ -330,6 +332,8 @@
                                                     timer: 2000
                                                 }).catch(swal.noop);
                                                 $('#modalEvidenciasCriterio4').modal('hide');
+                                                $('#txtCantidadCriterio4').val(0);
+                                                $('#txtTotalCriterio4').val(0);
                                                 verTablaCriterio4(year, criterio);
                                             }
                                         });
@@ -384,6 +388,8 @@
                                                     timer: 2000
                                                 }).catch(swal.noop);
                                                 $('#modalEvidenciasCriterio4').modal('hide');
+                                                $('#txtCantidadCriterio4').val(0);
+                                                $('#txtTotalCriterio4').val(0);
                                                 verTablaCriterio4(year, criterio);
                                             }
                                         });
