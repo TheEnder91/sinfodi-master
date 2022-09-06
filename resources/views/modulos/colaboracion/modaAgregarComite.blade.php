@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="button" class="btn btn-success" value="Guardar" id="btnGuardarComites"/>
+                {{-- <input type="button" class="btn btn-success" value="Guardar" id="btnGuardarComites"/> --}}
             </div>
         </div>
     </div>

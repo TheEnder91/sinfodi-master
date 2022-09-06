@@ -50,7 +50,7 @@
         <div class="row">
             <div class="col-11">
                 <label class="col-form-label"><span style="font-size:13px; color:red">*</span>Seleccione un comite:
-                    {{-- <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a> --}}
+                    <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a>
                 </label>
                 <div style="column-count:6; list-style: none;" id="listComites"></div>
             </div>
