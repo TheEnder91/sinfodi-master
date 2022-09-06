@@ -151,7 +151,7 @@
                         // console.log(dataGetComites);
                         row += "<tr>";
                         row += '<th scope="row" class="text-left" width="90%" style="font-size:12px;">' + dataGetComites.nombre + '</td>';
-                        row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="javascript:verDocumento('+ dataGetComites.id +', '+dataGetComites.consecutivo+', '+dataGetComites.year+', \''+dataGetComites.url_archivo+'\')"><i class="fa fa-file"></i></a></i></td>';
+                        row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="'+dataGetComites.url_archivo+'" target="_blank"><i class="fa fa-file"></i></a></i></td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGetComites.year + '</td>';
                         row += "</tr>";
                     }
