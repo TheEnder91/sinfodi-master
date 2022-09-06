@@ -71,6 +71,16 @@ class SostenibilidadDPTController extends Controller
         }
     }
 
+    public function calculosSostentabilidad($year, $clave){
+        $query = DB::select('SELECT DISTINCT clave_participante,
+                                       (SELECT SUM(total) AS sumaProyectos FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Proyectos") AS sumaProyectos,
+                                       (SELECT SUM(total) AS sumaServicios FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Servicios Especiales") AS sumaServicios,
+                                       (SELECT SUM(total) AS sumaCursos FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Cursos") AS sumaCursos
+                                FROM sinfodi_sostentabilidad
+                                WHERE clave_participante = '.$clave.' AND year = '.$year.'');
+        return $query;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -82,6 +92,56 @@ class SostenibilidadDPTController extends Controller
         $datos = DB::table('sinfodi_evaluacion_proy_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DProyTec')->get();
         $data['response'] = $datos;
         return $this->response($data);
+    }
+
+    public function detallesProyectos($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'puntos_totales',
+                             'lider_responsable',
+                             'puntos_lider',
+                             'nuevos_puntos_totales',
+                             'puntos_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        return $query;
+    }
+
+    public function detallesServicios($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Servicios Especiales')
+                    ->get();
+        return $query;
+    }
+
+    public function detallesCursos($year, $clave){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'porcentaje_participacion',
+                             'monto_ingresado',
+                             'ingreso_participacion',
+                             'total')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Cursos')
+                    ->get();
+        return $query;
     }
 
     /**

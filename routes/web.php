@@ -240,10 +240,10 @@ Route::middleware(['login'])->group(function(){
     // Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', function(){
     //     return Excel::download(new ConcentradoExcel, 'concentrado.xlsx');
     // });
-
-
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/downloadAcuse/{usuario}', [AcusesPDFController::class, "downloadAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+
+
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/listDifDIv', [DifusionDivulgacionController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/DifDiv/searchDifDIv/{year}', [DifusionDivulgacionController::class, "search"])->name('estimulos.evaluaciones.direccionGeneral.DivDif');
@@ -284,6 +284,7 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evaluaciones de estimulos Direccion general->Sostentabilidad */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/listSostentabilidad', [SostentabilidadDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/searchSostentabilidad/{year}', [SostentabilidadDGController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostentabilidadDGController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad', [SostentabilidadDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostentabilidadDGController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/detallesProyectos/{year}/{clave}', [SostentabilidadDGController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionGeneral.sostentabilidad');
@@ -319,6 +320,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/searchColaboradores/{year}', [ColaboracionDGController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionGeneral/colaboracion/saveDatos', [ColaboracionDGController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDGController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDGController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionGeneral.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección general->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/acreditaciones/listAcreditaciones', [AcreditacionesController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionGeneral.acreditaciones');
@@ -390,6 +392,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDAController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/saveDatosSostentabilidad', [SostenibilidadDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostenibilidadDAController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostenibilidadDAController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDAController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDAController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDAController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionAdministracion.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección administracion->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/transferencia/listTransferencia', [TransferenciaDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDAController::class, "search"])->name('estimulos.evaluaciones.direccionAdministracion.transferencia');
@@ -420,6 +426,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/searchColaboradores/{year}', [ColaboracionDAController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/saveDatos', [ColaboracionDAController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDAController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDAController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionAdministracion.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección administracion->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/acreditaciones/listAcreditaciones', [AcreditacionesDAController::class, "index"])->name('estimulos.evaluaciones.direccionAdministracion.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesDAController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionAdministracion.acreditaciones');
@@ -491,6 +498,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDPController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionPosgrado.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/saveDatosSostentabilidad', [SostenibilidadDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostenibilidadDPController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionPosgrado.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostenibilidadDPController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.DireccionPosgrado.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDPController::class, "detallesProyectos"])->name('estimulos.evaluaciones.DireccionPosgrado.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDPController::class, "detallesServicios"])->name('estimulos.evaluaciones.DireccionPosgrado.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDPController::class, "detallesCursos"])->name('estimulos.evaluaciones.DireccionPosgrado.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección posgrado->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/transferencia/listTransferencia', [TransferenciaDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDPController::class, "search"])->name('estimulos.evaluaciones.direccionPosgrado.transferencia');
@@ -521,6 +532,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/searchColaboradores/{year}', [ColaboracionDPController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/saveDatos', [ColaboracionDPController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDPController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDPController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionPosgrado.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección posgrado->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/acreditaciones/listAcreditaciones', [AcreditacionesDPController::class, "index"])->name('estimulos.evaluaciones.direccionPosgrado.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesDPController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionPosgrado.acreditaciones');
@@ -592,6 +604,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDCController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/saveDatosSostentabilidad', [SostenibilidadDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostenibilidadDCController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostenibilidadDCController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDCController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDCController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDCController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionCiencia.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección de ciencia->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/transferencia/listTransferencia', [TransferenciaDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDCController::class, "search"])->name('estimulos.evaluaciones.direccionCiencia.transferencia');
@@ -622,6 +638,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionCiencia/colaboracion/searchColaboradores/{year}', [ColaboracionDCController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionCiencia/colaboracion/saveDatos', [ColaboracionDCController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDCController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDCController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionCiencia.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección de ciencia->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/acreditaciones/listAcreditaciones', [AcreditacionesDCController::class, "index"])->name('estimulos.evaluaciones.direccionCiencia.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesDCController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionCiencia.acreditaciones');
@@ -693,6 +710,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDSTController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/saveDatosSostentabilidad', [SostenibilidadDSTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostenibilidadDSTController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostenibilidadDSTController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDSTController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDSTController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDSTController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección de servicios tecnologicos->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionServTec/transferencia/listTransferencia', [TransferenciaDSTController::class, "index"])->name('estimulos.evaluaciones.direccionServTec.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionServTec/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDSTController::class, "search"])->name('estimulos.evaluaciones.direccionServTec.transferencia');
@@ -723,6 +744,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionServTec/colaboracion/searchColaboradores/{year}', [ColaboracionDSTController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionServTec/colaboracion/saveDatos', [ColaboracionDSTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionServTec/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDSTController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDSTController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionServTec.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección servicios tecnologicos->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionServTec/acreditaciones/listAcreditaciones', [AcreditacionesDSTController::class, "index"])->name('estimulos.evaluaciones.direccionServTec.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionServTec/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesDSTController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionServTec.acreditaciones');
@@ -794,6 +816,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/searchSostentabilidad/{year}', [SostenibilidadDPTController::class, "searchSostentabilidad"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
     Route::post('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/saveDatosSostentabilidad', [SostenibilidadDPTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/datosSostentabilidad/{year}/{criterio}', [SostenibilidadDPTController::class, "datosSostentabilidad"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/calculosSostentabilidad/{year}/{clave}', [SostenibilidadDPTController::class, "calculosSostentabilidad"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDPTController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDPTController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDPTController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionProyTec.sostentabilidad');
     /** Rutas para ls evaluaciones de estimulos Dirección de proyectos tecnologicos tecnologicos->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionProyTec/transferencia/listTransferencia', [TransferenciaDPTController::class, "index"])->name('estimulos.evaluaciones.direccionProyTec.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDPTController::class, "search"])->name('estimulos.evaluaciones.direccionProyTec.transferencia');
@@ -824,6 +850,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionProyTec/colaboracion/searchColaboradores/{year}', [ColaboracionDPTController::class, "searchColaboradores"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
     Route::post('/estimulos/evaluaciones/DireccionProyTec/colaboracion/saveDatos', [ColaboracionDPTController::class, "saveDatos"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/colaboracion/datosColaboradores/{year}/{criterio}', [ColaboracionDPTController::class, "datosColaboradores"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/colaboracion/getComiteColaboracion/{year}/{clave}', [ColaboracionDPTController::class, "getComiteColaboracion"])->name('estimulos.evaluaciones.direccionProyTec.colaboracion');
     /** Rutas para las evidencias de estimulos Dirección de proyectos tecnologicos->Acreditaciones */
     Route::get('/estimulos/evaluaciones/DireccionProyTec/acreditaciones/listAcreditaciones', [AcreditacionesDPTController::class, "index"])->name('estimulos.evaluaciones.direccionProyTec.acreditaciones');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/acreditaciones/searchAcreditaciones/{year}/{criterio}', [AcreditacionesDPTController::class, "searchAcreditaciones"])->name('estimulos.evaluaciones.direccionProyTec.acreditaciones');

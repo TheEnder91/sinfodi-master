@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio18" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Registro de diseño industrial solicitado.</caption>
+        <caption style="font-size:13px;">Registro de diseño industrial solicitado (Valor del punto: 60).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>

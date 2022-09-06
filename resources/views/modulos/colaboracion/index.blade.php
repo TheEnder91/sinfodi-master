@@ -50,14 +50,14 @@
         <div class="row">
             <div class="col-11">
                 <label class="col-form-label"><span style="font-size:13px; color:red">*</span>Seleccione un comite:
-                    <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a>
+                    {{-- <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a> --}}
                 </label>
                 <div style="column-count:6; list-style: none;" id="listComites"></div>
             </div>
             <div class="col-1">
-                <div class="float-right">
+                {{-- <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardar"/>
-                </div>
+                </div> --}}
                 <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizar"/>
                 </div>
@@ -74,7 +74,7 @@
                         <th scope="col" style="font-size:13px;">Cantidad</th>
                         <th scope="col" style="font-size:13px;">Total</th>
                         <th scope="col" style="font-size:13px;">Año</th>
-                        <th scope="col" style="font-size:13px;">Acciones</th>
+                        {{-- <th scope="col" style="font-size:13px;">Acciones</th> --}}
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -204,10 +204,10 @@
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.cantidad + '</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.total + '</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.year + '</td>';
-                        row += '<td class="text-center" width="5%" style="font-size:12px;">'+
-                                    '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
-                                    '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +')"><i class="fa fa-trash-alt"></i></a>'+
-                                '</td>';
+                        // row += '<td class="text-center" width="5%" style="font-size:12px;">'+
+                        //             '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
+                        //             '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +')"><i class="fa fa-trash-alt"></i></a>'+
+                        //         '</td>';
                         row += "</tr>";
                     }
                     if ($.fn.dataTable.isDataTable("#tblColaboradores")) {

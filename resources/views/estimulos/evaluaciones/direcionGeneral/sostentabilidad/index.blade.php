@@ -20,7 +20,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="year" style="font-size:13px;">Seleccione el año:</label>
                     </div>
-                    <select class="custom-select" id="year" onChange="ShowSelected();" style="font-size:13px;">
+                    <select class="custom-select text-center" id="year" onChange="ShowSelected();" style="font-size:13px;">
                         @for ($i = date('Y'); $i >= 2021; $i--)
                             <option value="{{ $i - 1 }}">{{ $i - 1 }}</option>
                         @endfor
@@ -30,12 +30,11 @@
         </div><br>
         <div class="table-responsive">
             <table id="tblCriterio14" class="table table-bordered table-striped" style="font-size:13px;">
-                <caption style="font-size:13px;">Monto ingresado a CIDETEQ por proyectos patrocinados, comercializados, servicios especiales, cursos.</caption>
+                <caption style="font-size:13px;">Monto ingresado a CIDETEQ por proyectos patrocinados, comercializados, servicios especiales, cursos (Ingreso obtenido por proyecto/10,000).</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
                         <th scope="col" style="font-size:13px;">Nombre</th>
-                        <th scope="col" style="font-size:13px;">Puntos</th>
                         <th scope="col" style="font-size:13px;">Total</th>
                         <th scope="col" style="font-size:13px;">Año</th>
                         <th scope="col" style="font-size:13px;">Detalles</th>
@@ -60,6 +59,19 @@
             </div>
             <div class="modal-body">
                 <div id="cuerpoModal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <b>Calculo total =</b> suma proyectos + suma servicios + suma cursos.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="calculoTotal"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" id="calculoTotalSuma"></div>
+                        </div>
+                    </div><br>
                     <div class="row">
                         <div class="col-12">
                             <div class="card card-primary">
@@ -292,8 +304,7 @@
                         if(dataGeneralCriterio14.username == authUser || permissions == 1){
                                 row += "<tr>";
                                 row += '<th scope="row" class="text-center" width="8%" style="font-size:12px;">' + dataGeneralCriterio14.clave + '</td>';
-                                row += '<td width="77%" style="font-size:12px;">' + dataGeneralCriterio14.nombre + "</td>";
-                                row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.puntos + '</td>';
+                                row += '<td width="52%" style="font-size:12px;">' + dataGeneralCriterio14.nombre + "</td>";
                                 row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.total_puntos + '</td>';
                                 row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGeneralCriterio14.year + '</td>';
                                 row += '<td class="text-center" width="5%" style="font-size:12px;"><a href="javascript:verDetalleCriterio14(' + dataGeneralCriterio14.year + ', ' + dataGeneralCriterio14.clave + ')"><i class="fa fa-search"></i></a></td>';
@@ -331,7 +342,34 @@
         function verDetalleCriterio14(year, clave){
             $('#detalleCriterio14ModalLabel').modal({backdrop: 'static', keyboard: false});
             document.getElementById('tituloModal').innerHTML='Visualizar detalle sostenibilidad economica.';
-            let total = 0;
+            // Mostrat el calculo total...
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/calculosSostentabilidad/" + year + "/" + clave,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosCalculoTotalCriterio14){
+                    // console.log(datosCalculoTotalCriterio14[0].sumaProyectos);
+                    if(datosCalculoTotalCriterio14[0].sumaProyectos === null){
+                        var sumaProyectos = 0;
+                    }else{
+                        var sumaProyectos = datosCalculoTotalCriterio14[0].sumaProyectos;
+                    }
+                    if(datosCalculoTotalCriterio14[0].sumaServicios === null){
+                        var sumaServicios = 0;
+                    }else{
+                        var sumaServicios = datosCalculoTotalCriterio14[0].sumaServicios;
+                    }
+                    if(datosCalculoTotalCriterio14[0].sumaCursos === null){
+                        var sumaCursos = 0;
+                    }else{
+                        var sumaCursos = datosCalculoTotalCriterio14[0].sumaCursos;
+                    }
+                    var sumaTotalCalculo = parseFloat(sumaProyectos) + parseFloat(sumaServicios) + parseFloat(sumaCursos);
+                    // console.log(sumaProyectos + ' -> ' + sumaServicios + ' -> ' + sumaCursos);
+                    document.getElementById('calculoTotal').innerHTML='<b>Calculo total =</b> ' + sumaProyectos + ' + ' + sumaServicios + ' + ' + sumaCursos;
+                    document.getElementById('calculoTotalSuma').innerHTML='<b>Calculo total =</b> ' + sumaTotalCalculo.toFixed(2);
+                },
+            });
             // Detalles proyectos patrocinados...
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/detallesProyectos/" + year + "/" + clave,
@@ -382,18 +420,16 @@
                             var intVal = function(i){
                                 return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
                             };
-                            total = api
-                                .column(9)
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                            pageTotal = api
-                                .column(9, {page: 'current'})
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                });
+                            if(api.column(9).data().length){
+                                var pageTotal = api
+                                    .column(9, {page: 'current'})
+                                    .data()
+                                    .reduce(function(a, b){
+                                        return intVal(a) + intVal(b);
+                                    });
+                            }else{
+                                var pageTotal = 0;
+                            }
                             $(api.column(9).footer()).html(pageTotal);
                         },
                     });
@@ -430,18 +466,16 @@
                             var intVal = function(i){
                                 return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
                             };
-                            total = api
-                                .column(4)
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                            pageTotal = api
-                                .column(4, {page: 'current'})
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                });
+                            if(api.column(4).data().length){
+                                var pageTotal = api
+                                    .column(4, {page: 'current'})
+                                    .data()
+                                    .reduce(function(a, b){
+                                        return intVal(a) + intVal(b);
+                                    });
+                            }else{
+                                var pageTotal = 0;
+                            }
                             $(api.column(4).footer()).html(pageTotal);
                         },
                         "order":[[0, "asc"]],
@@ -510,18 +544,16 @@
                             var intVal = function(i){
                                 return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
                             };
-                            total = api
-                                .column(4)
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                }, 0);
-                            pageTotal = api
-                                .column(4, {page: 'current'})
-                                .data()
-                                .reduce(function(a, b){
-                                    return intVal(a) + intVal(b);
-                                });
+                            if(api.column(4).data().length){
+                                var pageTotal = api
+                                    .column(4, {page: 'current'})
+                                    .data()
+                                    .reduce(function(a, b){
+                                        return intVal(a) + intVal(b);
+                                    });
+                            }else{
+                                var pageTotal = 0;
+                            }
                             $(api.column(4).footer()).html(pageTotal);
                         },
                     });

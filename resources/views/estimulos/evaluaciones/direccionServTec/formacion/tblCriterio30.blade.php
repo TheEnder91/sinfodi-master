@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio30" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Atención a alumnos de tesis de maestría concluida.</caption>
+        <caption style="font-size:13px;">Atención a alumnos de tesis de maestría concluida (Valor del punto: 30).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>

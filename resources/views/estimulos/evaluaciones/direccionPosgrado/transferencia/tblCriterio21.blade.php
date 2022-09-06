@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio21" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Derecho de autor solicitado.</caption>
+        <caption style="font-size:13px;">Derecho de autor solicitado (Valor del punto: 25).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>

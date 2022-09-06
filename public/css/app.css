@@ -32165,4 +32165,4 @@ body.swal2-iosfix {
             transform: rotate(360deg); } }
 
 /* Estilos para el tab */
-
+.modal .modalColaboracion { width: 50%; }

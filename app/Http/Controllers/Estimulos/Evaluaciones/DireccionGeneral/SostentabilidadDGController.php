@@ -71,6 +71,16 @@ class SostentabilidadDGController extends Controller
         }
     }
 
+    public function calculosSostentabilidad($year, $clave){
+        $query = DB::select('SELECT DISTINCT clave_participante,
+                                       (SELECT SUM(total) AS sumaProyectos FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Proyectos") AS sumaProyectos,
+                                       (SELECT SUM(total) AS sumaServicios FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Servicios Especiales") AS sumaServicios,
+                                       (SELECT SUM(total) AS sumaCursos FROM sinfodi_sostentabilidad WHERE clave_participante = '.$clave.' AND year = '.$year.' AND tipo = "Cursos") AS sumaCursos
+                                FROM sinfodi_sostentabilidad
+                                WHERE clave_participante = '.$clave.' AND year = '.$year.'');
+        return $query;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

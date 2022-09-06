@@ -85,4 +85,18 @@ class ColaboracionDPTController extends Controller
         $data['response'] = $datos;
         return $this->response($data);
     }
+
+    public function getComiteColaboracion($year, $clave){
+        $query = DB::table('sinfodi_colaboracion')
+                    ->select('comites')
+                    ->where('year', '=', $year)
+                    ->where('clave', '=', $clave)
+                    ->value('comites');
+        $comite = explode(',', $query);
+        $queryComites = DB::table('sinfodi_comites')
+                            ->where('year', '=', $year)
+                            ->whereIn('consecutivo', $comite)
+                            ->get();
+        return $queryComites;
+    }
 }
