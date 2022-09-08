@@ -3,6 +3,7 @@
 use App\Exports\ConcentradoExcel;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Models\Estimulos\SostentabilidadEconomica;
@@ -90,7 +91,6 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Difusion
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::middleware(['login'])->group(function(){
     Route::get('/', function () {
         saveEvaluados();
@@ -134,6 +134,8 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/colaboracion/getColaboradores/{id}/{claveEmpleado}/{year}', [ColaboracionController::class, "getColaboradores"])->name('modulos.colaboracion');
     Route::put('/modulos/colaboracion/updateColaboracion/{id}', [ColaboracionController::class, "update"])->name('modulos.colaboracion');
     Route::delete('/modulos/colaboracion/destroyColaboracion/{id}', [ColaboracionController::class, "destroy"])->name('modulos.colaboracion');
+
+
     /** Puntos totales... */
     Route::get('/modulos/puntosTotales/listPuntosTotales', [PuntosTotalesController::class, "index"])->name('modulos.puntosTotales');
     Route::get('/modulos/puntosTotales/getTotalPuntos', [PuntosTotalesController::class, "getTotalPuntos"])->name('modulos.puntosTotales');
@@ -892,3 +894,6 @@ Route::middleware(['login'])->group(function(){
 });
 
 Route::post('buscar-colaborador', [ColaboracionController::class, 'buscarColaborador'])->name('buscar.colaborador');
+Route::get('/archivos/{nombre}', function($nombre){
+    return Storage::response('public/comites/'.$nombre);
+});
