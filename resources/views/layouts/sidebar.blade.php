@@ -13,12 +13,12 @@
                         <p>Sostenibilidad económica</p>
                     </a>
                 </li> --}}
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/colaboracion/listColaboracion') }}" class="nav-link {{ isRouteActive('modulos.colaboracion') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Colaboración institucional</p>
                     </a>
-                </li> --}}
+                </li>
                 {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -35,6 +35,12 @@
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/fondosAdministracion/listFondosAdministracion') }}" class="nav-link {{ isRouteActive('modulos.fondosAdministracion') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Fondos en administración</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/serviciosTecnologicos/informacionFinanciera/index') }}" class="nav-link {{ isRouteActive('modulos.serviciosTecnologicos.informacionFinanciera') }}">
+                        <i class="far fa-arrow-alt-circle-right"></i>
+                        <p>Servicios tecnológicos</p>
                     </a>
                 </li> --}}
                 @if (Auth::user()->hasPermissionTo('estimulo-lineamientos-index') || Auth::user()->hasPermissionTo('estimulo-objetivo-index') || Auth::user()->hasPermissionTo('estimulo-actividadA-index') || Auth::user()->hasPermissionTo('estimulo-actividadB-index') ||

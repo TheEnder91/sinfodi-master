@@ -12,6 +12,7 @@ use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Modulos\ColaboracionController;
 use App\Http\Controllers\Modulos\PuntosTotalesController;
 use App\Http\Controllers\Estimulos\LineamientosController;
+use App\Http\Controllers\Modulos\ServiciosTecnoController;
 use App\Http\Controllers\Estimulos\Factor2\MetasController;
 use App\Http\Controllers\Modulos\RecursosPropiosController;
 use App\Http\Controllers\Estimulos\Evaluaciones\ExportarExcel;
@@ -93,6 +94,7 @@ use App\Http\Controllers\Estimulos\Evaluaciones\DireccionAdministracion\Difusion
 Route::middleware(['login'])->group(function(){
     Route::get('/', function () {
         saveEvaluados();
+        getPersonalSinFiltros();
         return view('layouts.app');
     });
     /** Rutas para el panel de control de la aplicacion... */
@@ -157,6 +159,10 @@ Route::middleware(['login'])->group(function(){
     Route::get('/modulos/fondosAdministracion/existe/{year}/{id}', [FondosAdministracionController::class, "existe"])->name('modulos.fondosAdministracion');
     Route::post('/modulos/fondosAdministracion/guardarFondosAdministracion', [FondosAdministracionController::class, "guardarFondosAdministracion"])->name('modulos.fondosAdministracion');
     Route::get('/modulos/fondosAdministracion/getFondosAdministracion/{year}/{id}', [FondosAdministracionController::class, "getFondosAdministracion"])->name('modulos.fondosAdministracion');
+    /** Informacion Financiera de servicios tecnologicos... */
+    Route::get('/modulos/serviciosTecnologicos/informacionFinanciera/index', [ServiciosTecnoController::class, "index"])->name('modulos.serviciosTecnologicos.informacionFinanciera');
+    Route::get('/modulos/serviciosTecnologicos/informacionFinanciera/getDatos', [ServiciosTecnoController::class, "getDatos"])->name('modulo.serviciosTecnologicos.informacionFinanciera');
+    Route::post('/modulos/serviciosTecnologicos/informacionFinanciera/saveDatos', [ServiciosTecnoController::class, "saveDatos"])->name('modulo.serviciosTecnologicos.informacionFinanciera');
     //Ruta para visualizar los lineamientos de estimulos...
     Route::get('/estimulos/lineamientos/viewLineamientos', [LineamientosController::class, "index"])->name('estimulos.lineamientos');
     //Rutas para el catalogo de objetivos...
@@ -714,6 +720,11 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesProyectos/{year}/{clave}', [SostenibilidadDSTController::class, "detallesProyectos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesServicios/{year}/{clave}', [SostenibilidadDSTController::class, "detallesServicios"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDSTController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getMonto/{year}', [SostenibilidadDSTController::class, "getMonto"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/ObtenerTotalPersonas/{year}/{direccion}', [SostenibilidadDSTController::class, "obtenerTotalPersonas"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+
+
+
     /** Rutas para ls evaluaciones de estimulos Dirección de servicios tecnologicos->Transferencia de conocimiento e innovación */
     Route::get('/estimulos/evaluaciones/DireccionServTec/transferencia/listTransferencia', [TransferenciaDSTController::class, "index"])->name('estimulos.evaluaciones.direccionServTec.transferencia');
     Route::get('/estimulos/evaluaciones/DireccionServTec/transferencia/searchTransferencia/{year}/{criterio}', [TransferenciaDSTController::class, "search"])->name('estimulos.evaluaciones.direccionServTec.transferencia');

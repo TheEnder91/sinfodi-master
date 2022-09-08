@@ -144,6 +144,24 @@ class SostenibilidadDSTController extends Controller
         return $query;
     }
 
+    public function getMonto($year){
+        $query = DB::table('sinfodi_serv_tecno')
+                    ->select('monto')
+                    ->where('year', '=', $year)
+                    ->value('monto');
+        $data['response'] = $query;
+        return $this->response($data);
+    }
+
+    public function obtenerTotalPersonas($year, $direccion){
+        $query = DB::table('sinfodi_personal')
+                    ->selectRaw('COUNT(clave) AS totalPersonas')
+                    ->where('year', '=', $year)
+                    ->where('unidad_admin', '=', $direccion)
+                    ->value('totalPersonas');
+        return $query;
+    }
+
     /**
      * Display a listing of the resource.
      *

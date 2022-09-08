@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use App\Models\Estimulos\Personal;
 use Illuminate\Support\Facades\DB;
 use App\Models\Estimulos\Evaluados;
 use Illuminate\Support\Facades\Http;
@@ -194,6 +195,75 @@ function GetDireccionProyTec(){
         ];
     }
     return $datosDPT;
+}
+
+function getPersonalSinFiltros(){
+    $json = Http::get('http://126.107.2.56/SINFODI/capital_humano/api/personas/personal/tecnico');
+    $array = json_decode($json);
+    foreach($array->unidad_administrativa_sin_filtro->direccion_general as $item){
+        $direccion_general[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_General',
+            'year'=>date("Y")-1,
+        ];
+    }
+    foreach($array->unidad_administrativa_sin_filtro->direccion_de_administracion as $item){
+        $direccion_administracion[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_Administracion',
+            'year'=>date("Y")-1,
+        ];
+    }
+    foreach($array->unidad_administrativa_sin_filtro->direccion_de_posgrado as $item){
+        $direccion_posgrado[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_Posgrado',
+            'year'=>date("Y")-1,
+        ];
+    }
+    foreach($array->unidad_administrativa_sin_filtro->direccion_de_ciencia as $item){
+        $direccion_ciencia[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_Ciencia',
+            'year'=>date("Y")-1,
+        ];
+    }
+    foreach($array->unidad_administrativa_sin_filtro->direccion_de_servicios_tecnologicos as $item){
+        $direccion_servicios[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_Servicios',
+            'year'=>date("Y")-1,
+        ];
+    }
+    foreach($array->unidad_administrativa_sin_filtro->direccion_de_tecnologia as $item){
+        $direccion_tecnologia[] = [
+            'clave'=>$item->clave,
+            'nombre'=>$item->nombre,
+            'usuario'=>$item->usuario,
+            'unidad_admin'=>'Direccion_Tecnologia',
+            'year'=>date("Y")-1,
+        ];
+    }
+    $direcciones = array_merge($direccion_general, $direccion_administracion, $direccion_posgrado, $direccion_ciencia, $direccion_servicios, $direccion_tecnologia);
+    $existe = DB::table('sinfodi_personal')->where('year', date("Y")-1)->count();
+    // dd($direcciones);
+    if($existe == 0){
+        $savePersonal = new Personal();
+        $savePersonal->insert($direcciones);
+        return true;
+    }else{
+        return false;
+    }
 }
 
 function saveEvaluados(){

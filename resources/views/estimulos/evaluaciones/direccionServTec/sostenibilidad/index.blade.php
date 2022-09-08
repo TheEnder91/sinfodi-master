@@ -59,19 +59,58 @@
             </div>
             <div class="modal-body">
                 <div id="cuerpoModal">
-                    <div class="container">
+                    {{-- <div class="container"> --}}
                         <div class="row">
-                            <div class="col-12">
-                                <b>Calculo total =</b> suma proyectos + suma servicios + suma cursos.
+                            <div class="col-4" style="font-size: 12px;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <b style="color: red;">Calculo total =</b> <b>suma proyectos + suma servicios + suma cursos.</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="calculoTotal"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="calculoTotalSuma"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="calculoTotalSuma"></div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12" id="calculoTotalEntrePuntosPorPersona"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="total"></div>
+                                </div>
+                            </div>
+                            <div class="col-3" style="font-size: 12px;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <b style="color: green;">Monto =</b> <b>Monto total ingresado / 10000.</b>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="monto"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="montoEntre"></div>
+                                </div>
+                            </div>
+                            <div class="col-5" style="font-size: 12px;">
+                                <div class="row">
+                                    <div class="col-12" id="puntosPorPersona"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="puntosPorPersonaReal"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" id="totalPuntosPorPersonaReal"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12" id="calculoTotal"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12" id="calculoTotalSuma"></div>
-                        </div>
-                    </div><br>
+                    {{-- </div><br> --}}
+                    <br>
                     <div class="row">
                         <div class="col-12">
                             <div class="card card-primary">
@@ -340,9 +379,8 @@
         }
 
         function verDetalleCriterio14(year, clave){
-            $('#detalleCriterio14ModalLabel').modal({backdrop: 'static', keyboard: false});
             document.getElementById('tituloModal').innerHTML='Visualizar detalle sostenibilidad economica.';
-            // Mostrat el calculo total...
+            // Mostrar el calculo total...
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/calculosSostentabilidad/" + year + "/" + clave,
                 type: 'GET',
@@ -366,8 +404,36 @@
                     }
                     var sumaTotalCalculo = parseFloat(sumaProyectos) + parseFloat(sumaServicios) + parseFloat(sumaCursos);
                     // console.log(sumaProyectos + ' -> ' + sumaServicios + ' -> ' + sumaCursos);
-                    document.getElementById('calculoTotal').innerHTML='<b>Calculo total =</b> ' + sumaProyectos + ' + ' + sumaServicios + ' + ' + sumaCursos;
-                    document.getElementById('calculoTotalSuma').innerHTML='<b>Calculo total =</b> ' + sumaTotalCalculo.toFixed(2);
+                    document.getElementById('calculoTotal').innerHTML='<b style="color: red;">Calculo total =</b> ' + sumaProyectos + ' + ' + sumaServicios + ' + ' + sumaCursos;
+                    document.getElementById('calculoTotalSuma').innerHTML='<b style="color: red;">Calculo total =</b> ' + sumaTotalCalculo.toFixed(2);
+                    // Mostrar el monto total y punto por participante...
+                    var direccion = 'Direccion_Servicios';
+                    consultarDatos({
+                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getMonto/" + year,
+                        type: 'GET',
+                        dataType: 'json',
+                        ok: function(datosMontoCriterio14){
+                            // console.log(datosMontoCriterio14.response);
+                            document.getElementById('monto').innerHTML='<b style="color: green;">Monto =</b> ' + datosMontoCriterio14.response + ' / 10000';
+                            var monto = parseFloat(datosMontoCriterio14.response) / 10000;
+                            document.getElementById('montoEntre').innerHTML='<b style="color: green;">Monto =</b> ' + monto.toFixed(2);
+                            document.getElementById('puntosPorPersona').innerHTML='<b style="color: blue;">Puntos por persona(ingreso) =</b> <b style="color: green;">Monto</b> <b>/ numero de personal en la dirección.</b>';
+                            consultarDatos({
+                                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/ObtenerTotalPersonas/" + year + "/" + direccion,
+                                type: 'GET',
+                                dataType: 'json',
+                                ok: function(datosTotalPersonalCriterio14){
+                                    // console.log(datosTotalPersonalCriterio14);
+                                    document.getElementById('puntosPorPersonaReal').innerHTML='<b style="color: blue;">Puntos por persona(ingreso) =</b> '+monto.toFixed(2)+' / '+datosTotalPersonalCriterio14;
+                                    var totalPuntosPorPersona = monto.toFixed(2) / datosTotalPersonalCriterio14;
+                                    document.getElementById('totalPuntosPorPersonaReal').innerHTML='<b style="color: blue;">Puntos por persona(ingreso) =</b> '+totalPuntosPorPersona.toFixed(2);
+                                    document.getElementById('calculoTotalEntrePuntosPorPersona').innerHTML='<b>Total =</b> <b style="color: red;">Calculo total</b> + <b style="color: blue;">Puntos por persona</b>';
+                                    var total = parseFloat(sumaTotalCalculo.toFixed(2)) + parseFloat(totalPuntosPorPersona.toFixed(2));
+                                    document.getElementById('total').innerHTML='<b>Total =</b> '+total.toFixed(2);
+                                }
+                            });
+                        }
+                    });
                 },
             });
             // Detalles proyectos patrocinados...
@@ -559,6 +625,7 @@
                     });
                 },
             });
+            $('#detalleCriterio14ModalLabel').modal({backdrop: 'static', keyboard: false});
         }
     </script>
 @endsection
