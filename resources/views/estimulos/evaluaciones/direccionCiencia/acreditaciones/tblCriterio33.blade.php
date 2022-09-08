@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio33" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Pruebas de desempeño(limite superior de 40 puntos máximo).</caption>
+        <caption style="font-size:13px;">Pruebas de desempeño (Valor del punto: 1).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -130,6 +130,8 @@
     function verEvidenciasCriterio33(year, clave){
         var criterio = 33;
         var objetivo = 8;
+        $('#txtCantidadCriterio33').val(0);
+        $('#txtTotalCriterio33').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/acreditaciones/searchEvidencias/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

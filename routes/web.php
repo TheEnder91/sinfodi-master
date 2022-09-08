@@ -724,6 +724,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/detallesCursos/{year}/{clave}', [SostenibilidadDSTController::class, "detallesCursos"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getMonto/{year}', [SostenibilidadDSTController::class, "getMonto"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
     Route::get('/estimulos/evaluaciones/DireccionServTec/ObtenerTotalPersonas/{year}/{direccion}', [SostenibilidadDSTController::class, "obtenerTotalPersonas"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getPersonalRestante/{year}', [SostenibilidadDSTController::class, "getPersonalRestante"])->name('estimulos.evaluaciones.direccionServTec.sostentabilidad');
 
 
 

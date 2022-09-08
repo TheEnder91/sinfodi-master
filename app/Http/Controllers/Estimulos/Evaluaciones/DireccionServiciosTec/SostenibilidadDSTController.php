@@ -162,6 +162,21 @@ class SostenibilidadDSTController extends Controller
         return $query;
     }
 
+    public function getPersonalRestante($year){
+        $query = DB::select('SELECT clave, nombre, usuario, year
+                                FROM (SELECT clave, nombre, usuario, year
+                                      FROM sinfodi_evaluados
+                                      WHERE year = '.$year.' AND puesto = "Direccion_Servicios_Tecno"
+                                      UNION ALL
+                                      SELECT clave, nombre, username, year
+                                      FROM sinfodi_evaluacion_serv_tecno
+                                      WHERE year = '.$year.' AND id_criterio = 14 AND direccion = "DServTec") x
+                                GROUP BY clave, nombre, usuario, year
+                                HAVING COUNT(*) = 1');
+        $data['response'] = $query;
+        return $this->response($data);
+    }
+
     /**
      * Display a listing of the resource.
      *

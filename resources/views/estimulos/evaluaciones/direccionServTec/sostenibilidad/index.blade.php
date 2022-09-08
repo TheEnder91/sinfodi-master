@@ -284,36 +284,52 @@
             }
             // console.log(año);
             var criterio = 14;
-            consultarDatos({
-                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/searchSostentabilidad/" + año,
+            $.ajax({
                 type: 'GET',
-                dataType: 'json',
-                ok: function(datosCritero14){
-                    var datosCriterio14 = datosCritero14.response;
+                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/searchSostentabilidad/" + año,
+                data: {
+                    token: $('#txtTokenRepo').val(),
+                },
+                headers: {
+                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                },
+                success: function(datosCritero14){
                     // console.log(datosCritero14);
-                    // Codigo para guardar en el sistema...
-                    if(datosCriterio14.length > 0){
-                        for(var i = 0; i < datosCriterio14.length; i++){
-                            var dataCriterio14 = datosCriterio14[i];
+                    var dataCriterio14 = datosCritero14.response;
+                    if(dataCriterio14.length > 0){
+                        for(var i = 0; i < dataCriterio14.length; i++){
+                            var dataGetCriterio14 = dataCriterio14[i];
+                            var resultadoSumaSostenibilidad = getSumaSostenibilidad(año, dataGetCriterio14.clave_participante);
+                            // console.log(dataGetCriterio14.clave_participante + ' -> ' + resultadoSumaSostenibilidad);
+                            var direccion = 'Direccion_Servicios';
+                            var resultadoGetMonto = getMontoAjax(año);
+                            // console.log(dataGetCriterio14.clave_participante + ' -> ' + resultadoGetMonto);
+                            var resultadoGetPuntosPersonal = getPuntosPersonal(año, direccion);
+                            // console.log(dataGetCriterio14.clave_participante + ' -> ' + resultadoGetPuntosPersonal);
+                            var puntosPorPersona = resultadoGetMonto / resultadoGetPuntosPersonal;
+                            // console.log(dataGetCriterio14.clave_participante + ' -> ' + puntosPorPersona);
+                            var total = parseFloat(resultadoSumaSostenibilidad.toFixed(2)) + parseFloat(puntosPorPersona.toFixed(2));
+                            // console.log(dataGetCriterio14.clave_participante + ' -> ' + total);
                             $.ajax({
                                 type: 'POST',
                                 url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/saveDatosSostentabilidad",
                                 data: {
                                     token: $('#txtTokenRepo').val(),
-                                    clave: dataCriterio14.clave_participante,
-                                    nombre: dataCriterio14.nombre_participante,
+                                    clave: dataGetCriterio14.clave_participante,
+                                    nombre: dataGetCriterio14.nombre_participante,
                                     id_objetivo: 4,
                                     id_criterio: criterio,
                                     direccion: "DServTec",
                                     puntos: 0,
-                                    total_puntos: dataCriterio14.total,
-                                    year: dataCriterio14.year,
-                                    username: dataCriterio14.usuario_participante,
+                                    total_puntos: total,
+                                    year: dataGetCriterio14.year,
+                                    username: dataGetCriterio14.usuario_participante,
                                 },
                                 headers: {
                                     'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
                                 },
                                 success: function(data){
+                                    console.log('Desde modulo de sostenibilidad');
                                     verTablaCriterio14(año, 14);
                                 }
                             });
@@ -321,8 +337,144 @@
                     }else{
                         verTablaCriterio14(año, 14);
                     }
-                },
+                }
             });
+            $.ajax({
+                type: 'GET',
+                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getPersonalRestante/" + año,
+                data: {
+                    token: $('#txtTokenRepo').val(),
+                },
+                headers: {
+                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                },
+                success: function(datosRestantesPersonalCritero14){
+                    // console.log(datosRestantesPersonalCritero14);
+                    var dataRestantesPersonalCriterio14 = datosRestantesPersonalCritero14.response;
+                    if(dataRestantesPersonalCriterio14.length > 0){
+                        for(var i = 0; i < dataRestantesPersonalCriterio14.length; i++){
+                            var dataGetRestantesPersonalCriterio14 = dataRestantesPersonalCriterio14[i];
+                            var direccion = 'Direccion_Servicios';
+                            var resultadoGetMonto = getMontoAjax(año);
+                            // console.log(dataGetRestantesPersonalCriterio14.clave_participante + ' -> ' + resultadoGetMonto);
+                            var resultadoGetPuntosPersonal = getPuntosPersonal(año, direccion);
+                            // console.log(dataGetRestantesPersonalCriterio14.clave_participante + ' -> ' + resultadoGetPuntosPersonal);
+                            var puntosPorPersona = resultadoGetMonto / resultadoGetPuntosPersonal;
+                            // console.log(dataGetRestantesPersonalCriterio14.clave_participante + ' -> ' + puntosPorPersona);
+                            var total = parseFloat(puntosPorPersona.toFixed(2));
+                            // console.log(dataGetRestantesPersonalCriterio14.clave_participante + ' -> ' + total);
+                            $.ajax({
+                                type: 'POST',
+                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/saveDatosSostentabilidad",
+                                data: {
+                                    token: $('#txtTokenRepo').val(),
+                                    clave: dataGetRestantesPersonalCriterio14.clave,
+                                    nombre: dataGetRestantesPersonalCriterio14.nombre,
+                                    id_objetivo: 4,
+                                    id_criterio: criterio,
+                                    direccion: "DServTec",
+                                    puntos: 0,
+                                    total_puntos: total,
+                                    year: dataGetRestantesPersonalCriterio14.year,
+                                    username: dataGetRestantesPersonalCriterio14.usuario,
+                                },
+                                headers: {
+                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                },
+                                success: function(data){
+                                    console.log('Restantes de sostenibilidad.');
+                                    verTablaCriterio14(año, 14);
+                                }
+                            });
+                        }
+                    }else{
+                        verTablaCriterio14(año, 14);
+                    }
+                }
+            });
+        }
+
+        function getSumaSostenibilidad(year, clave){
+            var result = "";
+            $.ajax({
+                type: 'GET',
+                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/calculosSostentabilidad/" + year + "/" + clave,
+                async: false,
+                data: {
+                    token: $('#txtTokenRepo').val(),
+                },
+                headers: {
+                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                },
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                },
+                success: function(datosCalculoTotalCriterio14){
+                    if(datosCalculoTotalCriterio14[0].sumaProyectos === null){
+                        var sumaProyectos = 0;
+                    }else{
+                        var sumaProyectos = datosCalculoTotalCriterio14[0].sumaProyectos;
+                    }
+                    if(datosCalculoTotalCriterio14[0].sumaServicios === null){
+                        var sumaServicios = 0;
+                    }else{
+                        var sumaServicios = datosCalculoTotalCriterio14[0].sumaServicios;
+                    }
+                    if(datosCalculoTotalCriterio14[0].sumaCursos === null){
+                        var sumaCursos = 0;
+                    }else{
+                        var sumaCursos = datosCalculoTotalCriterio14[0].sumaCursos;
+                    }
+                    var sumaTotalCalculo = parseFloat(sumaProyectos) + parseFloat(sumaServicios) + parseFloat(sumaCursos);
+                    result = sumaTotalCalculo;
+                }
+            });
+            return result;
+        }
+
+        function getMontoAjax(year){
+            var result = "";
+            $.ajax({
+                type: 'GET',
+                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/getMonto/" + year,
+                async: false,
+                data: {
+                    token: $('#txtTokenRepo').val(),
+                },
+                headers: {
+                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                },
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                },
+                success: function(datosMontoCriterio14){
+                    var monto = parseFloat(datosMontoCriterio14.response) / 10000;
+                    result = monto;
+                }
+            });
+            return result;
+        }
+
+        function getPuntosPersonal(year, direccion){
+            var result = "";
+            $.ajax({
+                type: 'GET',
+                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/ObtenerTotalPersonas/" + year + "/" + direccion,
+                async: false,
+                data: {
+                    token: $('#txtTokenRepo').val(),
+                },
+                headers: {
+                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                },
+                beforeSend: function(xhr){
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                },
+                success: function(datosTotalPersonalCriterio14){
+                    result = datosTotalPersonalCriterio14;
+                }
+            });
+            return result;
         }
 
         function verTablaCriterio14(year, criterio){
@@ -387,20 +539,26 @@
                 dataType: 'json',
                 ok: function(datosCalculoTotalCriterio14){
                     // console.log(datosCalculoTotalCriterio14[0].sumaProyectos);
-                    if(datosCalculoTotalCriterio14[0].sumaProyectos === null){
+                    if(datosCalculoTotalCriterio14.length > 0){
+                        if(datosCalculoTotalCriterio14[0].sumaProyectos === null){
+                            var sumaProyectos = 0;
+                        }else{
+                            var sumaProyectos = datosCalculoTotalCriterio14[0].sumaProyectos;
+                        }
+                        if(datosCalculoTotalCriterio14[0].sumaServicios === null){
+                            var sumaServicios = 0;
+                        }else{
+                            var sumaServicios = datosCalculoTotalCriterio14[0].sumaServicios;
+                        }
+                        if(datosCalculoTotalCriterio14[0].sumaCursos === null){
+                            var sumaCursos = 0;
+                        }else{
+                            var sumaCursos = datosCalculoTotalCriterio14[0].sumaCursos;
+                        }
+                    }else{
                         var sumaProyectos = 0;
-                    }else{
-                        var sumaProyectos = datosCalculoTotalCriterio14[0].sumaProyectos;
-                    }
-                    if(datosCalculoTotalCriterio14[0].sumaServicios === null){
                         var sumaServicios = 0;
-                    }else{
-                        var sumaServicios = datosCalculoTotalCriterio14[0].sumaServicios;
-                    }
-                    if(datosCalculoTotalCriterio14[0].sumaCursos === null){
                         var sumaCursos = 0;
-                    }else{
-                        var sumaCursos = datosCalculoTotalCriterio14[0].sumaCursos;
                     }
                     var sumaTotalCalculo = parseFloat(sumaProyectos) + parseFloat(sumaServicios) + parseFloat(sumaCursos);
                     // console.log(sumaProyectos + ' -> ' + sumaServicios + ' -> ' + sumaCursos);

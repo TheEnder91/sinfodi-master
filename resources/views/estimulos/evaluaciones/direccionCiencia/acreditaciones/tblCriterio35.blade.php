@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio35" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Pruebas interlaboratorio(puntos por analito 60 puntos máximo).</caption>
+        <caption style="font-size:13px;">Pruebas interlaboratorio (Valor del punto: 5).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -131,6 +131,8 @@
     function verEvidenciasCriterio35(year, clave){
         var criterio = 35;
         var objetivo = 8;
+        $('#txtCantidadCriterio35').val(0);
+        $('#txtTotalCriterio35').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/acreditaciones/searchEvidencias/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

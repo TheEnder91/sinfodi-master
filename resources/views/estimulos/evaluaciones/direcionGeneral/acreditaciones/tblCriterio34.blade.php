@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio34" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Nuevas técnicas acreditadas y validadas como tales por la dirección técnica.</caption>
+        <caption style="font-size:13px;">Nuevas técnicas acreditadas y validadas como tales por la dirección técnica (Valor del punto: 25).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -131,6 +131,8 @@
     function verEvidenciasCriterio34(year, clave){
         var criterio = 34;
         var objetivo = 8;
+        $('#txtCantidadCriterio34').val(0);
+        $('#txtTotalCriterio34').val(0);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/acreditaciones/searchEvidencias/" + year + "/" + clave + "/" + criterio,
             type: 'GET',

@@ -30,6 +30,7 @@
         </div><br>
         <div class="table-responsive">
             <table id="tblCriterio32" class="table table-bordered table-striped">
+                <caption style="font-size:13px;">Puntos por las personas que participan en algun grupo institucional (Valor del punto: 10)</caption>
                 <thead>
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
@@ -220,10 +221,12 @@
                     var row = "";
                     for(var i = 0; i < datosColaboracionesCriterio32.length; i++){
                         var dataColaboracionCriterio32 = datosColaboracionesCriterio32[i];
+                        var url1 = "{{ url('/archivos/nombre') }}";
+                        var url_archivo = url1.replace('nombre', dataColaboracionCriterio32.url_archivo);
                         row += "<tr>";
                         row += '<th scope="row" class="text-center" width="15%" style="font-size:12px; vertical-align:middle;">' + dataColaboracionCriterio32.consecutivo + '</td>';
                         row += '<td width="40%" style="font-size:12px; vertical-align:middle;">' + dataColaboracionCriterio32.nombre.toUpperCase() + "</td>";
-                        row += '<td class="text-center" width="25%" style="font-size:12px; vertical-align:middle;"><a href="' + dataColaboracionCriterio32.url_archivo + '" target=_blank><i class="fa fa-eye"></i></a></td>';
+                        row += '<td class="text-center" width="25%" style="font-size:12px; vertical-align:middle;"><a href="' + url_archivo + '" target=_blank><i class="fa fa-eye"></i></a></td>';
                         row += '<td class="text-center" width="20%" style="font-size:12px; vertical-align:middle;">' + puntos + '</td>';
                         row += "</tr>";
                     }
