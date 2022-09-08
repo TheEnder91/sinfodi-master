@@ -148,14 +148,13 @@
                     var row = "";
                     for(var i = 0; i < datosGetComites.length; i++){
                         var dataGetComites = datosGetComites[i];
-                        // var url_archivo = '{{ url("/archivos/".'+dataGetComites.url_archivo+') }}';
-                        var url_archivo = "/archivos/"+dataGetComites.url_archivo;
+                        var url1 = "{{ url('/archivos/nombre') }}";
+                        var url_archivo = url1.replace('nombre', dataGetComites.url_archivo);
                         // console.log(url_archivo);
                         // console.log(dataGetComites);
                         row += "<tr>";
                         row += '<th scope="row" class="text-left" width="90%" style="font-size:12px;">' + dataGetComites.nombre + '</td>';
-                        // row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="'+dataGetComites.url_archivo+'" target="_blank"><i class="fa fa-file"></i></a></i></td>';
-                        row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="{{ url("/archivos/Comite_de_estimulos_2021.pdf") }}" target="_blank"><i class="fa fa-file"></i></a></i></td>';
+                        row += '<td width="5%" class="text-center" style="font-size:12px;"><a href="'+url_archivo+'" target="_blank"><i class="fa fa-file"></i></a></i></td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataGetComites.year + '</td>';
                         row += "</tr>";
                     }
