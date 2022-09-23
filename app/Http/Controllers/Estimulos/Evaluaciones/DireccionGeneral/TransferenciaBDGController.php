@@ -118,4 +118,49 @@ class TransferenciaBDGController extends Controller
         $data['response'] = $datos;
         return $this->response($data);
     }
+
+    public function getDatosinterinstitucional($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'interinstitucional',
+                             'tipo',
+                             'year')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        $data['response'] = $query;
+        return $this->response($data);
+    }
+
+    public function getDatosInterdirecciones($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'interdirecciones',
+                             'tipo',
+                             'year')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        $data['response'] = $query;
+        return $this->response($data);
+    }
+
+    public function getDatosInterareas($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'interareas',
+                             'tipo',
+                             'year')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        $data['response'] = $query;
+        return $this->response($data);
+    }
 }

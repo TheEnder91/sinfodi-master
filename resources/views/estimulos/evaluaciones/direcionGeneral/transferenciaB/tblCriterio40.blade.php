@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio40" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Proyectos de I&D en colaboración con otros grupos de la misma área.</caption>
+        <caption style="font-size:13px;">Proyectos de I&D en colaboración con otros grupos de la misma área (Valor del punto: 150).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>
@@ -8,10 +8,51 @@
                 <th scope="col" style="font-size:13px;">Puntos</th>
                 <th scope="col" style="font-size:13px;">Total</th>
                 <th scope="col" style="font-size:13px;">Año</th>
+                <th scope="col" style="font-size:13px;">Detalles</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="detalleCriterio40ModalLabel" tabindex="-1" role="dialog" aria-labelledby="detalleCriterio40ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" style="width: 40%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title tituloModal" id="exampleModalLongTitle">
+                    <div class="tituloModal" id="tituloModal"></div>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="cuerpoModal">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table id="tblTransferenciaBCriterio40" class="table table-bordered table-striped display" style="font-size:13px;">
+                                        <caption style="font-size:13px;">Sumar solo los proyectos que sean interáreas.</caption>
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col" style="font-size:13px; vertical-align:middle;">CGN</th>
+                                                <th scope="col" style="font-size:13px; vertical-align:middle;">interáreas</th>
+                                                <th scope="col" style="font-size:13px; vertical-align:middle;">Tipo</th>
+                                                <th scope="col" style="font-size:13px; vertical-align:middle;">Año</th>
+                                                <th scope="col" style="font-size:13px; vertical-align:middle;">Puntaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -118,6 +159,7 @@
                             row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataGeneralCriteri40.puntos) + '</td>';
                             row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataGeneralCriteri40.total_puntos) + '</td>';
                             row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataGeneralCriteri40.year + '</td>';
+                            row += '<td class="text-center" width="5%" style="font-size:12px;"><a href="javascript:verDetalleCriterio40(' + dataGeneralCriteri40.year + ', ' + dataGeneralCriteri40.clave + ')"><i class="fa fa-search"></i></a></td>';
                             row += "</tr>";
                     }
                 }
@@ -148,4 +190,55 @@
             },
         });
     }
+
+    function verDetalleCriterio40(year, clave){
+            $('#detalleCriterio40ModalLabel').modal({backdrop: 'static', keyboard: false});
+            document.getElementById('tituloModal').innerHTML='Detalle transferencia de conocimiento->actividades B.';
+            consultarDatos({
+                action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/getDatosInterareas/" + clave + "/" + year,
+                type: 'GET',
+                dataType: 'json',
+                ok: function(datosTransferenciaBCriterio40){
+                    // console.log(datosTransferenciaBCriterio40);
+                    var dataTransferenciaBCriterio40 = datosTransferenciaBCriterio40.response;
+                    var row = "";
+                    if(dataTransferenciaBCriterio40.length > 0){
+                        for(var i = 0; i < dataTransferenciaBCriterio40.length; i++){
+                            var getTransferenciaBCriterio40 = dataTransferenciaBCriterio40[i];
+                            row += "<tr>";
+                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + getTransferenciaBCriterio40.cgn + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + getTransferenciaBCriterio40.interareas + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + getTransferenciaBCriterio40.tipo + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + getTransferenciaBCriterio40.year + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(200) + '</td>';
+                            row += "</tr>";
+                        }
+                    }
+                    if ($.fn.dataTable.isDataTable("#tblTransferenciaBCriterio40")) {
+                        tblDifusionDivulgacion = $("#tblTransferenciaBCriterio40").DataTable();
+                        tblDifusionDivulgacion.destroy();
+                    }
+                    $('#tblTransferenciaBCriterio40 > tbody').html('');
+                    $('#tblTransferenciaBCriterio40 > tbody').append(row);
+                    $('#tblTransferenciaBCriterio40').DataTable({
+                        "order":[[0, "asc"]],
+                        "language":{
+                          "lengthMenu": "Mostrar _MENU_ registros por página.",
+                          "info": "Página _PAGE_ de _PAGES_",
+                          "infoEmpty": "No se encontraron registros.",
+                          "infoFiltered": "(filtrada de _MAX_ registros)",
+                          "loadingRecords": "Cargando...",
+                          "processing":     "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords":    "No se encontraron registros.",
+                          "paginate": {
+                                          "next":       ">",
+                                          "previous":   "<"
+                                      },
+                        },
+                        lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                    });
+                }
+            });
+        }
 </script>

@@ -96,10 +96,10 @@
             if(grupo == "grupo1"){
                 var direccion = document.getElementById("direccion").value;
                 document.getElementById("direccionContenedor").style.display="block";
-                document.getElementById("sectionDownload").style.display="block";
+                // document.getElementById("sectionDownload").style.display="block";
             }else if(grupo == "grupo2"){
                 document.getElementById("direccionContenedor").style.display="none";
-                document.getElementById("sectionDownload").style.display="none";
+                // document.getElementById("sectionDownload").style.display="none";
                 var direccion = "direccionVacio";
             }
             verPersonal(grupo, year, direccion);
@@ -110,10 +110,10 @@
             if(grupo == "grupo1"){
                 var direccion = document.getElementById("direccion").value;
                 document.getElementById("direccionContenedor").style.display="block";
-                document.getElementById("sectionDownload").style.display="block";
+                // document.getElementById("sectionDownload").style.display="block";
             }else if(grupo == "grupo2"){
                 document.getElementById("direccionContenedor").style.display="none";
-                document.getElementById("sectionDownload").style.display="none";
+                // document.getElementById("sectionDownload").style.display="none";
                 var direccion = "direccionVacio";
             }
             var year = document.getElementById("year").value;
@@ -141,6 +141,7 @@
                         // console.log(datosPersonal.response.length);
                         for(var i = 0; i < datosPersonal.response.length; i++){
                             var data = datosPersonal.response[i];
+                            // console.log(data);
                             if(grupo == 'grupo1'){
                                 if(data.direccion == 'DGeneral'){
                                     var puesto = "Direccion General";
@@ -160,8 +161,9 @@
                             }
                             // console.log(data);
                             var authUser = '<?= Auth::user()->usuario ?>';
+                            console.log(grupo + ' -> ' + data.username);
                             var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-acuses-index") ?>';
-                            // if(data.username == authUser || permissions == 1){
+                            if(data.username == authUser || permissions == 1){
                                 row += "<tr>";
                                 row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + data.clave + '</td>';
                                 row += '<td width="60%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
@@ -169,7 +171,7 @@
                                 row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
                                 row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
                                 row += "</tr>";
-                            // }
+                            }
                         }
                     }else{
                         console.log(datosPersonal.response.length);
@@ -214,7 +216,7 @@
         }
 
         function firmarAcuse(direccion, nombre, clave, year, grupo){
-
+            alert('Firmar...');
         }
 
         function downloadConcentrado(){

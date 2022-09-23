@@ -1,6 +1,6 @@
 <div class="table-responsive" width = "100%" id="table_refresh">
     <table id="tblCriterio40" class="table table-bordered table-striped" style="font-size:13px;">
-        <caption style="font-size:13px;">Proyectos de I&D en colaboración con otros grupos de la misma área.</caption>
+        <caption style="font-size:13px;">Proyectos de I&D en colaboración con otros grupos de la misma área (Valor del punto: 150).</caption>
         <thead>
             <tr class="text-center">
                 <th scope="col" style="font-size:13px;">Clave</th>

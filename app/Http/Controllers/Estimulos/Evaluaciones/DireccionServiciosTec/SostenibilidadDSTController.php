@@ -237,4 +237,19 @@ class SostenibilidadDSTController extends Controller
         $data['response'] = $datos;
         return $this->response($data);
     }
+
+    public function getDatosRemanente($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                    ->select('cgn',
+                             'clave_participante',
+                             'remanente',
+                             'tipo',
+                             'year')
+                    ->where('clave_participante', '=', $clave)
+                    ->where('year', '=', $year)
+                    ->where('tipo', '=', 'Proyectos')
+                    ->get();
+        $data['response'] = $query;
+        return $this->response($data);
+    }
 }

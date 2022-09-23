@@ -101,6 +101,7 @@
             obtenerCriterio38(año, 38);
             obtenerCriterio39(año, 39);
             obtenerCriterio40(año, 40);
+            obtenerCriterio41(año, 41);
         }
     </script>
 @endsection

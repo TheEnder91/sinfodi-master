@@ -1,3 +1,8 @@
+@php
+    $totalPuntosA = $sumaTotalPuntosA * 0.3;
+    $totalPuntosB = $sumaTotalPuntosB * 0.7;
+    $sumarTotalPuntosAyB = $totalPuntosA + $totalPuntosB;
+@endphp
 <div id="page">
     <table id="resumen">
         <thead>
@@ -10,26 +15,26 @@
         </thead>
         <tbody>
             <tr>
-                <td>Factor 1. Actividades A y B</td>
-                <td style="text-align: center">---</td>
+                <td>Factor 1. (Total puntos actividades A + B) * valor del punto</td>
+                <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
             <tr>
-                <td>Criterios adoptados por DG</td>
+                <td><b>Criterios adoptados por DG</b></td>
                 <td style="text-align: center"></td>
                 <td style="text-align: center"></td>
                 <td style="text-align: center"></td>
             </tr>
             <tr>
                 <td>Ingresos propios</td>
-                <td style="text-align: center">---</td>
+                <td style="text-align: center">N/A</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
             <tr>
                 <td>Fondos en administración</td>
-                <td style="text-align: center">---</td>
+                <td style="text-align: center">N/A</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
@@ -37,7 +42,7 @@
         <tfoot width = "100%" style="font-size: 10px;">
             <tr>
                 <td style="text-align: left">Total General:</td>
-                <td style="text-align: center">---</td>
+                <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
@@ -66,19 +71,31 @@
                     <tr>
                         <td class="tbody">{{ $itemCriteriosA->criterio }}</td>
                         <td class="tbody" style="text-align: center">{{ $itemCriteriosA->puntosCriterio }}</td>
-                        <td class="tbody" style="text-align: center">0</td>
-                        <td class="tbody" style="text-align: center">0</td>
+                        <td class="tbody" style="text-align: center">
+                            @if ($itemCriteriosA->cantidad === null)
+                                0
+                            @else
+                                {{ round($itemCriteriosA->cantidad) }}
+                            @endif
+                        </td>
+                        <td class="tbody" style="text-align: center">
+                            @if ($itemCriteriosA->totalPuntos === null)
+                                0.00
+                            @else
+                                {{ $itemCriteriosA->totalPuntos }}
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr style="font-size: 10px;">
                     <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos</td>
-                    <td style="text-align: center">0.00</td>
+                    <td style="text-align: center">{{ number_format($sumaTotalPuntosA, 2) }}</td>
                 </tr>
                 <tr style="font-size: 10px;">
-                    <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos por 0.3</td>
-                    <td style="text-align: center">0.00</td>
+                    <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos * 0.3</td>
+                    <td style="text-align: center">{{ number_format($totalPuntosA, 2) }}</td>
                 </tr>
                 <tr>
                     <td style="text-align: left; font-size: 8px; font-weight: bold;" colspan="4">Resultado de la suma de la tabla 1 actividades A multiplicados por un factor de 0.3, al Anexo 1 Mecanismo de Evaluación, página 13.</td>
@@ -103,19 +120,31 @@
                     <tr>
                         <td class="tbody">{{ $itemCriteriosB->criterio }}</td>
                         <td class="tbody" style="text-align: center">{{ $itemCriteriosB->puntosCriterio }}</td>
-                        <td class="tbody" style="text-align: center">0</td>
-                        <td class="tbody" style="text-align: center">0</td>
+                        <td class="tbody" style="text-align: center">
+                            @if ($itemCriteriosB->cantidad === null)
+                                0
+                            @else
+                                {{ round($itemCriteriosB->cantidad) }}
+                            @endif
+                        </td>
+                        <td class="tbody" style="text-align: center">
+                            @if ($itemCriteriosB->totalPuntos === null)
+                                0.00
+                            @else
+                                {{ $itemCriteriosB->totalPuntos }}
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr style="font-size: 10px;">
                     <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos</td>
-                    <td style="text-align: center">0.00</td>
+                    <td style="text-align: center">{{ number_format($sumaTotalPuntosB, 2) }}</td>
                 </tr>
                 <tr style="font-size: 10px;">
-                    <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos por 0.7</td>
-                    <td style="text-align: center">0.00</td>
+                    <td style="text-align: right; font-weight: bold;" colspan="3">Total de puntos * 0.7</td>
+                    <td style="text-align: center">{{ number_format($totalPuntosB, 2) }}</td>
                 </tr>
                 <tr>
                     <td style="text-align: left; font-size: 8px; font-weight: bold;" colspan="4">Resultado de la suma de la tabla 2 actividades B multiplicados por un factor de 0.7, al Anexo 1 Mecanismo de Evaluación, página 13.</td>

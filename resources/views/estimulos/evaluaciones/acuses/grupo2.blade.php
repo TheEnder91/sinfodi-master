@@ -1,3 +1,38 @@
+<div id="page">
+    <table id="resumen">
+        <thead>
+            <tr>
+                <th>Resumen</th>
+                <th>No. Puntos Anual</th>
+                <th>Monto Anual<sup>1</sup></th>
+                <th>Monto Bimestral<sup>1</sup></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Factor 1. Puntaje de acuerdo a su función</td>
+                <td style="text-align: center">---</td>
+                <td style="text-align: center">$0.00</td>
+                <td style="text-align: center">$0.00</td>
+            </tr>
+            <tr>
+                <td>Factor 2. Evaluación anual de nivel de impacto para el desarrollo institucional</td>
+                <td style="text-align: center">---</td>
+                <td style="text-align: center">$0.00</td>
+                <td style="text-align: center">$0.00</td>
+            </tr>
+        </tbody>
+        <tfoot width = "100%" style="font-size: 10px;">
+            <tr>
+                <td style="text-align: left">Total General:</td>
+                <td style="text-align: center">---</td>
+                <td style="text-align: center">$0.00</td>
+                <td style="text-align: center">$0.00</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<br>
 <fieldset class="Fieldset">
     <legend class="Legend">Grupo 2</legend>
     <fieldset>
@@ -12,7 +47,7 @@
             <tbody>
                 <tr>
                     <td class="tbody">Coordinador de área o equivalente</td>
-                    <td class="tbody" style="text-align: center">800</td>
+                    <td class="tbody" style="text-align: center">{{ $puntajeResponsabilidad }}</td>
                 </tr>
             </tbody>
         </table>

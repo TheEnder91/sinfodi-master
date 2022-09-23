@@ -6,7 +6,7 @@
     <div class="sidebar">
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-header" style="font-size:13px;">MODULOS</li>
+                {{-- <li class="nav-header" style="font-size:13px;">MODULOS</li> --}}
                 {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/sostenibilidad/listSostenibilidad') }}" class="nav-link {{ isRouteActive('modulos.sostentabilidad') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -24,20 +24,20 @@
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Puntos totales</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/recursosPropios/listRecursosPropios') }}" class="nav-link {{ isRouteActive('modulos.recursosPropios') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Recursos propios</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/fondosAdministracion/listFondosAdministracion') }}" class="nav-link {{ isRouteActive('modulos.fondosAdministracion') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Fondos en administración</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/serviciosTecnologicos/informacionFinanciera/index') }}" class="nav-link {{ isRouteActive('modulos.serviciosTecnologicos.informacionFinanciera') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Servicios tecnológicos</p>
@@ -198,13 +198,13 @@
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-colaboracion-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-acreditaciones-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-acreditaciones-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-investigacionB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-sostentabilidadB-index') ||
                      Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-sostentabilidadB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-servicios-transferenciaB-index') || Auth::user()->hasPermissionTo('estimulo-evaluaciones-proyectos-transferenciaB-index') ||
-                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index'))
+                     Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
                     <li class="nav-item has-treeview {{ isMenuOpen('estimulos.evaluaciones') }}">
                         <a href="#" class="nav-link {{ isRouteActive('estimulos.evaluaciones') }}">
                             <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
-                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index'))
+                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">

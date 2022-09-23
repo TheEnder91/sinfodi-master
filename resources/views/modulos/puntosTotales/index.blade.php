@@ -158,7 +158,7 @@
                     $('#tblTotalPuntos > tbody').html('');
                     $('#tblTotalPuntos > tbody').append(row);
                     $('#tblTotalPuntos').DataTable({
-                        "order":[[0, "asc"]],
+                        "order":[[0, "desc"]],
                         "language":{
                           "lengthMenu": "Mostrar _MENU_ registros por página.",
                           "info": "Página _PAGE_ de _PAGES_",
@@ -253,12 +253,37 @@
                 type: 'GET',
                 dataType: 'json',
                 ok: function(totalPuntosA){
-                    var totalPuntosGeneral = totalPuntosA.response[0].totalGeneral;
-                    var totalPuntosAdministracion = totalPuntosA.response[1].totalAdministracion;
-                    var totalPuntosPosgrado = totalPuntosA.response[2].totalPosgrado;
-                    var totalPuntosServicios = totalPuntosA.response[3].totalServicios;
-                    var totalPuntosCiencia = totalPuntosA.response[4].totalCiencia;
-                    var totalPuntosTecnologia = totalPuntosA.response[5].totalTecnologia;
+                    if(totalPuntosA.response[0].totalGeneral === null){
+                        var totalPuntosGeneral = 0;
+                    }else{
+                        var totalPuntosGeneral = totalPuntosA.response[0].totalGeneral;
+                    }
+                    if(totalPuntosA.response[1].totalAdministracion === null){
+                        var totalPuntosAdministracion = 0;
+                    }else{
+                        var totalPuntosAdministracion = totalPuntosA.response[1].totalAdministracion;
+                    }
+                    if(totalPuntosA.response[2].totalPosgrado === null){
+                        var totalPuntosPosgrado = 0;
+                    }else{
+                        var totalPuntosPosgrado = totalPuntosA.response[2].totalPosgrado;
+                    }
+                    if(totalPuntosA.response[4].totalCiencia === null){
+                        var totalPuntosCiencia = 0;
+                    }else{
+                        var totalPuntosCiencia = totalPuntosA.response[4].totalCiencia;
+                    }
+                    if(totalPuntosA.response[3].totalServicios === null){
+                        var totalPuntosServicios = 0;
+                    }else{
+                        var totalPuntosServicios = totalPuntosA.response[3].totalServicios;
+                    }
+                    if(totalPuntosA.response[5].totalTecnologia === null){
+                        var totalPuntosTecnologia = 0;
+                    }else{
+                        var totalPuntosTecnologia = totalPuntosA.response[5].totalTecnologia;
+                    }
+                    // console.log(totalPuntosGeneral);
                     var puntosTotalesA = parseFloat(totalPuntosGeneral) + parseFloat(totalPuntosAdministracion) + parseFloat(totalPuntosPosgrado) + parseFloat(totalPuntosServicios) + parseFloat(totalPuntosCiencia) + parseFloat(totalPuntosTecnologia);
                     // console.log(puntosTotalesA);
                     $('#txtTotalPuntosTotalA').val(new Intl.NumberFormat().format(puntosTotalesA.toFixed(2)));
@@ -268,12 +293,38 @@
                         type: 'GET',
                         dataType: 'json',
                         ok: function(totalPuntosB){
-                            var totalPuntosGeneralB = totalPuntosB.response[0].totalGeneralB;
-                            var totalPuntosAdministracionB = totalPuntosB.response[1].totalAdministracionB;
-                            var totalPuntosPosgradoB = totalPuntosB.response[2].totalPosgradoB;
-                            var totalPuntosServiciosB = totalPuntosB.response[3].totalServiciosB;
-                            var totalPuntosCienciaB = totalPuntosB.response[4].totalCienciaB;
-                            var totalPuntosTecnologiaB = totalPuntosB.response[5].totalTecnologiaB;
+                            // console.log(totalPuntosB);
+                            if(totalPuntosB.response[0].totalGeneralB === null){
+                                var totalPuntosGeneralB = 0;
+                            }else{
+                                var totalPuntosGeneralB = totalPuntosB.response[0].totalGeneralB;
+                            }
+                            if(totalPuntosB.response[1].totalAdministracionB === null){
+                                var totalPuntosAdministracionB = 0;
+                            }else{
+                                var totalPuntosAdministracionB = totalPuntosB.response[1].totalAdministracionB;
+                            }
+                            if(totalPuntosB.response[2].totalPosgradoB === null){
+                                var totalPuntosPosgradoB = 0;
+                            }else{
+                                var totalPuntosPosgradoB = totalPuntosB.response[2].totalPosgradoB;
+                            }
+                            if(totalPuntosB.response[3].totalServiciosB === null){
+                                var totalPuntosServiciosB = 0;
+                            }else{
+                                var totalPuntosServiciosB = totalPuntosB.response[3].totalServiciosB;
+                            }
+                            if(totalPuntosB.response[4].totalCienciaB === null){
+                                var totalPuntosCienciaB = 0;
+                            }else{
+                                var totalPuntosCienciaB = totalPuntosB.response[4].totalCienciaB;
+                            }
+                            if(totalPuntosB.response[5].totalTecnologiaB === null){
+                                var totalPuntosTecnologiaB = 0;
+                            }else{
+                                var totalPuntosTecnologiaB = totalPuntosB.response[5].totalTecnologiaB;
+                            }
+                            // console.log(totalPuntosServiciosB);
                             var puntosTotalesB = parseFloat(totalPuntosGeneralB) + parseFloat(totalPuntosAdministracionB) + parseFloat(totalPuntosPosgradoB) + parseFloat(totalPuntosServiciosB) + parseFloat(totalPuntosCienciaB) + parseFloat(totalPuntosTecnologiaB);
                             // console.log(puntosTotalesB);
                             $('#txtTotalPuntosTotalB').val(new Intl.NumberFormat().format(puntosTotalesB.toFixed(2)));
@@ -387,7 +438,7 @@
 
         function verTotalPuntos(id, year){
             consultarDatos({
-                action: "{{ config('app.url') }}/modulos/puntosTotales/getTotalPuntos",
+                action: "{{ config('app.url') }}/modulos/puntosTotales/getTotalPuntosYear/"+year+"/"+id,
                 type: 'GET',
                 dataType: 'json',
                 ok: function(verPuntosTotales){

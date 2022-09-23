@@ -278,4 +278,13 @@ class PuntosTotalesController extends Controller
         ');
         return $totalPuntosATecnologia;
     }
+
+    public function getTotalPuntosYear($year, $id){
+        $query = DB::table('sinfodi_total_puntos')
+                    ->where('year', $year)
+                    ->Where('id', $id)
+                    ->get();
+        $data['response'] = $query;
+        return $this->response($data);
+    }
 }

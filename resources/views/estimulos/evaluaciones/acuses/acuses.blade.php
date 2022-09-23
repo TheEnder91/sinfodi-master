@@ -124,72 +124,12 @@
             <div class="right"><b>Fecha: </b> {{ date('Y-m-d') }}</div>
             <div class="center">{{ strtoupper(eliminar_acentos($nombre)) }}</div>
         </div>
-        <div id="page">
-            <table id="resumen">
-                <thead>
-                    <tr>
-                        <th>Resumen</th>
-                        <th>No. Puntos Anual</th>
-                        <th>Monto Anual<sup>1</sup></th>
-                        <th>Monto Bimestral<sup>1</sup></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if($grupo == 'grupo1')
-                        <tr>
-                            <td>Factor 1. Actividades A y B</td>
-                            <td style="text-align: center">---</td>
-                            <td style="text-align: center">$0.00</td>
-                            <td style="text-align: center">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Criterios adoptados por DG</td>
-                            <td style="text-align: center"></td>
-                            <td style="text-align: center"></td>
-                            <td style="text-align: center"></td>
-                        </tr>
-                        <tr>
-                            <td>Ingresos propios</td>
-                            <td style="text-align: center">---</td>
-                            <td style="text-align: center">$0.00</td>
-                            <td style="text-align: center">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Fondos en administración</td>
-                            <td style="text-align: center">---</td>
-                            <td style="text-align: center">$0.00</td>
-                            <td style="text-align: center">$0.00</td>
-                        </tr>
-                    @elseif ($grupo == 'grupo2')
-                        <tr>
-                            <td>Factor 1. Puntaje de acuerdo a su función</td>
-                            <td style="text-align: center">---</td>
-                            <td style="text-align: center">$0.00</td>
-                            <td style="text-align: center">$0.00</td>
-                        </tr>
-                        <tr>
-                            <td>Factor 2. Evaluación anual de nivel de impacto para el desarrollo institucional</td>
-                            <td style="text-align: center">---</td>
-                            <td style="text-align: center">$0.00</td>
-                            <td style="text-align: center">$0.00</td>
-                        </tr>
-                    @endif
-                </tbody>
-                <tfoot width = "100%" style="font-size: 10px;">
-                    <tr>
-                        <td style="text-align: left">Total General:</td>
-                        <td style="text-align: center">---</td>
-                        <td style="text-align: center">$0.00</td>
-                        <td style="text-align: center">$0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-        <br>
         @if($grupo == 'grupo1')
             @include('estimulos.evaluaciones.acuses.grupo1')
+            {{-- @include('estimulos.evaluaciones.acuses.acuseGrupo1Prueba') --}}
         @elseif ($grupo == 'grupo2')
             @include('estimulos.evaluaciones.acuses.grupo2')
+            {{-- @include('estimulos.evaluaciones.acuses.acuseGrupo2Prueba') --}}
         @endif
         <div style="text-align: center; font-weight: bold; font-size: 11px;">
             Firma de representantes del Comité de Evaluación conforme al acuerdo de la minuta de la Primera Sesión del Comité de Evaluación {{ date("Y") }}.

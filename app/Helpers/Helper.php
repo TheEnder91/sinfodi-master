@@ -271,12 +271,7 @@ function saveEvaluados(){
     $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia(), GetDireccionServTec(), GetDireccionProyTec());
     // var_dump($datos);
     if(count($queryDatos) >= 1){
-        if(DB::table('sinfodi_evaluados')->delete()){
-            DB::table('sinfodi_evaluados')->truncate();
-            $saveEvaluados = new Evaluados();
-            $saveEvaluados->insert($datos);
-            return $datos;
-        }
+        return true;
     }else{
         $saveEvaluados = new Evaluados();
         $saveEvaluados->insert($datos);
@@ -392,6 +387,16 @@ function existeUsuario($usuario, $tipo, $criterio){
                         ->where('puesto', '=', $criterio)
                         ->where('unidad_admin', '<>', 'Personal de Apoyo')
                         ->where('categoria', '<>', 'Coordinador')
+                        ->count();
+        if($queryExiste >= 1){
+            return true;
+        }else{
+            return false;
+        }
+    }elseif($tipo = 'acuses' && $criterio == 'acuses'){
+        $queryExiste = DB::table('sinfodi_evaluados')
+                        ->select('usuario')
+                        ->where('usuario', '=', $usuario)
                         ->count();
         if($queryExiste >= 1){
             return true;
