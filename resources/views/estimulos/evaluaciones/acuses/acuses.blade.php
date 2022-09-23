@@ -125,11 +125,11 @@
             <div class="center">{{ strtoupper(eliminar_acentos($nombre)) }}</div>
         </div>
         @if($grupo == 'grupo1')
-            @include('estimulos.evaluaciones.acuses.grupo1')
-            {{-- @include('estimulos.evaluaciones.acuses.acuseGrupo1Prueba') --}}
+            {{-- @include('estimulos.evaluaciones.acuses.grupo1') --}}
+            @include('estimulos.evaluaciones.acuses.acuseGrupo1Prueba')
         @elseif ($grupo == 'grupo2')
-            @include('estimulos.evaluaciones.acuses.grupo2')
-            {{-- @include('estimulos.evaluaciones.acuses.acuseGrupo2Prueba') --}}
+            {{-- @include('estimulos.evaluaciones.acuses.grupo2') --}}
+            @include('estimulos.evaluaciones.acuses.acuseGrupo2Prueba')
         @endif
         <div style="text-align: center; font-weight: bold; font-size: 11px;">
             Firma de representantes del Comité de Evaluación conforme al acuerdo de la minuta de la Primera Sesión del Comité de Evaluación {{ date("Y") }}.
