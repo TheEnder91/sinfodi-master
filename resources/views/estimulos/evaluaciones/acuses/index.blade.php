@@ -215,8 +215,11 @@
             window.open(url);
         }
 
-        function firmarAcuse(direccion, nombre, clave, year, grupo){
-            alert('Firmar...');
+        function firmarAcuse(clave, nombre, year){
+            // var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/firmarAcusePDF/clave/nombre/year") }}';
+            // var link1 = url.replace('clave', clave);
+            // var firma = link1.replace('nombre', nombre);
+            // window.open(firma);
         }
 
         function downloadConcentrado(){

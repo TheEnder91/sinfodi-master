@@ -8,6 +8,8 @@ use App\Traits\SingleResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class AcusesPDFController extends Controller
 {
@@ -740,4 +742,25 @@ class AcusesPDFController extends Controller
         // ])->attach('pdf', Storage::get("/app/public/".$nombreDoc));
         // return $dompdf->stream($nombreDoc);
     // }
+
+    public function firmarAcuse($nombre, $clave, $year){
+        $nombreDoc = $clave."_".$nombre.".pdf";
+        $dompdf = resolve('dompdf.wrapper');
+        $archivo = $dompdf->download()->getOriginalContent();
+        Storage::put("/public/".$nombreDoc, $archivo);
+        $prueba = Http::attach(
+            'pdf', file_get_contents(storage_path("app/public/".$nombreDoc)), $nombreDoc
+        )->post('http://126.107.2.56/SINFODI/esignature/api/document', [
+            'no_employee' => $clave,
+            'document_type_id' => 4,
+            'is_private' => 1, //1 = SI, 2= NO
+        ]);
+        $prueba = Http::post('http://126.107.2.56/SINFODI/esignature/api/document', [
+            'no_employee' => $clave,
+            // 'pdf' => Storage::get("/app/public/".$nombreDoc),
+            'document_type_id' => 4,
+            'is_private' => 1, //1 = SI, 2= NO
+        ])->attach('pdf', Storage::get("/app/public/".$nombreDoc));
+        return $dompdf->stream($nombreDoc);
+    }
 }

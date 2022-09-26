@@ -203,7 +203,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_general as $item){
         $direccion_general[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_General',
             'year'=>date("Y")-1,
@@ -212,7 +212,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_de_administracion as $item){
         $direccion_administracion[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_Administracion',
             'year'=>date("Y")-1,
@@ -221,7 +221,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_de_posgrado as $item){
         $direccion_posgrado[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_Posgrado',
             'year'=>date("Y")-1,
@@ -230,7 +230,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_de_ciencia as $item){
         $direccion_ciencia[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_Ciencia',
             'year'=>date("Y")-1,
@@ -239,7 +239,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_de_servicios_tecnologicos as $item){
         $direccion_servicios[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_Servicios',
             'year'=>date("Y")-1,
@@ -248,7 +248,7 @@ function getPersonalSinFiltros(){
     foreach($array->unidad_administrativa_sin_filtro->direccion_de_tecnologia as $item){
         $direccion_tecnologia[] = [
             'clave'=>$item->clave,
-            'nombre'=>$item->nombre,
+            'nombre'=>eliminar_acentos($item->nombre),
             'usuario'=>$item->usuario,
             'unidad_admin'=>'Direccion_Tecnologia',
             'year'=>date("Y")-1,

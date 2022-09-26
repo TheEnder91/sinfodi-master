@@ -242,14 +242,14 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/acusesPDF', [AcusesPDFController::class, "index"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}/{grupo}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
-    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/firmarAcusePDF/{clave}/{nombre}/{year}', [AcusesPDFController::class, "firmarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     /** Exportar excel... */
     Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', [ExportarExcel::class, "index"])->name('estimulos.evaluaciones.exportarExcel');
     // Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', function(){
     //     return Excel::download(new ConcentradoExcel, 'concentrado.xlsx');
     // });
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
-    Route::get('/estimulos/evaluaciones/downloadAcuse/{usuario}', [AcusesPDFController::class, "downloadAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
 
 
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
