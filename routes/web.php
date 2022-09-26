@@ -11,6 +11,7 @@ use App\Http\Controllers\Modulos\ComitesController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Estimulos\ObjetivosController;
 use App\Http\Controllers\Modulos\ColaboracionController;
+use App\Http\Controllers\Estimulos\Evaluaciones\Factores;
 use App\Http\Controllers\Modulos\PuntosTotalesController;
 use App\Http\Controllers\Estimulos\LineamientosController;
 use App\Http\Controllers\Modulos\ServiciosTecnoController;
@@ -250,6 +251,14 @@ Route::middleware(['login'])->group(function(){
     // });
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/generarAcuse/{username}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+
+    // Rutas para los factores del grupo 1...
+    Route::get('/estimulos/evaluaciones/grupo1/factor2', [Factores::class, "grupo1_factor2"])->name('estimulos.evaluaciones.factores.grupo1.factor2');
+    Route::get('/estimulos/evaluaciones/grupo1/noAplica/factor2', [Factores::class, "grupo1_factor2_noAplica"])->name('estimulos.evaluaciones.factores.grupo1.noAplica.factor2');
+    Route::get('/estimulos/evaluaciones/grupo1/factor3', [Factores::class, "grupo1_factor3"])->name('estimulos.evaluaciones.factores.grupo1.factor3');
+    // Rutas para los factores del grupo 2...
+    Route::get('/estimulos/evaluaciones/grupo2/factor2', [Factores::class, "grupo2_factor2"])->name('estimulos.evaluaciones.factores.grupo2.factor2');
+    Route::get('/estimulos/evaluaciones/grupo2/factor3', [Factores::class, "grupo2_factor3"])->name('estimulos.evaluaciones.factores.grupo2.factor3');
 
 
     /** Rutas para las evaluaciones de estimulos Direccion general->Difusion y divulgacion... */
