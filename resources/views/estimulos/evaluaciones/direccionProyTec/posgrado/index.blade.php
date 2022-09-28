@@ -46,7 +46,7 @@
                                             Graduado entre 37 y 42 meses
                                         @endif
                                         @if ($item->id == 5)
-                                            Graduado entre 43 y 60 meses
+                                            Graduado entre 43 y 48 meses
                                         @endif
                                     </a>
                                 </li>

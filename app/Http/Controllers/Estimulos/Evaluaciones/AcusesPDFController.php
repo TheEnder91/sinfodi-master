@@ -40,7 +40,7 @@ class AcusesPDFController extends Controller
         $responsabilidades = DB::table('sinfodi_evaluacion_responsabilidades')
                                 ->select('clave')
                                 ->where('year', $year)
-                                ->whereRaw('(direccion = "Coordinadores" OR direccion = "Personal_Apoyo")')
+                                // ->whereRaw('(direccion = "Coordinadores" OR direccion = "Personal_Apoyo")')
                                 ->distinct()
                                 ->get();
         foreach ($responsabilidades as $itemResponsabilidad){
@@ -53,49 +53,37 @@ class AcusesPDFController extends Controller
                 $query = DB::table('sinfodi_evaluacion_general')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
-                            ->where('total_puntos', '<>', 0.00)
-                            ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Administracion'){
-                // $query = DB::table('sinfodi_evaluacion_administracion')
-                //             ->select('clave', 'nombre', 'direccion', 'username')
-                //             ->where('year', '=', $year)
-                //             ->where('total_puntos', '<>', 0.00)
-                //             ->whereNotIn('clave', $datos)
-                //             ->distinct()
-                //             ->get();
-                $query = [];
+                $query = DB::table('sinfodi_evaluacion_administracion')
+                            ->select('clave', 'nombre', 'direccion', 'username')
+                            ->where('year', '=', $year)
+                            ->distinct()
+                            ->get();
             }else if($direccion == 'Direccion Posgrado'){
                 $query = DB::table('sinfodi_evaluacion_posgrado')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
                             ->where('total_puntos', '<>', 0.00)
-                            ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Ciencia'){
                 $query = DB::table('sinfodi_evaluacion_ciencia')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
-                            ->where('total_puntos', '<>', 0.00)
-                            ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Servicios'){
                 $query = DB::table('sinfodi_evaluacion_serv_tecno')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
-                            ->where('total_puntos', '<>', 0.00)
-                            ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Tecnologia'){
                 $query = DB::table('sinfodi_evaluacion_proy_tecno')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
-                            ->where('total_puntos', '<>', 0.00)
-                            ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }
@@ -130,6 +118,86 @@ class AcusesPDFController extends Controller
                     WHERE criterios.observaciones = "Tabla 1. Actividad A."
                     ORDER BY criterios.id ASC
                 ');
+            }else if($direccion == 'Direccion Administracion'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_administracion
+                        WHERE sinfodi_evaluacion_administracion.clave = '.$clave.' AND sinfodi_evaluacion_administracion.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Posgrado'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_posgrado
+                        WHERE sinfodi_evaluacion_posgrado.clave = '.$clave.' AND sinfodi_evaluacion_posgrado.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Ciencia'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_ciencia
+                        WHERE sinfodi_evaluacion_ciencia.clave = '.$clave.' AND sinfodi_evaluacion_ciencia.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Servicios'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_serv_tecno
+                        WHERE sinfodi_evaluacion_serv_tecno.clave = '.$clave.' AND sinfodi_evaluacion_serv_tecno.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Tecnologia'){
+                $queryCriterioA = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_proy_tecno
+                        WHERE sinfodi_evaluacion_proy_tecno.clave = '.$clave.' AND sinfodi_evaluacion_proy_tecno.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad A."
+                    ORDER BY criterios.id ASC
+                ');
             }
             return $queryCriterioA;
         }else{
@@ -151,6 +219,86 @@ class AcusesPDFController extends Controller
                         SELECT id_criterio, puntos, total_puntos
                         FROM sinfodi_evaluacion_general
                         WHERE sinfodi_evaluacion_general.clave = '.$clave.' AND sinfodi_evaluacion_general.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Administracion'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_administracion
+                        WHERE sinfodi_evaluacion_administracion.clave = '.$clave.' AND sinfodi_evaluacion_administracion.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Posgrado'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_posgrado
+                        WHERE sinfodi_evaluacion_posgrado.clave = '.$clave.' AND sinfodi_evaluacion_posgrado.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Ciencia'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_ciencia
+                        WHERE sinfodi_evaluacion_ciencia.clave = '.$clave.' AND sinfodi_evaluacion_ciencia.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Servicios'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_serv_tecno
+                        WHERE sinfodi_evaluacion_serv_tecno.clave = '.$clave.' AND sinfodi_evaluacion_serv_tecno.year = '.$year.'
+                    ) puntos ON criterios.id = puntos.id_criterio
+                    WHERE criterios.observaciones = "Tabla 1. Actividad B."
+                    ORDER BY criterios.id ASC
+                ');
+            }else if($direccion == 'Direccion Tecnologia'){
+                $queryCriterioB = DB::select('
+                           SELECT criterios.id AS idCriterio,
+                           criterios.nombre AS criterio,
+                           criterios.puntos AS puntosCriterio,
+                           puntos.puntos AS cantidad,
+                           puntos.total_puntos AS totalPuntos
+                    FROM sinfodi_criterios criterios
+                    LEFT JOIN(
+                        SELECT id_criterio, puntos, total_puntos
+                        FROM sinfodi_evaluacion_proy_tecno
+                        WHERE sinfodi_evaluacion_proy_tecno.clave = '.$clave.' AND sinfodi_evaluacion_proy_tecno.year = '.$year.'
                     ) puntos ON criterios.id = puntos.id_criterio
                     WHERE criterios.observaciones = "Tabla 1. Actividad B."
                     ORDER BY criterios.id ASC
@@ -263,6 +411,41 @@ class AcusesPDFController extends Controller
                         ->where('year', $year)
                         ->whereBetween('id_criterio', [1, 35])
                         ->value('total_puntos');
+        }else if($direccion == 'Direccion Administracion'){
+            $query = DB::table('sinfodi_evaluacion_administracion')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [1, 35])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Posgrado'){
+            $query = DB::table('sinfodi_evaluacion_posgrado')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [1, 35])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Ciencia'){
+            $query = DB::table('sinfodi_evaluacion_ciencia')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [1, 35])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Servicios'){
+            $query = DB::table('sinfodi_evaluacion_serv_tecno')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [1, 35])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Tecnologia'){
+            $query = DB::table('sinfodi_evaluacion_proy_tecno')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [1, 35])
+                        ->value('total_puntos');
         }
         return $query;
     }
@@ -270,6 +453,41 @@ class AcusesPDFController extends Controller
     public function getSumaTotalPuntosB($year, $clave, $direccion){
         if($direccion == 'Direccion General'){
             $query = DB::table('sinfodi_evaluacion_general')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [36, 41])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Administracion'){
+            $query = DB::table('sinfodi_evaluacion_administracion')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [36, 41])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Posgrado'){
+            $query = DB::table('sinfodi_evaluacion_posgrado')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [36, 41])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Ciencia'){
+            $query = DB::table('sinfodi_evaluacion_ciencia')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [36, 41])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Servicios'){
+            $query = DB::table('sinfodi_evaluacion_serv_tecno')
+                        ->selectRaw('SUM(total_puntos) AS total_puntos')
+                        ->where('clave', $clave)
+                        ->where('year', $year)
+                        ->whereBetween('id_criterio', [36, 41])
+                        ->value('total_puntos');
+        }else if($direccion == 'Direccion Tecnologia'){
+            $query = DB::table('sinfodi_evaluacion_proy_tecno')
                         ->selectRaw('SUM(total_puntos) AS total_puntos')
                         ->where('clave', $clave)
                         ->where('year', $year)
