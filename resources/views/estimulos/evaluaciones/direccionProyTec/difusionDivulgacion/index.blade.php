@@ -65,7 +65,7 @@
         }
 
         function obtenerCriterio1(year){
-            verTablaCriterio1(año, 1);
+            // verTablaCriterio1(año, 1);
             if(year === 0){
                 var año = document.getElementById("year").value;
             }else{
@@ -82,29 +82,32 @@
                     // console.log(datosCritero1);
                     for(var i = 0; i < datosCriterio1.length; i++){
                         var dataCriterio1 = datosCriterio1[i];
-                        // console.log(dataCriterio1);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/DifDiv/saveDatosDifDiv",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio1.numero_personal,
-                                nombre: dataCriterio1.nombre,
-                                id_objetivo: 1,
-                                id_criterio: criterio,
-                                direccion: "DProyTec",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: año,
-                                username: dataCriterio1.username
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio1(año, 1);
-                            }
-                        });
+                        verTablaCriterio1(año, 1);
+                        // if(dataCriterio1.username != 'jesuc109' || dataCriterio1.username != 'marim032' || año != 2021){
+                            // console.log(dataCriterio1.numero_personal);
+                            // $.ajax({
+                            //     type: 'POST',
+                            //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/DifDiv/saveDatosDifDiv",
+                            //     data: {
+                            //         token: $('#txtTokenRepo').val(),
+                            //         clave: dataCriterio1.numero_personal,
+                            //         nombre: dataCriterio1.nombre,
+                            //         id_objetivo: 1,
+                            //         id_criterio: criterio,
+                            //         direccion: "DProyTec",
+                            //         puntos: 0,
+                            //         total_puntos: 0,
+                            //         year: año,
+                            //         username: dataCriterio1.username
+                            //     },
+                            //     headers: {
+                            //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            //     },
+                            //     success: function(data){
+                            //         verTablaCriterio1(año, 1);
+                            //     }
+                            // });
+                        // }
                     }
                 },
             });
@@ -125,8 +128,9 @@
                         // console.log(dataGeneralCriterio1);
                         var authUser = '<?= Auth::user()->usuario ?>';
                         var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-difusiondivulgacion-index") ?>';
-                        // console.log(permissions);
+                        // console.log(authUser + ' -> ' + año);
                         if(dataGeneralCriterio1.username == authUser || permissions == 1){
+                            // if(authUser != 'jesuc109' || año != 2021){
                                 row += "<tr>";
                                 row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataGeneralCriterio1.clave + '</td>';
                                 row += '<td style="font-size:12px;" width="40%">' + dataGeneralCriterio1.nombre.toUpperCase() + "</td>";
@@ -137,6 +141,7 @@
                                     row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio1(' + dataGeneralCriterio1.year + ', ' + dataGeneralCriterio1.clave + ')"><i class="fa fa-edit"></i></a></td>';
                                 // }
                                 row += "</tr>";
+                            // }
                         }
                     }
                     if ($.fn.dataTable.isDataTable("#tblCriterio1")) {

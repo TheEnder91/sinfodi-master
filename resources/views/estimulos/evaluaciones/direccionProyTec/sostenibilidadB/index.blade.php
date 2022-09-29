@@ -158,29 +158,30 @@
                                 for(var i = 0; i < arr2.length; i++){
                                     var dataCriterio37 = arr2[i];
                                     var puntosTotales = dataCriterio37.occurrence * puntos[0].puntos;
+                                    verTablaCriterio37(año, criterio);
                                     // console.log(dataCriterio37.clave_participante + '->' + puntosTotales);
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/sostenibilidadB/saveDatos",
-                                        data: {
-                                            token: $('#txtTokenRepo').val(),
-                                            clave: dataCriterio37.clave_participante,
-                                            nombre: dataCriterio37.nombre_participante,
-                                            id_objetivo: id_objetivo,
-                                            id_criterio: criterio,
-                                            direccion: "DProyTec",
-                                            puntos: dataCriterio37.occurrence,
-                                            total_puntos: puntosTotales,
-                                            year: año,
-                                            username: dataCriterio37.usuario_participante
-                                        },
-                                        headers: {
-                                            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                        },
-                                        success: function(data){
-                                            verTablaCriterio37(año, criterio);
-                                        }
-                                    });
+                                    // $.ajax({
+                                    //     type: 'POST',
+                                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/sostenibilidadB/saveDatos",
+                                    //     data: {
+                                    //         token: $('#txtTokenRepo').val(),
+                                    //         clave: dataCriterio37.clave_participante,
+                                    //         nombre: dataCriterio37.nombre_participante,
+                                    //         id_objetivo: id_objetivo,
+                                    //         id_criterio: criterio,
+                                    //         direccion: "DProyTec",
+                                    //         puntos: dataCriterio37.occurrence,
+                                    //         total_puntos: puntosTotales,
+                                    //         year: año,
+                                    //         username: dataCriterio37.usuario_participante
+                                    //     },
+                                    //     headers: {
+                                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    //     },
+                                    //     success: function(data){
+                                    //         verTablaCriterio37(año, criterio);
+                                    //     }
+                                    // });
                                 }
                             },
                         });

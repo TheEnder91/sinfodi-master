@@ -31,29 +31,30 @@
                 if(datosCriterio17.length > 0){
                     for(var i = 0; i < datosCriterio17.length; i++){
                         var dataCriterio17 = datosCriterio17[i];
+                        verTablaCriterio17(year, criterio);
                         // console.log(dataCriterio17);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/saveDatosTransferencia",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio17.numero_personal,
-                                nombre: dataCriterio17.nombre,
-                                id_objetivo: 5,
-                                id_criterio: 17,
-                                direccion: "DCiencia",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: year,
-                                username: dataCriterio17.username,
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio17(year, criterio);
-                            }
-                        });
+                        // $.ajax({
+                        //     type: 'POST',
+                        //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/transferencia/saveDatosTransferencia",
+                        //     data: {
+                        //         token: $('#txtTokenRepo').val(),
+                        //         clave: dataCriterio17.numero_personal,
+                        //         nombre: dataCriterio17.nombre,
+                        //         id_objetivo: 5,
+                        //         id_criterio: 17,
+                        //         direccion: "DCiencia",
+                        //         puntos: 0,
+                        //         total_puntos: 0,
+                        //         year: year,
+                        //         username: dataCriterio17.username,
+                        //     },
+                        //     headers: {
+                        //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                        //     },
+                        //     success: function(data){
+                        //         verTablaCriterio17(year, criterio);
+                        //     }
+                        // });
                     }
                 }else{
                     verTablaCriterio17(year, criterio);

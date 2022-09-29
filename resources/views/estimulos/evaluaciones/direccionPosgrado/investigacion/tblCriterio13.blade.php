@@ -32,28 +32,29 @@
                     for(var i = 0; i < datosCriterio13.length; i++){
                         var dataCriterio13 = datosCriterio13[i];
                         // console.log(dataCriterio13);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/investigacion/saveDatosInvestigacion",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio13.numero_personal,
-                                nombre: dataCriterio13.nombre,
-                                id_objetivo: 3,
-                                id_criterio: 13,
-                                direccion: "DPosgrado",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: year,
-                                username: dataCriterio13.username,
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio13(year, criterio);
-                            }
-                        });
+                        verTablaCriterio13(year, criterio);
+                        // $.ajax({
+                        //     type: 'POST',
+                        //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/investigacion/saveDatosInvestigacion",
+                        //     data: {
+                        //         token: $('#txtTokenRepo').val(),
+                        //         clave: dataCriterio13.numero_personal,
+                        //         nombre: dataCriterio13.nombre,
+                        //         id_objetivo: 3,
+                        //         id_criterio: 13,
+                        //         direccion: "DPosgrado",
+                        //         puntos: 0,
+                        //         total_puntos: 0,
+                        //         year: year,
+                        //         username: dataCriterio13.username,
+                        //     },
+                        //     headers: {
+                        //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                        //     },
+                        //     success: function(data){
+                        //         verTablaCriterio13(year, criterio);
+                        //     }
+                        // });
                     }
                 }else{
                     verTablaCriterio13(year, criterio);

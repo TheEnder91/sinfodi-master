@@ -37,30 +37,33 @@
                             dataType: 'json',
                             ok: function(datosCritero33Username){
                                 var username = datosCritero33Username.response[0];
+                                verTablaCriterio33(year, criterio);
                                 // console.log(username.clave + '->' + username.nombre + '->' + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/acreditaciones/saveDatosAcreditaciones",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 8,
-                                        id_criterio: criterio,
-                                        direccion: "DProyTec",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio33(year, criterio);
-                                        // console.log('OK');
-                                    }
-                                });
+                                // if(username.username != 'jesuc109' || username.username != 'marim032' || año != 2021){
+                                    // $.ajax({
+                                    //     type: 'POST',
+                                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/acreditaciones/saveDatosAcreditaciones",
+                                    //     data: {
+                                    //         token: $('#txtTokenRepo').val(),
+                                    //         clave: username.clave,
+                                    //         nombre: username.nombre,
+                                    //         id_objetivo: 8,
+                                    //         id_criterio: criterio,
+                                    //         direccion: "DProyTec",
+                                    //         puntos: 0,
+                                    //         total_puntos: 0,
+                                    //         year: year,
+                                    //         username: username.usuario
+                                    //     },
+                                    //     headers: {
+                                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    //     },
+                                    //     success: function(data){
+                                    //         verTablaCriterio33(year, criterio);
+                                    //         // console.log('OK');
+                                    //     }
+                                    // });
+                                // }
                             },
                         });
                     }

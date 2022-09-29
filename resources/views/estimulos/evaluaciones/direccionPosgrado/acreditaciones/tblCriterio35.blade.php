@@ -38,30 +38,31 @@
                             dataType: 'json',
                             ok: function(datosCritero35Username){
                                 var username = datosCritero35Username.response[0];
+                                verTablaCriterio35(year, criterio);
                                 // console.log(username.clave + '->' + username.nombre + '->' + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/acreditaciones/saveDatosAcreditaciones",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 8,
-                                        id_criterio: criterio,
-                                        direccion: "DPosgrado",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio35(year, criterio);
-                                        // console.log('OK');
-                                    }
-                                });
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/acreditaciones/saveDatosAcreditaciones",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: username.clave,
+                                //         nombre: username.nombre,
+                                //         id_objetivo: 8,
+                                //         id_criterio: criterio,
+                                //         direccion: "DPosgrado",
+                                //         puntos: 0,
+                                //         total_puntos: 0,
+                                //         year: year,
+                                //         username: username.usuario
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio35(year, criterio);
+                                //         // console.log('OK');
+                                //     }
+                                // });
                             },
                         });
                     }

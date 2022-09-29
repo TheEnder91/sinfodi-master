@@ -83,28 +83,29 @@
                 for(var i = 0; i < datosCriterio1.length; i++){
                     var dataCriterio1 = datosCriterio1[i];
                     // console.log(dataCriterio1);
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
-                        data: {
-                            token: $('#txtTokenRepo').val(),
-                            clave: dataCriterio1.numero_personal,
-                            nombre: dataCriterio1.nombre,
-                            id_objetivo: 1,
-                            id_criterio: criterio,
-                            direccion: "DGeneral",
-                            puntos: 0,
-                            total_puntos: 0,
-                            year: año,
-                            username: dataCriterio1.username
-                        },
-                        headers: {
-                            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                        },
-                        success: function(data){
-                            verTablaCriterio1(año, 1);
-                        }
-                    });
+                    verTablaCriterio1(año, 1);
+                    // $.ajax({
+                    //     type: 'POST',
+                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
+                    //     data: {
+                    //         token: $('#txtTokenRepo').val(),
+                    //         clave: dataCriterio1.numero_personal,
+                    //         nombre: dataCriterio1.nombre,
+                    //         id_objetivo: 1,
+                    //         id_criterio: criterio,
+                    //         direccion: "DGeneral",
+                    //         puntos: 0,
+                    //         total_puntos: 0,
+                    //         year: año,
+                    //         username: dataCriterio1.username
+                    //     },
+                    //     headers: {
+                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                    //     },
+                    //     success: function(data){
+                    //         verTablaCriterio1(año, 1);
+                    //     }
+                    // });
                 }
             },
         });

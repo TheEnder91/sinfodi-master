@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Factor 1. (Total puntos actividades A + B) * valor del punto</td>
+                <td>Factor 1. (Total puntos actividades A + B) * {{ number_format($valorPuntoProductividad, 2) }}</td>
                 <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
@@ -26,7 +26,21 @@
                 <td style="text-align: center"></td>
                 <td style="text-align: center"></td>
             </tr>
-            <tr>
+            @if($año == 2020)
+                <tr>
+                    <td>Ingresos propios</td>
+                    <td style="text-align: center">N/A</td>
+                    <td style="text-align: center">$0.00</td>
+                    <td style="text-align: center">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Fondos en administración</td>
+                    <td style="text-align: center">N/A</td>
+                    <td style="text-align: center">$0.00</td>
+                    <td style="text-align: center">$0.00</td>
+                </tr>
+            @endif
+            {{-- <tr>
                 <td>Ingresos propios</td>
                 <td style="text-align: center">N/A</td>
                 <td style="text-align: center">$0.00</td>
@@ -37,7 +51,7 @@
                 <td style="text-align: center">N/A</td>
                 <td style="text-align: center">$0.00</td>
                 <td style="text-align: center">$0.00</td>
-            </tr>
+            </tr> --}}
         </tbody>
         <tfoot width = "100%" style="font-size: 10px;">
             <tr>

@@ -39,29 +39,30 @@
                             ok: function(datosCritero2Username){
                                 // Codigo para guardar en el sistema...
                                 var username = datosCritero2Username.response[0];
+                                verTablaCriterio2(year, 2);
                                 // console.log(username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/saveDatosPosgrado",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 2,
-                                        id_criterio: criterio,
-                                        direccion: "DServTec",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio2(year, 2);
-                                    }
-                                });
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/posgrado/saveDatosPosgrado",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: username.clave,
+                                //         nombre: username.nombre,
+                                //         id_objetivo: 2,
+                                //         id_criterio: criterio,
+                                //         direccion: "DServTec",
+                                //         puntos: 0,
+                                //         total_puntos: 0,
+                                //         year: year,
+                                //         username: username.usuario
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio2(year, 2);
+                                //     }
+                                // });
                             },
                         });
                     }

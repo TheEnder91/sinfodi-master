@@ -39,29 +39,30 @@
                             ok: function(datosCritero34Username){
                                 var username = datosCritero34Username.response[0];
                                 // console.log(username.clave + '->' + username.nombre + '->' + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/acreditaciones/saveDatosAcreditaciones",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 8,
-                                        id_criterio: criterio,
-                                        direccion: "DAdministracion",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio34(year, criterio);
-                                        // console.log('OK');
-                                    }
-                                });
+                                verTablaCriterio34(year, criterio);
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/acreditaciones/saveDatosAcreditaciones",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: username.clave,
+                                //         nombre: username.nombre,
+                                //         id_objetivo: 8,
+                                //         id_criterio: criterio,
+                                //         direccion: "DAdministracion",
+                                //         puntos: 0,
+                                //         total_puntos: 0,
+                                //         year: year,
+                                //         username: username.usuario
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio34(year, criterio);
+                                //         // console.log('OK');
+                                //     }
+                                // });
                             },
                         });
                     }

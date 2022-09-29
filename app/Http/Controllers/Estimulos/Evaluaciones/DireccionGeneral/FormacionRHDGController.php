@@ -122,6 +122,7 @@ class FormacionRHDGController extends Controller
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
                             ->where('Id_TipoAlumno', '=', 11)
+                            // ->whereRaw('(Id_TipoAlumno = 14 OR Id_TipoAlumno = 11 OR Id_TipoAlumno = 13)')
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -134,7 +135,7 @@ class FormacionRHDGController extends Controller
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$inicial, $final])
-                            ->where('Id_TipoAlumno', '=', 10)
+                            ->whereRaw('Id_TipoAlumno', '=', 10)
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -313,6 +314,7 @@ class FormacionRHDGController extends Controller
                                  Evidencia AS evidencias')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 11)
+                    // ->whereRaw('(Id_TipoAlumno = 14 OR Id_TipoAlumno = 11 OR Id_TipoAlumno = 13)')
                     ->where('id_asesor', '=', $clave)
                     ->get();
         return $query;

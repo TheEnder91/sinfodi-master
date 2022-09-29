@@ -160,28 +160,29 @@
                                     var dataCriterio37 = arr2[i];
                                     var puntosTotales = dataCriterio37.occurrence * puntos[0].puntos;
                                     // console.log(dataCriterio37);
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/saveDatos",
-                                        data: {
-                                            token: $('#txtTokenRepo').val(),
-                                            clave: dataCriterio37.clave_participante,
-                                            nombre: dataCriterio37.nombre_participante,
-                                            id_objetivo: id_objetivo,
-                                            id_criterio: criterio,
-                                            direccion: "DGeneral",
-                                            puntos: dataCriterio37.occurrence,
-                                            total_puntos: puntosTotales,
-                                            year: año,
-                                            username: dataCriterio37.usuario_participante
-                                        },
-                                        headers: {
-                                            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                        },
-                                        success: function(data){
-                                            verTablaCriterio37(año, criterio);
-                                        }
-                                    });
+                                    verTablaCriterio37(año, criterio);
+                                    // $.ajax({
+                                    //     type: 'POST',
+                                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/saveDatos",
+                                    //     data: {
+                                    //         token: $('#txtTokenRepo').val(),
+                                    //         clave: dataCriterio37.clave_participante,
+                                    //         nombre: dataCriterio37.nombre_participante,
+                                    //         id_objetivo: id_objetivo,
+                                    //         id_criterio: criterio,
+                                    //         direccion: "DGeneral",
+                                    //         puntos: dataCriterio37.occurrence,
+                                    //         total_puntos: puntosTotales,
+                                    //         year: año,
+                                    //         username: dataCriterio37.usuario_participante
+                                    //     },
+                                    //     headers: {
+                                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    //     },
+                                    //     success: function(data){
+                                    //         verTablaCriterio37(año, criterio);
+                                    //     }
+                                    // });
                                 }
                             },
                         });

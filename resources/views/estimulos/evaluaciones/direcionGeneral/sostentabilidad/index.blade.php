@@ -256,28 +256,29 @@
                     if(datosCriterio14.length > 0){
                         for(var i = 0; i < datosCriterio14.length; i++){
                             var dataCriterio14 = datosCriterio14[i];
-                            $.ajax({
-                                type: 'POST',
-                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad",
-                                data: {
-                                    token: $('#txtTokenRepo').val(),
-                                    clave: dataCriterio14.clave_participante,
-                                    nombre: dataCriterio14.nombre_participante,
-                                    id_objetivo: 4,
-                                    id_criterio: criterio,
-                                    direccion: "DGeneral",
-                                    puntos: 0,
-                                    total_puntos: dataCriterio14.total,
-                                    year: dataCriterio14.year,
-                                    username: dataCriterio14.usuario_participante,
-                                },
-                                headers: {
-                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                },
-                                success: function(data){
-                                    verTablaCriterio14(año, 14);
-                                }
-                            });
+                            verTablaCriterio14(año, 14);
+                            // $.ajax({
+                            //     type: 'POST',
+                            //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/sostentabilidad/saveDatosSostentabilidad",
+                            //     data: {
+                            //         token: $('#txtTokenRepo').val(),
+                            //         clave: dataCriterio14.clave_participante,
+                            //         nombre: dataCriterio14.nombre_participante,
+                            //         id_objetivo: 4,
+                            //         id_criterio: criterio,
+                            //         direccion: "DGeneral",
+                            //         puntos: 0,
+                            //         total_puntos: dataCriterio14.total,
+                            //         year: dataCriterio14.year,
+                            //         username: dataCriterio14.usuario_participante,
+                            //     },
+                            //     headers: {
+                            //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            //     },
+                            //     success: function(data){
+                            //         verTablaCriterio14(año, 14);
+                            //     }
+                            // });
                         }
                     }else{
                         verTablaCriterio14(año, 14);

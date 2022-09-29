@@ -40,28 +40,29 @@
                                 // Codigo para guardar en el sistema...
                                 var username = datosCritero28Username.response[0];
                                 // console.log(username.clave + "->" + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 6,
-                                        id_criterio: 28,
-                                        direccion: "DGeneral",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario,
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio28(year, 28);
-                                    }
-                                });
+                                verTablaCriterio28(year, 28);
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/formacionRH/saveDatosFormacionRH",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: username.clave,
+                                //         nombre: username.nombre,
+                                //         id_objetivo: 6,
+                                //         id_criterio: 28,
+                                //         direccion: "DGeneral",
+                                //         puntos: 0,
+                                //         total_puntos: 0,
+                                //         year: year,
+                                //         username: username.usuario,
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio28(year, 28);
+                                //     }
+                                // });
                             },
                         });
                     }

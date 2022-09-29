@@ -32,28 +32,29 @@
                     for(var i = 0; i < datosCriterio7.length; i++){
                         var dataCriterio7 = datosCriterio7[i];
                         // console.log(dataCriterio7);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio7.numero_personal,
-                                nombre: dataCriterio7.nombre,
-                                id_objetivo: 3,
-                                id_criterio: 7,
-                                direccion: "DGeneral",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: year,
-                                username: dataCriterio7.username,
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio7(year, criterio);
-                            }
-                        });
+                        verTablaCriterio7(year, criterio);
+                        // $.ajax({
+                        //     type: 'POST',
+                        //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/DifDiv/saveDatosDifDiv",
+                        //     data: {
+                        //         token: $('#txtTokenRepo').val(),
+                        //         clave: dataCriterio7.numero_personal,
+                        //         nombre: dataCriterio7.nombre,
+                        //         id_objetivo: 3,
+                        //         id_criterio: 7,
+                        //         direccion: "DGeneral",
+                        //         puntos: 0,
+                        //         total_puntos: 0,
+                        //         year: year,
+                        //         username: dataCriterio7.username,
+                        //     },
+                        //     headers: {
+                        //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                        //     },
+                        //     success: function(data){
+                        //         verTablaCriterio7(year, criterio);
+                        //     }
+                        // });
                     }
                 }else{
                     verTablaCriterio7(year, criterio);

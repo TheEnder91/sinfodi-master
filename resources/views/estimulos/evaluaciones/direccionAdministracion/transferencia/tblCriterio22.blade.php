@@ -32,28 +32,29 @@
                     for(var i = 0; i < datosCriterio22.length; i++){
                         var dataCriterio22 = datosCriterio22[i];
                         // console.log(dataCriterio22);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/transferencia/saveDatosTransferencia",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio22.numero_personal,
-                                nombre: dataCriterio22.nombre,
-                                id_objetivo: 5,
-                                id_criterio: 22,
-                                direccion: "DAdministracion",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: year,
-                                username: dataCriterio22.username,
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio22(year, criterio);
-                            }
-                        });
+                        verTablaCriterio22(year, criterio);
+                        // $.ajax({
+                        //     type: 'POST',
+                        //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/transferencia/saveDatosTransferencia",
+                        //     data: {
+                        //         token: $('#txtTokenRepo').val(),
+                        //         clave: dataCriterio22.numero_personal,
+                        //         nombre: dataCriterio22.nombre,
+                        //         id_objetivo: 5,
+                        //         id_criterio: 22,
+                        //         direccion: "DAdministracion",
+                        //         puntos: 0,
+                        //         total_puntos: 0,
+                        //         year: year,
+                        //         username: dataCriterio22.username,
+                        //     },
+                        //     headers: {
+                        //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                        //     },
+                        //     success: function(data){
+                        //         verTablaCriterio22(year, criterio);
+                        //     }
+                        // });
                     }
                 }else{
                     verTablaCriterio22(year, criterio);

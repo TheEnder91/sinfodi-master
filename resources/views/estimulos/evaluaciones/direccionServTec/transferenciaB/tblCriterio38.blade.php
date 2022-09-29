@@ -63,30 +63,31 @@
                                 // console.log(dataCriterio38);
                                 var puntosTotales = dataCriterio38.occurrence * puntos[0].puntos;
                                     // console.log(dataCriterio38.clave_participante + '->' + puntosTotales);
+                                    verTablaCriterio38(year, criterio);
                                 // console.log(puntosTotales);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/tranferenciaB/saveDatos",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: dataCriterio38.clave_participante,
-                                        nombre: dataCriterio38.nombre_participante,
-                                        id_objetivo: id_objetivo,
-                                        id_criterio: criterio,
-                                        direccion: "DServTec",
-                                        puntos: dataCriterio38.occurrence,
-                                        total_puntos: puntosTotales,
-                                        year: year,
-                                        username: dataCriterio38.usuario_participante
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio38(year, criterio);
-                                        // console.log('Ok');
-                                    }
-                                });
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/tranferenciaB/saveDatos",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: dataCriterio38.clave_participante,
+                                //         nombre: dataCriterio38.nombre_participante,
+                                //         id_objetivo: id_objetivo,
+                                //         id_criterio: criterio,
+                                //         direccion: "DServTec",
+                                //         puntos: dataCriterio38.occurrence,
+                                //         total_puntos: puntosTotales,
+                                //         year: year,
+                                //         username: dataCriterio38.usuario_participante
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio38(year, criterio);
+                                //         // console.log('Ok');
+                                //     }
+                                // });
                             }
                         },
                     });

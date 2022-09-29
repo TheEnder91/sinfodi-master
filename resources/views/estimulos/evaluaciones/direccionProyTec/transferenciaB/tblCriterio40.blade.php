@@ -62,30 +62,31 @@
                                 var dataCriterio40 = arrCriterio40[i];
                                 // console.log(dataCriterio40);
                                 var puntosTotales = dataCriterio40.occurrence * puntos[0].puntos;
+                                verTablaCriterio40(year, criterio);
                                 // console.log(dataCriterio40.clave_participante + '->' + puntosTotales);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/saveDatos",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: dataCriterio40.clave_participante,
-                                        nombre: dataCriterio40.nombre_participante,
-                                        id_objetivo: id_objetivo,
-                                        id_criterio: criterio,
-                                        direccion: "DProyTec",
-                                        puntos: dataCriterio40.occurrence,
-                                        total_puntos: puntosTotales,
-                                        year: year,
-                                        username: dataCriterio40.usuario_participante
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio40(year, criterio);
-                                        // console.log('Ok');
-                                    }
-                                });
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/tranferenciaB/saveDatos",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: dataCriterio40.clave_participante,
+                                //         nombre: dataCriterio40.nombre_participante,
+                                //         id_objetivo: id_objetivo,
+                                //         id_criterio: criterio,
+                                //         direccion: "DProyTec",
+                                //         puntos: dataCriterio40.occurrence,
+                                //         total_puntos: puntosTotales,
+                                //         year: year,
+                                //         username: dataCriterio40.usuario_participante
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio40(year, criterio);
+                                //         // console.log('Ok');
+                                //     }
+                                // });
                             }
                         },
                     });

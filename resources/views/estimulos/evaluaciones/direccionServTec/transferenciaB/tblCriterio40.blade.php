@@ -63,29 +63,30 @@
                                 // console.log(dataCriterio40);
                                 var puntosTotales = dataCriterio40.occurrence * puntos[0].puntos;
                                 // console.log(dataCriterio40.clave_participante + '->' + puntosTotales);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/tranferenciaB/saveDatos",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: dataCriterio40.clave_participante,
-                                        nombre: dataCriterio40.nombre_participante,
-                                        id_objetivo: id_objetivo,
-                                        id_criterio: criterio,
-                                        direccion: "DServTec",
-                                        puntos: dataCriterio40.occurrence,
-                                        total_puntos: puntosTotales,
-                                        year: year,
-                                        username: dataCriterio40.usuario_participante
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio40(year, criterio);
-                                        // console.log('Ok');
-                                    }
-                                });
+                                verTablaCriterio40(year, criterio);
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/tranferenciaB/saveDatos",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: dataCriterio40.clave_participante,
+                                //         nombre: dataCriterio40.nombre_participante,
+                                //         id_objetivo: id_objetivo,
+                                //         id_criterio: criterio,
+                                //         direccion: "DServTec",
+                                //         puntos: dataCriterio40.occurrence,
+                                //         total_puntos: puntosTotales,
+                                //         year: year,
+                                //         username: dataCriterio40.usuario_participante
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio40(year, criterio);
+                                //         // console.log('Ok');
+                                //     }
+                                // });
                             }
                         },
                     });

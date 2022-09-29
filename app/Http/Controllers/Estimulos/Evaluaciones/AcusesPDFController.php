@@ -40,7 +40,7 @@ class AcusesPDFController extends Controller
         $responsabilidades = DB::table('sinfodi_evaluacion_responsabilidades')
                                 ->select('clave')
                                 ->where('year', $year)
-                                // ->whereRaw('(direccion = "Coordinadores" OR direccion = "Personal_Apoyo")')
+                                ->whereRaw('(direccion = "Coordinadores" OR direccion = "Personal_Apoyo")')
                                 ->distinct()
                                 ->get();
         foreach ($responsabilidades as $itemResponsabilidad){
@@ -53,37 +53,43 @@ class AcusesPDFController extends Controller
                 $query = DB::table('sinfodi_evaluacion_general')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
+                            // ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Administracion'){
-                $query = DB::table('sinfodi_evaluacion_administracion')
-                            ->select('clave', 'nombre', 'direccion', 'username')
-                            ->where('year', '=', $year)
-                            ->distinct()
-                            ->get();
+                // $query = DB::table('sinfodi_evaluacion_administracion')
+                //             ->select('clave', 'nombre', 'direccion', 'username')
+                //             ->where('year', '=', $year)
+                //             ->distinct()
+                //             ->get();
+                $query = [];
             }else if($direccion == 'Direccion Posgrado'){
                 $query = DB::table('sinfodi_evaluacion_posgrado')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
                             ->where('total_puntos', '<>', 0.00)
+                            // ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Ciencia'){
                 $query = DB::table('sinfodi_evaluacion_ciencia')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
+                            // ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Servicios'){
                 $query = DB::table('sinfodi_evaluacion_serv_tecno')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
+                            // ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }else if($direccion == 'Direccion Tecnologia'){
                 $query = DB::table('sinfodi_evaluacion_proy_tecno')
                             ->select('clave', 'nombre', 'direccion', 'username')
                             ->where('year', '=', $year)
+                            // ->whereNotIn('clave', $datos)
                             ->distinct()
                             ->get();
             }
@@ -91,6 +97,7 @@ class AcusesPDFController extends Controller
             $query = DB::table('sinfodi_evaluacion_responsabilidades')
                         ->select('clave', 'nombre', 'direccion', 'username')
                         ->where('year', '=', $year)
+                        // ->whereNotIn('clave', $datos)
                         ->distinct()
                         ->get();
         }else{
@@ -323,14 +330,17 @@ class AcusesPDFController extends Controller
         if($grupo == 'grupo1'){
             $sumaTotalPuntosA = self::getSumaTotalPuntosA($year, $clave, $direccion);
             $sumaTotalPuntosB = self::getSumaTotalPuntosB($year, $clave, $direccion);
+            $valoPuntoProductividad = self::getValorPuntoProductividad($year);
             $html = view('estimulos.evaluaciones.acuses.acuses', [
                 'clave' => $clave,
                 'nombre' => $nombre,
                 'grupo' => $grupo,
+                'año' => $year,
                 'criteriosA' => self::consultasCriteriosA($direccion, $clave, $year, $grupo),
                 'criteriosB' => self::consultasCriteriosB($direccion, $clave, $year, $grupo),
                 'sumaTotalPuntosA' => $sumaTotalPuntosA,
                 'sumaTotalPuntosB' => $sumaTotalPuntosB,
+                'valorPuntoProductividad' => $valoPuntoProductividad,
             ]);
             $dompdf->loadHtml($html);
             return $dompdf->stream();($nombreDoc);
@@ -400,6 +410,13 @@ class AcusesPDFController extends Controller
         $query = DB::table('sinfodi_total_puntos')
                     ->where('year', $year)
                     ->value('valor_punto_responsabilidad');
+        return $query;
+    }
+
+    public function getValorPuntoProductividad($year){
+        $query = DB::table('sinfodi_total_puntos')
+                    ->where('year', $year)
+                    ->value('valor_punto_actividades');
         return $query;
     }
 

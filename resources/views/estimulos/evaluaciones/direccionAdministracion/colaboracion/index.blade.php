@@ -124,28 +124,29 @@
                     if(datosCriterio32.length > 0){
                         for(var i = 0; i < datosCriterio32.length; i++){
                             var dataCriterio32 = datosCriterio32[i];
-                            $.ajax({
-                                type: 'POST',
-                                url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/colaboracion/saveDatos",
-                                data: {
-                                    token: $('#txtTokenRepo').val(),
-                                    clave: dataCriterio32.clave,
-                                    nombre: dataCriterio32.nombre,
-                                    id_objetivo: 7,
-                                    id_criterio: criterio,
-                                    direccion: "DAdministracion",
-                                    puntos: dataCriterio32.cantidad,
-                                    total_puntos: dataCriterio32.total,
-                                    year: año,
-                                    username: dataCriterio32.usuario,
-                                },
-                                headers: {
-                                    'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                },
-                                success: function(data){
-                                    verTablaCriterio32(año, 32);
-                                }
-                            });
+                            verTablaCriterio32(año, 32);
+                            // $.ajax({
+                            //     type: 'POST',
+                            //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionAdministracion/colaboracion/saveDatos",
+                            //     data: {
+                            //         token: $('#txtTokenRepo').val(),
+                            //         clave: dataCriterio32.clave,
+                            //         nombre: dataCriterio32.nombre,
+                            //         id_objetivo: 7,
+                            //         id_criterio: criterio,
+                            //         direccion: "DAdministracion",
+                            //         puntos: dataCriterio32.cantidad,
+                            //         total_puntos: dataCriterio32.total,
+                            //         year: año,
+                            //         username: dataCriterio32.usuario,
+                            //     },
+                            //     headers: {
+                            //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                            //     },
+                            //     success: function(data){
+                            //         verTablaCriterio32(año, 32);
+                            //     }
+                            // });
                         }
                     }else{
                         verTablaCriterio32(año, 32);

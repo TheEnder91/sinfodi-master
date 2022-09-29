@@ -121,7 +121,7 @@ class PosgradoDGController extends Controller
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                             ->where('Id_Nivel', '=', 8)
-                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 60')
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
                             ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
                             ->groupBy('Nom_asesor')
@@ -253,7 +253,7 @@ class PosgradoDGController extends Controller
                                  TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) AS meses,
                                  Evidencia AS evidencias')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
-                    ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 60')
+                    ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
                     ->where('Id_Nivel', '=', 8)
                     ->where('id_asesor', '=', $clave)
                     ->get();

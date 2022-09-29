@@ -150,10 +150,10 @@ class InvestigacionDGController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_lfc_personas')
                     ->selectRaw('sinfodidb.sinfodi_lfc_personas.lfc_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_lfc_personas.lfc_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario as username')
-                    ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                        $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                 sinfodi_master.sinfodi_evaluados.usuario as username')
+                    ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                        $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                     })
                     ->leftJoin('sinfodidb.sinfodi_lfc', 'sinfodidb.sinfodi_lfc.lfc_clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_lfc_persona')
                     ->where('sinfodidb.sinfodi_lfc.lfc_eliminado', '=', 0)
@@ -164,7 +164,7 @@ class InvestigacionDGController extends Controller
                     ->whereIn('sinfodi_lfc_personas.lfc_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_lfc_personas.lfc_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -173,10 +173,10 @@ class InvestigacionDGController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_mem_personas')
                     ->selectRaw('sinfodidb.sinfodi_mem_personas.mem_clave_personal AS numero_personal,
                                  sinfodidb.sinfodi_mem_personas.mem_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                        $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                        $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                     })
                     ->leftJoin('sinfodidb.sinfodi_mem', 'sinfodidb.sinfodi_mem.mem_clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_mem_persona')
                     ->where('sinfodidb.sinfodi_mem.mem_eliminado', '=', 0)
@@ -187,7 +187,7 @@ class InvestigacionDGController extends Controller
                     ->whereIn('sinfodidb.sinfodi_mem_personas.mem_clave_personal', $clave)
                     ->groupBy('sinfodidb.sinfodi_mem_personas.mem_clave_personal')
                     ->groupBy('sinfodidb.sinfodi_mem_personas.mem_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -196,10 +196,10 @@ class InvestigacionDGController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_mem_personas')
                     ->selectRaw('sinfodidb.sinfodi_mem_personas.mem_clave_personal AS numero_personal,
                                  sinfodidb.sinfodi_mem_personas.mem_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                        $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                        $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_personal')
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                     })
                     ->leftJoin('sinfodidb.sinfodi_mem', 'sinfodidb.sinfodi_mem.mem_clave', '=', 'sinfodidb.sinfodi_mem_personas.mem_clave_mem_persona')
                     ->where('sinfodidb.sinfodi_mem.mem_eliminado', '=', 0)
@@ -210,7 +210,7 @@ class InvestigacionDGController extends Controller
                     ->whereIn('sinfodidb.sinfodi_mem_personas.mem_clave_personal', $clave)
                     ->groupBy('sinfodidb.sinfodi_mem_personas.mem_clave_personal')
                     ->groupBy('sinfodidb.sinfodi_mem_personas.mem_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -219,10 +219,10 @@ class InvestigacionDGController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_lfc_personas')
                     ->selectRaw('sinfodidb.sinfodi_lfc_personas.lfc_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_lfc_personas.lfc_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario as username')
-                    ->join('productivo_sinfodi.sinfodi_evaluados', function($join){
-                        $join->on('productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
-                             ->where('productivo_sinfodi.sinfodi_evaluados.puesto', '=', 'Direccion_General');
+                                 sinfodi_master.sinfodi_evaluados.usuario as username')
+                    ->join('sinfodi_master.sinfodi_evaluados', function($join){
+                        $join->on('sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
+                             ->where('sinfodi_master.sinfodi_evaluados.puesto', '=', 'Direccion_General');
                     })
                     ->leftJoin('sinfodidb.sinfodi_lfc', 'sinfodidb.sinfodi_lfc.lfc_clave', '=', 'sinfodidb.sinfodi_lfc_personas.lfc_clave_lfc_persona')
                     ->where('sinfodidb.sinfodi_lfc.lfc_eliminado', '=', 0)
@@ -233,7 +233,7 @@ class InvestigacionDGController extends Controller
                     ->whereIn('sinfodi_lfc_personas.lfc_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_lfc_personas.lfc_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_lfc_personas.lfc_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }

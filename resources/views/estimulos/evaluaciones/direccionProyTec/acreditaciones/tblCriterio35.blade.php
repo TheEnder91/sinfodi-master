@@ -38,30 +38,33 @@
                             dataType: 'json',
                             ok: function(datosCritero35Username){
                                 var username = datosCritero35Username.response[0];
+                                verTablaCriterio35(year, criterio);
                                 // console.log(username.clave + '->' + username.nombre + '->' + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/acreditaciones/saveDatosAcreditaciones",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 8,
-                                        id_criterio: criterio,
-                                        direccion: "DProyTec",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio35(year, criterio);
-                                        // console.log('OK');
-                                    }
-                                });
+                                // if(username.username != 'jesuc109' || username.username != 'marim032' || año != 2021){
+                                    // $.ajax({
+                                    //     type: 'POST',
+                                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionProyTec/acreditaciones/saveDatosAcreditaciones",
+                                    //     data: {
+                                    //         token: $('#txtTokenRepo').val(),
+                                    //         clave: username.clave,
+                                    //         nombre: username.nombre,
+                                    //         id_objetivo: 8,
+                                    //         id_criterio: criterio,
+                                    //         direccion: "DProyTec",
+                                    //         puntos: 0,
+                                    //         total_puntos: 0,
+                                    //         year: year,
+                                    //         username: username.usuario
+                                    //     },
+                                    //     headers: {
+                                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    //     },
+                                    //     success: function(data){
+                                    //         verTablaCriterio35(year, criterio);
+                                    //         // console.log('OK');
+                                    //     }
+                                    // });
+                                // }
                             },
                         });
                     }
@@ -88,16 +91,18 @@
                     var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-proyectos-acreditaciones-index") ?>';
                     // console.log(permissions);
                     if(dataGeneralCriterio35.username == authUser || permissions == 1){
-                        row += "<tr>";
-                        row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.clave + '</td>';
-                        row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio35.nombre.toUpperCase() + "</td>";
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.total_puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.year + '</td>';
-                        // if(permissions == 1){
-                            row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio35(' + dataGeneralCriterio35.year + ', ' + dataGeneralCriterio35.clave + ', ' + 35 +')"><i class="fa fa-edit"></i></a></td>';
-                        // }
-                        row += "</tr>";
+                        if(authUser != 'jesuc109' || año != 2021){
+                            row += "<tr>";
+                            row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.clave + '</td>';
+                            row += '<td width="40%" style="font-size:12px;">' + dataGeneralCriterio35.nombre.toUpperCase() + "</td>";
+                            row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.puntos) + '</td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataGeneralCriterio35.total_puntos) + '</td>';
+                            row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataGeneralCriterio35.year + '</td>';
+                            // if(permissions == 1){
+                                row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio35(' + dataGeneralCriterio35.year + ', ' + dataGeneralCriterio35.clave + ', ' + 35 +')"><i class="fa fa-edit"></i></a></td>';
+                            // }
+                            row += "</tr>";
+                        }
                     }
                 }
                 if ($.fn.dataTable.isDataTable("#tblCriterio35")) {

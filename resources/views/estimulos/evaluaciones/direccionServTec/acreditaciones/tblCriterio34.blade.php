@@ -39,30 +39,31 @@
                             dataType: 'json',
                             ok: function(datosCritero34Username){
                                 var username = datosCritero34Username.response[0];
+                                verTablaCriterio34(year, criterio);
                                 // console.log(username.clave + '->' + username.nombre + '->' + username.usuario);
-                                $.ajax({
-                                    type: 'POST',
-                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/acreditaciones/saveDatosAcreditaciones",
-                                    data: {
-                                        token: $('#txtTokenRepo').val(),
-                                        clave: username.clave,
-                                        nombre: username.nombre,
-                                        id_objetivo: 8,
-                                        id_criterio: criterio,
-                                        direccion: "DServTec",
-                                        puntos: 0,
-                                        total_puntos: 0,
-                                        year: year,
-                                        username: username.usuario
-                                    },
-                                    headers: {
-                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                    },
-                                    success: function(data){
-                                        verTablaCriterio34(year, criterio);
-                                        // console.log('OK');
-                                    }
-                                });
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/acreditaciones/saveDatosAcreditaciones",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: username.clave,
+                                //         nombre: username.nombre,
+                                //         id_objetivo: 8,
+                                //         id_criterio: criterio,
+                                //         direccion: "DServTec",
+                                //         puntos: 0,
+                                //         total_puntos: 0,
+                                //         year: year,
+                                //         username: username.usuario
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         verTablaCriterio34(year, criterio);
+                                //         // console.log('OK');
+                                //     }
+                                // });
                             },
                         });
                     }

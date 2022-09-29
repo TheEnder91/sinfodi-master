@@ -159,29 +159,30 @@
                                     var dataCriterio37 = arr2[i];
                                     // console.log(dataCriterio37);
                                     var puntosTotales = dataCriterio37.occurrence * puntos[0].puntos;
+                                    verTablaCriterio37(año, criterio);
                                     // console.log(dataCriterio37.clave_participante + '->' + puntosTotales);
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/saveDatos",
-                                        data: {
-                                            token: $('#txtTokenRepo').val(),
-                                            clave: dataCriterio37.clave_participante,
-                                            nombre: dataCriterio37.nombre_participante,
-                                            id_objetivo: id_objetivo,
-                                            id_criterio: criterio,
-                                            direccion: "DCiencia",
-                                            puntos: dataCriterio37.occurrence,
-                                            total_puntos: puntosTotales,
-                                            year: año,
-                                            username: dataCriterio37.usuario_participante
-                                        },
-                                        headers: {
-                                            'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                        },
-                                        success: function(data){
-                                            verTablaCriterio37(año, criterio);
-                                        }
-                                    });
+                                    // $.ajax({
+                                    //     type: 'POST',
+                                    //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/saveDatos",
+                                    //     data: {
+                                    //         token: $('#txtTokenRepo').val(),
+                                    //         clave: dataCriterio37.clave_participante,
+                                    //         nombre: dataCriterio37.nombre_participante,
+                                    //         id_objetivo: id_objetivo,
+                                    //         id_criterio: criterio,
+                                    //         direccion: "DCiencia",
+                                    //         puntos: dataCriterio37.occurrence,
+                                    //         total_puntos: puntosTotales,
+                                    //         year: año,
+                                    //         username: dataCriterio37.usuario_participante
+                                    //     },
+                                    //     headers: {
+                                    //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    //     },
+                                    //     success: function(data){
+                                    //         verTablaCriterio37(año, criterio);
+                                    //     }
+                                    // });
                                 }
                             },
                         });

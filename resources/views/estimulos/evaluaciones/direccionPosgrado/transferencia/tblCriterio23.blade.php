@@ -31,29 +31,30 @@
                 if(datosCriterio23.length > 0){
                     for(var i = 0; i < datosCriterio23.length; i++){
                         var dataCriterio23 = datosCriterio23[i];
+                        verTablaCriterio23(year, criterio);
                         // console.log(dataCriterio23);
-                        $.ajax({
-                            type: 'POST',
-                            url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/transferencia/saveDatosTransferencia",
-                            data: {
-                                token: $('#txtTokenRepo').val(),
-                                clave: dataCriterio23.numero_personal,
-                                nombre: dataCriterio23.nombre,
-                                id_objetivo: 5,
-                                id_criterio: 23,
-                                direccion: "DPosgrado",
-                                puntos: 0,
-                                total_puntos: 0,
-                                year: year,
-                                username: dataCriterio23.username,
-                            },
-                            headers: {
-                                'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            },
-                            success: function(data){
-                                verTablaCriterio23(year, criterio);
-                            }
-                        });
+                        // $.ajax({
+                        //     type: 'POST',
+                        //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/transferencia/saveDatosTransferencia",
+                        //     data: {
+                        //         token: $('#txtTokenRepo').val(),
+                        //         clave: dataCriterio23.numero_personal,
+                        //         nombre: dataCriterio23.nombre,
+                        //         id_objetivo: 5,
+                        //         id_criterio: 23,
+                        //         direccion: "DPosgrado",
+                        //         puntos: 0,
+                        //         total_puntos: 0,
+                        //         year: year,
+                        //         username: dataCriterio23.username,
+                        //     },
+                        //     headers: {
+                        //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                        //     },
+                        //     success: function(data){
+                        //         verTablaCriterio23(year, criterio);
+                        //     }
+                        // });
                     }
                 }else{
                     verTablaCriterio23(year, criterio);

@@ -128,6 +128,7 @@
         }
 
         function verPersonal(grupo, year, direccion){
+            var bandera = true;
             // console.log(grupo+'->'+year+'->'+direccion);
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/getDirecciones/" + year + "/" + direccion + "/" + grupo,
@@ -169,7 +170,11 @@
                                 row += '<td width="60%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
                                 row += '<td class="text-center" width="20%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
                                 row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
-                                row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
+                                if(bandera == true){
+                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-edit"></i></a></td>';
+                                }else{
+                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:noFirmarAcuse()"><i class="fa fa-edit"></i></a></td>';
+                                }
                                 row += "</tr>";
                             }
                         }
@@ -204,6 +209,15 @@
             });
         }
 
+        function noFirmarAcuse(){
+            swal({
+                type: 'error',
+                text: 'Aun no puede firmar, espere autorizacion.',
+                showConfirmButton: false,
+                timer: 2000
+            }).catch(swal.noop);
+        }
+
         function verAcuse(direccion, nombre, clave, year, grupo){
             var url2 = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/generarAcusePDF/direccion/nombre/clave/year/grupo") }}';
             var link1 = url2.replace('direccion', direccion);
@@ -216,10 +230,10 @@
         }
 
         function firmarAcuse(clave, nombre, year){
-            // var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/firmarAcusePDF/clave/nombre/year") }}';
-            // var link1 = url.replace('clave', clave);
-            // var firma = link1.replace('nombre', nombre);
-            // window.open(firma);
+            var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/firmarAcusePDF/clave/nombre/year") }}';
+            var link1 = url.replace('clave', clave);
+            var firma = link1.replace('nombre', nombre);
+            window.open(firma);
         }
 
         function downloadConcentrado(){

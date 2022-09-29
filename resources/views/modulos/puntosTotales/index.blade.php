@@ -207,15 +207,15 @@
                 return;
             }
             // Validamos si los porcentajes son 0...
-            if(porcentajeActividadIndividual == 0 || porcentajeFacturacion == 0 || porcentajeFondosAdmin == 0 || porcentajeResponsabilidad == 0){
-                swal({
-                    type: 'warning',
-                    text: 'Favor de llenar todos los porcentajes.',
-                    showConfirmButton: false,
-                    timer: 1800
-                }).catch(swal.noop);
-                return;
-            }
+            // if(porcentajeActividadIndividual == 0 || porcentajeFacturacion == 0 || porcentajeFondosAdmin == 0 || porcentajeResponsabilidad == 0){
+            //     swal({
+            //         type: 'warning',
+            //         text: 'Favor de llenar todos los porcentajes.',
+            //         showConfirmButton: false,
+            //         timer: 1800
+            //     }).catch(swal.noop);
+            //     return;
+            // }
             // Calcular el importe de las actividades individuales(Importe total * porcentaje de la actividad individuales)
             actividadIndividual = importeTotal * porcentajeActividadIndividual;
             $('#txtActividadIndividual').val(new Intl.NumberFormat().format(actividadIndividual.toFixed(2)));
@@ -243,7 +243,7 @@
                         $('#txtTotalPuntosResponsabilidad').val(new Intl.NumberFormat().format(sumaTotalPuntos));
                         // Obtener el valor del punto por responsabilidad...
                         var valorPuntoResponsabilidad = responsabilidad / sumaTotalPuntos;
-                        $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(valorPuntoResponsabilidad.toFixed(2)));
+                        // $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(valorPuntoResponsabilidad.toFixed(2)));
                     }
                 },
             });
@@ -335,10 +335,24 @@
                             // console.log(sumarPuntosAyB);
                             $('#txtTotalPuntosTotalAB').val(new Intl.NumberFormat().format(sumarPuntosAyB.toFixed(2)));
                             // Calcular le valor del punto...
-                            var valorActividades = $('#txtActividadIndividual').val().replace(/,/g, "");
-                            var valorAyB = $('#txtTotalPuntosTotalAB').val().replace(/,/g, "");
-                            var valorPunto = parseFloat(valorActividades) / parseFloat(valorAyB);
-                            $('#txtValorPunto').val(new Intl.NumberFormat().format(valorPunto.toFixed(2)));
+                            // var valorActividades = $('#txtActividadIndividual').val().replace(/,/g, "");
+                            // var valorAyB = $('#txtTotalPuntosTotalAB').val().replace(/,/g, "");
+                            // var valorPunto = parseFloat(valorActividades) / parseFloat(valorAyB);
+                            // $('#txtValorPunto').val(new Intl.NumberFormat().format(valorPunto.toFixed(2)));
+                            // $('#btnGuardar').show();
+
+                            var valorAyB = parseFloat($('#txtTotalPuntosTotalAB').val().replace(/,/g, ""));
+                            var puntosResponsabilidad = parseFloat($('#txtTotalPuntosResponsabilidad').val().replace(/,/g, ""));
+                            var suma = valorAyB + puntosResponsabilidad;
+                            var importe = parseFloat($('#txtImporteTotal').val());
+                            var total = importe / suma;
+                            $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(total.toFixed(2)));
+                            $('#txtValorPunto').val(new Intl.NumberFormat().format(total.toFixed(2)));
+                            console.log(valorAyB);
+                            console.log(puntosResponsabilidad);
+                            console.log(suma);
+                            console.log(importe);
+                            console.log(total);
                             $('#btnGuardar').show();
                         }
                     });
@@ -377,15 +391,15 @@
                 return;
             }
             // Validamos que los campos no esten vacios...
-            if(porcentajeActividadIndividual == 0 || porcentajeFacturacion == 0 || porcentajeFondosAdmin == 0 || porcentajeResponsabilidad == 0){
-                swal({
-                    type: 'warning',
-                    text: 'Favor de llenar todos los porcentajes.',
-                    showConfirmButton: false,
-                    timer: 1800
-                }).catch(swal.noop);
-                return;
-            }
+            // if(porcentajeActividadIndividual == 0 || porcentajeFacturacion == 0 || porcentajeFondosAdmin == 0 || porcentajeResponsabilidad == 0){
+            //     swal({
+            //         type: 'warning',
+            //         text: 'Favor de llenar todos los porcentajes.',
+            //         showConfirmButton: false,
+            //         timer: 1800
+            //     }).catch(swal.noop);
+            //     return;
+            // }
             // Consulta para validar si ya existe el registro correspondiente al año...
             consultarDatos({
                 action: "{{ config('app.url') }}/modulos/puntosTotales/existe/" + year,
