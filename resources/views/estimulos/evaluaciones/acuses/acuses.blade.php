@@ -137,7 +137,8 @@
         <div class="centrado" style="width: 100%; font-size: 12px; font-weight: bold;">
             <div class="linea"></div>
             {{ strtoupper(eliminar_acentos($nombre)) }}<br>
-            Acuso de recibido como conformidad y manifiesto el conocimiento del proceso y el cálculo de los estímulos.
+            {{-- Acuso de recibido como conformidad y manifiesto el conocimiento del proceso, el cálculo de los estímulos y el monto . --}}
+            Acuso de recibido. Asi mismo, declaro bajo protesta de decir verdad que se hizo de mi conocimiento el mecanismo de evaluación por lo que manifiesto mi entera conformidad con el resultado y monto a pagar.
         </div>
         <div style="width: 100%; font-size: 12px; font-weight: bold;">
             <div style="float:left; width: 50%;">

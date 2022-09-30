@@ -343,7 +343,7 @@ class AcusesPDFController extends Controller
                 'valorPuntoProductividad' => $valoPuntoProductividad,
             ]);
             $dompdf->loadHtml($html);
-            return $dompdf->stream();($nombreDoc);
+            return $dompdf->stream($nombreDoc);
         }elseif($grupo == 'grupo2'){
             $tipoResponsabilidad = self::getTipoResponsabilidad($clave, $year);
             $nivelResponsabilidad = self::getNivelResponsabilidad($clave, $year);
@@ -361,7 +361,7 @@ class AcusesPDFController extends Controller
                 'valorPuntoResponsabilidad' => $valoPuntoResponsabilidad,
             ]);
             $dompdf->loadHtml($html);
-            return $dompdf->stream();($nombreDoc);
+            return $dompdf->stream($nombreDoc);
         }
         // $html = view('estimulos.evaluaciones.acuses.acuses', [
         //     'direccion' => $direccion,
