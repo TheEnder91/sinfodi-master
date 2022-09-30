@@ -978,9 +978,47 @@ class AcusesPDFController extends Controller
         // return $dompdf->stream($nombreDoc);
     // }
 
-    public function firmarAcuse($nombre, $clave, $year){
-        $nombreDoc = $clave."_".$nombre.".pdf";
+    public function firmarAcuse($direccion, $nombre, $clave, $year, $grupo){
         $dompdf = resolve('dompdf.wrapper');
+        if($grupo == 'grupo1'){
+            $sumaTotalPuntosA = self::getSumaTotalPuntosA($year, $clave, $direccion);
+            $sumaTotalPuntosB = self::getSumaTotalPuntosB($year, $clave, $direccion);
+            $valoPuntoProductividad = self::getValorPuntoProductividad($year);
+            $html = view('estimulos.evaluaciones.acuses.acuses', [
+                'clave' => $clave,
+                'nombre' => $nombre,
+                'grupo' => $grupo,
+                'año' => $year,
+                'criteriosA' => self::consultasCriteriosA($direccion, $clave, $year, $grupo),
+                'criteriosB' => self::consultasCriteriosB($direccion, $clave, $year, $grupo),
+                'sumaTotalPuntosA' => $sumaTotalPuntosA,
+                'sumaTotalPuntosB' => $sumaTotalPuntosB,
+                'valorPuntoProductividad' => $valoPuntoProductividad,
+            ]);
+            $dompdf->loadHtml($html);
+            // return $dompdf->stream();($nombreDoc);
+        }elseif($grupo == 'grupo2'){
+            $tipoResponsabilidad = self::getTipoResponsabilidad($clave, $year);
+            $nivelResponsabilidad = self::getNivelResponsabilidad($clave, $year);
+            $puntaje = self::getPuntosResponsabilidad($clave, $year);
+            $nivelImpacto = self::getNivelImpacto('Medio');
+            $valoPuntoResponsabilidad = self::getValorPuntoResponsabilidad($year);
+            $html = view('estimulos.evaluaciones.acuses.acuses', [
+                'clave' => $clave,
+                'nombre' => $nombre,
+                'grupo' => $grupo,
+                'puntajeResponsabilidad' => $puntaje,
+                'nivelResponsabilidad' => $nivelResponsabilidad,
+                'tipoResonsabilidad' => $tipoResponsabilidad,
+                'nivelImpacto' => $nivelImpacto,
+                'valorPuntoResponsabilidad' => $valoPuntoResponsabilidad,
+            ]);
+            $dompdf->loadHtml($html);
+            // return $dompdf->stream();($nombreDoc);
+        }
+
+        $nombreDoc = $clave."_".$nombre.".pdf";
+        // dd($nombreDoc);
         $archivo = $dompdf->download()->getOriginalContent();
         Storage::put("/public/".$nombreDoc, $archivo);
         $prueba = Http::attach(
@@ -990,12 +1028,13 @@ class AcusesPDFController extends Controller
             'document_type_id' => 4,
             'is_private' => 1, //1 = SI, 2= NO
         ]);
-        $prueba = Http::post('http://126.107.2.56/SINFODI/esignature/api/document', [
-            'no_employee' => $clave,
-            // 'pdf' => Storage::get("/app/public/".$nombreDoc),
-            'document_type_id' => 4,
-            'is_private' => 1, //1 = SI, 2= NO
-        ])->attach('pdf', Storage::get("/app/public/".$nombreDoc));
+        // $prueba = Http::post('http://126.107.2.56/SINFODI/esignature/api/document', [
+        //     'no_employee' => $clave,
+        //     // 'pdf' => Storage::get("/app/public/".$nombreDoc),
+        //     'document_type_id' => 4,
+        //     'is_private' => 1, //1 = SI, 2= NO
+        // // ])->attach('pdf', Storage::get("/app/public/".$nombreDoc));
+        // ])->attach('pdf', Storage::get("/public/".$nombreDoc));
         return $dompdf->stream($nombreDoc);
     }
 }

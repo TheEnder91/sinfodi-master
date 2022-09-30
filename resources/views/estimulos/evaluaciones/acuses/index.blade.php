@@ -128,7 +128,7 @@
         }
 
         function verPersonal(grupo, year, direccion){
-            var bandera = true;
+            var bandera = false;
             // console.log(grupo+'->'+year+'->'+direccion);
             consultarDatos({
                 action: "{{ config('app.url') }}/estimulos/evaluaciones/getDirecciones/" + year + "/" + direccion + "/" + grupo,
@@ -229,10 +229,13 @@
             window.open(url);
         }
 
-        function firmarAcuse(clave, nombre, year){
-            var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/firmarAcusePDF/clave/nombre/year") }}';
+        function firmarAcuse(direccion, nombre, clave, year, grupo){
+            var url = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/firmarAcusePDF/direccion/nombre/clave/year/grupo") }}';
             var link1 = url.replace('clave', clave);
-            var firma = link1.replace('nombre', nombre);
+            var link2 = link1.replace('nombre', nombre);
+            var link3 = link2.replace('grupo', grupo);
+            var link4 = link3.replace('direccion', direccion);
+            var firma = link4.replace('year', year);
             window.open(firma);
         }
 

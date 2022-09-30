@@ -128,7 +128,7 @@
             type: 'GET',
             dataType: 'json',
             ok: function(dataEvidenciasCriterio8){
-                // console.log(dataEvidenciasCriterio8); //Comentamos para futuras pruebas...
+                console.log(dataEvidenciasCriterio8); //Comentamos para futuras pruebas...
                 $('#modalEvidenciasCriterio8').modal({backdrop: 'static', keyboard: false});
                 consultarDatos({
                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/investigacion/puntosinvestigacion/" + criterio + "/" + objetivo,
