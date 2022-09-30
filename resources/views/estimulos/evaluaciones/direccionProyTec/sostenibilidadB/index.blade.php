@@ -121,8 +121,10 @@
                 dataType: 'json',
                 ok: function(datosCriterio37){
                     var datosCriterio37 = datosCriterio37.response;
+                    // console.log(datosCriterio37);
                     // Codigo para guardar en el sistema...
                     if(datosCriterio37.length > 0){
+                        // console.log(datosCriterio37);
                         // console.log(datosCriterio37);
                         let arr2 = [];
                         datosCriterio37.forEach((x)=>{
@@ -198,8 +200,8 @@
                 type: 'GET',
                 dataType: 'json',
                 ok: function(datosGeneralCriterio37){
-                    var datosGeneralCriterio37 = datosGeneralCriterio37.response;
                     // console.log(datosGeneralCriterio37);
+                    var datosGeneralCriterio37 = datosGeneralCriterio37.response;
                     var row = "";
                     for(var i = 0; i < datosGeneralCriterio37.length; i++){
                         var dataGeneralCriterio37 = datosGeneralCriterio37[i];

@@ -2,6 +2,7 @@
     $totalPuntosA = $sumaTotalPuntosA * 0.3;
     $totalPuntosB = $sumaTotalPuntosB * 0.7;
     $sumarTotalPuntosAyB = $totalPuntosA + $totalPuntosB;
+    $montoAnual = $sumarTotalPuntosAyB * $valorPuntoProductividad
 @endphp
 <div id="page">
     <table id="resumen">
@@ -17,7 +18,7 @@
             <tr>
                 <td>Factor 1. (Total puntos actividades A + B) * {{ number_format($valorPuntoProductividad, 2) }}</td>
                 <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
-                <td style="text-align: center">$0.00</td>
+                <td style="text-align: center">${{ number_format($montoAnual, 2) }}</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
             <tr>
@@ -57,7 +58,7 @@
             <tr>
                 <td style="text-align: left">Total General:</td>
                 <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
-                <td style="text-align: center">$0.00</td>
+                <td style="text-align: center">${{ number_format($montoAnual, 2) }}</td>
                 <td style="text-align: center">$0.00</td>
             </tr>
         </tfoot>
