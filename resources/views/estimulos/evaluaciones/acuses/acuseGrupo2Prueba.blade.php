@@ -49,12 +49,12 @@
             </tr>
             <tr>
                 @if ($tipoResonsabilidad == 'Directores' || $tipoResonsabilidad == 'Subdirectores')
-                    <td style="text-align: left">Calculo para determinar el monto del éstimulo = ({{ $puntajeResponsabilidad }} * {{ $nivelImpacto }}) * {{ $valorPuntoResponsabilidad }}:</td>
+                    <td style="text-align: left">Calculo para determinar el monto del éstimulo = ({{ $puntajeResponsabilidad }} * {{ $nivelImpacto }}) * {{ number_format($valorPuntoResponsabilidad, 2) }}:</td>
                     <td style="text-align: center">N/A</td>
                     <td style="text-align: center">${{ number_format($calculo1, 2) }}</td>
                     {{-- <td style="text-align: center">${{ number_format($calculoBimestral1, 2) }}</td> --}}
                 @elseif ($tipoResonsabilidad == 'Coordinadores' || $tipoResonsabilidad == 'Personal_Apoyo')
-                    <td style="text-align: left">Calculo para determinar el monto del éstimulo = {{ $puntajeResponsabilidad }} * {{ $valorPuntoResponsabilidad }}:</td>
+                    <td style="text-align: left">Calculo para determinar el monto del éstimulo = {{ $puntajeResponsabilidad }} * {{ number_format($valorPuntoResponsabilidad, 2) }}:</td>
                     <td style="text-align: center">N/A</td>
                     <td style="text-align: center">${{ number_format($calculo2, 2) }}</td>
                     {{-- <td style="text-align: center">${{ number_format($calculoBimestral2, 2) }}</td> --}}

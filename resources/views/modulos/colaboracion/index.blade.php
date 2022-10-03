@@ -55,14 +55,14 @@
                 </label>
                 <div style="column-count:6; list-style: none;" id="listComites"></div>
             </div>
-            <div class="col-1">
+            {{-- <div class="col-1">
                 <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardar"/>
                 </div>
                 <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizar"/>
                 </div>
-            </div>
+            </div> --}}
         </div><br>
         <div class="table-responsive">
             <table id="tblColaboradores" class="table table-bordered table-striped">
@@ -210,7 +210,7 @@
                         row += '<td class="text-center" width="5%" style="font-size:12px;">' + dataColaboradores.year + '</td>';
                         row += '<td class="text-center" width="5%" style="font-size:12px;">'+
                                     '<a href="javascript:editarColaboradores('+ dataColaboradores.id +', '+dataColaboradores.clave+', '+dataColaboradores.year+')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;'+
-                                    '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +')"><i class="fa fa-trash-alt"></i></a>'+
+                                    // '<a href="javascript:eliminarColaboradores('+ dataColaboradores.id +')"><i class="fa fa-trash-alt"></i></a>'+
                                 '</td>';
                         row += "</tr>";
                     }

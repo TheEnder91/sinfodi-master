@@ -33,9 +33,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                @can('estimulo-evaluaciones-servicios-acreditaciones-index')
+                {{-- @can('estimulo-evaluaciones-servicios-acreditaciones-index')
                     <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio35"/>
-                @endcan
+                @endcan --}}
             </div>
         </div>
     </div>
