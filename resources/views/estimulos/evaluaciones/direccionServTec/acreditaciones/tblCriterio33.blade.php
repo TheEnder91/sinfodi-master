@@ -138,7 +138,7 @@
             type: 'GET',
             dataType: 'json',
             ok: function(dataEvidenciasCriterio33){
-                // console.log(dataEvidenciasCriterio33);
+                console.log(dataEvidenciasCriterio33);
                 $('#modalEvidenciasCriterio33').modal({backdrop: 'static', keyboard: false});
                 consultarDatos({
                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/acreditaciones/puntos/" + criterio + "/" + objetivo,

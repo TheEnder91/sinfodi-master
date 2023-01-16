@@ -212,10 +212,10 @@ class AcreditacionesDSTController extends Controller
 
     public static function Evidencias_Criterio33($clave, $fechaInicial, $fechaFinal){
         $queryPersona = DB::connection('acreditaciones')->table('performancetests')
-                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, performancetests.name AS nombre, performancetests.file AS archivo, performancetests.is_group_or_person')
+                                ->selectRaw('persons.employees_number AS numeroPersonal, persons.employees_name_p AS nombrePersonal, performancetests.file AS archivo, performancetests.name AS nombre, performancetests.is_group_or_person')
                                 ->join('persons', 'persons.groups_id', '=', 'performancetests.groups_id')
                                 ->whereBetween('performancetests.date_end', [$fechaInicial, $fechaFinal])
-                                ->where('performancetests.employees_number', $clave)
+                                ->where('persons.employees_number', $clave)
                                 ->where('performancetests.is_group_or_person', '=', 0);
 
         $queryGrupo = DB::connection('acreditaciones')->table('performancetests')
