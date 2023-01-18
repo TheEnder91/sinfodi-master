@@ -52,6 +52,7 @@ class PosgradoDGController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_General')
+                            ->where('year', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){

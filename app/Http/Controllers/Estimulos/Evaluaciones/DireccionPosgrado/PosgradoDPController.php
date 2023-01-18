@@ -51,6 +51,7 @@ class PosgradoDPController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Posgrado')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -74,8 +75,7 @@ class PosgradoDPController extends Controller
     /** Funciones para obtener los datos necesarios para la evaluacion de posgrado... */
     public static function Evaluacion_Objetivo2_Criterio2_Posgrado($clave, $fechaInicial, $fechaFinal){
         $queryCriterio2 = DB::connection('posgradoDB')->table('dfa_alumnos')
-                            ->selectRaw('id_asesor AS numero_personal,
-                                         Nom_asesor AS nombre')
+                            ->selectRaw('id_asesor AS numero_personal, Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                             ->where('Id_Nivel', '=', 6)
                             ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 20 AND 30')

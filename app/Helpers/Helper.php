@@ -267,7 +267,7 @@ function getPersonalSinFiltros(){
 }
 
 function saveEvaluados(){
-    $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->get();
+    $queryDatos = DB::table('sinfodi_evaluados')->select('usuario')->where('year', date("Y")-1)->get();
     $datos = array_merge(GetDirectores(), GetSubdirectores(), GetCoordinadores(), GetPersonalApoyo(), GetDireccionGeneral(), GetDireccionAdministracion(), GetDireccionPosgrado(), GetDireccionCiencia(), GetDireccionServTec(), GetDireccionProyTec());
     // var_dump($datos);
     if(count($queryDatos) >= 1){
