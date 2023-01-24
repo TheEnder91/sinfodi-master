@@ -84,8 +84,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -95,7 +95,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -104,8 +104,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -115,7 +115,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -124,8 +124,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -135,7 +135,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -144,10 +144,10 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username,
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username,
                                  COUNT(*) AS total,
-                                 COUNT(*) * (SELECT puntos FROM productivo_sinfodi.sinfodi_criterios WHERE id = 18) AS total_puntos')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 COUNT(*) * (SELECT puntos FROM sinfodi_master.sinfodi_criterios WHERE id = 18) AS total_puntos')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -157,7 +157,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -166,8 +166,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -177,7 +177,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -186,8 +186,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -197,7 +197,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -206,7 +206,7 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -216,7 +216,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -225,8 +225,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -236,7 +236,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -245,8 +245,8 @@ class TransferenciaDCController extends Controller
         $query = DB::connection('sinfodiDB')->table('sinfodidb.sinfodi_pat_personas')
                     ->selectRaw('sinfodidb.sinfodi_pat_personas.pat_clave_persona AS numero_personal,
                                  sinfodidb.sinfodi_pat_personas.pat_nombre AS nombre,
-                                 productivo_sinfodi.sinfodi_evaluados.usuario AS username')
-                    ->leftJoin('productivo_sinfodi.sinfodi_evaluados', 'productivo_sinfodi.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
+                                 sinfodi_master.sinfodi_evaluados.usuario AS username')
+                    ->leftJoin('sinfodi_master.sinfodi_evaluados', 'sinfodi_master.sinfodi_evaluados.clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->leftJoin('sinfodidb.sinfodi_pat', 'sinfodidb.sinfodi_pat.pat_clave', '=', 'sinfodidb.sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -256,7 +256,7 @@ class TransferenciaDCController extends Controller
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_nombre')
-                    ->groupBy('productivo_sinfodi.sinfodi_evaluados.usuario')
+                    ->groupBy('sinfodi_master.sinfodi_evaluados.usuario')
                     ->get();
         return $query;
     }
@@ -342,7 +342,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio15_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -357,7 +357,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio16_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -372,7 +372,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio17_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -387,7 +387,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio18_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -402,7 +402,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio19_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -417,7 +417,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio20_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -432,7 +432,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio21_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -447,7 +447,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio22_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)
@@ -462,7 +462,7 @@ class TransferenciaDCController extends Controller
 
     public static function Get_Evidencias_Obj5_Criterio23_TransferenciaConocimiento($clave, $inicial, $final){
         $query = DB::connection('sinfodiDB')->table('sinfodi_pat_personas')
-                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status')
+                    ->select('sinfodi_pat_personas.pat_clave_persona AS numero_personal', 'sinfodi_pat_personas.pat_clave_pat_persona AS clave', 'sinfodi_pat.pat_status AS status', 'sinfodi_pat_personas.pat_porcentaje AS porcentaje')
                     ->leftJoin('sinfodi_pat', 'sinfodi_pat.pat_clave', '=', 'sinfodi_pat_personas.pat_clave_pat_persona')
                     ->where('sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodi_pat_personas.pat_clave_persona', '<>', 0)

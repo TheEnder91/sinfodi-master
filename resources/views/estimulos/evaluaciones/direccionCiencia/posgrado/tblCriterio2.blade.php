@@ -41,28 +41,28 @@
                                 var username = datosCritero2Username.response[0];
                                 verTablaCriterio2(year, 2);
                                 // console.log(username.usuario);
-                                // $.ajax({
-                                //     type: 'POST',
-                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/saveDatosPosgrado",
-                                //     data: {
-                                //         token: $('#txtTokenRepo').val(),
-                                //         clave: username.clave,
-                                //         nombre: username.nombre,
-                                //         id_objetivo: 2,
-                                //         id_criterio: criterio,
-                                //         direccion: "DCiencia",
-                                //         puntos: 0,
-                                //         total_puntos: 0,
-                                //         year: year,
-                                //         username: username.usuario
-                                //     },
-                                //     headers: {
-                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                //     },
-                                //     success: function(data){
-                                //         verTablaCriterio2(year, 2);
-                                //     }
-                                // });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/saveDatosPosgrado",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: username.clave,
+                                        nombre: username.nombre,
+                                        id_objetivo: 2,
+                                        id_criterio: criterio,
+                                        direccion: "DCiencia",
+                                        puntos: 0,
+                                        total_puntos: 0,
+                                        year: year,
+                                        username: username.usuario
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        verTablaCriterio2(year, 2);
+                                    }
+                                });
                             },
                         });
                     }
@@ -178,6 +178,12 @@
                                     row += '<br>';
                                     row += '<b><input type="checkbox" class="evidenciasCriterio2" name="evidenciasCriterio2[]" id="evidenciasCriterio2'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio2('+puntos+');"> ' + claveEvidencia + '</b>';
                                     row += '</div>';
+                                }else if (year <= '2022'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio2(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio2" name="evidenciasCriterio2[]" id="evidenciasCriterio2'+claveEvidencia+'" value="'+claveData.porcentaje / 100+'" onClick="contarEvidenciasCriterio2(this.checked, '+puntos+', this.value);"> ' + claveEvidencia + '-> ' +claveData.porcentaje+ '%</b>';
+                                    row += '</div>';
                                 }
                             }
                         }
@@ -240,18 +246,51 @@
         }).catch(swal.noop);
     }
 
-    function contarEvidenciasCriterio2(puntos){
-        // Parte para contar la cantidad de evidencias a la que pertenece...
+    function contarEvidenciasCriterio2(estaChequeado, puntos, porcentaje){
+        // Variables...
+        var contador = 0;
+        puntos = parseInt(puntos);
+        porcentaje = parseFloat(porcentaje);
+        var sumaActual = 0;
+        var puntosPorcen = puntos * porcentaje;
+        var campo_resultado = document.getElementById('txtTotalCriterio2');
+        // Revisamos errores...
+        try {
+            if (campo_resultado != null) {
+                if (isNaN(campo_resultado.value)) {
+                    campo_resultado.value = "0.00";
+                }
+                sumaActual = parseFloat(campo_resultado.value);
+            }
+        } catch (ex) {
+            alert('No existe el campo de la suma.');
+        }
+        // Validamos si seleccionamos y
+        if (estaChequeado == true) {
+            sumaActual = parseFloat(sumaActual) + parseFloat(puntosPorcen);
+        } else {
+            sumaActual = parseFloat(sumaActual) - parseFloat(puntosPorcen);
+        }
+        // console.log(sumaActual);
+        console.log(estaChequeado + ' ' + porcentaje + ' '  + puntos + ' ' + puntosPorcen + ' ' + sumaActual);
+        campo_resultado.value = parseFloat(sumaActual);
+        // Parte para contar la cantidad de evidencias seleccionadas...
         var evidencias = [];
+        // var porcen = [];
+        // var puntosPorcen = 0;
+        // var totalPuntos = 0;
         $('input.evidenciasCriterio2:checked').each(function(){
-            evidencias.push(this.value);
+             evidencias.push(this.value);
+        //     porcen = porcentaje / 100;
+        //     puntosPorcen = (puntos * porcen);
+        //     totalPuntos += puntosPorcen;
         });
         var cantidad = evidencias.length;
         $('#txtCantidadCriterio2').val(cantidad);
         //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
-        // console.log(puntos);
-        var totalPuntos = cantidad * puntos;
-        $('#txtTotalCriterio2').val(totalPuntos);
+
+        // console.log(puntosPorcen);
+        // $('#txtTotalCriterio2').val(0);
     }
 
     function actualizarEvidenciasCriterio2(){

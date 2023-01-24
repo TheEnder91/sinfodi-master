@@ -42,26 +42,26 @@
                                 verTablaCriterio26(year, 26);
                                 // console.log(username.clave + "->" + username.usuario);
                                 // $.ajax({
-                                //     type: 'POST',
-                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/formacionRH/saveDatosFormacionRH",
-                                //     data: {
-                                //         token: $('#txtTokenRepo').val(),
-                                //         clave: username.clave,
-                                //         nombre: username.nombre,
-                                //         id_objetivo: 6,
-                                //         id_criterio: 26,
-                                //         direccion: "DServTec",
-                                //         puntos: 0,
-                                //         total_puntos: 0,
-                                //         year: year,
-                                //         username: username.usuario,
-                                //     },
-                                //     headers: {
-                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                //     },
-                                //     success: function(data){
-                                //         verTablaCriterio26(year, 26);
-                                //     }
+                                    // type: 'POST',
+                                    // url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/formacionRH/saveDatosFormacionRH",
+                                    // data: {
+                                        // token: $('#txtTokenRepo').val(),
+                                        // clave: username.clave,
+                                        // nombre: username.nombre,
+                                        // id_objetivo: 6,
+                                        // id_criterio: 26,
+                                        // direccion: "DServTec",
+                                        // puntos: 0,
+                                        // total_puntos: 0,
+                                        // year: year,
+                                        // username: username.usuario,
+                                    // },
+                                    // headers: {
+                                        // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    // },
+                                    // success: function(data){
+                                        // verTablaCriterio26(year, 26);
+                                    // }
                                 // });
                             },
                         });
@@ -164,7 +164,7 @@
                                 row += '<a href="' + claveData.evidencias + '" target="_blank">';
                                 row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px"></a>';
                                 row += '<br>';
-                                row += '<b><input type="checkbox" class="evidenciasCriterio26" name="evidenciasCriterio26[]" id="evidenciasCriterio26'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio26('+puntos+');"> ' + claveEvidencias + '</b>';
+                                row += '<b><input type="checkbox" class="evidenciasCriterio26" name="evidenciasCriterio26[]" id="evidenciasCriterio26'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio26('+puntos+');"> ' + claveEvidencias + ' -> 100%</b>';
                                 row += '</div>';
                             }
                         }

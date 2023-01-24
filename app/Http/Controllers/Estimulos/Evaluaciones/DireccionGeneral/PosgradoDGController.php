@@ -117,15 +117,29 @@ class PosgradoDGController extends Controller
     }
 
     public static function Evaluacion_Objetivo2_Criterio5_Posgrado($clave, $fechaInicial, $fechaFinal){
-        $queryCriterio5 = DB::connection('posgradoDB')->table('dfa_alumnos')
+        $queryAsesores = DB::connection('posgradoDB')->table('dfa_alumnos')
                             ->selectRaw('id_asesor AS numero_personal,
                                          Nom_asesor AS nombre')
                             ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                             ->where('Id_Nivel', '=', 8)
                             ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
-                            ->whereIn('id_asesor', $clave)
                             ->groupBy('id_asesor')
-                            ->groupBy('Nom_asesor')
+                            ->groupBy('Nom_asesor');
+        $queryCoasesor = DB::connection('posgradoDB')->table('dfa_alumnos')
+                            ->selectRaw('id_coasesor AS numero_personal,
+                                         Nom_coasesor AS nombre')
+                            ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
+                            ->where('Id_Nivel', '=', 8)
+                            ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
+                            ->groupBy('id_coasesor')
+                            ->groupBy('Nom_coasesor')
+                            ->unionAll($queryAsesores);
+        $queryCriterio5 = DB::connection('posgradoDB')->table($queryCoasesor)
+                            ->selectRaw('numero_personal, nombre')
+                            ->whereIn('numero_personal', $clave)
+                            ->groupBy('numero_personal')
+                            ->groupBy('nombre')
+                            ->orderBy('numero_personal', 'ASC')
                             ->get();
         return $queryCriterio5;
     }
@@ -247,18 +261,29 @@ class PosgradoDGController extends Controller
     }
 
     public static function Get_Evidencias_Criterio5_Posgrado($clave, $fechaInicial, $fechaFinal){
-        $query = DB::connection('posgradoDB')->table('dfa_alumnos')
-                    ->selectRaw('id_asesor AS numero_personal,
-                                 Fecha_i AS FechaInicial,
-                                 Fecha_f AS FechaFinal,
-                                 TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) AS meses,
-                                 Evidencia AS evidencias')
-                    ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
-                    ->whereRaw('TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48')
-                    ->where('Id_Nivel', '=', 8)
-                    ->where('id_asesor', '=', $clave)
-                    ->get();
-        return $query;
+        $query = "SELECT idAlumno AS id,
+                         id_asesor AS numero_personal,
+                         Fecha_i AS FechaInicial,
+                         Fecha_f AS FechaFinal,
+                         TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) AS meses,
+                         Por_part_asesor AS porcentaje,
+                         Evidencia AS evidencias
+                  FROM dfa_alumnos
+                  WHERE (Fecha_f BETWEEN '$fechaInicial' AND '$fechaFinal') AND Id_Nivel = 8 AND
+                        (TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48) AND Id_asesor = $clave
+                  UNION ALL
+                  SELECT idAlumno AS id,
+                         Id_coasesor AS numero_personal,
+                         Fecha_i AS FechaInicial,
+                         Fecha_f AS FechaFinal,
+                         TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) AS meses,
+                         Por_part_coasesor AS porcentaje,
+                         Evidencia AS evidencias
+                  FROM dfa_alumnos
+                  WHERE (Fecha_f BETWEEN '$fechaInicial' AND '$fechaFinal') AND Id_Nivel = 8 AND
+                        (TIMESTAMPDIFF(MONTH, Fecha_i, Fecha_f) BETWEEN 43 AND 48) AND Id_coasesor = $clave";
+        $queryEvidencias = DB::connection('posgradoDB')->select($query);
+        return $queryEvidencias;
     }
 
     /**

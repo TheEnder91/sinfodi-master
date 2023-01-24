@@ -122,7 +122,7 @@
     function verEvidenciasCriterio15(year, clave, criterio){
         var objetivo = 5;
         $('#txtCantidadCriterio15').val(0);
-        $('#txtTotalCriterio15').val(0);
+        $('#txtTotalCriterio15').val(0.00);
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionPosgrado/transferencia/searchEvidenciasTransferencia/" + year + "/" + clave + "/" + criterio,
             type: 'GET',
@@ -155,7 +155,7 @@
                             row += '<a href="http://126.107.2.56/SINFODI/Files/SINFODI-PropiedadIntelectual/' + claveData.clave + tipo + '.pdf" target="_blank">';
                             row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px">';
                             row += '</a><br>';
-                            row += '<b><input type="checkbox" class="evidenciasCriterio15" name="evidenciasCriterio15[]" id="evidenciasCriterio15'+claveData.clave+'" value="'+claveData.clave+'" onClick="contarEvidenciasCriterio15('+puntos+');"> ' + claveData.clave + tipo + '</b>';
+                            row += '<b><input type="checkbox" class="evidenciasCriterio15" name="evidenciasCriterio15[]" id="evidenciasCriterio15'+claveData.clave+'" value="'+claveData.porcentaje / 100+'" onClick="contarEvidenciasCriterio15(this.checked, '+puntos+', this.value);"> ' + claveData.clave + tipo + ' -> ' + claveData.porcentaje + '%</b>';
                             row += '</div>';
                         }
                         $("#contenedorCriterio15").html(row).fadeIn('slow');
@@ -199,18 +199,48 @@
         });
     }
 
-    function contarEvidenciasCriterio15(puntos){
-        // Parte para contar la cantidad de evidencias a la que pertenece...
+    function contarEvidenciasCriterio15(estaChequeado, puntos, porcentaje){
+        // Variables...
+        var contador = 0;
+        puntos = parseInt(puntos);
+        porcentaje = parseFloat(porcentaje);
+        var sumaActual = 0;
+        var puntosPorcen = puntos * porcentaje;
+        var campo_resultado = document.getElementById('txtTotalCriterio15');
+        // Revisamos errores...
+        try {
+            if (campo_resultado != null) {
+                if (isNaN(campo_resultado.value)) {
+                    campo_resultado.value = "0.00";
+                }
+                sumaActual = parseFloat(campo_resultado.value);
+            }
+        } catch (ex) {
+            alert('No existe el campo de la suma.');
+        }
+        // Validamos si seleccionamos y
+        if (estaChequeado == true) {
+            sumaActual = parseFloat(sumaActual) + parseFloat(puntosPorcen);
+        } else {
+            sumaActual = parseFloat(sumaActual) - parseFloat(puntosPorcen);
+        }
+        // console.log(sumaActual);
+        console.log(estaChequeado + ' ' + porcentaje + ' '  + puntos + ' ' + puntosPorcen + ' ' + sumaActual);
+        campo_resultado.value = parseFloat(sumaActual).toFixed(2);
+        // Parte para contar la cantidad de evidencias seleccionadas...
         var evidencias = [];
+        // var porcen = [];
+        // var puntosPorcen = 0;
+        // var totalPuntos = 0;
         $('input.evidenciasCriterio15:checked').each(function(){
-            evidencias.push(this.value);
+             evidencias.push(this.value);
+        //     porcen = porcentaje / 100;
+        //     puntosPorcen = (puntos * porcen);
+        //     totalPuntos += puntosPorcen;
         });
         var cantidad = evidencias.length;
         $('#txtCantidadCriterio15').val(cantidad);
         //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
-        // console.log(puntos);
-        var totalPuntos = cantidad * puntos;
-        $('#txtTotalCriterio15').val(totalPuntos);
     }
 
     function actualizarEvidenciasCriterio15(){

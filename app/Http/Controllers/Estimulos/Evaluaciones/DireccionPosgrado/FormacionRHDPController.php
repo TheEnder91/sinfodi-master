@@ -49,6 +49,7 @@ class FormacionRHDPController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Posgrado')
+                            ->where('year', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -272,7 +273,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 1)
                     ->where('id_asesor', '=', $clave)
@@ -285,7 +287,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 2)
                     ->where('id_asesor', '=', $clave)
@@ -298,7 +301,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 3)
                     ->where('id_asesor', '=', $clave)
@@ -311,7 +315,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 11)
                     // ->whereRaw('(Id_TipoAlumno = 14 OR Id_TipoAlumno = 11 OR Id_TipoAlumno = 13)')
@@ -325,7 +330,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 10)
                     ->where('id_asesor', '=', $clave)
@@ -338,7 +344,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumnoPregrado,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_TipoAlumno', '=', 4)
                     ->where('id_asesor', '=', $clave)
@@ -351,7 +358,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumno,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_Nivel', '=', 6)
                     ->where('id_asesor', '=', $clave)
@@ -364,7 +372,8 @@ class FormacionRHDPController extends Controller
                     ->selectRaw('IdAlumno,
                                  Id_asesor AS numero_personal,
                                  Nom_asesor AS nombre,
-                                 Evidencia AS evidencias')
+                                 Evidencia AS evidencias,
+                                 Por_part_asesor AS porcentaje')
                     ->whereBetween('Fecha_f', [$fechaInicial, $fechaFinal])
                     ->where('Id_Nivel', '=', 8)
                     ->where('id_asesor', '=', $clave)

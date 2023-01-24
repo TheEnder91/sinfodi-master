@@ -164,7 +164,7 @@
                                 row += '<a href="' + claveData.evidencias + '" target="_blank">';
                                 row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px"></a>';
                                 row += '<br>';
-                                row += '<b><input type="checkbox" class="evidenciasCriterio24" name="evidenciasCriterio24[]" id="evidenciasCriterio24'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio24('+puntos+');"> ' + claveEvidencias + '</b>';
+                                row += '<b><input type="checkbox" class="evidenciasCriterio24" name="evidenciasCriterio24[]" id="evidenciasCriterio24'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio24('+puntos+');"> ' + claveEvidencias + ' -> ' + claveData.porcentaje + '%</b>';
                                 row += '</div>';
                             }
                         }

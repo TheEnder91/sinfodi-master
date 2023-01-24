@@ -138,7 +138,7 @@
             type: 'GET',
             dataType: 'json',
             ok: function(dataEvidenciasCriterio2){
-                // console.log(dataEvidenciasCriterio2); //Comentamos para futuras pruebas...
+                console.log(dataEvidenciasCriterio2); //Comentamos para futuras pruebas...
                 $('#modalEvidenciasCriterio2').modal({backdrop: 'static', keyboard: false});
                 consultarDatos({
                     action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/posgrado/puntosPosgrado/" + criterio + "/" + objetivo,
@@ -173,6 +173,12 @@
                                     row += '<b><input type="checkbox" class="evidenciasCriterio2" name="evidenciasCriterio2[]" id="evidenciasCriterio2'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio2('+puntos+');"> ' + claveEvidencia + '</b>';
                                     row += '</div>';
                                 }else if (year <= '2021'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio2(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio2" name="evidenciasCriterio2[]" id="evidenciasCriterio2'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio2('+puntos+');"> ' + claveEvidencia + '</b>';
+                                    row += '</div>';
+                                }else if (year <= '2022'){
                                     row += '<div class="col-12 col-md-2 text-center">';
                                     row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio2(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
                                     row += '<br>';

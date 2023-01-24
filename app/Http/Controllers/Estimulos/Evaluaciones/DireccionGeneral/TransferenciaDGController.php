@@ -171,7 +171,7 @@ class TransferenciaDGController extends Controller
                     ->where('sinfodidb.sinfodi_pat.pat_eliminado', '=', 0)
                     ->where('sinfodidb.sinfodi_pat_personas.pat_clave_persona', '<>', 0)
                     ->where('sinfodidb.sinfodi_pat.pat_tipo', '=', 3)
-                    ->where('sinfodidb.sinfodi_pat.pat_status', '=', 1)
+                    ->where('sinfodidb.sinfodi_pat.pat_status', '=', 2)
                     ->whereBetween('sinfodidb.sinfodi_pat.pat_fecha', [$inicial, $final])
                     ->whereIn('sinfodidb.sinfodi_pat_personas.pat_clave_persona', $clave)
                     ->groupBy('sinfodidb.sinfodi_pat_personas.pat_clave_persona')

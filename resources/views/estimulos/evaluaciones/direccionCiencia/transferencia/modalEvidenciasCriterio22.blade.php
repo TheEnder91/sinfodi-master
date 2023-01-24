@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-2">
                         <label class="col-form-label" style="font-size:13px;">Total:</label>
-                        <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotalCriterio22" value="0" readonly>
+                        <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotalCriterio22" value="0.00" readonly>
                     </div>
                     <div class="col-2">
                         <label class="col-form-label" style="font-size:13px;">Año:</label>
@@ -33,9 +33,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{-- @can('estimulo-evaluaciones-ciencia-transferencia-index')
+                @can('estimulo-evaluaciones-ciencia-transferencia-index')
                     <input type="button" class="btn btn-success" value="Actualizar" id="btnActualizarCriterio22"/>
-                @endcan --}}
+                @endcan
             </div>
         </div>
     </div>

@@ -212,7 +212,7 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evaluaciones de estimulos responsabilidades->Directores... */
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/listDirectores', [DirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/existe/{year}/{direccion}', [DirectoresController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.directores');
-    Route::get('/estimulos/evaluaciones/responsabilidades/directores/searchDirectores', [DirectoresController::class, "searchDirectores"])->name('estimulos.evaluaciones.responsabilidades.directores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/directores/searchDirectores/{year}', [DirectoresController::class, "searchDirectores"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/puntos', [DirectoresController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::post('/estimulos/evaluaciones/responsabilidades/directores/store', [DirectoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.directores');
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/getDirectores/{year}', [DirectoresController::class, "getDirectores"])->name('estimulos.evaluaciones.responsabilidades.directores');

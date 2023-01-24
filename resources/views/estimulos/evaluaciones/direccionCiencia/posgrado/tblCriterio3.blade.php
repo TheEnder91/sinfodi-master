@@ -40,7 +40,7 @@
                                 // Codigo para guardar en el sistema...
                                 var username = datosCritero3Username.response[0];
                                 verTablaCriterio3(year, criterio);
-                                // console.log(username.clave + "->" + username.usuario);
+                                //console.log(username.clave + "->" + username.usuario);
                                 // $.ajax({
                                 //     type: 'POST',
                                 //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/saveDatosPosgrado",
@@ -93,7 +93,7 @@
                         row += '<th scope="row" class="text-center" width="10%" style="font-size:12px;">' + dataPosgradoCriterio3.clave + '</td>';
                         row += '<td width="40%" style="font-size:12px;">' + dataPosgradoCriterio3.nombre.toUpperCase() + "</td>";
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataPosgradoCriterio3.puntos) + '</td>';
-                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + parseInt(dataPosgradoCriterio3.total_puntos) + '</td>';
+                        row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataPosgradoCriterio3.total_puntos + '</td>';
                         row += '<td class="text-center" width="10%" style="font-size:12px;">' + dataPosgradoCriterio3.year + '</td>';
                         // if(permissions == 1){
                             row += '<td class="text-center" width="10%" style="font-size:12px;"><a href="javascript:verEvidenciasCriterio3(' + dataPosgradoCriterio3.year + ', ' + dataPosgradoCriterio3.clave + ', ' + criterio +')"><i class="fa fa-edit"></i></a></td>';
@@ -131,7 +131,7 @@
 
     function verEvidenciasCriterio3(year, clave, criterio){
         $('#txtCantidadCriterio3').val(0);
-        $('#txtTotalCriterio3').val(0);
+        $('#txtTotalCriterio3').val("0.00");
         var objetivo = 2;
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/posgrado/searchEvidenciasPosgrado/" + year + "/" + clave + "/" + criterio,
@@ -174,9 +174,15 @@
                                     row += '</div>';
                                 }else if (year <= '2021'){
                                     row += '<div class="col-12 col-md-2 text-center">';
-                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio3(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<img src="evidencias{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio3(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
                                     row += '<br>';
                                     row += '<b><input type="checkbox" class="evidenciasCriterio3" name="evidenciasCriterio3[]" id="evidenciasCriterio3'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio3('+puntos+');"> ' + claveEvidencia + '</b>';
+                                    row += '</div>';
+                                }else if (year <= '2022'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onclick="mostrarMensajeCriterio3(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio3" name="evidenciasCriterio3[]" id="evidenciasCriterio3'+claveEvidencia+'" value="'+claveData.porcentaje / 100+'" onclick="contarEvidenciasCriterio3(this.checked, '+puntos+', this.value);"> ' + claveEvidencia + '-> ' +claveData.porcentaje+ '%</b>';
                                     row += '</div>';
                                 }
                             }
@@ -237,18 +243,51 @@
         });
     }
 
-    function contarEvidenciasCriterio3(puntos){
-        // Parte para contar la cantidad de evidencias a la que pertenece...
+    function contarEvidenciasCriterio3(estaChequeado, puntos, porcentaje){
+        // Variables...
+        var contador = 0;
+        puntos = parseInt(puntos);
+        porcentaje = parseFloat(porcentaje);
+        var sumaActual = 0;
+        var puntosPorcen = puntos * porcentaje;
+        var campo_resultado = document.getElementById('txtTotalCriterio3');
+        // Revisamos errores...
+        try {
+            if (campo_resultado != null) {
+                if (isNaN(campo_resultado.value)) {
+                    campo_resultado.value = "0.00";
+                }
+                sumaActual = parseFloat(campo_resultado.value);
+            }
+        } catch (ex) {
+            alert('No existe el campo de la suma.');
+        }
+        // Validamos si seleccionamos y
+        if (estaChequeado == true) {
+            sumaActual = parseFloat(sumaActual) + parseFloat(puntosPorcen);
+        } else {
+            sumaActual = parseFloat(sumaActual) - parseFloat(puntosPorcen);
+        }
+        // console.log(sumaActual);
+        console.log(estaChequeado + ' ' + porcentaje + ' '  + puntos + ' ' + puntosPorcen + ' ' + sumaActual);
+        campo_resultado.value = parseFloat(sumaActual);
+        // Parte para contar la cantidad de evidencias seleccionadas...
         var evidencias = [];
+        // var porcen = [];
+        // var puntosPorcen = 0;
+        // var totalPuntos = 0;
         $('input.evidenciasCriterio3:checked').each(function(){
-            evidencias.push(this.value);
+             evidencias.push(this.value);
+        //     porcen = porcentaje / 100;
+        //     puntosPorcen = (puntos * porcen);
+        //     totalPuntos += puntosPorcen;
         });
         var cantidad = evidencias.length;
         $('#txtCantidadCriterio3').val(cantidad);
         //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
-        // console.log(puntos);
-        var totalPuntos = cantidad * puntos;
-        $('#txtTotalCriterio3').val(totalPuntos);
+
+        // console.log(puntosPorcen);
+        // $('#txtTotalCriterio3').val(0);
     }
 
     function actualizarEvidenciasCriterio3(){

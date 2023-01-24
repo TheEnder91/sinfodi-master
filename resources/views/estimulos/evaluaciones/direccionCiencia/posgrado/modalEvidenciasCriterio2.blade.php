@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-2">
                         <label class="col-form-label" style="font-size:13px;">Total:</label>
-                        <input type="text" class="form-control form-control-sm text-center" name="totalCriterio2" id="txtTotalCriterio2" value="0" readonly>
+                        <input type="text" class="form-control form-control-sm text-center" name="totalCriterio2" id="txtTotalCriterio2" value="0.00" readonly>
                     </div>
                     <div class="col-2">
                         <label class="col-form-label" style="font-size:13px;">Año:</label>

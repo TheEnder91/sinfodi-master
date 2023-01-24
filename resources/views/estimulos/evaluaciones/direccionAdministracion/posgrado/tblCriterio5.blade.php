@@ -178,6 +178,12 @@
                                     row += '<br>';
                                     row += '<b><input type="checkbox" class="evidenciasCriterio5" name="evidenciasCriterio5[]" id="evidenciasCriterio5'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio5('+puntos+');"> ' + claveEvidencia + '</b>';
                                     row += '</div>';
+                                }else if (year <= '2022'){
+                                    row += '<div class="col-12 col-md-2 text-center">';
+                                    row += '<img src="{{ asset('img/pdf2.png') }}" style="cursor: pointer" width="60px" height="60px" onClick="mostrarMensajeCriterio5(\''+nuevaFechaInicial+'\',\''+nuevaFechaFinal+'\', '+claveData.meses+', \''+claveData.evidencias+'\');">';
+                                    row += '<br>';
+                                    row += '<b><input type="checkbox" class="evidenciasCriterio5" name="evidenciasCriterio5[]" id="evidenciasCriterio5'+claveEvidencia+'" value="'+claveEvidencia+'" onClick="contarEvidenciasCriterio5('+puntos+');"> ' + claveEvidencia + '</b>';
+                                    row += '</div>';
                                 }
                             }
                         }

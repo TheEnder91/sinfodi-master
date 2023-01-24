@@ -164,7 +164,7 @@
                                 row += '<a href="' + claveData.evidencias + '" target="_blank">';
                                 row += '<img src="{{ asset('img/pdf2.png') }}" width="60px" height="60px"></a>';
                                 row += '<br>';
-                                row += '<b><input type="checkbox" class="evidenciasCriterio30" name="evidenciasCriterio30[]" id="evidenciasCriterio30'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio30('+puntos+');"> ' + claveEvidencias + '</b>';
+                                row += '<b><input type="checkbox" class="evidenciasCriterio30" name="evidenciasCriterio30[]" id="evidenciasCriterio30'+claveEvidencias+'" value="'+claveEvidencias+'" onClick="contarEvidenciasCriterio30('+puntos+');"> ' + claveEvidencias + ' -> 100%</b>';
                                 row += '</div>';
                             }
                         }

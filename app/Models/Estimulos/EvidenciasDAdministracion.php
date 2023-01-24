@@ -9,6 +9,6 @@ class EvidenciasDAdministracion extends Model
     public $table = 'sinfodi_evidencias_administracion';
 
     protected $fillable = [
-        'clave', 'evidencias', 'puntos', 'total_puntos', 'year', 'id_criterio',
+        'clave', 'evidencias', 'puntos', 'total_puntos', 'id_criterio', 'year',
     ];
 }

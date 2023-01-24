@@ -40,10 +40,11 @@ class DirectoresController extends Controller
         return $this->response($data);
     }
 
-    public static function searchDirectores(){
+    public static function searchDirectores($year){
         $queryDirectores = DB::table('sinfodi_evaluados')
                             ->select('clave', 'nombre', 'usuario', 'puesto')
                             ->where('puesto', '=', 'Director')
+                            ->where('year', '=', $year)
                             ->get();
         return $queryDirectores;
     }
