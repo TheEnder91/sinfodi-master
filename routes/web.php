@@ -96,7 +96,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/', function () {
         saveEvaluados();
         getPersonalSinFiltros();
-        return view('layouts.app');
+        return view('layouts.inicio');
     });
     /** Rutas para el panel de control de la aplicacion... */
     //Rutas para el modulo de usuarios...
