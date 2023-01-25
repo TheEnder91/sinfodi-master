@@ -55,9 +55,10 @@
         @endsection
 @else
         @section('texto_informativo')
-        <div class="row">
-            <div class="col-12">
-                <h5><label>Lo sentimos, usted no es candidato para participar en estimulos.</label></h5>
+            <div class="row">
+                <div class="col-12">
+                    <h5><label>Lo sentimos, usted no es candidato para participar en estimulos.</label></h5>
+                </div>
             </div>
-        </div>
+        @endsection
 @endif
