@@ -12,14 +12,14 @@
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Sostenibilidad económica</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/colaboracion/listColaboracion') }}" class="nav-link {{ isRouteActive('modulos.colaboracion') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Colaboración institucional</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Puntos totales</p>

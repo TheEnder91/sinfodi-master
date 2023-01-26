@@ -53,16 +53,16 @@
                 <label class="col-form-label"><span style="font-size:13px; color:red">*</span>Seleccione un comite:
                     <a href="javascript:agregarComite()"><i class="fa fa-plus"></i>Agregar comite</a>
                 </label>
-                <div style="column-count:6; list-style: none;" id="listComites"></div>
+                <div style="column-count:4; list-style: none;" id="listComites"></div>
             </div>
-            {{-- <div class="col-1">
+            <div class="col-1">
                 <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardar"/>
                 </div>
                 <div class="float-right">
                     <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizar"/>
                 </div>
-            </div> --}}
+            </div>
         </div><br>
         <div class="table-responsive">
             <table id="tblColaboradores" class="table table-bordered table-striped">
