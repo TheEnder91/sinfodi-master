@@ -76,7 +76,7 @@
                     // console.log(existe.response);
                     if(existe.response == 0){
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/searchCoordinadores",
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/Coordinadores/searchCoordinadores/"+año,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(searchCoordinadores){

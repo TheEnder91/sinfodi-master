@@ -38,10 +38,11 @@ class PersonalApoyoController extends Controller
         return $this->response($data);
     }
 
-    public static function searchPersonalApoyo(){
+    public static function searchPersonalApoyo($year){
         $queryDirectores = DB::table('sinfodi_evaluados')
                             ->select('clave', 'nombre', 'usuario', 'puesto')
                             ->where('puesto', '=', 'Personal_Apoyo')
+                            ->where('year', '=', $year)
                             ->get();
         return $queryDirectores;
     }

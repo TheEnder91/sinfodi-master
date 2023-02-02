@@ -92,25 +92,25 @@
                                             for(var i = 0; i < searchDirectores.length; i++){
                                                 var dataDirectores = searchDirectores[i];
                                                 // console.log(dataDirectores.clave);
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/store",
-                                                    data: {
-                                                        clave: dataDirectores.clave,
-                                                        nombre: dataDirectores.nombre,
-                                                        direccion: direccion,
-                                                        responsabilidad: 'Director de área o equivalente',
-                                                        puntos: puntos[0].puntos,
-                                                        year: año,
-                                                        username: dataDirectores.usuario,
-                                                    },
-                                                    headers: {
-                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                                    },
-                                                    success: function(data){
-                                                        verTablaDirectores(año);
-                                                    }
-                                                });
+                                                // $.ajax({
+                                                    // type: 'POST',
+                                                    // url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/directores/store",
+                                                    // data: {
+                                                        // clave: dataDirectores.clave,
+                                                        // nombre: dataDirectores.nombre,
+                                                        // direccion: direccion,
+                                                        // responsabilidad: 'Director de área o equivalente',
+                                                        // puntos: puntos[0].puntos,
+                                                        // year: año,
+                                                        // username: dataDirectores.usuario,
+                                                    // },
+                                                    // headers: {
+                                                        // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    // },
+                                                    // success: function(data){
+                                                        // verTablaDirectores(año);
+                                                    // }
+                                                // });
                                             }
                                         }else{
                                             verTablaDirectores(año);

@@ -27,10 +27,11 @@ class SubdirectoresController extends Controller
         return view('estimulos.evaluaciones.responsabilidades.subdirectores.index');
     }
 
-    public static function searchSubdirectores(){
+    public static function searchSubdirectores($year){
         $querySubdirectores = DB::table('sinfodi_evaluados')
                             ->select('clave', 'nombre', 'usuario', 'puesto')
                             ->where('puesto', '=', 'Subdirector')
+                            ->where('year', '=', $year)
                             ->get();
         return $querySubdirectores;
     }

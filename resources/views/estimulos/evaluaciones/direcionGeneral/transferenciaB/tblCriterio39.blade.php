@@ -105,29 +105,29 @@
                                 var puntosTotales = dataCriterio39.occurrence * puntos[0].puntos;
                                 // console.log(dataCriterio39.clave_participante + '->' + puntosTotales);
                                 verTablaCriterio39(year, criterio);
-                                // $.ajax({
-                                //     type: 'POST',
-                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/saveDatos",
-                                //     data: {
-                                //         token: $('#txtTokenRepo').val(),
-                                //         clave: dataCriterio39.clave_participante,
-                                //         nombre: dataCriterio39.nombre_participante,
-                                //         id_objetivo: id_objetivo,
-                                //         id_criterio: criterio,
-                                //         direccion: "DGeneral",
-                                //         puntos: dataCriterio39.occurrence,
-                                //         total_puntos: puntosTotales,
-                                //         year: year,
-                                //         username: dataCriterio39.usuario_participante
-                                //     },
-                                //     headers: {
-                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                //     },
-                                //     success: function(data){
-                                //         verTablaCriterio39(year, criterio);
-                                //         // console.log('Ok');
-                                //     }
-                                // });
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/saveDatos",
+                                    data: {
+                                        token: $('#txtTokenRepo').val(),
+                                        clave: dataCriterio39.clave_participante,
+                                        nombre: dataCriterio39.nombre_participante,
+                                        id_objetivo: id_objetivo,
+                                        id_criterio: criterio,
+                                        direccion: "DGeneral",
+                                        puntos: dataCriterio39.occurrence,
+                                        total_puntos: puntosTotales,
+                                        year: year,
+                                        username: dataCriterio39.usuario_participante
+                                    },
+                                    headers: {
+                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                    },
+                                    success: function(data){
+                                        verTablaCriterio39(year, criterio);
+                                        // console.log('Ok');
+                                    }
+                                });
                             }
                         },
                     });

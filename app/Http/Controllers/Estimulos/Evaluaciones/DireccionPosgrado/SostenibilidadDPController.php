@@ -31,6 +31,7 @@ class SostenibilidadDPController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Posgrado')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -158,6 +159,7 @@ class SostenibilidadDPController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Posgrado')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){

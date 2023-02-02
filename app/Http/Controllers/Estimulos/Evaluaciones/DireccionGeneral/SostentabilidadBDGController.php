@@ -30,6 +30,7 @@ class SostentabilidadBDGController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_General')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -52,11 +53,11 @@ class SostentabilidadBDGController extends Controller
     }
 
     public function saveDatos(Request $request){
-        if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
+        // if(EvaluacionDGeneral::where('clave', '=', $request->clave)->where('year', '=', $request->year)->where('id_criterio', '=', $request->id_criterio)->count() == 0){
             $nuevo = new EvaluacionDGeneral();
             $nuevo->create($request->all());
             return response()->json('exito');
-        }
+        // }
     }
 
     /**

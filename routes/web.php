@@ -218,7 +218,7 @@ Route::middleware(['login'])->group(function(){
     Route::get('/estimulos/evaluaciones/responsabilidades/directores/getDirectores/{year}', [DirectoresController::class, "getDirectores"])->name('estimulos.evaluaciones.responsabilidades.directores');
     /** Rutas para las evaluaciones de estimulos responsabilidades->Subdirectores... */
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/listSubdirectores', [SubdirectoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
-    Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/searchSubdirectores', [SubdirectoresController::class, "searchSubdirectores"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/searchSubdirectores/{year}', [SubdirectoresController::class, "searchSubdirectores"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/puntos', [SubdirectoresController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::get('/estimulos/evaluaciones/responsabilidades/subdirectores/existe/{year}/{direccion}', [SubdirectoresController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
     Route::post('/estimulos/evaluaciones/responsabilidades/subdirectores/store', [SubdirectoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.subdirectores');
@@ -226,14 +226,14 @@ Route::middleware(['login'])->group(function(){
     /** Rutas para las evaluaciones de estimulos responsabilidades->Coordinadores... */
     Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/listCoordinadores', [CoordinadoresController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/existe/{year}/{direccion}', [CoordinadoresController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
-    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/searchCoordinadores', [CoordinadoresController::class, "searchCoordinadores"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
+    Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/searchCoordinadores/{year}', [CoordinadoresController::class, "searchCoordinadores"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/puntos', [CoordinadoresController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     Route::post('/estimulos/evaluaciones/responsabilidades/Coordinadores/store', [CoordinadoresController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     Route::get('/estimulos/evaluaciones/responsabilidades/Coordinadores/getCoordinadores/{year}', [CoordinadoresController::class, "getCoordinadores"])->name('estimulos.evaluaciones.responsabilidades.Coordinadores');
     /** Rutas para las evaluaciones de estimulos responsabilidades->Personal de apoyo... */
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/listPersonalApoyo', [PersonalApoyoController::class, "index"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/existe/{year}/{direccion}', [PersonalApoyoController::class, "existe"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
-    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/searchPersonalApoyo', [PersonalApoyoController::class, "searchPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
+    Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/searchPersonalApoyo/{year}', [PersonalApoyoController::class, "searchPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/puntos', [PersonalApoyoController::class, "puntos"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::post('/estimulos/evaluaciones/responsabilidades/personalApoyo/store', [PersonalApoyoController::class, "store"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');
     Route::get('/estimulos/evaluaciones/responsabilidades/personalApoyo/getPersonalApoyo/{year}', [PersonalApoyoController::class, "getPersonalApoyo"])->name('estimulos.evaluaciones.responsabilidades.personalApoyo');

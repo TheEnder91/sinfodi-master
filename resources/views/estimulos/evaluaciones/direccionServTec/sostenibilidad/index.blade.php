@@ -294,7 +294,7 @@
                     'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
                 },
                 success: function(datosCritero14){
-                    // console.log(datosCritero14);
+                    console.log(datosCritero14);
                     var dataCriterio14 = datosCritero14.response;
                     if(dataCriterio14.length > 0){
                         for(var i = 0; i < dataCriterio14.length; i++){
@@ -312,27 +312,27 @@
                             // console.log(dataGetCriterio14.clave_participante + ' -> ' + total);
                             verTablaCriterio14(año, 14);
                             // $.ajax({
-                            //     type: 'POST',
-                            //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/saveDatosSostentabilidad",
-                            //     data: {
-                            //         token: $('#txtTokenRepo').val(),
-                            //         clave: dataGetCriterio14.clave_participante,
-                            //         nombre: dataGetCriterio14.nombre_participante,
-                            //         id_objetivo: 4,
-                            //         id_criterio: criterio,
-                            //         direccion: "DServTec",
-                            //         puntos: 0,
-                            //         total_puntos: total,
-                            //         year: dataGetCriterio14.year,
-                            //         username: dataGetCriterio14.usuario_participante,
-                            //     },
-                            //     headers: {
-                            //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                            //     },
-                            //     success: function(data){
-                            //         console.log('Desde modulo de sostenibilidad');
-                            //         verTablaCriterio14(año, 14);
-                            //     }
+                                // type: 'POST',
+                                // url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionServTec/sostentabilidad/saveDatosSostentabilidad",
+                                // data: {
+                                    // token: $('#txtTokenRepo').val(),
+                                    // clave: dataGetCriterio14.clave_participante,
+                                    // nombre: dataGetCriterio14.nombre_participante,
+                                    // id_objetivo: 4,
+                                    // id_criterio: criterio,
+                                    // direccion: "DServTec",
+                                    // puntos: 0,
+                                    // total_puntos: dataGetCriterio14.total,
+                                    // year: dataGetCriterio14.year,
+                                    // username: dataGetCriterio14.usuario_participante,
+                                // },
+                                // headers: {
+                                    // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                // },
+                                // success: function(data){
+                                    // console.log('Desde modulo de sostenibilidad');
+                                    // verTablaCriterio14(año, 14);
+                                // }
                             // });
                         }
                     }else{
@@ -452,6 +452,7 @@
                 success: function(datosMontoCriterio14){
                     var monto = parseFloat(datosMontoCriterio14.response) / 10000;
                     result = monto;
+                    // console.log(result);
                 }
             });
             return result;

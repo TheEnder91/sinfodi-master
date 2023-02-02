@@ -31,6 +31,7 @@ class SostenibilidadDSTController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Servicios_Tecno')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){
@@ -191,6 +192,7 @@ class SostenibilidadDSTController extends Controller
         $queryEvaluados = DB::table('sinfodi_evaluados')
                             ->select('clave', 'puesto')
                             ->where('puesto', '=', 'Direccion_Servicios_Tecno')
+                            ->where('year', '=', $year)
                             ->orderby('clave', 'ASC')
                             ->get();
         foreach($queryEvaluados as $itemEvaluados){

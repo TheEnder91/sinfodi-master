@@ -98,36 +98,40 @@
                         dataType: 'json',
                         ok: function(puntosCriterio40){
                             var puntos = puntosCriterio40.response;
-                            // console.log(puntos[0].puntos);
-                            for(var i = 0; i < arrCriterio40.length; i++){
-                                var dataCriterio40 = arrCriterio40[i];
-                                // console.log(dataCriterio40);
-                                var puntosTotales = dataCriterio40.occurrence * puntos[0].puntos;
-                                // console.log(dataCriterio40.clave_participante + '->' + puntosTotales);
+                            // console.log(puntos);
+                            if(arrCriterio40.length > 0){
+                                for(var i = 0; i < arrCriterio40.length; i++){
+                                    var dataCriterio40 = arrCriterio40[i];
+                                    // console.log(dataCriterio40);
+                                    var puntosTotales = dataCriterio40.occurrence * puntos[0].puntos;
+                                    // console.log(dataCriterio40.clave_participante + '->' + puntosTotales);
+                                    verTablaCriterio40(year, criterio);
+                                    // $.ajax({
+                                        // type: 'POST',
+                                        // url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/saveDatos",
+                                        // data: {
+                                            // token: $('#txtTokenRepo').val(),
+                                            // clave: dataCriterio40.clave_participante,
+                                            // nombre: dataCriterio40.nombre_participante,
+                                            // id_objetivo: id_objetivo,
+                                            // id_criterio: criterio,
+                                            // direccion: "DGeneral",
+                                            // puntos: dataCriterio40.occurrence,
+                                            // total_puntos: puntosTotales,
+                                            // year: year,
+                                            // username: dataCriterio40.usuario_participante
+                                        // },
+                                        // headers: {
+                                            // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                        // },
+                                        // success: function(data){
+                                            // verTablaCriterio40(year, criterio);
+                                            // // // console.log('Ok');
+                                        // }
+                                    // });
+                                }
+                            }else{
                                 verTablaCriterio40(year, criterio);
-                                // $.ajax({
-                                //     type: 'POST',
-                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/tranferenciaB/saveDatos",
-                                //     data: {
-                                //         token: $('#txtTokenRepo').val(),
-                                //         clave: dataCriterio40.clave_participante,
-                                //         nombre: dataCriterio40.nombre_participante,
-                                //         id_objetivo: id_objetivo,
-                                //         id_criterio: criterio,
-                                //         direccion: "DGeneral",
-                                //         puntos: dataCriterio40.occurrence,
-                                //         total_puntos: puntosTotales,
-                                //         year: year,
-                                //         username: dataCriterio40.usuario_participante
-                                //     },
-                                //     headers: {
-                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                //     },
-                                //     success: function(data){
-                                //         verTablaCriterio40(year, criterio);
-                                //         // console.log('Ok');
-                                //     }
-                                // });
                             }
                         },
                     });
@@ -145,7 +149,7 @@
             dataType: 'json',
             ok: function(datosGeneralCriterio40){
                 var datosGeneralCriterio40 = datosGeneralCriterio40.response;
-                // console.log(datosGeneralCriterio40);
+                console.log(datosGeneralCriterio40);
                 var row = "";
                 for(var i = 0; i < datosGeneralCriterio40.length; i++){
                     var dataGeneralCriteri40 = datosGeneralCriterio40[i];

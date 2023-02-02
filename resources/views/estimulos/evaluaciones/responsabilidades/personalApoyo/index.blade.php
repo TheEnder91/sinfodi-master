@@ -76,7 +76,7 @@
                     // console.log(existe.response);
                     if(existe.response == 0){
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/searchPersonalApoyo",
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/searchPersonalApoyo/"+año,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(searchPersonalApoyo){
@@ -92,25 +92,25 @@
                                             for(var i = 0; i < searchPersonalApoyo.length; i++){
                                                 var dataPersonalApoyo = searchPersonalApoyo[i];
                                                 // console.log(dataPersonalApoyo.clave);
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/store",
-                                                    data: {
-                                                        clave: dataPersonalApoyo.clave,
-                                                        nombre: dataPersonalApoyo.nombre,
-                                                        direccion: dataPersonalApoyo.puesto,
-                                                        responsabilidad: 'Personal de apoyo de área o equivalente',
-                                                        puntos: puntos[0].puntos,
-                                                        year: año,
-                                                        username: dataPersonalApoyo.usuario,
-                                                    },
-                                                    headers: {
-                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                                    },
-                                                    success: function(data){
-                                                        verTablaPersonalApoyo(año);
-                                                    }
-                                                });
+                                                // $.ajax({
+                                                    // type: 'POST',
+                                                    // url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/personalApoyo/store",
+                                                    // data: {
+                                                        // clave: dataPersonalApoyo.clave,
+                                                        // nombre: dataPersonalApoyo.nombre,
+                                                        // direccion: dataPersonalApoyo.puesto,
+                                                        // responsabilidad: 'Personal de apoyo de área o equivalente',
+                                                        // puntos: puntos[0].puntos,
+                                                        // year: año,
+                                                        // username: dataPersonalApoyo.usuario,
+                                                    // },
+                                                    // headers: {
+                                                        // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    // },
+                                                    // success: function(data){
+                                                        // verTablaPersonalApoyo(año);
+                                                    // }
+                                                // });
                                             }
                                         }else{
                                             verTablaPersonalApoyo(año);

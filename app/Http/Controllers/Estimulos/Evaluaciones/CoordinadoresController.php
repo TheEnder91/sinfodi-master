@@ -38,10 +38,11 @@ class CoordinadoresController extends Controller
         return $this->response($data);
     }
 
-    public static function searchCoordinadores(){
+    public static function searchCoordinadores($year){
         $queryDirectores = DB::table('sinfodi_evaluados')
                             ->select('clave', 'nombre', 'usuario', 'puesto', 'unidad_admin')
                             ->where('puesto', '=', 'Coordinador')
+                            ->where('year', '=', $year)
                             ->get();
         return $queryDirectores;
     }

@@ -75,7 +75,7 @@
                 ok: function(existe){
                     if(existe.response == 0){
                         consultarDatos({
-                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/searchSubdirectores",
+                            action: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/searchSubdirectores/"+año,
                             type: 'GET',
                             dataType: 'json',
                             ok: function(searchSubdirectores){
@@ -90,25 +90,25 @@
                                             for(var i = 0; i < searchSubdirectores.length; i++){
                                                 var dataSubdirectores = searchSubdirectores[i];
                                                 // console.log(dataSubdirectores.clave);
-                                                $.ajax({
-                                                    type: 'POST',
-                                                    url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/store",
-                                                    data: {
-                                                        clave: dataSubdirectores.clave,
-                                                        nombre: dataSubdirectores.nombre,
-                                                        direccion: direccion,
-                                                        responsabilidad: 'Subdirector de área o equivalente',
-                                                        puntos: puntos[0].puntos,
-                                                        year: año,
-                                                        username: dataSubdirectores.usuario,
-                                                    },
-                                                    headers: {
-                                                        'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
-                                                    },
-                                                    success: function(data){
-                                                        verTablaSubdirectores(año);
-                                                    }
-                                                });
+                                                // $.ajax({
+                                                    // type: 'POST',
+                                                    // url: "{{ config('app.url') }}/estimulos/evaluaciones/responsabilidades/subdirectores/store",
+                                                    // data: {
+                                                        // clave: dataSubdirectores.clave,
+                                                        // nombre: dataSubdirectores.nombre,
+                                                        // direccion: direccion,
+                                                        // responsabilidad: 'Subdirector de área o equivalente',
+                                                        // puntos: puntos[0].puntos,
+                                                        // year: año,
+                                                        // username: dataSubdirectores.usuario,
+                                                    // },
+                                                    // headers: {
+                                                        // 'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                                    // },
+                                                    // success: function(data){
+                                                        // verTablaSubdirectores(año);
+                                                    // }
+                                                // });
                                             }
                                         }else{
                                             verTablaSubdirectores(año);
