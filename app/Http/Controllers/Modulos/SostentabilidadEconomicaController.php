@@ -105,6 +105,9 @@ class SostentabilidadEconomicaController extends Controller
         $actualizar->nuevos_puntos_totales = $request->nuevos_puntos_totales;
         $actualizar->puntos_participacion = $request->puntos_participacion;
         $actualizar->total = $request->total;
+        $actualizar->trl_inicio = $request->trl_inicio;
+        $actualizar->trl_final = $request->trl_final;
+        $actualizar->trl_evolucion = $request->trl_evolucion;
         $actualizar->save();
         $data['response'] = true;
         return $this->response($data);

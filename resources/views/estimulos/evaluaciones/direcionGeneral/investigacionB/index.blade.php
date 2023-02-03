@@ -25,7 +25,7 @@
                         <th scope="col" style="font-size:13px;">Total</th>
                         <th scope="col" style="font-size:13px;">Año</th>
                         {{-- @if (Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacion-index")) --}}
-                            <th scope="col" style="font-size:13px;">Evidencias</th>
+                            {{-- <th scope="col" style="font-size:13px;">Evidencias</th> --}}
                         {{-- @endif --}}
                     </tr>
                 </thead>
@@ -44,30 +44,57 @@
         }
 
         function verTablaCriterio36(){
-            var row = "";
-        if ($.fn.dataTable.isDataTable("#tblCriterio36")) {
-            tblDifusionDivulgacion = $("#tblCriterio36").DataTable();
-            tblDifusionDivulgacion.destroy();
-        }
-        $('#tblCriterio36 > tbody').html('');
-        $('#tblCriterio36 > tbody').append(row);
-        $('#tblCriterio36').DataTable({
-            "order":[[0, "asc"]],
-            "language":{
-              "lengthMenu": "Mostrar _MENU_ registros por página.",
-              "info": "Página _PAGE_ de _PAGES_",
-              "infoEmpty": "No se encontraron registros.",
-              "infoFiltered": "(filtrada de _MAX_ registros)",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search": "Buscar:",
-              "zeroRecords":    "No se encontraron registros.",
-              "paginate": {
-                              "next":       ">",
-                              "previous":   "<"
-                          },
+            var year = 2022;
+            var criterio = 36;
+            consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionGeneral/investigacionB/datosInvestigacionB/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(datosGeneralCriterio36){
+                var datosGeneralCriterio36 = datosGeneralCriterio36.response;
+                // console.log(datosGeneralCriterio36);
+                var row = "";
+                for(var i = 0; i < datosGeneralCriterio36.length; i++){
+                    var dataGeneralCriteri40 = datosGeneralCriterio36[i];
+                    // console.log(dataGeneralCriteri40);
+                    var authUser = '<?= Auth::user()->usuario ?>';
+                    var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-general-investigacionB-index") ?>';
+                    // console.log(permissions);
+                    if(dataGeneralCriteri40.username == authUser || permissions == 1){
+                            row += "<tr>";
+                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataGeneralCriteri40.clave + '</td>';
+                            row += '<td style="font-size:12px;" width="60%">' + dataGeneralCriteri40.nombre.toUpperCase() + "</td>";
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataGeneralCriteri40.puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataGeneralCriteri40.total_puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataGeneralCriteri40.year + '</td>';
+                            row += "</tr>";
+                    }
+                }
+                if ($.fn.dataTable.isDataTable("#tblCriterio36")) {
+                    tblDifusionDivulgacion = $("#tblCriterio36").DataTable();
+                    tblDifusionDivulgacion.destroy();
+                }
+                $('#tblCriterio36 > tbody').html('');
+                $('#tblCriterio36 > tbody').append(row);
+                $('#tblCriterio36').DataTable({
+                    "order":[[0, "asc"]],
+                    "language":{
+                      "lengthMenu": "Mostrar _MENU_ registros por página.",
+                      "info": "Página _PAGE_ de _PAGES_",
+                      "infoEmpty": "No se encontraron registros.",
+                      "infoFiltered": "(filtrada de _MAX_ registros)",
+                      "loadingRecords": "Cargando...",
+                      "processing":     "Procesando...",
+                      "search": "Buscar:",
+                      "zeroRecords":    "No se encontraron registros.",
+                      "paginate": {
+                                      "next":       ">",
+                                      "previous":   "<"
+                                  },
+                    },
+                    lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
+                });
             },
-            lengthMenu: [[10, 15, 20, 50], [10, 15, 20, 50]]
         });
         }
     </script>

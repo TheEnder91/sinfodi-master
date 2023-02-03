@@ -490,4 +490,10 @@ class InvestigacionDPTController extends Controller
     public function indexB(){
         return view('estimulos.evaluaciones.direccionProyTec.investigacionB.index');
     }
+
+    public function datosInvestigacionB($year, $criterio){
+        $datos = DB::table('sinfodi_evaluacion_proy_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DProyTec')->get();
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
 }

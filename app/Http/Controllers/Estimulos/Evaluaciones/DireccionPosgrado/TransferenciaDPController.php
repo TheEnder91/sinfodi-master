@@ -641,6 +641,8 @@ class TransferenciaDPController extends Controller
             $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DPosgrado')->get();
         }elseif($criterio == 40){
             $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DPosgrado')->get();
+        }elseif($criterio == 41){
+            $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DPosgrado')->get();
         }
         $data['response'] = $datos;
         return $this->response($data);

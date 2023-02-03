@@ -36,5 +36,8 @@ class SostentabilidadEconomica extends Model
         'total',
         'year',
         'tipo',
+        'trl_inicio',
+        'trl_final',
+        'trl_evolucion',
     ];
 }

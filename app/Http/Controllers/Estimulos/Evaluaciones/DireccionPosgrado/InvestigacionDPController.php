@@ -490,4 +490,10 @@ class InvestigacionDPController extends Controller
     public function indexB(){
         return view('estimulos.evaluaciones.direccionPosgrado.investigacionB.index');
     }
+
+    public function datosInvestigacionB($year, $criterio){
+        $datos = DB::table('sinfodi_evaluacion_posgrado')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DPosgrado')->get();
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
 }

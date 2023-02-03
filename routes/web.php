@@ -353,6 +353,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionGeneral/acreditaciones/updateDatosPuntos', [AcreditacionesController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionGeneral.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección general->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacionB/listInvestigacionB', [InvestigacionBDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.investigacionCientificaB');
+    Route::get('/estimulos/evaluaciones/DireccionGeneral/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionBDGController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionGeneral.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección general->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/listSostenibilidadB', [SostentabilidadBDGController::class, "index"])->name('estimulos.evaluaciones.direccionGeneral.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionGeneral/sostenibilidadB/searchSostenibilidadB/{year}', [SostentabilidadBDGController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionGeneral.sostenibilidadB');
@@ -463,6 +464,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionAdministracion/acreditaciones/updateDatosPuntos', [AcreditacionesDAController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionAdministracion.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección administracion->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacionB/listInvestigacionB', [InvestigacionDAController::class, "indexB"])->name('estimulos.evaluaciones.direccionAdministracion.investigacionB');
+    Route::get('/estimulos/evaluaciones/DireccionAdministracion/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionDAController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionAdministracion.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección administracion->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/listSostenibilidadB', [SostenibilidadDAController::class, "indexB"])->name('estimulos.evaluaciones.direccionAdministracion.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionAdministracion/sostenibilidadB/searchSostenibilidadB/{year}', [SostenibilidadDAController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionAdministracion.sostenibilidadB');
@@ -570,6 +572,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionPosgrado/acreditaciones/updateDatosPuntos', [AcreditacionesDPController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionPosgrado.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección posgrado->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacionB/listInvestigacionB', [InvestigacionDPController::class, "indexB"])->name('estimulos.evaluaciones.direccionPosgrado.investigacionB');
+    Route::get('/estimulos/evaluaciones/DireccionPosgrado/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionDPController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionPosgrado.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección posgrado->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/listSostenibilidadB', [SostenibilidadDPController::class, "indexB"])->name('estimulos.evaluaciones.direccionPosgrado.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionPosgrado/sostenibilidadB/searchSostenibilidadB/{year}', [SostenibilidadDPController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionPosgrado.sostenibilidadB');
@@ -677,6 +680,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionCiencia/acreditaciones/updateDatosPuntos', [AcreditacionesDCController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionCiencia.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección de ciencia->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/investigacionB/listInvestigacionB', [InvestigacionDCController::class, "indexB"])->name('estimulos.evaluaciones.direccionCiencia.investigacionB');
+    Route::get('/estimulos/evaluaciones/DireccionCiencia/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionDCController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionCiencia.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección de ciencia->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/listSostenibilidadB', [SostenibilidadDCController::class, "indexB"])->name('estimulos.evaluaciones.direccionCiencia.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionCiencia/sostenibilidadB/searchSostenibilidadB/{year}', [SostenibilidadDCController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionCiencia.sostenibilidadB');
@@ -787,6 +791,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionServTec/acreditaciones/updateDatosPuntos', [AcreditacionesDSTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionServTec.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección de servicios tecnologicos->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionServTec/investigacionB/listInvestigacionB', [InvestigacionDSTController::class, "indexB"])->name('estimulos.evaluaciones.direccionServTec.investigacionB');
+    Route::get('/estimulos/evaluaciones/DireccionServTec/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionDSTController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionServTec.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección de servicios->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostenibilidadB/listSostenibilidadB', [SostenibilidadDSTController::class, "indexB"])->name('estimulos.evaluaciones.direccionServTec.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionServTec/sostenibilidadB/searchSostenibilidadB/{year}', [SostenibilidadDSTController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionServTec.sostenibilidadB');
@@ -894,6 +899,7 @@ Route::middleware(['login'])->group(function(){
     Route::put('/estimulos/evaluaciones/DireccionProyTec/acreditaciones/updateDatosPuntos', [AcreditacionesDPTController::class, "updateDatosPuntos"])->name('estimulos.evaluaciones.direccionProyTec.acreditaciones');
     /** Rutas para las evidencias de estimulos Dirección de proyectos tecnologicos->Investigación cientifica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionProyTec/investigacionB/listInvestigacionB', [InvestigacionDPTController::class, "indexB"])->name('estimulos.evaluaciones.direccionProyTec.investigacionB');
+    Route::get('/estimulos/evaluaciones/DireccionProyTec/investigacionB/datosInvestigacionB/{year}/{criterio}', [InvestigacionDPTController::class, "datosInvestigacionB"])->name('estimulos.evaluaciones.direccionProyTec.investigacionCientificaB');
     /** Rutas para las evidencias de estimulos Dirección de tecnologia->Sostenibilidad economica tabla B */
     Route::get('/estimulos/evaluaciones/DireccionProyTec/sostenibilidadB/listSostenibilidadB', [SostenibilidadDPTController::class, "indexB"])->name('estimulos.evaluaciones.direccionProyTec.sostenibilidadB');
     Route::get('/estimulos/evaluaciones/DireccionProyTec/sostenibilidadB/searchSostenibilidadB/{year}', [SostenibilidadDPTController::class, "searchSostenibilidadB"])->name('estimulos.evaluaciones.direccionProyTec.sostenibilidadB');

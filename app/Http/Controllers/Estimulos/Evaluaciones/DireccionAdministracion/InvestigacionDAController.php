@@ -492,4 +492,10 @@ class InvestigacionDAController extends Controller
     {
         return view('estimulos.evaluaciones.direccionAdministracion.investigacionB.index');
     }
+
+    public function datosInvestigacionB($year, $criterio){
+        $datos = DB::table('sinfodi_evaluacion_administracion')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DAdministracion')->get();
+        $data['response'] = $datos;
+        return $this->response($data);
+    }
 }

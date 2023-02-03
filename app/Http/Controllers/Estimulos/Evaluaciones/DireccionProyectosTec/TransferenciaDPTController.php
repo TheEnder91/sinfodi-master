@@ -641,6 +641,8 @@ class TransferenciaDPTController extends Controller
             $datos = DB::table('sinfodi_evaluacion_proy_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DProyTec')->get();
         }elseif($criterio == 40){
             $datos = DB::table('sinfodi_evaluacion_proy_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DProyTec')->get();
+        }elseif($criterio == 41){
+            $datos = DB::table('sinfodi_evaluacion_proy_tecno')->where('year', '=', $year)->where('id_criterio', '=', $criterio)->where('direccion', '=', 'DProyTec')->get();
         }
         $data['response'] = $datos;
         return $this->response($data);

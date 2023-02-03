@@ -24,9 +24,6 @@
                                 <a class="nav-link active" id="proys-tab" data-toggle="tab" href="#proys" role="tab" aria-controls="proys" aria-selected="true">Proyectos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="trl-tab" data-toggle="tab" href="#trl" role="tab" aria-controls="trl" aria-selected="true">TRL</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" id="servEsp-tab" data-toggle="tab" href="#servEsp" role="tab" aria-controls="servEsp" aria-selected="true">Servicios especiales</a>
                             </li>
                             <li class="nav-item">
@@ -120,6 +117,10 @@
                                         <label class="col-form-label" style="font-size:13px;"><span style="color: red">*</span>$ por CTCI:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="monto" id="txtMonto" onKeyPress="return soloNumeros(event)" onkeyup="calcular1();" value='0'>
                                     </div>
+                                    <div class="col-1">
+                                        <label class="col-form-label"  style="font-size:13px;">Año:</label>
+                                        <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-2">
@@ -142,30 +143,53 @@
                                         <label class="col-form-label"  style="font-size:13px;">Puntos por participación:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="nuevosPuntosParticipacion" id="txtNuevosPuntosParticipacion" readonly>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-1">
                                         <label class="col-form-label"  style="font-size:13px;">Total:</label>
                                         <input type="text" class="form-control form-control-sm text-center" name="total" id="txtTotal" readonly>
                                     </div>
                                     <div class="col-1">
-                                        <label class="col-form-label"  style="font-size:13px;">Año:</label>
-                                        <input type="text" class="form-control form-control-sm text-center" name="year" id="txtYear" value="{{ date("Y") - 1 }}" readonly>
+                                        <label class="col-form-label"  style="font-size:13px;">TRL Inicio:</label>
+                                        <select name="trlInicio" id="trlInicio" class="form-control form-control-sm">
+                                            <option value="0" style="font-size:13px;">No aplica</option>
+                                            @for ($i = 1; $i < 10; $i++)
+                                                <option value="{{ $i}}" style="font-size:13px;">{{ $i }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                     <div class="col-1">
-                                        <br>
-                                        <div class="float-right">
+                                        <label class="col-form-label"  style="font-size:13px;">TRL Final:</label>
+                                        <select name="trlFinal" id="trlFinal" class="form-control form-control-sm">
+                                            <option value="0" style="font-size:13px;">No aplica</option>
+                                            @for ($i = 1; $i < 10; $i++)
+                                                <option value="{{ $i}}" style="font-size:13px;">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <label class="col-form-label"  style="font-size:13px;">TRL Evolucion:</label>
+                                        <select name="trlEvolucion" id="trlEvolucion" class="form-control form-control-sm">
+                                            <option value="0" style="font-size:13px;">No aplica</option>
+                                            @for ($i = 1; $i < 10; $i++)
+                                                <option value="{{ $i}}" style="font-size:13px;">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="float-left">
                                             <input type="button" class="btn btn-danger" value="Cancelar" id="btnCancelarProys"/>
                                         </div>
-                                    </div>
-                                    <div class="col-1">
-                                        <br>
-                                        <div class="float-right">
+                                        <div class="float-left">
                                             <input type="button" class="btn btn-primary" value="Guardar" id="btnGuardarProys"/>
                                         </div>
-                                        <div class="float-right">
+                                        <div class="float-left" style="padding-left: 1em;">
                                             <input type="button" class="btn btn-primary" value="Actualizar" id="btnActualizarProys"/>
                                         </div>
                                     </div>
-                                </div><br>
+                                </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
@@ -188,28 +212,6 @@
                                                 <tbody></tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade show" id="trl" role="tabpanel" aria-labelledby="trl-tab">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <div class="row">
-                                            <div class="col-2">
-                                                <label class="col-form-label" for="txtCGNTRL" style="font-size:13px;"><span style="color: red">*</span>CGN:</label>
-                                                <input type="text" class="form-control form-control-sm" name="cgn" id="txtCGNTRL">
-                                            </div>
-                                            <div class="col-10">
-                                                <label class="col-form-label" for="txtProyectoTRL" style="font-size:13px;"><span style="color: red">*</span>Nombre del proyecto:</label>
-                                                <input type="text" class="form-control form-control-sm" name="proyecto" id="txtProyectoTRL">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        Participantes:
                                     </div>
                                 </div>
                             </div>
@@ -713,6 +715,11 @@
             var puntosParticipacion = parseFloat($('#txtNuevosPuntosParticipacion').val());
             var total = parseFloat($('#txtTotal').val());
             var year = parseFloat($('#txtYear').val());
+            // TRL...
+            var trlInicio = parseFloat($('#trlInicio').val());
+            var trlFinal = parseFloat($('#trlFinal').val());
+            var trlEvolucion = parseFloat($('#trlEvolucion').val());
+            // Termina TRL..
 
             if(cgn == "" || nombreProyecto == "" || nombreresponsable == "" || nombreParticipante == "" || porcentajeParticipacion == 0 || monto == 0){
                 swal({
@@ -751,6 +758,9 @@
                     total: total,
                     year: year,
                     tipo: "Proyectos",
+                    trl_inicio: trlInicio,
+                    trl_final: trlFinal,
+                    trl_evolucion: trlEvolucion,
                     _token: "{{ csrf_token() }}",
                 },
                 type: 'POST',
@@ -845,6 +855,9 @@
                     $('#txtNuevosPuntosParticipacion').val(getSostentabilidad.puntos_participacion);
                     $('#txtTotal').val(getSostentabilidad.total);
                     $('#txtYear').val(getSostentabilidad.year);
+                    $('#trlInicio').val(getSostentabilidad.trl_inicio);
+                    $('#trlFinal').val(getSostentabilidad.trl_final);
+                    $('#trlEvolucion').val(getSostentabilidad.trl_evolucion);
                 },
             });
         }
@@ -898,6 +911,11 @@
             var puntosParticipacion = parseFloat($('#txtNuevosPuntosParticipacion').val());
             var total = parseFloat($('#txtTotal').val());
             var year = parseFloat($('#txtYear').val());
+            // TRL...
+            var trlInicio = parseFloat($('#trlInicio').val());
+            var trlFinal = parseFloat($('#trlFinal').val());
+            var trlEvolucion = parseFloat($('#trlEvolucion').val());
+            // Fin TRL...
             if(cgn == "" || nombreProyecto == "" || nombreresponsable == "" || nombreParticipante == "" || porcentajeParticipacion == 0 || monto == 0){
                 swal({
                     type: 'warning',
@@ -941,6 +959,9 @@
                         nuevos_puntos_totales: nuevosPuntos,
                         puntos_participacion: puntosParticipacion,
                         total: total,
+                        trl_inicio: trlInicio,
+                        trl_final: trlFinal,
+                        trl_evolucion: trlEvolucion,
                         _token: "{{ csrf_token() }}",
                     },
                     type: 'PUT',
@@ -980,6 +1001,9 @@
             $('#btnActualizarProys').hide();
             $('#btnGuardarProys').show();
             $('#btnCancelarProys').hide();
+            $('#trlInicio').val(0);
+            $('#trlFinal').val(0);
+            $('#trlEvolucion').val(0);
         }
 
         function eliminarProys(id){
@@ -1751,15 +1775,6 @@
             // console.log(responsable + '->' + participante);
             // Nos muestra un mensaje de que debe de llenar los campos...
             if(cgn == "" || nombreCursos == "" || nombreResponsable == "" || nombreParticipante == "" || porcentaje == 0 || montoCTCI == 0){
-                swal({
-                    type: 'warning',
-                    text: 'Favor de llenar los campos marcados con *.',
-                    showConfirmButton: false,
-                    timer: 1800
-                }).catch(swal.noop);
-                return;
-            }
-            if(responsable == "No" && participante == "No"){
                 swal({
                     type: 'warning',
                     text: 'Favor de seleccionar si es el responsable o el participante.',
