@@ -24,6 +24,9 @@
                                 <a class="nav-link active" id="proys-tab" data-toggle="tab" href="#proys" role="tab" aria-controls="proys" aria-selected="true">Proyectos</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" id="trl-tab" data-toggle="tab" href="#trl" role="tab" aria-controls="trl" aria-selected="true">TRL</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="servEsp-tab" data-toggle="tab" href="#servEsp" role="tab" aria-controls="servEsp" aria-selected="true">Servicios especiales</a>
                             </li>
                             <li class="nav-item">
@@ -185,6 +188,28 @@
                                                 <tbody></tbody>
                                             </table>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade show" id="trl" role="tabpanel" aria-labelledby="trl-tab">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <label class="col-form-label" for="txtCGNTRL" style="font-size:13px;"><span style="color: red">*</span>CGN:</label>
+                                                <input type="text" class="form-control form-control-sm" name="cgn" id="txtCGNTRL">
+                                            </div>
+                                            <div class="col-10">
+                                                <label class="col-form-label" for="txtProyectoTRL" style="font-size:13px;"><span style="color: red">*</span>Nombre del proyecto:</label>
+                                                <input type="text" class="form-control form-control-sm" name="proyecto" id="txtProyectoTRL">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        Participantes:
                                     </div>
                                 </div>
                             </div>

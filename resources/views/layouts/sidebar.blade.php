@@ -7,12 +7,12 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 {{-- <li class="nav-header" style="font-size:13px;">MODULOS</li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/sostenibilidad/listSostenibilidad') }}" class="nav-link {{ isRouteActive('modulos.sostentabilidad') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Sostenibilidad económica</p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/colaboracion/listColaboracion') }}" class="nav-link {{ isRouteActive('modulos.colaboracion') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
@@ -204,7 +204,7 @@
                             <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
-                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
+                        {{-- @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">
@@ -213,7 +213,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        @endif
+                        @endif --}}
                         <ul class="nav nav-treeview">
                             @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Director") ||
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirector") ||
