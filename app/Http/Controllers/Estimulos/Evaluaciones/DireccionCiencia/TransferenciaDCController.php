@@ -579,6 +579,8 @@ class TransferenciaDCController extends Controller
             $evaluacion = self::Evaluaciones_Criterio39($clave, $year);
         }elseif($criterio == 40){
             $evaluacion = self::Evaluaciones_Criterio40($clave, $year);
+        }elseif($criterio == 41){
+            $evaluacion = self::Evaluaciones_Criterio41($clave, $year);
         }
         $data['response'] = $evaluacion;
         return $this->response($data);
@@ -607,6 +609,16 @@ class TransferenciaDCController extends Controller
     public static function Evaluaciones_Criterio40($clave, $year){
         $query = DB::table('sinfodi_sostentabilidad')
                         ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'interareas', 'year')
+                        ->where('year', '=', $year)
+                        ->where('tipo', '=', 'Proyectos')
+                        ->whereIn('clave_participante', $clave)
+                        ->get();
+        return $query;
+    }
+
+    public static function Evaluaciones_Criterio41($clave, $year){
+        $query = DB::table('sinfodi_sostentabilidad')
+                        ->select('clave_participante', 'nombre_participante', 'usuario_participante', 'trl', 'year')
                         ->where('year', '=', $year)
                         ->where('tipo', '=', 'Proyectos')
                         ->whereIn('clave_participante', $clave)

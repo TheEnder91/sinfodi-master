@@ -19,6 +19,88 @@
 
 <script>
     function obtenerCriterio41(year, criterio){
+        var id_objetivo = 5;
+        consultarDatos({
+            action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/searchTransferencia/" + year + "/" + criterio,
+            type: 'GET',
+            dataType: 'json',
+            ok: function(datosCritero41){
+                var datosCriterio41 = datosCritero41.response;
+                // console.log(datosCritero41);
+                // Codigo para guardar en el sistema...
+                if(datosCriterio41.length > 0){
+                    // console.log(datosCriterio41);
+                    let arrCriterio41 = [];
+                    datosCriterio41.forEach((x)=>{
+                        if(x['trl'] == 1){
+                            if(arrCriterio41.some((val)=>{ return val['clave_participante'] == x['clave_participante']})){
+                                arrCriterio41.forEach((k)=>{
+                                    if(k['clave_participante'] === x['clave_participante']){
+                                        k['nombre_participante'] = x['nombre_participante']
+                                        k['usuario_participante'] = x['usuario_participante']
+                                        k['year'] = x['year']
+                                        k["occurrence"]++;
+                                    }
+                                });
+                            }else{
+                                let a = {}
+                                a['clave_participante'] = x['clave_participante']
+                                a['nombre_participante'] = x['nombre_participante']
+                                a['usuario_participante'] = x['usuario_participante']
+                                a['year'] = x['year']
+                                a["occurrence"] = 1;
+                                arrCriterio41.push(a);
+                            }
+                        }
+                    });
+                    // console.log(arrCriterio41);
+                    consultarDatos({
+                        action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/puntos/" + criterio + "/" + id_objetivo,
+                        type: 'GET',
+                        dataType: 'json',
+                        ok: function(puntosCriterio41){
+                            var puntos = puntosCriterio41.response;
+                            // console.log(puntos[0].puntos);
+                            for(var i = 0; i < arrCriterio41.length; i++){
+                                var dataCriterio41 = arrCriterio41[i];
+                                // console.log(dataCriterio41);
+                                var puntosTotales = dataCriterio41.occurrence * puntos[0].puntos;
+                                // console.log(dataCriterio41.clave_participante + '->' + puntosTotales);
+                                verTablaCriterio41(year, criterio);
+                                // $.ajax({
+                                //     type: 'POST',
+                                //     url: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/saveDatos",
+                                //     data: {
+                                //         token: $('#txtTokenRepo').val(),
+                                //         clave: dataCriterio41.clave_participante,
+                                //         nombre: dataCriterio41.nombre_participante,
+                                //         id_objetivo: id_objetivo,
+                                //         id_criterio: criterio,
+                                //         direccion: "DCiencia",
+                                //         puntos: dataCriterio41.occurrence,
+                                //         total_puntos: puntosTotales,
+                                //         year: year,
+                                //         username: dataCriterio41.usuario_participante
+                                //     },
+                                //     headers: {
+                                //         'token' : $('#txtTokenRepo').val() ? $('#txtTokenRepo').val(): ''
+                                //     },
+                                //     success: function(data){
+                                //         // verTablaCriterio41(year, criterio);
+                                //         console.log('Ok');
+                                //     }
+                                // });
+                            }
+                        },
+                    });
+                }else{
+                    verTablaCriterio41(year, criterio);
+                }
+            },
+        });
+    }
+
+    function verTablaCriterio41(year, criterio){
         consultarDatos({
             action: "{{ config('app.url') }}/estimulos/evaluaciones/DireccionCiencia/tranferenciaB/datosTransferenciaB/" + year + "/" + criterio,
             type: 'GET',

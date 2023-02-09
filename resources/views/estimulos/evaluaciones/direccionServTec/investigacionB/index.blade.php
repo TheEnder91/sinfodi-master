@@ -43,6 +43,7 @@
             verTablaCriterio36();
         }
 
+
         function verTablaCriterio36(){
             var year = 2022;
             var criterio = 36;
@@ -55,18 +56,18 @@
                 // console.log(datosServiciosCriterio36);
                 var row = "";
                 for(var i = 0; i < datosServiciosCriterio36.length; i++){
-                    var dataServiciosCriteri40 = datosServiciosCriterio36[i];
-                    // console.log(dataServiciosCriteri40);
+                    var dataServiciosCriteri36 = datosServiciosCriterio36[i];
+                    // console.log(dataServiciosCriteri36);
                     var authUser = '<?= Auth::user()->usuario ?>';
                     var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-servicios-investigacionB-index") ?>';
                     // console.log(permissions);
-                    if(dataServiciosCriteri40.username == authUser || permissions == 1){
+                    if(dataServiciosCriteri36.username == authUser || permissions == 1){
                             row += "<tr>";
-                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataServiciosCriteri40.clave + '</td>';
-                            row += '<td style="font-size:12px;" width="60%">' + dataServiciosCriteri40.nombre.toUpperCase() + "</td>";
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataServiciosCriteri40.puntos) + '</td>';
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataServiciosCriteri40.total_puntos) + '</td>';
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataServiciosCriteri40.year + '</td>';
+                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataServiciosCriteri36.clave + '</td>';
+                            row += '<td style="font-size:12px;" width="60%">' + dataServiciosCriteri36.nombre.toUpperCase() + "</td>";
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataServiciosCriteri36.puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataServiciosCriteri36.total_puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataServiciosCriteri36.year + '</td>';
                             row += "</tr>";
                     }
                 }

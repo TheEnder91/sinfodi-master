@@ -36,8 +36,8 @@
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Fondos en administración</p>
                     </a>
-                </li>
-                <li class="nav-item">
+                </li> --}}
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/serviciosTecnologicos/informacionFinanciera/index') }}" class="nav-link {{ isRouteActive('modulos.serviciosTecnologicos.informacionFinanciera') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Servicios tecnológicos</p>

@@ -55,18 +55,18 @@
                 // console.log(datosCienciaCriterio36);
                 var row = "";
                 for(var i = 0; i < datosCienciaCriterio36.length; i++){
-                    var dataCienciaCriteri40 = datosCienciaCriterio36[i];
+                    var dataCienciaCriteri36 = datosCienciaCriterio36[i];
                     // console.log(dataCienciaCriteri40);
                     var authUser = '<?= Auth::user()->usuario ?>';
                     var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-ciencia-investigacionB-index") ?>';
                     // console.log(permissions);
-                    if(dataCienciaCriteri40.username == authUser || permissions == 1){
+                    if(dataCienciaCriteri36.username == authUser || permissions == 1){
                             row += "<tr>";
-                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataCienciaCriteri40.clave + '</td>';
-                            row += '<td style="font-size:12px;" width="60%">' + dataCienciaCriteri40.nombre.toUpperCase() + "</td>";
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataCienciaCriteri40.puntos) + '</td>';
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataCienciaCriteri40.total_puntos) + '</td>';
-                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataCienciaCriteri40.year + '</td>';
+                            row += '<th style="font-size:12px;" scope="row" class="text-center" width="10%">' + dataCienciaCriteri36.clave + '</td>';
+                            row += '<td style="font-size:12px;" width="60%">' + dataCienciaCriteri36.nombre.toUpperCase() + "</td>";
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataCienciaCriteri36.puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + parseInt(dataCienciaCriteri36.total_puntos) + '</td>';
+                            row += '<td style="font-size:12px;" class="text-center" width="10%">' + dataCienciaCriteri36.year + '</td>';
                             row += "</tr>";
                     }
                 }
