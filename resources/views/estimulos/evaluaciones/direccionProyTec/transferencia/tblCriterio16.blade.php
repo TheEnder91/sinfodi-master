@@ -225,20 +225,21 @@
             sumaActual = parseFloat(sumaActual) - parseFloat(puntosPorcen);
         }
         // console.log(sumaActual);
-        console.log(estaChequeado + ' ' + porcentaje + ' '  + puntos + ' ' + puntosPorcen + ' ' + sumaActual);
+        // console.log(estaChequeado + ' ' + porcentaje + ' '  + puntos + ' ' + puntosPorcen + ' ' + sumaActual);
         campo_resultado.value = parseFloat(sumaActual).toFixed(2);
         // Parte para contar la cantidad de evidencias seleccionadas...
         var evidencias = [];
         // var porcen = [];
         // var puntosPorcen = 0;
         // var totalPuntos = 0;
-        $('input.txtCantidadCriterio16:checked').each(function(){
+        $('input.evidenciasCriterio16:checked').each(function(){
              evidencias.push(this.value);
         //     porcen = porcentaje / 100;
         //     puntosPorcen = (puntos * porcen);
         //     totalPuntos += puntosPorcen;
         });
         var cantidad = evidencias.length;
+        console.log(cantidad);
         $('#txtCantidadCriterio16').val(cantidad);
         //Parte para sacar el total de puntos dependiendo de los evidencias a los que pertenece...
     }
