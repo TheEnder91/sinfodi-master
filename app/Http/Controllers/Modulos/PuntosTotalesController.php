@@ -80,12 +80,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalGeneral
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_general
-                  WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección General" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección General" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAGeneral;
@@ -96,12 +96,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalAdministracion
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_administracion
-                  WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección de Administración" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección de Administración" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAAdministracion;
@@ -112,12 +112,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalPosgrado
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_posgrado
-                  WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección de Posgrado" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección de Posgrado" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAPosgrado;
@@ -128,12 +128,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalServicios
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_serv_tecno
-                WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                 GROUP BY clave, nombre
                 UNION ALL
                 SELECT clave, nombre, "0" AS total_puntos
                 FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Servicios Tecnológicos" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE responsabilidad = "Dirección de Servicios Tecnológicos" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAServicios;
@@ -144,12 +144,7 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalCiencia
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_ciencia
-                WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
-                GROUP BY clave, nombre
-                UNION ALL
-                SELECT clave, nombre, "0" AS total_puntos
-                FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Ciencia" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosACiencia;
@@ -160,12 +155,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.3 AS totalTecnologia
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_proy_tecno
-                WHERE year = 2020 AND (id_criterio BETWEEN 1 AND 35)
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 1 AND 35)
                 GROUP BY clave, nombre
                 UNION ALL
                 SELECT clave, nombre, "0" AS total_puntos
                 FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Tecnología" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE responsabilidad = "Dirección de Tecnología" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosATecnologia;
@@ -188,12 +183,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalGeneralB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_general
-                  WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección General" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección General" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAGeneral;
@@ -204,12 +199,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalAdministracionB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_administracion
-                  WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección de Administración" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección de Administración" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAAdministracion;
@@ -220,12 +215,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalPosgradoB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                   FROM sinfodi_evaluacion_posgrado
-                  WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                  WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                   GROUP BY clave, nombre
                   UNION ALL
                   SELECT clave, nombre, "0" AS total_puntos
                   FROM sinfodi_evaluacion_responsabilidades
-                  WHERE responsabilidad = "Dirección de Posgrado" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                  WHERE responsabilidad = "Dirección de Posgrado" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                   GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAPosgrado;
@@ -236,12 +231,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalServiciosB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_serv_tecno
-                WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                 GROUP BY clave, nombre
                 UNION ALL
                 SELECT clave, nombre, "0" AS total_puntos
                 FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Servicios Tecnológicos" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE responsabilidad = "Dirección de Servicios Tecnológicos" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosAServicios;
@@ -252,12 +247,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalCienciaB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_ciencia
-                WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                 GROUP BY clave, nombre
                 UNION ALL
                 SELECT clave, nombre, "0" AS total_puntos
                 FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Ciencia" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE responsabilidad = "Dirección de Ciencia" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosACiencia;
@@ -268,12 +263,12 @@ class PuntosTotalesController extends Controller
             SELECT SUM(contar.total_puntos) * 0.7 AS totalTecnologiaB
             FROM (SELECT clave, nombre, SUM(total_puntos) AS total_puntos
                 FROM sinfodi_evaluacion_proy_tecno
-                WHERE year = 2020 AND (id_criterio BETWEEN 36 AND 41)
+                WHERE year = '.$year.' AND (id_criterio BETWEEN 36 AND 41)
                 GROUP BY clave, nombre
                 UNION ALL
                 SELECT clave, nombre, "0" AS total_puntos
                 FROM sinfodi_evaluacion_responsabilidades
-                WHERE responsabilidad = "Dirección de Tecnología" AND year = 2020 AND (direccion = "Directores" OR direccion = "Subdirectores")
+                WHERE responsabilidad = "Dirección de Tecnología" AND year = '.$year.' AND (direccion = "Directores" OR direccion = "Subdirectores")
                 GROUP BY clave, nombre) AS contar
         ');
         return $totalPuntosATecnologia;

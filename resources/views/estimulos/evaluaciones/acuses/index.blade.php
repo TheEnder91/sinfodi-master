@@ -21,7 +21,7 @@
                         <label class="input-group-text" for="grupo" style="font-size:13px;">Seleccione un grupo:</label>
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="grupo" onChange="ShowSelectedGrupo();">
-                        <option value="grupo1">Grupo 1</option>
+                        {{-- <option value="grupo1">Grupo 1</option> --}}
                         <option value="grupo2">Grupo 2</option>
                     </select>
                 </div>
@@ -67,9 +67,9 @@
                     <tr class="text-center">
                         <th scope="col" style="font-size:13px;">Clave</th>
                         <th scope="col" style="font-size:13px;">Nombre</th>
-                        <th scope="col" style="font-size:13px;">Descripción</th>
+                        <th scope="col" style="font-size:13px;">Dirección</th>
                         <th scope="col" style="font-size:13px;">Acuse</th>
-                        <th scope="col" style="font-size:13px;">Firmar</th>
+                        {{-- <th scope="col" style="font-size:13px;">Firmar</th> --}}
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -158,25 +158,27 @@
                                     var puesto = "Direccion de Tecnologia";
                                 }
                             }else if(grupo == 'grupo2'){
-                                var puesto = data.direccion;
+                                var puesto = data.responsabilidad;
                             }
                             // console.log(data);
                             var authUser = '<?= Auth::user()->usuario ?>';
-                            console.log(grupo + ' -> ' + data.username);
+                            // console.log(grupo + ' -> ' + data.username);
                             var permissions = '<?= Auth::user()->hasPermissionTo("estimulo-evaluaciones-acuses-index") ?>';
-                            if(data.username == authUser || permissions == 1){
-                                row += "<tr>";
-                                row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + data.clave + '</td>';
-                                row += '<td width="60%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
-                                row += '<td class="text-center" width="20%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
-                                row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
-                                if(bandera == true){
-                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-edit"></i></a></td>';
-                                }else{
-                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:noFirmarAcuse()"><i class="fa fa-edit"></i></a></td>';
+                            // if(data.direccion == 'DCiencia' || data.direccion == 'DServTec' || data.direccion == 'DProyTec'){
+                                if(data.username == authUser || permissions == 1){
+                                    row += "<tr>";
+                                    row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + data.clave + '</td>';
+                                    row += '<td width="50%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
+                                    row += '<td class="text-left" width="30%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
+                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
+                                    // if(bandera == true){
+                                    //     row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-edit"></i></a></td>';
+                                    // }else{
+                                    //     row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:noFirmarAcuse()"><i class="fa fa-edit"></i></a></td>';
+                                    // }
+                                    row += "</tr>";
                                 }
-                                row += "</tr>";
-                            }
+                            // }
                         }
                     }else{
                         console.log(datosPersonal.response.length);

@@ -121,7 +121,7 @@
     <fieldset>
         <legend class="LegendFactor">Factor 3*</legend>
         <div style="width: 100%; text-align: justify; font-size: 11px; font-weight: bold">
-            Acuerdo 04/ext05/2022. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 2 no se evalúa el factor 3 tomando en consideración lo descrito en la página 18 de los lineamientos aplicables.
+            Acuerdo 04/ext05/{{ date("Y") }}. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 2 no se evalúa el factor 3 tomando en consideración lo descrito en la página 18 de los lineamientos aplicables.
         </div>
         <br>
     </fieldset>
@@ -129,7 +129,7 @@
 <fieldset class="Fieldset">
     <div style="width: 100%; text-align: justify; font-size: 11px;">
         Fecha y número de acta de presentación de los resultados de determinación de cálculo de estímulos presentados a la Dirección General conforme al Capítulo  VIII , Numeral 2 "De la facultades de los integrantes del Comité de Evaluación" punto 3 para aprobación del pago.<br><br>
-        Quinta sesión Extraordinaria, La Titular de la Dirección General aprueba la presente cédula de evaluación para el otorgamiento de estímulos al personal científico y tecnológico del Centro, correspondiente al ejercicio 2021 mediante Acuerdo número: 05/EXT/2022.<br><br>
-        Quinta sesión Extraordinaria, La Titular de la Dirección General conforme a sus facultades establecidas en los Lineamientos para el otorgamiento de estímulos al personal científico y tecnológico del CIDETEQ, aprueba que la dispersión del monto a pagar señalado en la presente cédula de evaluación correspondiente al ejercicio 2021 se realice en una sola exhibición mediante Acuerdo número: 06/EXT/2022.
+        Quinta sesión Extraordinaria, La Titular de la Dirección General aprueba la presente cédula de evaluación para el otorgamiento de estímulos al personal científico y tecnológico del Centro, correspondiente al ejercicio 2021 mediante Acuerdo número: 05/EXT/{{ date("Y") }}.<br><br>
+        Quinta sesión Extraordinaria, La Titular de la Dirección General conforme a sus facultades establecidas en los Lineamientos para el otorgamiento de estímulos al personal científico y tecnológico del CIDETEQ, aprueba que la dispersión del monto a pagar señalado en la presente cédula de evaluación correspondiente al ejercicio 2021 se realice en una sola exhibición mediante Acuerdo número: 06/EXT/{{ date("Y") }}.
     </div>
 </fieldset>

@@ -95,7 +95,7 @@ class AcusesPDFController extends Controller
             }
         }elseif($grupo == 'grupo2'){
             $query = DB::table('sinfodi_evaluacion_responsabilidades')
-                        ->select('clave', 'nombre', 'direccion', 'username')
+                        ->select('clave', 'nombre', 'direccion', 'responsabilidad', 'username')
                         ->where('year', '=', $year)
                         // ->whereNotIn('clave', $datos)
                         ->distinct()

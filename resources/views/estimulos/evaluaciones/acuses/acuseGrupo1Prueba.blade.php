@@ -18,7 +18,7 @@
             <tr>
                 <td>Factor 1. (Total puntos actividades A + B) * {{ number_format($valorPuntoProductividad, 2) }}</td>
                 <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
-                <td style="text-align: center">${{ number_format(round($montoAnual), 2) }}</td>
+                <td style="text-align: center">${{ number_format($montoAnual, 2) }}</td>
                 {{-- <td style="text-align: center">$0.00</td> --}}
             </tr>
             <tr>
@@ -57,8 +57,8 @@
         <tfoot width = "100%" style="font-size: 10px;">
             <tr>
                 <td style="text-align: left">Total General:</td>
-                <td style="text-align: center">{{ round($sumarTotalPuntosAyB) }}</td>
-                <td style="text-align: center">${{ number_format(round($montoAnual), 2) }}</td>
+                <td style="text-align: center">{{ number_format($sumarTotalPuntosAyB, 2) }}</td>
+                <td style="text-align: center">${{ number_format($montoAnual, 2) }}</td>
                 {{-- <td style="text-align: center">$0.00</td> --}}
             </tr>
         </tfoot>

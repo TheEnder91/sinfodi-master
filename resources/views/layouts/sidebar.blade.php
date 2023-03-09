@@ -19,13 +19,13 @@
                         <p>Colaboración institucional</p>
                     </a>
                 </li> --}}
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Puntos totales</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/recursosPropios/listRecursosPropios') }}" class="nav-link {{ isRouteActive('modulos.recursosPropios') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Recursos propios</p>
@@ -204,7 +204,7 @@
                             <i class="far fa-arrow-alt-circle-down"></i>
                             <p><b>Evaluaciones</b><i class="right fas fa-angle-left"></i></p>
                         </a>
-                        {{-- @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
+                        @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-acuses-index') || existeUsuario(Auth::user()->usuario, 'acuses', 'acuses'))
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ \App\Traits\Principal::getUrlToken('/estimulos/evaluaciones/acusesPDF') }}" class="nav-link {{ isRouteActive('evaluaciones.acusesPDF') }}">
@@ -213,7 +213,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        @endif --}}
+                        @endif
                         <ul class="nav nav-treeview">
                             @if (Auth::user()->hasPermissionTo('estimulo-evaluaciones-directores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Director") ||
                                  Auth::user()->hasPermissionTo('estimulo-evaluaciones-subdirectores-index') || existeUsuario(Auth::user()->usuario, 'responsabilidades', "Subdirector") ||

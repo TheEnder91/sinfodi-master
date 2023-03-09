@@ -217,17 +217,21 @@
             //     return;
             // }
             // Calcular el importe de las actividades individuales(Importe total * porcentaje de la actividad individuales)
-            actividadIndividual = importeTotal * porcentajeActividadIndividual;
-            $('#txtActividadIndividual').val(new Intl.NumberFormat().format(actividadIndividual.toFixed(2)));
+            // actividadIndividual = importeTotal * porcentajeActividadIndividual;
+            // $('#txtActividadIndividual').val(new Intl.NumberFormat().format(actividadIndividual.toFixed(2)));
+            $('#txtActividadIndividual').val(0.00);
             // Calcular el importe de la facturación(Importe total * porcentaje de facturacion)
-            facturacion = importeTotal *porcentajeFacturacion;
-            $('#txtFacturacion').val(new Intl.NumberFormat().format(facturacion.toFixed(2)));
+            // facturacion = importeTotal *porcentajeFacturacion;
+            // $('#txtFacturacion').val(new Intl.NumberFormat().format(facturacion.toFixed(2)));
+            $('#txtFacturacion').val(0.00);
             // Calcular el importe de los fondos de administracion(Importe total * porcentaje de fondos de administracion)
-            fondosAdmin = importeTotal *porcentajeFondosAdmin;
-            $('#txtFondosAdmin').val(new Intl.NumberFormat().format(fondosAdmin.toFixed(2)));
+            // fondosAdmin = importeTotal *porcentajeFondosAdmin;
+            // $('#txtFondosAdmin').val(new Intl.NumberFormat().format(fondosAdmin.toFixed(2)));
+            $('#txtFondosAdmin').val(0.00);
             // Calcular el importe de responsabilidad(Importe total * porcentaje de responsabilidades)
-            responsabilidad = importeTotal * porcentajeResponsabilidad;
-            $('#txtResponsabilidad').val(new Intl.NumberFormat().format(responsabilidad.toFixed(2)));
+            // responsabilidad = importeTotal * porcentajeResponsabilidad;
+            // $('#txtResponsabilidad').val(new Intl.NumberFormat().format(responsabilidad.toFixed(2)));
+            $('#txtResponsabilidad').val(0.00);
             // Calcular la suma de todos los puntos para responsabilidades...
             var year = $('#txtYear').val();
             consultarDatos({
@@ -242,8 +246,9 @@
                     }else{
                         $('#txtTotalPuntosResponsabilidad').val(new Intl.NumberFormat().format(sumaTotalPuntos));
                         // Obtener el valor del punto por responsabilidad...
-                        var valorPuntoResponsabilidad = responsabilidad / sumaTotalPuntos;
+                        // var valorPuntoResponsabilidad = responsabilidad / sumaTotalPuntos;
                         // $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(valorPuntoResponsabilidad.toFixed(2)));
+                        $('#txtValorPuntoResponsabilidad').val(0);
                     }
                 },
             });
@@ -283,11 +288,15 @@
                     }else{
                         var totalPuntosTecnologia = totalPuntosA.response[5].totalTecnologia;
                     }
-                    // console.log(totalPuntosGeneral);
                     var puntosTotalesA = parseFloat(totalPuntosGeneral) + parseFloat(totalPuntosAdministracion) + parseFloat(totalPuntosPosgrado) + parseFloat(totalPuntosServicios) + parseFloat(totalPuntosCiencia) + parseFloat(totalPuntosTecnologia);
-                    // console.log(puntosTotalesA);
+                    // console.log(totalPuntosGeneral);
+                    // console.log(totalPuntosAdministracion);
+                    // console.log(totalPuntosPosgrado);
+                    // console.log(totalPuntosCiencia);
+                    // console.log(totalPuntosServicios);
+                    // console.log(totalPuntosTecnologia);
                     $('#txtTotalPuntosTotalA').val(new Intl.NumberFormat().format(puntosTotalesA.toFixed(2)));
-                    // Calcular la suma de todos los puntos de las actividades de la tabla B de todas las direcciones por el 0.7 establecido...
+                    //         // Calcular la suma de todos los puntos de las actividades de la tabla B de todas las direcciones por el 0.7 establecido...
                     consultarDatos({
                         action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosB/"+year,
                         type: 'GET',
@@ -332,15 +341,14 @@
                             var puntosA = $('#txtTotalPuntosTotalA').val().replace(/,/g, "");
                             var puntosB = $('#txtTotalPuntosTotalB').val().replace(/,/g, "");
                             var sumarPuntosAyB = parseFloat(puntosA) + parseFloat(puntosB);
-                            // console.log(sumarPuntosAyB);
+                            // // console.log(sumarPuntosAyB);
                             $('#txtTotalPuntosTotalAB').val(new Intl.NumberFormat().format(sumarPuntosAyB.toFixed(2)));
-                            // Calcular le valor del punto...
+                            // // Calcular le valor del punto...
                             // var valorActividades = $('#txtActividadIndividual').val().replace(/,/g, "");
                             // var valorAyB = $('#txtTotalPuntosTotalAB').val().replace(/,/g, "");
                             // var valorPunto = parseFloat(valorActividades) / parseFloat(valorAyB);
                             // $('#txtValorPunto').val(new Intl.NumberFormat().format(valorPunto.toFixed(2)));
-                            // $('#btnGuardar').show();
-
+                            // // $('#btnGuardar').show();
                             var valorAyB = parseFloat($('#txtTotalPuntosTotalAB').val().replace(/,/g, ""));
                             var puntosResponsabilidad = parseFloat($('#txtTotalPuntosResponsabilidad').val().replace(/,/g, ""));
                             var suma = valorAyB + puntosResponsabilidad;
@@ -348,16 +356,126 @@
                             var total = importe / suma;
                             $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(total.toFixed(2)));
                             $('#txtValorPunto').val(new Intl.NumberFormat().format(total.toFixed(2)));
-                            console.log(valorAyB);
-                            console.log(puntosResponsabilidad);
-                            console.log(suma);
-                            console.log(importe);
-                            console.log(total);
-                            // $('#btnGuardar').show();
+                            // console.log(valorAyB);
+                            // console.log(puntosResponsabilidad);
+                            // console.log(suma);
+                            // console.log(importe);
+                            // console.log(total);
+                            $('#btnGuardar').show();
                         }
                     });
-                }
+                },
             });
+            // consultarDatos({
+            //     action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosA/"+year,
+            //     type: 'GET',
+            //     dataType: 'json',
+            //     ok: function(totalPuntosA){
+            //         if(totalPuntosA.response[0].totalGeneral === null){
+            //             var totalPuntosGeneral = 0;
+            //         }else{
+            //             var totalPuntosGeneral = totalPuntosA.response[0].totalGeneral;
+            //         }
+            //         if(totalPuntosA.response[1].totalAdministracion === null){
+            //             var totalPuntosAdministracion = 0;
+            //         }else{
+            //             var totalPuntosAdministracion = totalPuntosA.response[1].totalAdministracion;
+            //         }
+            //         if(totalPuntosA.response[2].totalPosgrado === null){
+            //             var totalPuntosPosgrado = 0;
+            //         }else{
+            //             var totalPuntosPosgrado = totalPuntosA.response[2].totalPosgrado;
+            //         }
+            //         if(totalPuntosA.response[4].totalCiencia === null){
+            //             var totalPuntosCiencia = 0;
+            //         }else{
+            //             var totalPuntosCiencia = totalPuntosA.response[4].totalCiencia;
+            //         }
+            //         if(totalPuntosA.response[3].totalServicios === null){
+            //             var totalPuntosServicios = 0;
+            //         }else{
+            //             var totalPuntosServicios = totalPuntosA.response[3].totalServicios;
+            //         }
+            //         if(totalPuntosA.response[5].totalTecnologia === null){
+            //             var totalPuntosTecnologia = 0;
+            //         }else{
+            //             var totalPuntosTecnologia = totalPuntosA.response[5].totalTecnologia;
+            //         }
+            //         // console.log(totalPuntosGeneral);
+            //         var puntosTotalesA = parseFloat(totalPuntosGeneral) + parseFloat(totalPuntosAdministracion) + parseFloat(totalPuntosPosgrado) + parseFloat(totalPuntosServicios) + parseFloat(totalPuntosCiencia) + parseFloat(totalPuntosTecnologia);
+            //         // console.log(puntosTotalesA);
+            //         $('#txtTotalPuntosTotalA').val(new Intl.NumberFormat().format(puntosTotalesA.toFixed(2)));
+            //         // Calcular la suma de todos los puntos de las actividades de la tabla B de todas las direcciones por el 0.7 establecido...
+            //         consultarDatos({
+            //             action: "{{ config('app.url') }}/modulos/puntosTotales/verTotalPuntosB/"+year,
+            //             type: 'GET',
+            //             dataType: 'json',
+            //             ok: function(totalPuntosB){
+            //                 // console.log(totalPuntosB);
+            //                 if(totalPuntosB.response[0].totalGeneralB === null){
+            //                     var totalPuntosGeneralB = 0;
+            //                 }else{
+            //                     var totalPuntosGeneralB = totalPuntosB.response[0].totalGeneralB;
+            //                 }
+            //                 if(totalPuntosB.response[1].totalAdministracionB === null){
+            //                     var totalPuntosAdministracionB = 0;
+            //                 }else{
+            //                     var totalPuntosAdministracionB = totalPuntosB.response[1].totalAdministracionB;
+            //                 }
+            //                 if(totalPuntosB.response[2].totalPosgradoB === null){
+            //                     var totalPuntosPosgradoB = 0;
+            //                 }else{
+            //                     var totalPuntosPosgradoB = totalPuntosB.response[2].totalPosgradoB;
+            //                 }
+            //                 if(totalPuntosB.response[3].totalServiciosB === null){
+            //                     var totalPuntosServiciosB = 0;
+            //                 }else{
+            //                     var totalPuntosServiciosB = totalPuntosB.response[3].totalServiciosB;
+            //                 }
+            //                 if(totalPuntosB.response[4].totalCienciaB === null){
+            //                     var totalPuntosCienciaB = 0;
+            //                 }else{
+            //                     var totalPuntosCienciaB = totalPuntosB.response[4].totalCienciaB;
+            //                 }
+            //                 if(totalPuntosB.response[5].totalTecnologiaB === null){
+            //                     var totalPuntosTecnologiaB = 0;
+            //                 }else{
+            //                     var totalPuntosTecnologiaB = totalPuntosB.response[5].totalTecnologiaB;
+            //                 }
+            //                 // console.log(totalPuntosServiciosB);
+            //                 var puntosTotalesB = parseFloat(totalPuntosGeneralB) + parseFloat(totalPuntosAdministracionB) + parseFloat(totalPuntosPosgradoB) + parseFloat(totalPuntosServiciosB) + parseFloat(totalPuntosCienciaB) + parseFloat(totalPuntosTecnologiaB);
+            //                 // console.log(puntosTotalesB);
+            //                 $('#txtTotalPuntosTotalB').val(new Intl.NumberFormat().format(puntosTotalesB.toFixed(2)));
+            //                 // Sumar el total de puntos A mas el total de puntos B...
+            //                 var puntosA = $('#txtTotalPuntosTotalA').val().replace(/,/g, "");
+            //                 var puntosB = $('#txtTotalPuntosTotalB').val().replace(/,/g, "");
+            //                 var sumarPuntosAyB = parseFloat(puntosA) + parseFloat(puntosB);
+            //                 // console.log(sumarPuntosAyB);
+            //                 $('#txtTotalPuntosTotalAB').val(new Intl.NumberFormat().format(sumarPuntosAyB.toFixed(2)));
+            //                 // Calcular le valor del punto...
+            //                 // var valorActividades = $('#txtActividadIndividual').val().replace(/,/g, "");
+            //                 // var valorAyB = $('#txtTotalPuntosTotalAB').val().replace(/,/g, "");
+            //                 // var valorPunto = parseFloat(valorActividades) / parseFloat(valorAyB);
+            //                 // $('#txtValorPunto').val(new Intl.NumberFormat().format(valorPunto.toFixed(2)));
+            //                 // $('#btnGuardar').show();
+
+            //                 var valorAyB = parseFloat($('#txtTotalPuntosTotalAB').val().replace(/,/g, ""));
+            //                 var puntosResponsabilidad = parseFloat($('#txtTotalPuntosResponsabilidad').val().replace(/,/g, ""));
+            //                 var suma = valorAyB + puntosResponsabilidad;
+            //                 var importe = parseFloat($('#txtImporteTotal').val());
+            //                 var total = importe / suma;
+            //                 $('#txtValorPuntoResponsabilidad').val(new Intl.NumberFormat().format(total.toFixed(2)));
+            //                 $('#txtValorPunto').val(new Intl.NumberFormat().format(total.toFixed(2)));
+            //                 console.log(valorAyB);
+            //                 console.log(puntosResponsabilidad);
+            //                 console.log(suma);
+            //                 console.log(importe);
+            //                 console.log(total);
+            //                 // $('#btnGuardar').show();
+            //             }
+            //         });
+            //     }
+            // });
         }
 
         function guardarPuntosTotales(){
