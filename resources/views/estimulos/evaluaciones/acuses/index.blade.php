@@ -21,8 +21,8 @@
                         <label class="input-group-text" for="grupo" style="font-size:13px;">Seleccione un grupo:</label>
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="grupo" onChange="ShowSelectedGrupo();">
-                        {{-- <option value="grupo1">Grupo 1</option> --}}
-                        <option value="grupo2">Grupo 2</option>
+                        <option value="grupo1">Grupo 1</option>
+                        {{-- <option value="grupo2">Grupo 2</option> --}}
                     </select>
                 </div>
             </div>
