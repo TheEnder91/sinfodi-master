@@ -19,12 +19,12 @@
                         <p>Colaboración institucional</p>
                     </a>
                 </li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/puntosTotales/listPuntosTotales') }}" class="nav-link {{ isRouteActive('modulos.puntosTotales') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
                         <p>Puntos totales</p>
                     </a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a href="{{ \App\Traits\Principal::getUrlToken('/modulos/recursosPropios/listRecursosPropios') }}" class="nav-link {{ isRouteActive('modulos.recursosPropios') }}">
                         <i class="far fa-arrow-alt-circle-right"></i>
