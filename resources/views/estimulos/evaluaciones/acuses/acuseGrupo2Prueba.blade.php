@@ -154,7 +154,7 @@
                 </table>
             @elseif ($tipoResonsabilidad == 'Coordinadores' || $tipoResonsabilidad == 'Personal_Apoyo')
                 <div style="width: 100%; text-align: justify; font-size: 11px; font-weight: bold">
-                    *ESTE FACTOR APLICA PARA COORDINADORES Y PERSONAL DE APOYO.
+                    *ESTE FACTOR APLICA PARA DIRECTORES Y SUBDIRECTORES.
                 </div>
             @endif
         </div>
@@ -165,7 +165,7 @@
         <legend class="LegendFactor">Factor 3*</legend>
         @if ($tipoResonsabilidad == 'Directores' || $tipoResonsabilidad == 'Subdirectores')
             <div style="width: 100%; text-align: justify; font-size: 11px; font-weight: bold">
-                *ESTE FACTOR APLICA PARA DIRECTORES Y SUBDIRECTORES.
+                *ESTE FACTOR APLICA PARA COORDINADORES Y PERSONAL DE APOYO.
             </div>
         @elseif ($tipoResonsabilidad == 'Coordinadores' || $tipoResonsabilidad == 'Personal_Apoyo')
             <div style="width: 100%; text-align: center;">
