@@ -178,7 +178,8 @@
         <legend class="LegendFactor">Factor 2*</legend>
         <div style="width: 100%; text-align: justify; font-size: 11px; font-weight: bold">
             {{-- Conforme a los lineamientos para el otorgamiento de estimulos por proyecto del personal cientifico y tecnologico del CIDETEQ en su anexo 1 página 13 que a la letra dice, estos y a las atribuciones de la DG y conforme al criterio del comite de estimulos SDCH-056-2022 de fecha del 13 de Junio del 2022 este factor podra o no ser evaluado. --}}
-            Acuerdo 03/ext05/2022. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 1 solo se aplicará el factor 1, los factores 2 y 3 no se evalúan tomando en consideración el Anexo 1 pagina 13 de los Lineamientos aplicables.
+            {{-- Acuerdo 03/ext05/2022. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 1 solo se aplicará el factor 1, los factores 2 y 3 no se evalúan tomando en consideración el Anexo 1 pagina 13 de los Lineamientos aplicables. --}}
+            *ESTE FACTOR APLICA PARA DIRECTORES Y SUBDIRECTORES.
         </div>
         <br>
     </fieldset>
@@ -186,7 +187,8 @@
     <fieldset>
         <legend class="LegendFactor">Factor 3*</legend>
         <div style="width: 100%; text-align: justify; font-size: 11px; font-weight: bold">
-            Acuerdo 03/ext05/2022. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 1 solo se aplicará el factor 1, los factores 2 y 3 no se evalúan tomando en consideración el Anexo 1 pagina 13 de los Lineamientos aplicables.
+            {{-- Acuerdo 03/ext05/2022. La titular de la Dirección General de conformidad con sus facultades determina lo siguiente: Del grupo 1 solo se aplicará el factor 1, los factores 2 y 3 no se evalúan tomando en consideración el Anexo 1 pagina 13 de los Lineamientos aplicables. --}}
+            *ESTE FACTOR APLICA PARA COORDINADORES Y PERSONAL DE APOYO.
         </div>
         <br>
     </fieldset>
