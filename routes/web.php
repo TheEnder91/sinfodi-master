@@ -242,7 +242,7 @@ Route::middleware(['login'])->group(function(){
     /** Ruta para obtener los acuses... */
     Route::get('/estimulos/evaluaciones/acusesPDF', [AcusesPDFController::class, "index"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/getDirecciones/{year}/{direccion}/{grupo}', [AcusesPDFController::class, "getDirecciones"])->name('estimulos.evaluaciones.acusesPDF');
-    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
+    Route::get('/estimulos/evaluaciones/generarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}/{impacto}/{desempeno}', [AcusesPDFController::class, "generarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     Route::get('/estimulos/evaluaciones/firmarAcusePDF/{direccion}/{nombre}/{clave}/{year}/{grupo}', [AcusesPDFController::class, "firmarAcuse"])->name('estimulos.evaluaciones.acusesPDF');
     /** Exportar excel... */
     Route::get('/estimulos/evaluaciones/concentrado/ExcelConcentrado/{direccion}/{year}', [ExportarExcel::class, "index"])->name('estimulos.evaluaciones.exportarExcel');

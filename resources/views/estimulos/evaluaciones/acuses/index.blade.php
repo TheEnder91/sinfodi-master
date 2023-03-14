@@ -22,7 +22,7 @@
                     </div>
                     <select class="custom-select text-center" style="font-size:13px;" id="grupo" onChange="ShowSelectedGrupo();">
                         <option value="grupo1">Grupo 1</option>
-                        {{-- <option value="grupo2">Grupo 2</option> --}}
+                        <option value="grupo2">Grupo 2</option>
                     </select>
                 </div>
             </div>
@@ -170,7 +170,7 @@
                                     row += '<th scope="row" class="text-center" width="10%" style="font-size:12px; vertical-align:middle;">' + data.clave + '</td>';
                                     row += '<td width="50%" style="font-size:12px; vertical-align:middle;">' + data.nombre.toUpperCase() + "</td>";
                                     row += '<td class="text-left" width="30%" style="font-size:12px; vertical-align:middle;">' + puesto.toUpperCase() + "</td>";
-                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-file-pdf"></i></a></td>';
+                                    row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:verAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\', ' + data.id_impacto + ', ' + data.id_desempeño + ')"><i class="fa fa-file-pdf"></i></a></td>';
                                     // if(bandera == true){
                                     //     row += '<td class="text-center" width="10%" style="font-size:18px;"><a href="javascript:firmarAcuse(\'' + direccion + '\', ' + '\'' + data.nombre + '\', ' + data.clave + ', ' + year + ', ' + '\'' + grupo + '\'' + ')"><i class="fa fa-edit"></i></a></td>';
                                     // }else{
@@ -220,15 +220,17 @@
             }).catch(swal.noop);
         }
 
-        function verAcuse(direccion, nombre, clave, year, grupo){
-            var url2 = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/generarAcusePDF/direccion/nombre/clave/year/grupo") }}';
+        function verAcuse(direccion, nombre, clave, year, grupo, idImpacto, idDesempeño){
+            var url2 = '{{ \App\Traits\Principal::getUrlToken("/estimulos/evaluaciones/generarAcusePDF/direccion/nombre/clave/year/grupo/impacto/desempeno") }}';
             var link1 = url2.replace('direccion', direccion);
-            var link2 = link1.replace('clave', clave);
-            var link3 = link2.replace('year', year);
-            var link4 = link3.replace('grupo', grupo);
-            var url = link4.replace('nombre', nombre);
-            // console.log(link3);
-            window.open(url);
+            var link2 = link1.replace('nombre', nombre);
+            var link3 = link2.replace('clave', clave);
+            var link4 = link3.replace('year', year);
+            var link5 = link4.replace('grupo', grupo);
+            var link6 = link5.replace('impacto', idImpacto);
+            var link7 = link6.replace('desempeno', idDesempeño);
+            console.log(link7);
+            window.open(link7);
         }
 
         function firmarAcuse(direccion, nombre, clave, year, grupo){

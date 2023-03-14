@@ -95,7 +95,7 @@ class AcusesPDFController extends Controller
             }
         }elseif($grupo == 'grupo2'){
             $query = DB::table('sinfodi_evaluacion_responsabilidades')
-                        ->select('clave', 'nombre', 'direccion', 'responsabilidad', 'username')
+                        ->select('clave', 'nombre', 'direccion', 'responsabilidad', 'username', 'id_impacto', 'id_desempeño')
                         ->where('year', '=', $year)
                         // ->whereNotIn('clave', $datos)
                         ->distinct()
@@ -324,7 +324,7 @@ class AcusesPDFController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function generarAcuse($direccion, $nombre, $clave, $year, $grupo){
+    public function generarAcuse($direccion, $nombre, $clave, $year, $grupo, $impacto, $desempeño){
         $nombreDoc = $clave."_".$nombre.".pdf";
         $dompdf = \App::make("dompdf.wrapper");
         if($grupo == 'grupo1'){
@@ -348,7 +348,10 @@ class AcusesPDFController extends Controller
             $tipoResponsabilidad = self::getTipoResponsabilidad($clave, $year);
             $nivelResponsabilidad = self::getNivelResponsabilidad($clave, $year);
             $puntaje = self::getPuntosResponsabilidad($clave, $year);
-            $nivelImpacto = self::getNivelImpacto('Medio');
+            $factorImpacto = self::getFactorImpacto($impacto);
+            $nivelImpacto = self::getNivelImpacto($impacto);
+            $resultadosDesempeño = self::getResultadosDesempeño($desempeño);
+            $f3Desempeño = self::getF3Desempeño($desempeño);
             $valoPuntoResponsabilidad = self::getValorPuntoResponsabilidad($year);
             $html = view('estimulos.evaluaciones.acuses.acuses', [
                 'clave' => $clave,
@@ -357,7 +360,10 @@ class AcusesPDFController extends Controller
                 'puntajeResponsabilidad' => $puntaje,
                 'nivelResponsabilidad' => $nivelResponsabilidad,
                 'tipoResonsabilidad' => $tipoResponsabilidad,
+                'factorImpacto' => $factorImpacto,
                 'nivelImpacto' => $nivelImpacto,
+                'resultadosDesempeño' => $resultadosDesempeño,
+                'f3Desempeño' => $f3Desempeño,
                 'valorPuntoResponsabilidad' => $valoPuntoResponsabilidad,
             ]);
             $dompdf->loadHtml($html);
@@ -399,10 +405,31 @@ class AcusesPDFController extends Controller
         return $query;
     }
 
-    public function getNivelImpacto($nivel){
+    public function getFactorImpacto($impacto){
         $query = DB::table('sinfodi_impacto')
-                    ->where('nivel', $nivel)
+                    ->where('id', $impacto)
                     ->value('factor');
+        return $query;
+    }
+
+    public function getNivelImpacto($impacto){
+        $query = DB::table('sinfodi_impacto')
+                    ->where('id', $impacto)
+                    ->value('nivel');
+        return $query;
+    }
+
+    public function getResultadosDesempeño($desempeño){
+        $query = DB::table('sinfodi_desempeños')
+                    ->where('id', $desempeño)
+                    ->value('resultados');
+        return $query;
+    }
+
+    public function getF3Desempeño($desempeño){
+        $query = DB::table('sinfodi_desempeños')
+                    ->where('id', $desempeño)
+                    ->value('f3');
         return $query;
     }
 
