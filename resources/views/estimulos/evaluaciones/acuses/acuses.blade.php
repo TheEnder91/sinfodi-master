@@ -79,7 +79,7 @@
                 height: 2px;
                 max-width: 200px;
                 padding: 0;
-                margin: 50px auto 0 auto;
+                margin: 30px auto 0 auto;
             }
             .centrado{
             	text-align: center;
@@ -98,6 +98,7 @@
                 margin: 0 34.6%;
                 border: 1px solid black;
                 border-radius: 5px;
+                font-size: 12px;
             }
             .thead{
                 border: 1px solid black;
@@ -134,22 +135,22 @@
         <div style="text-align: center; font-weight: bold; font-size: 11px;">
             Firma de representantes del Comité de Evaluación conforme al acuerdo de la minuta de la Primera Sesión del Comité de Evaluación {{ date("Y") }}.
         </div>
-        <div class="centrado" style="width: 100%; font-size: 12px; font-weight: bold;">
+        <div class="centrado" style="width: 100%; font-size: 11px; font-weight: bold;">
             <div class="linea"></div>
             {{ strtoupper(eliminar_acentos($nombre)) }}<br>
             {{-- Acuso de recibido como conformidad y manifiesto el conocimiento del proceso, el cálculo de los estímulos y el monto . --}}
             Acuso de recibido. Asi mismo, declaro bajo protesta de decir verdad que se hizo de mi conocimiento el mecanismo de evaluación por lo que manifiesto mi entera conformidad con el resultado y monto a pagar.
         </div>
         <div style="width: 100%; font-size: 12px; font-weight: bold;">
-            <div style="float:left; width: 50%;">
+            <div style="float:left; width: 50%; font-size: 12px;">
                 <div style="text-align: center;">
-                    <div style="border-top: 1px solid black; height: 2px; max-width: 200px; padding: 0; margin: 50px auto 0 auto;"></div>
+                    <div style="border-top: 1px solid black; height: 2px; max-width: 200px; padding: 0; margin: 30px auto 0 auto;"></div>
                     <p>C.P. MARÍA JUDIT RIVERA MONTEALVO<br>PRESIDENTA</p>
                 </div>
             </div>
-            <div style="float:left; width: 50%;">
+            <div style="float:left; width: 50%; font-size: 12px;">
                 <div style="text-align: center;">
-                    <div style="border-top: 1px solid black; height: 2px; max-width: 200px; padding: 0; margin: 50px auto 0 auto;"></div>
+                    <div style="border-top: 1px solid black; height: 2px; max-width: 200px; padding: 0; margin: 30px auto 0 auto;"></div>
                     <p>LIC. ESTEBAN VELIZ MARCIN<br>SECRETARIO TÉCNICO</p>
                 </div>
             </div>
