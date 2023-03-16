@@ -194,7 +194,7 @@
 <fieldset class="Fieldset">
     <div style="width: 100%; text-align: justify; font-size: 11px;">
         Fecha y número de acta de presentación de los resultados de determinación de cálculo de estímulos presentados a la Dirección General conforme al Capítulo  VIII , Numeral 2 "De la facultades de los integrantes del Comité de Evaluación" punto 3 para aprobación del pago.<br><br>
-        Quinta sesión Extraordinaria, La Titular de la Dirección General aprueba la presente cédula de evaluación para el otorgamiento de estímulos al personal científico y tecnológico del Centro, correspondiente al ejercicio 2021 mediante Acuerdo número: 05/EXT/{{ date("Y") }}.<br><br>
-        Quinta sesión Extraordinaria, La Titular de la Dirección General conforme a sus facultades establecidas en los Lineamientos para el otorgamiento de estímulos al personal científico y tecnológico del CIDETEQ, aprueba que la dispersión del monto a pagar señalado en la presente cédula de evaluación correspondiente al ejercicio 2021 se realice en una sola exhibición mediante Acuerdo número: 06/EXT/{{ date("Y") }}.
+        Quinta sesión Extraordinaria, La Titular de la Dirección General aprueba la presente cédula de evaluación para el otorgamiento de estímulos al personal científico y tecnológico del Centro, correspondiente al ejercicio {{ date('Y') - 1 }}.<br><br>
+        Quinta sesión Extraordinaria, La Titular de la Dirección General conforme a sus facultades establecidas en los Lineamientos para el otorgamiento de estímulos al personal científico y tecnológico del CIDETEQ, aprueba que la dispersión del monto a pagar señalado en la presente cédula de evaluación correspondiente al ejercicio {{ date('Y') - 1 }} se realice de forma bimestral.
     </div>
 </fieldset>
